@@ -22,7 +22,7 @@
  	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
-			<value>classpath:/spring/applicationContext.properties</value>
+			<value>/WEB-INF/spring/applicationContext.properties</value>
 		</property>
 	</bean>
 	<bean id = "multipartResolver" 
@@ -45,7 +45,7 @@
 	</bean>
 
 <!-- 	mybatis sql session template -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+<!-- 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:kr/co/ggb/mapper/mybatis-config.xml" />
 	</bean>
@@ -53,6 +53,6 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>	
-	
+	 -->
 		
 </beans>
