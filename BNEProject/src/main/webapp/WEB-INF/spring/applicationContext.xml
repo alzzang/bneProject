@@ -52,12 +52,9 @@
 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
-<<<<<<< HEAD
+
 	</bean>	
 	 -->
-=======
-	</bean>	 -->
-	
->>>>>>> branch 'master' of https://github.com/alzzang/bneProject.git
+
 		
 </beans>
