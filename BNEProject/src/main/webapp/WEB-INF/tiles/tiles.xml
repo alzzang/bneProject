@@ -7,35 +7,19 @@
 <tiles-definitions>
 
 	<definition name="tilesbase" template="/WEB-INF/views/layout.jsp">
-		<put-attribute name="title" value="banana homepage" />
-		<put-attribute name="navigation" value="/WEB-INF/views/navigation.jsp" />
+		
 		<put-attribute name="menu" value="" />
-		<put-attribute name="body" value="/WEB-INF/views/MainPage.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/views/FooterPage.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="" />
 	</definition>
 
 
 	<!-- 컨트롤러에서 리턴해 주는 뷰이름,본예제는 hello -->
 	<definition name="test" extends="tilesbase">
-		<put-attribute name="menu" value="banana" />
-		<put-attribute name="body" value="테스트성공" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 	</definition>
 
-	<definition name="category" extends="tilesbase">
-		<put-attribute name="menu" value="/WEB-INF/views/CatePageHotPart.jsp" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/CatePageContentsPart.jsp" />
-	<put-attribute name="footer" value="" />
-	</definition>
-	
-	<definition name="write" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/WritePage.jsp" />
-
-	</definition>
-	
-	<definition name="moreContents" template="/WEB-INF/views/moreLayout.jsp" >
-			<put-attribute name="menu" value="/WEB-INF/views/CatePageContentsPart.jsp" />
-	</definition>
 </tiles-definitions>
 
  

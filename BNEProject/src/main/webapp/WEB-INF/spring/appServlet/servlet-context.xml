@@ -4,8 +4,9 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 			http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
@@ -20,16 +21,15 @@
 	
 	<context:component-scan base-package="kr.co.bne" />
 	
-	<beans:bean id = "tilesviewResolver"
-		class = "org.springframework.web.view.tiles3.TilesViewResolver"/>
-	<beans:bean id = "tilesConfigurer"
-		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-		<beans:property name="definitions">
-			<beans:list>
-				<beans:value>/WEB-INF/tiles/tiles.xml</beans:value>
-			</beans:list>
-		</beans:property>
-	</beans:bean>
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" />  
+
+    <beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">  
+         	<beans:property name="definitions">
+                <beans:list>  
+                     <beans:value>/resources/tiles/tiles.xml</beans:value>  
+                </beans:list>
+         	</beans:property>
+      </beans:bean>   
 	
 	
 </beans:beans>
