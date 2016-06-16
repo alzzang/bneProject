@@ -7,7 +7,6 @@
 <tiles-definitions>
 
 	<definition name="tilesbase" template="/WEB-INF/views/layout.jsp">
-		
 		<put-attribute name="menu" value="" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="" />
@@ -16,8 +15,9 @@
 
 	<!-- 컨트롤러에서 리턴해 주는 뷰이름,본예제는 hello -->
 	<definition name="test" extends="tilesbase">
-		<put-attribute name="menu" value="" />
+		<put-attribute name="menu" value="^^" />
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+		<put-attribute name="footer" value="!!" />
 	</definition>
 
 </tiles-definitions>
