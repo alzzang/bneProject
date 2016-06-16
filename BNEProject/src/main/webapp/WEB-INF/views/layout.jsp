@@ -8,8 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<tiles:insertAttribute name="navigation" />
-
 
 	<div class="container">
 		<tiles:insertAttribute name="menu" />
