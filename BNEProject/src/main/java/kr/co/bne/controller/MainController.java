@@ -10,4 +10,7 @@ public class MainController {
 		System.out.println("aaa");
 		return "main";
 	}
+	public String goMen(){
+		return "manin1";
+	}
 }
