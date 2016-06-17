@@ -19,4 +19,7 @@ public class testService {
 	public void aa(){
 		
 	}
+	public void dddd(){
+		
+	}
 }
