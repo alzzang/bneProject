@@ -5,20 +5,23 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-
 	<definition name="tilesbase" template="/WEB-INF/views/layout.jsp">
-		<put-attribute name="menu" value="" />
+		<put-attribute name="menu" value="/WEB-INF/views/menu.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="" />
+	</definition>	
+
+	<definition name="main" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/body.jsp"/>
 	</definition>
+	
+	
 
 
-	<!-- 컨트롤러에서 리턴해 주는 뷰이름,본예제는 hello -->
-	<definition name="test" extends="tilesbase">
-		<put-attribute name="menu" value="^^" />
-		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
-		<put-attribute name="footer" value="!!" />
-	</definition>
+<!-- 	<definition name="main" extends="bodybase">
+		<put-attribute name="nav" value="/WEB-INF/views/nav.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/content.jsp"/>
+	</definition> -->
 
 </tiles-definitions>
 
