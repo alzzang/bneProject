@@ -7,4 +7,9 @@ public class testService {
 	public void cc(){
 		System.out.println("aaa");
 	}
+	public void dd(){
+		System.out.println("aaa");
+	}
+	
+	
 }
