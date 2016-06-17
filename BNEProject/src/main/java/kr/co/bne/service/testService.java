@@ -7,4 +7,8 @@ public class testService {
 	public void dddd(){
 		
 	}
+	
+	public void abc(){
+		
+	}
 }
