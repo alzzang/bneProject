@@ -1,17 +1,10 @@
 package kr.co.bne.service;
 
 public class testService {
-	public void bb(){
-		System.out.println("aaa");
+	public void aa(){
+		
 	}
-	public void cc(){
-		System.out.println("aaa");
-	}
-	public void dd(){
-		System.out.println("aaa");
-	}
-	
-	public void bb1(){
+	public void dddd(){
 		
 	}
 	
@@ -22,6 +15,9 @@ public class testService {
 		
 	}
 	public void dddd(){
+		
+	}
+	public void abc(){
 		
 	}
 }
