@@ -11,6 +11,9 @@ public class testService {
 		System.out.println("aaa");
 	}
 	
+	public void bb1(){
+		
+	}
 	
 
 	public void aa(){
