@@ -10,16 +10,8 @@ public class MainController {
 		System.out.println("hello");
 		return "main";
 	}
-<<<<<<< HEAD
-	
 	@RequestMapping("/WeeklyWrite")
 	public String WeeklyWriteForm(){
 		return "WeeklyWriteForm";
 	}
-=======
-
-
-	
-	
->>>>>>> refs/remotes/origin/develop
 }
