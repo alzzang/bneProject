@@ -21,8 +21,9 @@
 	<definition name="password" template="/WEB-INF/views/password.jsp"/>
 		
 	
-	
-	
+	<definition name="WeeklyWriteForm" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/WeeklyWriteForm.jsp"/>
+	</definition>
 
 
 <!-- 	<definition name="main" extends="bodybase">
