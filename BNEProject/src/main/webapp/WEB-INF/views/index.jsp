@@ -13,8 +13,7 @@
 <!-- END META SECTION -->
 
 <!-- CSS INCLUDE -->
-<link rel="stylesheet" type="text/css" id="theme"
-	href="../css/theme-default.css" />
+<link rel="stylesheet" type="text/css" id="theme"	href="/css/theme-default.css" />
 <!-- EOF CSS INCLUDE -->
 </head>
 <body>
@@ -25,22 +24,22 @@
 		<div class="page-sidebar">
 			<!-- START X-NAVIGATION -->
 			<ul class="x-navigation">
-				<li class="xn-logo"><a href="index.html">Joli Admin</a> <a
+				<li class="xn-logo"><a href="index.html"> Admin</a> <a
 					href="#" class="x-navigation-control"></a></li>
 				<li class="xn-profile"><a href="#" class="profile-mini"> <img
-						src="assets/images/users/avatar.jpg" alt="John Doe" />
+						src="/assets/images/users/avatar.jpg" alt="John Doe" />
 				</a>
 					<div class="profile">
 						<div class="profile-image">
-							<img src="assets/images/users/user7.jpg" alt="John Doe" />
+							<img src="/assets/images/users/user7.jpg" alt="John Doe" />
 						</div>
 						<div class="profile-data">
-							<div class="profile-data-name">Jin Woo</div>
+							<div class="profile-data-name"> Woo</div>
 							<div class="profile-data-title">Web Developer/Designer</div>
 						</div>
 						<div class="profile-controls">
-							<a href="pages-profile.html" class="profile-control-left"><span
-								class="fa fa-info"></span></a> <a href="pages-messages.html"
+							<a href="#" class="profile-control-left"><span
+								class="fa fa-info"></span></a> <a href="#"
 								class="profile-control-right"><span class="fa fa-envelope"></span></a>
 						</div>
 					</div></li>
@@ -263,23 +262,23 @@
 							style="height: 200px;">
 							<a href="#" class="list-group-item">
 								<div class="list-group-status status-online"></div> <img
-								src="assets/images/users/user2.jpg" class="pull-left"
+								src="/assets/images/users/user2.jpg" class="pull-left"
 								alt="John Doe" /> <span class="contacts-title">John Doe</span>
 								<p>Praesent placerat tellus id augue condimentum</p>
 							</a> <a href="#" class="list-group-item">
 								<div class="list-group-status status-away"></div> <img
-								src="assets/images/users/user.jpg" class="pull-left"
+								src="/assets/images/users/user.jpg" class="pull-left"
 								alt="Dmitry Ivaniuk" /> <span class="contacts-title">Dmitry
 									Ivaniuk</span>
 								<p>Donec risus sapien, sagittis et magna quis</p>
 							</a> <a href="#" class="list-group-item">
 								<div class="list-group-status status-away"></div> <img
-								src="assets/images/users/user3.jpg" class="pull-left"
+								src="/assets/images/users/user3.jpg" class="pull-left"
 								alt="Nadia Ali" /> <span class="contacts-title">Nadia Ali</span>
 								<p>Mauris vel eros ut nunc rhoncus cursus sed</p>
 							</a> <a href="#" class="list-group-item">
 								<div class="list-group-status status-offline"></div> <img
-								src="assets/images/users/user6.jpg" class="pull-left"
+								src="/assets/images/users/user6.jpg" class="pull-left"
 								alt="Darth Vader" /> <span class="contacts-title">Darth
 									Vader</span>
 								<p>I want my money back!</p>

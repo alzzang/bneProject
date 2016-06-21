@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
+			
 	@Autowired BCryptPasswordEncoder passwordEncoder;
 	
 	
@@ -30,7 +30,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/login", method = { RequestMethod.GET })
 	public String login() {
-		/*return "redirect:/main";*/
+	
 		return "redirect:/user/goLoginForm";
 	}
 	
@@ -41,7 +41,14 @@ public class UserController {
 		
 		return "redirect:/main";
 	}
-
+	
+	
+	@RequestMapping(value = "/changeProfile", method = { RequestMethod.GET})
+	public String chagePassword(HttpServletRequest req) {
+				
+		return "password";
+	}
+	
 	@RequestMapping(value="/authcheck", method={ RequestMethod.POST })
 	public String authcheck(@RequestParam ("id") String id,@RequestParam ("password") String password, HttpServletRequest req ){
 		
@@ -50,7 +57,8 @@ public class UserController {
 		String encodedPassword = passwordEncoder.encode(password);
 		System.out.println(id);
 		System.out.println(encodedPassword);
-		
+	
+		 
 		return "redirect:/main";
 	}
 	

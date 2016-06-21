@@ -17,15 +17,15 @@
 			</a>
 				<div class="profile">
 					<div class="profile-image">
-						<img src="assets/images/users/user7.jpg" alt="John Doe">
+						<img src="/assets/images/users/user7.jpg" alt="John Doe">
 					</div>
 					<div class="profile-data">
 						<div class="profile-data-name">Jin Woo</div>
 						<div class="profile-data-title">Web Developer/Designer</div>
 					</div>
 					<div class="profile-controls">
-						<a href="pages-profile.html" class="profile-control-left"><span
-							class="fa fa-info"></span></a> <a href="pages-messages.html"
+						<a href="/user/changeProfile" class="profile-control-left"><span
+							class="fa fa-gear"></span></a> <a href="pages-messages.html"
 							class="profile-control-right"><span class="fa fa-envelope"></span></a>
 					</div>
 				</div></li>
