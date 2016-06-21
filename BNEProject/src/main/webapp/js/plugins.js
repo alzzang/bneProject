@@ -558,55 +558,6 @@ $(function() {
 
                     }
                 });
-                
-                var calendarWeek = $('#calendarWeek').fullCalendar({
-                    header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'agendaWeek'
-                    },
-                    editable: true,
-                    eventSources: {url: "assets/ajax_fullcalendar.php"},
-                    droppable: true,
-                    selectable: true,
-                    selectHelper: true,
-                    select: function(start, end, allDay) {
-                        var title = prompt('Event Title:');
-                        if (title) {
-                        	calendarWeek.fullCalendar('renderEvent',
-                            {
-                                title: title,
-                                start: start,
-                                end: end,
-                                allDay: allDay
-                            },
-                            true
-                            );
-                        }
-                        calendarWeek.fullCalendar('unselect');
-                    },
-                    drop: function(date, allDay) {
-
-                        var originalEventObject = $(this).data('eventObject');
-
-                        var copiedEventObject = $.extend({}, originalEventObject);
-
-                        copiedEventObject.start = date;
-                        copiedEventObject.allDay = allDay;
-
-                        $('#calendarWeek').fullCalendar('renderEvent', copiedEventObject, true);
-
-
-                        if ($('#drop-remove').is(':checked')) {
-                            $(this).remove();
-                        }
-
-                    }
-                });
-                
-                
-                
-                
                 $("#new-event").on("click",function(){
                     var et = $("#new-event-text").val();
                     if(et != ''){
