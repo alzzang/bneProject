@@ -13,8 +13,7 @@
 <!-- END META SECTION -->
 
 <!-- CSS INCLUDE -->
-<link rel="stylesheet" type="text/css" id="theme"
-	href="../css/theme-default.css" />
+<link rel="stylesheet" type="text/css" id="theme"	href="/css/theme-default.css" />
 <!-- EOF CSS INCLUDE -->
 </head>
 <body>
@@ -25,7 +24,7 @@
 		<div class="page-sidebar">
 			<!-- START X-NAVIGATION -->
 			<ul class="x-navigation">
-				<li class="xn-logo"><a href="index.html">Joli Admin</a> <a
+				<li class="xn-logo"><a href="index.html"> Admin</a> <a
 					href="#" class="x-navigation-control"></a></li>
 				<li class="xn-profile"><a href="#" class="profile-mini"> <img
 						src="assets/images/users/avatar.jpg" alt="John Doe" />
@@ -39,8 +38,8 @@
 							<div class="profile-data-title">Web Developer/Designer</div>
 						</div>
 						<div class="profile-controls">
-							<a href="pages-profile.html" class="profile-control-left"><span
-								class="fa fa-info"></span></a> <a href="pages-messages.html"
+							<a href="#" class="profile-control-left"><span
+								class="fa fa-info"></span></a> <a href="#"
 								class="profile-control-right"><span class="fa fa-envelope"></span></a>
 						</div>
 					</div></li>
