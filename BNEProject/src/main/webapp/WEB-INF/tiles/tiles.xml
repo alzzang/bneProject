@@ -16,6 +16,13 @@
 	</definition>
 	
 	
+	<definition name="login" template="/WEB-INF/views/pages-login.jsp"/>
+		
+	<definition name="password" template="/WEB-INF/views/password.jsp"/>
+		
+	
+	
+	
 
 
 <!-- 	<definition name="main" extends="bodybase">
