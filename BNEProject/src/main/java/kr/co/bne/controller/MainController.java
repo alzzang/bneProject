@@ -10,4 +10,8 @@ public class MainController {
 		System.out.println("hello");
 		return "main";
 	}
+
+
+	
+	
 }
