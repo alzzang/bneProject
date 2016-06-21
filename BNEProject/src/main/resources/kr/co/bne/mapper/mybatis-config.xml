@@ -20,11 +20,10 @@
 	<!-- <mapper resource="kr/co/ggb/mapper/BoardMapper.xml"/> -->
 
 		<mapper resource="kr/co/bne/mapper/ClientMapper.xml"/>
-		<mapper resource="kr/co/bne/mapper/CounsellingRecordMapperMapper.xml"/>
+		<mapper resource="kr/co/bne/mapper/CounsellingRecordMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/DailyReportMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/DepartmentMapper.xml"/>		
 		<mapper resource="kr/co/bne/mapper/EmployeeMapper.xml"/>
-		<mapper resource="kr/co/bne/mapper/MonthlyGoalMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/SecondaryClientMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/WeeklyPlanMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/WeeklyReportMapper.xml"/>		
