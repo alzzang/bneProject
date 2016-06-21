@@ -17,6 +17,15 @@
 
 	<mappers>
 	<!-- <mapper resource="kr/co/ggb/mapper/BoardMapper.xml"/> -->
-		<mapper resource=""/>
+		<mapper resource="kr/co/bne/mapper/ClientMapper"/>
+		<mapper resource="kr/co/bne/mapper/CounsellingRecordMapperMapper"/>
+		<mapper resource="kr/co/bne/mapper/DailyReportMapper"/>
+		<mapper resource="kr/co/bne/mapper/DepartmentMapper"/>		
+		<mapper resource="kr/co/bne/mapper/EmployeeMapper"/>
+		<mapper resource="kr/co/bne/mapper/MonthlyGoalMapper"/>
+		<mapper resource="kr/co/bne/mapper/SecondaryClientMapper"/>
+		<mapper resource="kr/co/bne/mapper/WeeklyPlanMapper"/>
+		<mapper resource="kr/co/bne/mapper/WeeklyReportMapper"/>		
+
 	</mappers>
 </configuration>
