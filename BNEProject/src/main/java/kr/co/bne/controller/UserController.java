@@ -49,7 +49,7 @@ public class UserController {
 		session.setAttribute("user", id);
 		String encodedPassword = passwordEncoder.encode(password);
 		System.out.println(id);
-		System.out.println(encodedPassword);
+		System.out.println("PW:"+encodedPassword);
 		
 		return "redirect:/main";
 	}
