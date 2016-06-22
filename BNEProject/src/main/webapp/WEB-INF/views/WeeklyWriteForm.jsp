@@ -74,7 +74,7 @@
 			<div class="col-md-12">
 				<div id="alert_holder"></div>
 				<div class="calendar">
-					<div id="calendar" class="fc fc-ltr fc-unthemed">
+					<div id="calendarWeek" class="fc fc-ltr fc-unthemed">
 					</div>
 				</div>
 			</div>

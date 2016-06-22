@@ -18,7 +18,10 @@
 	
 	<definition name="login" template="/WEB-INF/views/pages-login.jsp"/>
 		
-	<definition name="password" template="/WEB-INF/views/password.jsp"/>
+	<definition name="password" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/password.jsp"/>
+	</definition>
+	
 		
 	
 	<definition name="WeeklyWriteForm" extends="tilesbase">

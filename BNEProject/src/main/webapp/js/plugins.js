@@ -558,8 +558,53 @@ $(function() {
 
                     }
                 });
+                $("#new-event").on("click",function(){
+                    var et = $("#new-event-text").val();
+                    if(et != ''){
+                        $("#external-events").prepend('<a class="list-group-item external-event">'+et+'</a>');
+                        prepare_external_list();
+                    }
+                });
                 
-                var calendarWeek = $('#calendarWeek').fullCalendar({
+            }            
+        }
+        
+        return {
+            init: function(){
+                calendar();
+            }
+        }
+    }();
+        var fullCalendarWeek = function(){
+        
+        var calendar = function(){
+            
+            if($("#calendarWeek").length > 0){
+                
+                function prepare_external_list(){
+                    
+                    $('#external-events .external-event').each(function() {
+                            var eventObject = {title: $.trim($(this).text())};
+
+                            $(this).data('eventObject', eventObject);
+                            $(this).draggable({
+                                    zIndex: 999,
+                                    revert: true,
+                                    revertDuration: 0
+                            });
+                    });                    
+                    
+                }
+                
+                
+                var date = new Date();
+                var d = date.getDate();
+                var m = date.getMonth();
+                var y = date.getFullYear();
+
+                prepare_external_list();
+
+                var calendar = $('#calendarWeek').fullCalendar({
                     header: {
                         left: 'prev,next today',
                         center: 'title',
@@ -573,7 +618,7 @@ $(function() {
                     select: function(start, end, allDay) {
                         var title = prompt('Event Title:');
                         if (title) {
-                        	calendarWeek.fullCalendar('renderEvent',
+                            calendar.fullCalendar('renderEvent',
                             {
                                 title: title,
                                 start: start,
@@ -583,7 +628,7 @@ $(function() {
                             true
                             );
                         }
-                        calendarWeek.fullCalendar('unselect');
+                        calendar.fullCalendar('unselect');
                     },
                     drop: function(date, allDay) {
 
@@ -604,9 +649,6 @@ $(function() {
                     }
                 });
                 
-                
-                
-                
                 $("#new-event").on("click",function(){
                     var et = $("#new-event-text").val();
                     if(et != ''){
@@ -624,13 +666,12 @@ $(function() {
             }
         }
     }();
-    
     formElements.init();
     uiElements.init();
     templatePlugins.init();    
     
     fullCalendar.init();
-    
+    fullCalendarWeek.init();
     /* My Custom Progressbar */
     $.mpb = function(action,options){
 
