@@ -24,7 +24,7 @@
 				<div class="login-title">
 					<strong>Welcome</strong>, Please login
 				</div>
-				<form action="/user/authcheck" class="form-horizontal" method="post">
+				<form action="/user/validCheck" class="form-horizontal" method="post">
 					<div class="form-group">
 						<div class="col-md-12">
 							<input type="text" class="form-control" placeholder="Username"
