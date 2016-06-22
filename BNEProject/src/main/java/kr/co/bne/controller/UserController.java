@@ -67,9 +67,7 @@ public class UserController {
 				return "redirect:/main";
 			}
 			return "redirect:/user/login";
-		}
-
-		else {
+		}else{
 			if (employeeDTO != null) {
 				
 				userService.modifyPassword(id, req.getParameter("newpassword"));
@@ -77,7 +75,6 @@ public class UserController {
 			}
 			return "redirect:/user/changeProfile";
 		}
-
 	}
 
 }
