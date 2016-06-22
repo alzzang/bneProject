@@ -138,6 +138,8 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<script type="text/javascript" src="/js/plugins/moment.min.js"></script>
 	<script type="text/javascript"
 		src="/js/plugins/daterangepicker/daterangepicker.js"></script>
+		<script type="text/javascript" src="/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+	
 	<!-- END THIS PAGE PLUGINS-->
 
 	<!-- START TEMPLATE -->
@@ -145,7 +147,6 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 	<script type="text/javascript" src="/js/plugins.js"></script>
 	<script type="text/javascript" src="/js/actions.js"></script>
-	<script type="text/javascript" src="/js/user.js"></script>
 
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->

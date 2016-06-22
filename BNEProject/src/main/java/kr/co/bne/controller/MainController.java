@@ -10,8 +10,8 @@ public class MainController {
 		
 		return "main";
 	}
-
-
-	
-	
+	@RequestMapping("/WeeklyWrite")
+	public String WeeklyWriteForm(){
+		return "WeeklyWriteForm";
+	}
 }
