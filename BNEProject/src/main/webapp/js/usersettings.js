@@ -1,14 +1,8 @@
 $(function(){
-	
-	alert('k');
-	$("#hello").on("click",function(){
-		alert('jquery 적용');
-	})
-
-	
-	
 	  // JavaScript form validation
 
+	 alert('usersettings.js');
+	
     var checkPassword = function(str)
     {
       var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
@@ -17,9 +11,10 @@ $(function(){
 
     var checkForm = function(e)
     {
+    	 alert('incheckForm');
       if(this.password.value == "") {
         alert("Error: Username cannot be blank!");
-        this.password.focus();
+        this.password.focus(); 
         e.preventDefault(); // equivalent to return false
         return;
       }
@@ -43,14 +38,27 @@ $(function(){
         e.preventDefault();
         return;
       }
+      
       alert("Both username and password are VALID!");
+ /*     var formObj =document.getElementById("myPasswordForm");
+      formObj.attr("action", "/user/validCheck");
+ */     
+     
+      
+      
+      //  /user/validCheck
+      /* 무한 스크롤 전 ajax 테스트 실행 */
+//		$(".btn-default").on("click", function() {
+//			formObj.attr("action", "/user/validCheck");
+//			formObj.attr("method", "post");
+//		});
+      
     };
+
 
     var myForm = document.getElementById("myPasswordForm");
     myForm.addEventListener("submit", checkForm, true);
 
-    
-    
     
     
     // HTML5 form validation
