@@ -5,7 +5,10 @@
 <mapper namespace="kr.co.bne.mapper.Employee">
 
 	<select id="selectEmployee" parameterType="String" resultType="Employee">
-	<![CDATA[select * from employee where employee_id=#{value}]]>
+	
+	<![CDATA[select e.*, d.department_name from employee e, department d where d.department_id = e.department_id and e.employee_id=#{value}]]>
+	
+	<!-- <![CDATA[select * from employee where employee_id=#{value}]]> -->
 	</select>
 
 	<update id="updatePassword" parameterType="HashMap">

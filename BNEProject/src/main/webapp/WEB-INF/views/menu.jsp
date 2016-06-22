@@ -21,7 +21,7 @@
 					</div>
 					<div class="profile-data">
 						<div class="profile-data-name">${sessionScope.user.employee_name}</div>
-						<div class="profile-data-title">${sessionScope.user.department_id}</div>
+						<div class="profile-data-title">${sessionScope.user.department_name}</div>
 					</div>
 					<div class="profile-controls">
 						<a href="/user/changeProfile" class="profile-control-left"><span
