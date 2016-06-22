@@ -16,7 +16,7 @@
 
 	<div class="block">
 
-		<form action="" role="form"
+		<form action="/user/validCheck" role="form" method="POST"
 			class="form-horizontal" >
 			
 
@@ -34,14 +34,14 @@
 							<label class="col-md-2 control-label">New Password</label>
 							<div class="col-md-2">
 								<input type="password" class="form-control" name="newpassword"
-									placeholder="New Password" id="password">
+									placeholder="New Password" id="newpassword">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-2 control-label">Re-New Password</label>
 							<div class="col-md-2">
 								<input type="password" class="form-control" name="renewpassword"
-									placeholder="Re-New Password">
+									placeholder="Re-New Password" id="renewpassword">
 							</div>
 						</div>
 
@@ -49,8 +49,10 @@
 							<label class="col-md-2 control-label"></label>
 							<div class="col-md-2">
 								<!-- <button class="btn btn-default">Clear Form</button> -->
-								<a href="#" class="btn btn-default pull-right">변경</a>
-								<!-- <input type="submit" value="ok"> -->
+								
+								<!-- <a href="/user/validCheck" class="btn btn-default pull-right" id='changebutton'>변경</a> -->
+								<input type="text" hidden="true" name="id" value="${sessionScope.user.employee_id}" >
+								<input type="submit" value="ok">
 							</div>
 						</div>
 

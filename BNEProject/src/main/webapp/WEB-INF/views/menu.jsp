@@ -10,7 +10,7 @@
 		style="position: relative; top: 0; left: 0;" dir="ltr">
 		<!-- START X-NAVIGATION -->
 		<ul class="x-navigation">
-			<li class="xn-logo"><a href="index.html">Joli Admin</a> <a
+			<li class="xn-logo"><a href="/main">Joli Admin</a> <a
 				href="#" class="x-navigation-control"></a></li>
 			<li class="xn-profile active"><a href="#" class="profile-mini">
 					<img src="assets/images/users/avatar.jpg" alt="John Doe">
