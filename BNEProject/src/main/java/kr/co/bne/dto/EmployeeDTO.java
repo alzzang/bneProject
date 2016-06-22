@@ -4,6 +4,7 @@ public class EmployeeDTO {
 	private String employee_id;
 	private String employee_name;
 	private String password;
+	
 	private int department_id;
 	
 	public String getEmployee_id() {

@@ -23,7 +23,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public EmployeeDTO selectEmployee(String id) {
 		// TODO Auto-generated method stub
-		System.out.println("44");
+		
 		return sqlSession.selectOne("kr.co.bne.mapper.Employee.selectEmployee", id);
 	}
 
