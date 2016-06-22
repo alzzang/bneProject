@@ -608,7 +608,7 @@ $(function() {
                     header: {
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'agendaWeek'
+                        right: 'month,agendaWeek,agendaDay'
                     },
                     editable: true,
                     eventSources: {url: "assets/ajax_fullcalendar.php"},
