@@ -77,7 +77,7 @@
                             <div class="panel-body mail">
                                 
                                 <div class="mail-item mail-read mail-info">                                    
-                                    <div class="mail-star">
+                                    <div class="mail-star starred">
                                         <span class="fa fa-star-o"></span>
                                     </div>
                                     <div class="mail-user">Dmitry Ivaniuk</div>                                    

@@ -141,7 +141,7 @@ $(document).ready(function(){
     /* END CONTENT FRAME */
     
     /* MAILBOX */
-    $(".mail .mail-star").on("click",function(){
+    $(".mail").on("click",function(){
         $(this).toggleClass("starred");
     });
     
