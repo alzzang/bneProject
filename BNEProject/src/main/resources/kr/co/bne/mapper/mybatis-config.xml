@@ -17,6 +17,6 @@
 
 	<mappers>
 	<!-- <mapper resource="kr/co/ggb/mapper/BoardMapper.xml"/> -->
-		<mapper resource=""/>
+<!-- 		<mapper resource=""/> -->
 	</mappers>
 </configuration>
