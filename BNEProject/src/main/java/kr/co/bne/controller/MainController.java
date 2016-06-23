@@ -8,8 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 	@RequestMapping(value= "/main")
 	public String goMain() {
-		return "dailyReportMain";
+		if(true){
+			return "dailyReportMain";
+		}
+		else{
+			return "main";
+		}
 	}
+
 	
 	@RequestMapping("/write")
 	public String goWriteform() {
@@ -21,4 +27,5 @@ public class MainController {
 		return "dailyReportDetail";
 	}
 	
+
 }
