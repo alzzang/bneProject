@@ -13,11 +13,11 @@
 			<li class="xn-logo"><a href="index.html">Joli Admin</a> <a
 				href="#" class="x-navigation-control"></a></li>
 			<li class="xn-profile active"><a href="#" class="profile-mini">
-					<img src="assets/images/users/avatar.jpg" alt="John Doe">
+					<img src="/assets/images/users/avatar.jpg" alt="John Doe">
 			</a>
 				<div class="profile">
 					<div class="profile-image">
-						<img src="assets/images/users/user7.jpg" alt="John Doe">
+						<img src="/assets/images/users/user7.jpg" alt="John Doe">
 					</div>
 					<div class="profile-data">
 						<div class="profile-data-name">Jin Woo</div>
@@ -36,9 +36,16 @@
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">주간 계획</span></a>
 			</li>
-			<li class=""><a href="index.html"><span
-					class="fa fa-desktop"></span> <span class="xn-text">일일 업무 보고</span></a>
-			</li>
+			<li class="xn-openable"><a href="#"><span
+					class="fa fa-file-text-o"></span> <span class="xn-text">일일 업무 보고</span></a>
+				<ul>
+					<li><a href="layout-boxed.html">메인</a></li>		
+					
+					<!-- 사원 목록 -->			
+					<li><a href="layout-nav-toggled.html">이동우</a><div class="informer informer-danger">4</div></li>
+					<li><a href="layout-nav-top.html">이태우</a><div class="informer informer-danger">4</div></li>
+					<!--  -->				
+				</ul></li>
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">프로필</span></a>
 			</li>
