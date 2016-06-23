@@ -22,4 +22,9 @@ public class MainController {
 		return "dailyReportDetail";
 	}
 	
+	@RequestMapping("/WeeklyWrite")
+	public String WeeklyWriteForm(){
+		return "WeeklyWriteForm";
+	}
+	
 }
