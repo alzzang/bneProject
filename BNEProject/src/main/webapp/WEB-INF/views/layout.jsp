@@ -50,10 +50,10 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 <body>
 	
-	<c:if test="${sessionScope.user == null}">
+<%-- 	<c:if test="${sessionScope.user == null}">
 		<jsp:forward page="/user/login" />
 	</c:if>
-	${sessionScope.user}
+	${sessionScope.user} --%>
 
 	<div class="page-container">
 
@@ -139,7 +139,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<script type="text/javascript"
 		src="/js/plugins/daterangepicker/daterangepicker.js"></script>
 		<script type="text/javascript" src="/js/plugins/fullcalendar/fullcalendar.min.js"></script>
-	
+	<script type="text/javascript" src="/js/plugins/dropzone/dropzone.min.js"></script>
 	<!-- END THIS PAGE PLUGINS-->
 
 	<!-- START TEMPLATE -->

@@ -1,7 +1,24 @@
 $(function(){
-	  // JavaScript form validation
 
-	 alert('usersettings.js');
+
+	Dropzone.options.myDropzone={
+		autoProcessQueue:false,
+		
+		init:function(){
+			var submitButton = document.querySelector("#submitButton");
+			var myDropzone = this;
+			
+			submitButton.addEventListener("click",function(){
+				myDropzone.processQueue();
+			});
+		}
+	
+	};
+	
+	
+	
+	
+	//JavaScript form validation
 	
     var checkPassword = function(str)
     {
@@ -11,7 +28,7 @@ $(function(){
 
     var checkForm = function(e)
     {
-    	 alert('incheckForm');
+    
       if(this.password.value == "") {
         alert("Error: Username cannot be blank!");
         this.password.focus(); 
@@ -40,18 +57,7 @@ $(function(){
       }
       
       alert("Both username and password are VALID!");
- /*     var formObj =document.getElementById("myPasswordForm");
-      formObj.attr("action", "/user/validCheck");
- */     
-     
-      
-      
-      //  /user/validCheck
-      /* 무한 스크롤 전 ajax 테스트 실행 */
-//		$(".btn-default").on("click", function() {
-//			formObj.attr("action", "/user/validCheck");
-//			formObj.attr("method", "post");
-//		});
+
       
     };
 
