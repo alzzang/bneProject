@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.bne.common.DailyReportListElement;
+import kr.co.bne.common.DailyReportTeamListElement;
 
 
 @Repository("dailyReportDAO")
@@ -39,6 +40,23 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		int pageNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getPagingNum_All", params);
 		
 		return pageNum;
+	}
+	
+	
+	
+	@Override
+	public List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException {
+		List<DailyReportTeamListElement> teamList = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMemberList", user_id);
+	
+		return teamList;
+	}
+	
+	
+	@Override
+	public int getTotalUnapprovalNum(String user_id) throws RuntimeException {
+		int TotalUnapprovalNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getTotalUnapprovalNum", user_id);
+		
+		return TotalUnapprovalNum;
 	}
 
 }

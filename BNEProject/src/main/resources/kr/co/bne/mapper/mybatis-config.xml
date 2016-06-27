@@ -15,6 +15,7 @@
 		<typeAlias alias="WeeklyReport" type="kr.co.bne.dto.WeeklyReportDTO"/>
 		
 		<typeAlias alias="DailyReportListElement" type="kr.co.bne.common.DailyReportListElement"/>
+		<typeAlias alias="DailyReportTeamListElement" type="kr.co.bne.common.DailyReportTeamListElement"/>
 	</typeAliases>
 
 	<mappers>

@@ -17,6 +17,15 @@
 
 
 
+<resultMap type="DailyReportTeamListElement" id="DailyReportTeamListElement">
+	<result column="employee_id" property="employee_id"/>
+	<result column="employee_name" property="employee_name"/>
+	<result column="department_id" property="department_id"/>
+	<result column="unApproval" property="unApproval"/>
+</resultMap>
+
+
+
 <!-- 전체 리스트 페이징(팀장 뷰에서 쓰일 것) -->
 <select id="selectDailyReportList_All" parameterType="hashmap" resultMap="DailyReportListElement"> 
 
@@ -59,6 +68,29 @@
 	      	</choose>
 	 		
 	 		) 
+</select>
+
+
+
+
+
+<select id="selectTeamMemberList" parameterType="String" resultMap="DailyReportTeamListElement"> 
+	select a.employee_id, b.employee_name, b.department_id, a.unApproval
+	from (select employee_id, count(*) unApproval from DAILY_REPORT
+	      where department_id = (select department_id from department where manager_id = #{value})
+	            and approval_flag = 0
+	      group by employee_id) a, employee b
+	where a.employee_id = b.employee_id
+</select>
+
+
+
+
+
+<select id="getTotalUnapprovalNum" parameterType="String" resultType="int">
+	select count(*) from DAILY_REPORT
+  	where department_id = (select department_id from department where manager_id = #{value}) 
+    	    and APPROVAL_FLAG = 0;
 </select>
 
 
@@ -144,14 +176,7 @@
 
 
 
-<select id="selectTeamMemberList" parameterType="" resultMap=""> 
-	select a.employee_id, b.employee_name, b.department_id, a.unApproval
-	from (select employee_id, count(*) unApproval from DAILY_REPORT
-	      where department_id = (select department_id from department where manager_id = #{user_id})
-	            and approval_flag = 0
-	      group by employee_id) a, employee b
-	where a.employee_id = b.employee_id
-</select> -->
+ -->
 
 
 
