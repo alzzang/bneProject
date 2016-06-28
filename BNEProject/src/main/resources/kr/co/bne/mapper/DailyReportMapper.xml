@@ -13,6 +13,7 @@
 	<result column="title" property="title"/>
 	<result column="reg_date" property="reg_date"/>
 	<result column="approval_flag" property="approval_flag"/>
+	<result column="idx" property="idx"/>
 </resultMap>
 
 
@@ -29,8 +30,8 @@
 <!-- 전체 리스트 페이징(팀장 뷰에서 쓰일 것) -->
 <select id="selectDailyReportList_All" parameterType="hashmap" resultMap="DailyReportListElement"> 
 
-	select employee_id, employee_name, title, reg_date, approval_flag
-	from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.employee_id, e.employee_name, d.title, reg_date, approval_flag
+	select idx, employee_id, employee_name, title, reg_date, approval_flag
+	from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
 	      from daily_report d , employee e
 	      where d.employee_id = e.employee_id
 	      		<choose>
@@ -43,7 +44,7 @@
 	      		</choose>
 	      		   
 	      		) a  		
-	where idx between #{pageIdx} and #{pageIdx} * 15
+	where idx between (#{startIdx} - 1) * (#{perContentNum} + 1) and #{startIdx} + #{perContentNum} - 1
 	order by idx asc 
 
 </select>
@@ -54,7 +55,7 @@
 
 <select id="getPagingNum_All" parameterType="hashmap" resultType="int"> 
 	
-	select ceil(count(*)/15) cnt from
+	select ceil(count(*)/#{perContentNum}) cnt from
 	(select *
 	 from daily_report d , employee e
 	 where d.employee_id = e.employee_id	 		
@@ -74,23 +75,24 @@
 
 
 
-<select id="selectTeamMemberList" parameterType="String" resultMap="DailyReportTeamListElement"> 
-	select a.employee_id, b.employee_name, b.department_id, a.unApproval
+<select id="selectTeamMemberList" parameterType="java.lang.String" resultMap="DailyReportTeamListElement"> 
+	select b.employee_id, b.employee_name, b.department_id, nvl(a.unApproval, 0) unApproval
 	from (select employee_id, count(*) unApproval from DAILY_REPORT
 	      where department_id = (select department_id from department where manager_id = #{value})
 	            and approval_flag = 0
 	      group by employee_id) a, employee b
-	where a.employee_id = b.employee_id
+	where a.employee_id(+) = b.employee_id
+  order by b.employee_name asc
 </select>
 
 
 
 
 
-<select id="getTotalUnapprovalNum" parameterType="String" resultType="int">
+<select id="getTotalUnapprovalNum" parameterType="java.lang.String" resultType="int">
 	select count(*) from DAILY_REPORT
   	where department_id = (select department_id from department where manager_id = #{value}) 
-    	    and APPROVAL_FLAG = 0;
+    	    and APPROVAL_FLAG = 0
 </select>
 
 

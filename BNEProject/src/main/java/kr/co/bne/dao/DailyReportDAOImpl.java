@@ -19,11 +19,12 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	
 	
 	@Override
-	public List<DailyReportListElement> selectDailyReportList_All(int department_id, int pageIdx, String employee_id) throws RuntimeException {
+	public List<DailyReportListElement> selectDailyReportList_All(int department_id, int startIdx, int perContentNum, String employee_id) throws RuntimeException {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("department_id", department_id);
 		params.put("employee_id", employee_id);
-		params.put("pageIdx", pageIdx);
+		params.put("startIdx", startIdx);
+		params.put("perContentNum", perContentNum);
 		
 		List<DailyReportListElement> list = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyReportList_All", params);
 		
@@ -33,10 +34,11 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	
 	
 	@Override
-	public int getPagingNum_All(int department_id, String employee_id) throws RuntimeException {
+	public int getPagingNum_All(int department_id, String employee_id, int perContentNum) throws RuntimeException {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("department_id", department_id);
-		params.put("employee_id", employee_id);		
+		params.put("employee_id", employee_id);
+		params.put("perContentNum", perContentNum);
 		int pageNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getPagingNum_All", params);
 		
 		return pageNum;
