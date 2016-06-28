@@ -26,11 +26,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		return sqlSession.selectOne("kr.co.bne.mapper.Employee.selectEmployee", id);
 	}
-
 	@Override
 	public void updatePassword(HashMap<String, String> info) {
 		// TODO Auto-generated method stub
 		sqlSession.update("kr.co.bne.mapper.Employee.updatePassword",info);
+	}
+	@Override
+	public void updateFile(HashMap<String, String> info) {
+		// TODO Auto-generated method stub
+		sqlSession.update("kr.co.bne.mapper.Employee.updateFile",info);
 	}
 
 }

@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 	@RequestMapping("/main")
 	public String goMain() {
-		
 		return "main";
 	}
+	
 	@RequestMapping("/WeeklyWrite")
 	public String WeeklyWriteForm(){
 		return "WeeklyWriteForm";

@@ -21,8 +21,7 @@ public class UserServiceImple implements UserService {
 	@Override
 	public EmployeeDTO validCheck(String id, String rawPassword) {
 		EmployeeDTO employeeDTO = employeeDAOImple.selectEmployee(id);
-		System.out.println(rawPassword);
-		System.out.println(employeeDTO.getPassword());
+			
 		if (employeeDTO != null) {
 			if (passwordEncoder.matches(rawPassword, employeeDTO.getPassword())) {
 				return employeeDTO;
@@ -38,6 +37,16 @@ public class UserServiceImple implements UserService {
 		info.put("id", id);
 		info.put("password", passwordEncoder.encode(rawPassword));
 		employeeDAOImple.updatePassword(info);
+	}
+
+	@Override
+	public void modifyFilePosition(String id, String filePosition) {
+		// TODO Auto-generated method stub
+		HashMap<String, String> info = new HashMap<String, String>();
+		info.put("id", id);
+		info.put("filePosition", filePosition);
+		employeeDAOImple.updateFile(info);
+		
 	}
 
 }

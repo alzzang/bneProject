@@ -50,11 +50,11 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 <body>
 	
-<%-- 	<c:if test="${sessionScope.user == null}">
+	<c:if test="${sessionScope.user == null}">
 		<jsp:forward page="/user/login" />
 	</c:if>
-	${sessionScope.user} --%>
-
+	
+	
 	<div class="page-container">
 
 		<div
@@ -65,7 +65,6 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 		<div class="page-content">
 			<tiles:insertAttribute name="header" />
-
 			<tiles:insertAttribute name="body" />
 		</div>
 
