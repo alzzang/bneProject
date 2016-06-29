@@ -578,7 +578,7 @@ $(function() {
         var fullCalendarWeek = function(){
         
         var calendar = function(){
-            
+        	
             if($("#calendarWeek").length > 0){
                 
                 function prepare_external_list(){
@@ -596,11 +596,12 @@ $(function() {
                     
                 }
                 
-                
+             
                 var date = new Date();
                 var d = date.getDate();
                 var m = date.getMonth();
                 var y = date.getFullYear();
+                var idx = 0;
 
                 prepare_external_list();
 
@@ -631,7 +632,7 @@ $(function() {
                         calendar.fullCalendar('unselect');
                     },
                     drop: function(date, allDay) {
-
+                 
                         var originalEventObject = $(this).data('eventObject');
 
                         var copiedEventObject = $.extend({}, originalEventObject);
@@ -646,7 +647,21 @@ $(function() {
                             $(this).remove();
                         }
 
-                    }
+                    },
+                    eventDragStop: function(event, jsEvent, ui, view) { 
+/*                    	alert(event.title());*/
+                        //console.log(event.id);
+/*                    	var v = event.allDay;
+                    	alert(v);*/
+                    	 /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
+                         if (isElemOverDiv($('div#test1>a'), $('div.content-frame-left'))) {
+                             calendar.fullCalendar('removeEvents', event.id);
+                         }
+                        
+                         $('div#test1>a').remove();
+                     }
+                    
+
                 });
                 
                 $("#new-event").on("click",function(){
@@ -660,8 +675,23 @@ $(function() {
             }            
         }
         
+        var isElemOverDiv = function(draggedItem, dropArea) {
+            var draggedItem1 = $(draggedItem);
+            
+            if($('div#test1>a').length){
+                var left = draggedItem1.position().left;
+                var top = draggedItem1.position().top;
+
+                if(left<0 || top<20 || top>390){
+                	return true;
+                }            
+            }
+            return false;
+        }
+        
         return {
             init: function(){
+            	 $('#calendarWeek').children('.fc-view-container').children().append('<div id="calendarTrash" style="float: right; padding-top: 5px; padding-right: 5px; padding-left: 5px;"><span class="ui-icon ui-icon-trash"></span></div>');
                 calendar();
             }
         }
@@ -730,3 +760,6 @@ Object.size = function(obj) {
     }
     return size;
 };
+
+
+
