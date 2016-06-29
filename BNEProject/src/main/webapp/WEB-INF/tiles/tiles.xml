@@ -12,7 +12,7 @@
 	</definition>
 
 	<definition name="main" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/body.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/counsellingForm.jsp" />
 	</definition>
 
 	<definition name="password" extends="tilesbase">

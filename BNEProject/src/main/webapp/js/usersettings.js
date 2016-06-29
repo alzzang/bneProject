@@ -1,33 +1,34 @@
 $(function() {
+	
+	$("#mysummernote").destroy();
+	$('#mysummernote').prop('disabled', true);
+    $('#mysummernote').summernote({
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+        styleWithSpan: false,
+        toolbar: [
+        ]                         
+    });
 
+	
 	Dropzone.options.myDropzone = {
 		url : "/user/upload",
 		autoDiscover : false,
 		autoProcessQueue : false,
-
 		init : function() {
 			var submitButton = document.querySelector("#submitButton");
 			var myDropzone = this;
-
 			submitButton.addEventListener("click", function() {
 				myDropzone.processQueue();
 			});
 			this.on('success', function() {
 				location.reload();
 			});
-			
 		}
-
 	};
-
-	/*
-	 * $('#submitButton').on("click",function(event){ event.preventDefault();
-	 * var files = event.originalEvent.dataTransfer.files; var file=files[0];
-	 * alert(file); });
-	 */
-
-	
-	 var checkPassword = function(str)
+		
+	var checkPassword = function(str)
 	    {
 	      var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 	      return re.test(str);
@@ -64,7 +65,8 @@ $(function() {
 	      }};
 	
 	
-	   var myForm = document.getElementById("myPasswordForm");
+	 
+	    var myForm = document.getElementById("myPasswordForm");
 	    myForm.addEventListener("submit", checkForm, true);
 
 	    // HTML5 form validation

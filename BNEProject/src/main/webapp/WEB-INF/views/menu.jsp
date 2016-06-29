@@ -221,7 +221,8 @@
 							value="${sessionScope.user.employee_id}">
 
 					</form>
-					<input type="button" value="저장" id="submitButton">
+					<button class="btn btn-default">Clear Form</button>
+					<input class="btn btn-primary pull-right" type="button" value="저장" id="submitButton">
 				</div>
 			</div>
 			<div class="modal-footer">
