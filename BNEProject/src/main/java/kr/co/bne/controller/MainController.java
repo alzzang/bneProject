@@ -25,7 +25,6 @@ public class MainController {
 	@RequestMapping(value="/smarteditor")
 	public String getSmartEditor(HttpServletResponse res,HttpServletRequest req) throws ServletException, IOException
 	{
-		System.out.println("aaaa");
 		return "edit";
 	}
 

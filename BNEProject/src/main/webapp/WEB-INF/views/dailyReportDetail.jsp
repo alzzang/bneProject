@@ -191,7 +191,7 @@ $( "#drivingDistance" ).attr( "value", result ); */
 						</div>
 						
 						<br><br>
-						<%if(true) { %> <!-- 팀원일 때 -->
+						<%if(false) { %> <!-- 팀원일 때 -->
 						<div class="timeline-body comments">
                                             <div class="comment-item">
                                                 <img src="/assets/images/users/user4.jpg">
@@ -202,7 +202,7 @@ $( "#drivingDistance" ).attr( "value", result ); */
                                                 <small class="text-muted">10h ago</small>
                                             </div>                                            
                                         </div>
-						<%}else { %> <!-- 팀장일 때 -->
+						<%}else if(true) { %> <!-- 팀장일 때 -->
 						<div class="form-group push-up-20">
 							<div class="col-md-12">
 								<div class="input-group">

@@ -196,9 +196,8 @@
 									</div>
 								</div>
 							</div>
-
-							<jsp:include page="SmartEditor2.jsp"></jsp:include>
-
+	
+							<jsp:include page="../../SmartEditor2.jsp"></jsp:include>
 							<div class="panel-footer">
 								<button class="btn btn-primary pull-right"
 									id="dailyReportSubmit" onclick="submitContents()">Submit</button>
