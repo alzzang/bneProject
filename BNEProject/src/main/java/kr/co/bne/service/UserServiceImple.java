@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import kr.co.bne.dao.EmployeeDAOImpl;
 import kr.co.bne.dto.EmployeeDTO;
@@ -19,10 +20,13 @@ public class UserServiceImple implements UserService {
 
 	@Override
 	public EmployeeDTO validCheck(String id, String rawPassword) {
-
 		EmployeeDTO employeeDTO = employeeDAOImple.selectEmployee(id);
-		if (passwordEncoder.matches(rawPassword, employeeDTO.getPassword())) {
-			return employeeDTO;
+		System.out.println(rawPassword);
+		System.out.println(employeeDTO.getPassword());
+		if (employeeDTO != null) {
+			if (passwordEncoder.matches(rawPassword, employeeDTO.getPassword())) {
+				return employeeDTO;
+			}
 		}
 		return null;
 	}
