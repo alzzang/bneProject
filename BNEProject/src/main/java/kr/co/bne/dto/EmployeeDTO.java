@@ -6,6 +6,7 @@ public class EmployeeDTO {
 	private String password;
 	private String department_name;
 	private String position;
+	private String file_position;
 	private int department_id;
 	public String getEmployee_id() {
 		return employee_id;
@@ -37,12 +38,21 @@ public class EmployeeDTO {
 	public void setPosition(String position) {
 		this.position = position;
 	}
+	public String getFile_position() {
+		return file_position;
+	}
+	public void setFile_position(String file_position) {
+		this.file_position = file_position;
+	}
 	public int getDepartment_id() {
 		return department_id;
 	}
 	public void setDepartment_id(int department_id) {
 		this.department_id = department_id;
 	}
+	
+	
+	
 	
 	
 	

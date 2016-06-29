@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 	@RequestMapping(value= "/main")
 	public String goMain() {
-			return "dailyReport_Writeform";
-		
+			return "main";
 	}
+	
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){
 
@@ -27,5 +27,8 @@ public class MainController {
 	{
 		return "edit";
 	}
-
+	@RequestMapping("/WeeklyWrite")
+	public String WeeklyWriteForm(){
+		return "WeeklyWriteForm";
+	}
 }

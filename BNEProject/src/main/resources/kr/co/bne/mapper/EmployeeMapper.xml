@@ -21,4 +21,11 @@
 	<![CDATA[update employee set password=#{password} where employee_id=#{id}]]>
 	</update>
 
+	<update id="updateFile" parameterType="HashMap">
+	<![CDATA[update employee set file_position=#{filePosition} where employee_id=#{id}]]>
+	</update>
+
+	
+
+
 </mapper>
