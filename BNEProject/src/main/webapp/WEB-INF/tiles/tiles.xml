@@ -19,7 +19,11 @@
 	</definition>
 	
 	<definition name="login" template="/WEB-INF/views/pages-login.jsp"/>
-		
+	
+	<definition name="edit" template="/WEB-INF/views/SmartEditor2Skin.jsp"/>
+	
+	<definition name="inputarea" template="/WEB-INF/views/smart_editor2_inputarea.jsp"/>
+	
 	<definition name="password" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/password.jsp"/>
 	</definition>
@@ -30,8 +34,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/WeeklyWriteForm.jsp"/>
 	</definition>
 
-
-<!-- 	<definition name="main" extends="bodybase">
+	<definition name="aaa" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/SmartEditor2.jsp"/>
+	</definition>
+	<!-- <definition name="main" extends="bodybase">
 		<put-attribute name="nav" value="/WEB-INF/views/nav.jsp"/>
 		<put-attribute name="content" value="/WEB-INF/views/content.jsp"/>
 	</definition> -->

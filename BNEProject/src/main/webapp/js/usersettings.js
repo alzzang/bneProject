@@ -1,8 +1,8 @@
-$(function(){
+//$(function(){
 	  // JavaScript form validation
 
-	 alert('usersettings.js');
-	
+	/* alert('usersettings.js');*/
+	/*
     var checkPassword = function(str)
     {
       var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
@@ -38,8 +38,8 @@ $(function(){
         e.preventDefault();
         return;
       }
-      
-      alert("Both username and password are VALID!");
+      */
+  //    alert("Both username and password are VALID!");
  /*     var formObj =document.getElementById("myPasswordForm");
       formObj.attr("action", "/user/validCheck");
  */     
@@ -53,17 +53,17 @@ $(function(){
 //			formObj.attr("method", "post");
 //		});
       
-    };
+ //   };
 
 
-    var myForm = document.getElementById("myPasswordForm");
+   /* var myForm = document.getElementById("myPasswordForm");
     myForm.addEventListener("submit", checkForm, true);
 
-    
+    */
     
     // HTML5 form validation
 
-    var supports_input_validity = function()
+   /* var supports_input_validity = function()
     {
       var i = document.createElement("input");
       return "setCustomValidity" in i;
@@ -78,9 +78,9 @@ $(function(){
 
       var pwd2Input = document.getElementById("renewpassword");
 
-      // input key handlers
+  */    // input key handlers
 
-      usernameInput.addEventListener("keyup", function() {
+   /*   usernameInput.addEventListener("keyup", function() {
         usernameInput.setCustomValidity(this.validity.patternMismatch ? usernameInput.title : "");
       }, false);
 
@@ -104,4 +104,4 @@ $(function(){
     
     
     
-})
+})*/

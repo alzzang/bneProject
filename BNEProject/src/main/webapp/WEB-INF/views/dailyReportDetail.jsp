@@ -1,6 +1,29 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ <script>
+/* $( window ).load(function innerContent(){
+	var content='${dailyReport.content}';
+	$('#dailyReportContent').prepend(content);
+}); */
+$('#drivingDistance').bind('load', function() {
+	alert('abc');
+	var result=${dailyReport.after_gauge}-${dailyReport.before_gauge};
+	$( "#drivingDistance" ).attr( "value", result );
+  });
+  $('#drivingDistance').trigger('load');
+/* function drivingDistance(){
+	
+	alert(result);
+	return result;
+} */
+/* var result=${dailyReport.after_gauge}-${dailyReport.before_gauge};
+alert(result);
+$( "#drivingDistance" ).attr( "value", result ); */
+</script> 
+
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -75,7 +98,7 @@
 							<div class="input-group">
 								<span class="input-group-addon"><span
 									class="fa fa-pencil"></span></span> <input type="text"
-									class="form-control" readonly="readonly" style="cursor: default;" style="cursor: default;">
+									class="form-control" readonly="readonly" style="cursor: default;" style="cursor: default;" value="${dailyReport.title}">
 							</div>
 						</div>
 
@@ -90,7 +113,7 @@
 							<div class="input-group">
 								<span class="input-group-addon"><span
 									class="fa fa-calendar"></span></span> <input type="text"
-									class="form-control " value="2014-11-01" readonly="readonly" style="cursor: default;" style="cursor: default;">
+									class="form-control " value="${dailyReport.reg_date}" readonly="readonly" style="cursor: default;" style="cursor: default;">
 							</div>
 						</div>
 					</div>
@@ -101,10 +124,10 @@
 							<div class="input-group">
 								<span class="input-group-addon" style="padding-bottom: 10px;"><span
 									class="fa fa-won"></span></span> <input type="text"
-									class="form-control" readonly="readonly" style="cursor: default;" style="cursor: default;"> <span class="progress"> <span
+									class="form-control" readonly="readonly" style="cursor: default;" style="cursor: default;" value="${dailyReport.sales}"> <span class="progress"> <span
 									class="progress-bar progress-bar-danger" role="progressbar"
 									aria-valuenow="150" aria-valuemin="0" aria-valuemax="100"
-									style="width: 80%"> 80% </span>
+									style="width: 0%"> </span>
 								</span>
 
 							</div>
@@ -119,32 +142,32 @@
 						<div class="col-md-2 col-xs-12">
 							<div class="input-group">
 								<span class="input-group-addon">출근 시 계기판</span> <input
-									type="text" class="form-control" readonly="readonly" style="cursor: default;">
+									type="text" class="form-control" readonly="readonly" style="cursor: default;"value="${dailyReport.before_gauge}" >
 							</div>
 						</div>
 
 						<div class="col-md-2 col-xs-12">
 							<div class="input-group">
 								<span class="input-group-addon">퇴근 시 계기판</span> <input
-									type="text" class="form-control" readonly="readonly" style="cursor: default;"> 
+									type="text" class="form-control" readonly="readonly" style="cursor: default;" value="${dailyReport.after_gauge}"> 
 							</div>
 						</div>
 
 						<div class="col-md-2 col-xs-12">
 							<div class="input-group">
 								<span class="input-group-addon">주행 거리</span> <input type="text"
-									class="form-control" readonly="readonly" style="cursor: default;" style="cursor: default;">
+									class="form-control" readonly="readonly" style="cursor: default;" style="cursor: default;" value="${dailyReport.after_gauge - dailyReport.before_gauge}" id="drivingDistance">
 									
 							</div>
 						</div>
 					</div>
-
+				
 					<div class="form-group">
 						<label class="col-md-3 col-xs-12 control-label">상담 일지</label>
 						<div class="col-md-6 col-xs-12">
 							<div class="input-group">
 								<ul class="list-tags">
-                                        <li><a href="#"><span class="fa fa-tag"></span> amet</a></li>
+                                        <li><a href="#" ><span class="fa fa-tag"></span> amet</a></li>
                                         <li><a href="#"><span class="fa fa-tag"></span> rutrum</a></li>
                                         <li><a href="#"><span class="fa fa-tag"></span> nunc</a></li>
                                         <li><a href="#"><span class="fa fa-tag"></span> tempor</a></li>
@@ -157,40 +180,8 @@
 					</div>
 
 					<br> <br> 
-					<div class="col-md-8 col-md-offset-2">
-
-
-						<h3>
-							Re: Product development 
-						</h3>
-						<p>Hello Dmitry,</p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Mauris ligula risus, viverra sit amet purus id, ullamcorper
-							venenatis leo. Ut vitae semper neque. Nunc vel lacus vel erat
-							sodales ultricies sed sed massa. Duis non elementum velit. Nunc
-							quis molestie dui. Nullam ullamcorper lectus in mattis volutpat.
-							Nunc egestas felis sit amet ultrices euismod. Donec lacinia neque
-							vel quam pharetra, non dignissim arcu semper. Donec ultricies,
-							neque ut vehicula ultrices, ligula velit sodales purus, eget
-							eleifend libero risus sed turpis. Fusce hendrerit vel dui ut
-							pulvinar. Ut sed tristique ante, sed egestas turpis. Lorem ipsum
-							dolor sit amet, consectetur adipiscing elit.</p>
-						<p>Fusce sit amet dui at nunc laoreet facilisis. Proin
-							consequat orci sollicitudin sem cursus, quis vehicula eros
-							ultrices. Cras fermentum justo at nibh tincidunt, consectetur
-							elementum est aliquam.</p>
-						<p>Nam dignissim convallis nulla, vitae porta purus fringilla
-							ac. Praesent consectetur ex eu dui efficitur sollicitudin. Mauris
-							libero est, aliquam a diam maximus, dignissim laoreet lacus.</p>
-						<p>Nulla ac nisi sodales, auctor dui et, consequat turpis.
-							Cras dolor turpis, sagittis vel elit in, varius elementum arcu.
-							Mauris aliquet lorem ac enim blandit, nec consequat tortor
-							auctor. Sed eget nunc at justo congue mollis eget a urna.
-							Phasellus in mauris quis tortor porta tristique at a risus.</p>
-						<p class="text-muted">
-							<strong>Best Regards<br>John Doe
-							</strong>
-						</p>
+					<div class="col-md-6 col-md-offset-3" id="dailyReportContent" >
+						${dailyReport.content}
 						<div class="note-statusbar">
 							<div class="note-resizebar">
 								<div class="note-icon-bar"></div>
@@ -222,6 +213,8 @@
 							</div>
 						<%} %>
 						</div>
+						
+						
 					</div>
 				</div>
 
@@ -232,7 +225,6 @@
 	</div>
 
 </div>
-
 
 
 <!-- END CONTENT FRAME BODY -->

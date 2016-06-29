@@ -3,4 +3,30 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.DailyReport">
+
+	<select id="selectEmployee" parameterType="String" resultType="DailyReportEmployee">
+	<![CDATA[select d.DEPARTMENT_NAME,e.employee_name,m.SALES_GOAL,e.employee_id from EMPLOYEE e, MONTHLY_GOAL m, department d 
+       where e.employee_id=m.EMPLOYEE_ID and e.DEPARTMENT_ID=e.DEPARTMENT_ID and e.employee_id=#{employee_id} and m.YEAR=(select TO_CHAR(SYSDATE,'YYYY') from dual) and 
+       m.MONTH=(select TO_CHAR(SYSDATE,'MM') from dual)]]>
+	</select>
+	
+	<insert id="insertDailyReport" parameterType="DailyReport">
+	<![CDATA[
+	 insert into daily_report values(daily_report_seq.nextval,#{department_id},#{employee_id},#{title},#{reg_date},#{sales},#{before_gauge},#{after_gauge},#{content},'',0)
+	]]>
+	</insert>
+	
+	<select id="selectDailyReport" parameterType="String" resultType="DailyReport">
+	<![CDATA[
+	select * from DAILY_REPORT where DAILY_REPORT_ID=#{id}
+	]]>
+	</select>
+	
+	<select id="selectDailySalesGoal" parameterType="hashmap" resultType="Integer">
+	<![CDATA[
+		select p.SALES
+		from EMPLOYEE e, WEEKLY_REPORT r, WEEKLY_PLAN p
+		where e.EMPLOYEE_ID=r.EMPLOYEE_ID and r.WEEKLY_REPORT_ID=p.WEEKLY_REPORT_ID and p.REG_DATE=#{reg_date} and e.EMPLOYEE_ID=#{employee_id}
+	]]>
+	</select>
 </mapper>
