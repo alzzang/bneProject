@@ -653,11 +653,11 @@ $(function() {
                         //console.log(event.id);
 /*                    	var v = event.allDay;
                     	alert(v);*/
-                    	 /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
-                         if (isElemOverDiv($('div#test1>a'), $('div.content-frame-left'))) {
-                             calendar.fullCalendar('removeEvents', event.id);
+                         if (isElemOverDiv($('div#test1>a'))) {
+                        	 console.log(event._id);
+                        	 calendar.fullCalendar('removeEvents', event._id);
                          }
-                        
+                         /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
                          $('div#test1>a').remove();
                      }
                     
@@ -675,14 +675,14 @@ $(function() {
             }            
         }
         
-        var isElemOverDiv = function(draggedItem, dropArea) {
+        var isElemOverDiv = function(draggedItem) {
             var draggedItem1 = $(draggedItem);
             
             if($('div#test1>a').length){
                 var left = draggedItem1.position().left;
                 var top = draggedItem1.position().top;
-
-                if(left<0 || top<20 || top>390){
+/*                alert(top+","+left);*/
+                if(left<0 || top<0 || top>390){
                 	return true;
                 }            
             }
