@@ -23,6 +23,12 @@
 			<version>3.2.3.RELEASE</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-test</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
 
 		<!-- Spring jdbc -->
 		<dependency>

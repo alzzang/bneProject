@@ -633,7 +633,6 @@ $(function() {
                         calendar.fullCalendar('unselect');
                     },
                     drop: function(date, allDay) {
-
                         var originalEventObject = $(this).data('eventObject');
 
                         var copiedEventObject = $.extend({}, originalEventObject);
@@ -642,7 +641,6 @@ $(function() {
                         copiedEventObject.allDay = allDay;
 
                         $('#calendarWeek').fullCalendar('renderEvent', copiedEventObject, true);
-
 
                         if ($('#drop-remove').is(':checked')) {
                             $(this).remove();

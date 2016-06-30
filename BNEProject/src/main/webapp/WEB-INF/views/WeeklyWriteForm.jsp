@@ -3,7 +3,17 @@
 	pageEncoding="UTF-8"%>
 
 <style>
+
 </style>
+
+<script>
+/* window.onload = function(){
+	setInterval(function(){
+		$("#udongi").css("height", "500px");	
+	}, 1000);
+} */
+</script>
+
 
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
