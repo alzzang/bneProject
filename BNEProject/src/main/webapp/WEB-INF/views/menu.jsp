@@ -1,50 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+	pageEncoding="UTF-8"%>
 
 <div id="mCSB_1"
 	class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside"
 	tabindex="0">
+
+
 	<div id="mCSB_1_container"
 		class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y"
 		style="position: relative; top: 0; left: 0;" dir="ltr">
+
+
 		<!-- START X-NAVIGATION -->
+
 		<ul class="x-navigation">
-			<li class="xn-logo"><a href="index.html">Joli Admin</a> <a
-				href="#" class="x-navigation-control"></a></li>
-			<li class="xn-profile active"><a href="#" class="profile-mini">
-					<img src="assets/images/users/avatar.jpg" alt="John Doe">
-			</a>
+
+			<li class="xn-logo"><a href="/main">BnE</a> <a href="#"
+				class="x-navigation-control"></a></li>
+
+
+
+
+			<li class="xn-profile active">
+				<%-- <a href="#" class="profile-mini"	>
+			
+			<img src="/user/download/${sessionScope.user.file_position}/"></a> --%>
+				
+				<a href="#" class="profile-mini">
+				 
+				 <img src="/user/download/${sessionScope.user.file_position}/"></a>
+
 				<div class="profile">
 					<div class="profile-image">
-						<img src="/assets/images/users/user7.jpg" alt="John Doe">
+					<a href="#" data-toggle="modal" data-target="#myModal">
+						<img src="/user/download/${sessionScope.user.file_position}/">
+						</a>
 					</div>
 					<div class="profile-data">
-						<div class="profile-data-name">Jin Woo</div>
-						<div class="profile-data-title">Web Developer/Designer</div>
+						<div class="profile-data-name">${sessionScope.user.employee_name}</div>
+						<div class="profile-data-title">${sessionScope.user.department_name}</div>
 					</div>
 					<div class="profile-controls">
-						<a href="/user/changeProfile" class="profile-control-left"><span
-							class="fa fa-gear"></span></a> <a href="pages-messages.html"
-							class="profile-control-right"><span class="fa fa-envelope"></span></a>
+						<a href="/user/changeProfile" class="profile-control-left">
+						<span class="fa fa-gear"></span></a> 
+						<a href="pages-messages.html"
+							class="profile-control-right" >
+							<span class="fa fa-envelope"></span></a>
 					</div>
-				</div></li>
+
+				</div>
+
+			</li>
+
 			<li class="xn-title">Navigation</li>
 			<li class=""><a href="index.html"><span
-					class="fa fa-desktop"></span> <span class="xn-text">Home</span></a>
-			</li>
+					class="fa fa-desktop"></span> <span class="xn-text">Home</span></a></li>
 			<li class=""><a href="index.html"><span
-					class="fa fa-desktop"></span> <span class="xn-text">주간 계획</span></a>
-			</li>
+					class="fa fa-desktop"></span> <span class="xn-text">주간 계획</span></a></li>
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">일일 업무 보고</span></a>
 			</li>
 			<li class=""><a href="index.html"><span
-					class="fa fa-desktop"></span> <span class="xn-text">프로필</span></a>
-			</li>
-			
-			
-			
+					class="fa fa-desktop"></span> <span class="xn-text">프로필</span></a></li>
+
+
+
 			<li class="xn-openable"><a href="#"><span
 					class="fa fa-file-text-o"></span> <span class="xn-text">Layouts</span></a>
 				<ul>
@@ -74,7 +94,7 @@
 							class="fa fa-pencil-square-o"></span> Panels</a></li>
 					<li><a href="ui-icons.html"><span class="fa fa-magic"></span>
 							Icons</a>
-					<div class="informer informer-warning">+679</div></li>
+						<div class="informer informer-warning">+679</div></li>
 					<li><a href="ui-typography.html"><span
 							class="fa fa-pencil"></span> Typography</a></li>
 					<li><a href="ui-portlet.html"><span class="fa fa-th"></span>
@@ -154,6 +174,7 @@
 
 		</ul>
 		<!-- END X-NAVIGATION -->
+
 	</div>
 	<div id="mCSB_1_scrollbar_vertical"
 		class="mCSB_scrollTools mCSB_1_scrollbar mCS-light mCSB_scrollTools_vertical"
@@ -167,4 +188,48 @@
 			<div class="mCSB_draggerRail"></div>
 		</div>
 	</div>
+
 </div>
+
+<!-- <a href="#" data-toggle="modal" data-target="#myModal">Open Modal</a> -->
+<!-- Modal -->
+<div id="myModal"  class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Modal Header</h4>
+			</div>
+			<div class="modal-body">
+				<div class="panel-body">
+					<h3>
+						<span class="fa fa-download"></span> Mini dropzone
+					</h3>
+					<p>
+						Add form with class
+						<code>dropzone dropzone-mini</code>
+						to get mini dropzone box
+					</p>
+					<form class="dropzone dropzone-mini dz-clickable" method="post"
+						id="myDropzone">
+						<div class="dz-default dz-message">
+							<span>Drop files here to upload</span>
+						</div>
+						<input type="text" hidden="true" name="id"
+							value="${sessionScope.user.employee_id}">
+
+					</form>
+					<button class="btn btn-default">Clear Form</button>
+					<input class="btn btn-primary pull-right" type="button" value="저장" id="submitButton">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+

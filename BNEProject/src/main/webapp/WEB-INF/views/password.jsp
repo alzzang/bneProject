@@ -16,7 +16,7 @@
 
 	<div class="block">
 
-		<form action="" role="form"
+		<form id="myPasswordForm"  method="POST" action="/user/validCheck" role="form" 
 			class="form-horizontal" >
 			
 
@@ -26,7 +26,8 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label">Password</label>
 							<div class="col-md-2">
-								<input type="text" class="form-control" name="password"
+								<input type="password" class="form-control" name="password" id="password"
+									title="Password must contain at least 6 characters, including UPPER/lowercase and numbers." required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
 									placeholder="Password">
 							</div>
 						</div>
@@ -34,14 +35,16 @@
 							<label class="col-md-2 control-label">New Password</label>
 							<div class="col-md-2">
 								<input type="password" class="form-control" name="newpassword"
-									placeholder="New Password" id="password">
+									title="Password must contain at least 6 characters, including UPPER/lowercase and numbers." required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+									placeholder="New Password" id="newpassword">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-2 control-label">Re-New Password</label>
 							<div class="col-md-2">
-								<input type="password" class="form-control" name="renewpassword"
-									placeholder="Re-New Password">
+								<input type="password" class="form-control" name="renewpassword" id="renewpassword"
+											
+									title="Password must contain at least 6 characters, including UPPER/lowercase and numbers." required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" placeholder="Re-New Password" id="renewpassword">
 							</div>
 						</div>
 
@@ -49,13 +52,22 @@
 							<label class="col-md-2 control-label"></label>
 							<div class="col-md-2">
 								<!-- <button class="btn btn-default">Clear Form</button> -->
-								<a href="#" class="btn btn-default pull-right">변경</a>
-								<!-- <input type="submit" value="ok"> -->
+								
+								<!-- <a href="/user/validCheck" class="btn btn-default pull-right" id='changebutton'>변경</a> -->
+								<input type="text" hidden="true" name="id" value="${sessionScope.user.employee_id}" >
+								<input type="submit" value="ok">
 							</div>
 						</div>
 
 					</div>
 				</div>
+				
+<!-- <form id="myForm" method="POST" action="...">
+		<p>Username: <input id="field_username" title="Username must not be blank and contain only letters, numbers and underscores." type="text" required pattern="\w+" name="username"></p>
+		<p>Password: <input id="field_pwd1" title="Password must contain at least 6 characters, including UPPER/lowercase and numbers." type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" name="pwd1"></p>
+		<p>Confirm Password: <input id="field_pwd2" title="Please enter the same Password as above." type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" name="pwd2"></p>
+		<p><input type="submit" value="Submit"></p>
+	 </form>		 -->
 
 			
 		</form>
