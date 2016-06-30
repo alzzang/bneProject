@@ -2,8 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
-
 <style>
 
 </style>
@@ -82,7 +80,7 @@
 				</div>
 			</div>
 		</div>
-
+	<button id='aaaa'> aa</button>
 	</div>
 	<!-- END CONTENT FRAME BODY -->
 
