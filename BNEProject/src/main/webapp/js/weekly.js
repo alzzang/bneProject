@@ -1,10 +1,11 @@
 $(function(){
-	alert("aa");
-	 
 	var insertDB = function(){
-		var s = [];
+
 		/*$("div.fc-event-container>a").*/
-		s =	$(".fc-event-container>a");
+		var s = $(".fc-event-container>a");
+		for(var i = 0; i<s.length; i++){
+			alert(s[i].innerText);
+		}
 	}
 	
 	$('#aaaa').on('click',function(){
