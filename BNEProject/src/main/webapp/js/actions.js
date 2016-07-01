@@ -506,9 +506,9 @@ function x_navigation(){
         
     });
     
-   /* $(".x-navigation li").click(function(event){
+    $(".x-navigation li").click(function(event){
        
-    	event.stopPropagation();
+/*    	event.stopPropagation();
           	
         var li = $(this);
                 
@@ -525,9 +525,8 @@ function x_navigation(){
                     return true;
                 else
                     return false;
-            }                                     
-    });*/
-    
+            }    */                                 
+    });    
     /* XN-SEARCH */
     $(".xn-search").on("click",function(){
         $(this).find("input").focus();
