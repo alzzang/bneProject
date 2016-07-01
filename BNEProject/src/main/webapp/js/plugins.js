@@ -652,12 +652,12 @@ $(function() {
                         //console.log(event.id);
 /*                    	var v = event.allDay;
                     	alert(v);*/
-                         if (isElemOverDiv($('div#test1>a'))) {
+                         if (isElemOverDiv($('div#trash>a'))) {
                         	 console.log(event._id);
                         	 calendar.fullCalendar('removeEvents', event._id);
                          }
                          /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
-                         $('div#test1>a').remove();
+                         $('div#trash>a').remove();
                      }
                 });
                 
