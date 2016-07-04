@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
 import kr.co.bne.common.DailyReportListElement;
 import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dto.EmployeeDTO;
@@ -51,7 +53,7 @@ public class DailyReportController {
 	
 	
 	
-	@RequestMapping(value="/main/all", method={RequestMethod.GET}) 
+	@RequestMapping(value="/main/all") 
 	public String goMain_Manager(Model model, HttpServletRequest request, HttpSession session){
 		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");		
 
@@ -70,7 +72,7 @@ public class DailyReportController {
 
 	
 	
-	@RequestMapping(value="/main/all/{page}", method={RequestMethod.GET}) 
+	@RequestMapping(value="/main/all/{page}") 
 	public String goMain_Manager(Model model, HttpServletRequest request, HttpSession session, @PathVariable("page") int page){
 		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");		
 		
@@ -89,23 +91,31 @@ public class DailyReportController {
 		}
 		
 		Enumeration parameterNames = request.getParameterNames();
-		
-		if(parameterNames.hasMoreElements()) { //파라미터가 존재하면
-			while(parameterNames.hasMoreElements()) {
-				String parameterName = (String)parameterNames.nextElement();
 				
-				if("employee_id".equals(parameterName)) {
-					serviceParams.put("employee_id", request.getParameter(parameterName));
-				}else if("reg_date".equals(parameterName)) {
-					serviceParams.put("reg_date", request.getParameter(parameterName));
-				}else if("approval_flag".equals(parameterName)) {
-					serviceParams.put("approval_flag", request.getParameter(parameterName));
+		while(parameterNames.hasMoreElements()) {
+			String parameterName = (String)parameterNames.nextElement();
+			
+			if("employee_id".equals(parameterName)) {
+				serviceParams.put("employee_id", request.getParameter(parameterName));
+				model.addAttribute("currentEmployee_id", (String)serviceParams.get("employee_id"));
+			}else if("reg_date".equals(parameterName)) {
+				serviceParams.put("reg_date", request.getParameter(parameterName));
+				model.addAttribute("currentReg_date", (String)serviceParams.get("reg_date"));
+			}else if("approval_flag".equals(parameterName)) {
+				serviceParams.put("approval_flag", Integer.parseInt(request.getParameter(parameterName)));
+				
+				if((Integer)serviceParams.get("approval_flag") == 0) {
+					model.addAttribute("currentApproval_flag", "미승인 목록");
+				}else if((Integer)serviceParams.get("approval_flag") == 1) {
+					model.addAttribute("currentApproval_flag", "승인 목록");
 				}
 			}
-		}else {//파라미터가 존재하지 않으면
-			
 		}
-				
+		System.out.println(serviceParams.toString());
+		Gson gson = new Gson();
+		String serviceParamsStr = gson.toJson(serviceParams);
+		
+		
 		dailyReportListMap = dailyReportService.selectDailyReportList("manager", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
 		
 		
@@ -118,11 +128,12 @@ public class DailyReportController {
 		model.addAttribute("totalPageNum", dailyReportListMap.get("totalPageNum"));
 		model.addAttribute("totalUnapprovalNum", totalUnapprovalNum);
 		model.addAttribute("memberList", memberList);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("serviceParams", serviceParams);
+		model.addAttribute("serviceParamsStr", serviceParamsStr);
+		
+		model.addAttribute("currentPage", page);		
 		
 		
-		System.out.println(serviceParams.toString());
+		model.addAttribute("url", "/dailyReport/main/all");
 		
 		return "dailyReportMain";
 	}
@@ -198,6 +209,7 @@ public class DailyReportController {
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("serviceParams", serviceParams);
+		model.addAttribute("url", "/dailyReport/main/employee/" + user.getEmployee_id());
 		
 		return "dailyReportMain";
 	}
@@ -217,99 +229,6 @@ public class DailyReportController {
 	}
 	
 
-	
-	
-	
-	
-	
-	/*@RequestMapping(value="/main/all/{page}", method={RequestMethod.GET}) 
-	public @ResponseBody HashMap<String , Object> Ajax_goMain_Manager(Model model, HttpServletRequest request, HttpSession session, @PathVariable("page") int page){
-		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");		
-		HashMap<String, Object> dailyReportListMap = null;		
-		HashMap<String, Object> serviceParams = new HashMap<String, Object>();
-		int totalUnapprovalNum = 0;
-		List<DailyReportTeamListElement> memberList = null;
-		
-		
-		Enumeration parameterNames = request.getParameterNames();
-		
-		if(parameterNames.hasMoreElements()) { //파라미터가 존재하면
-			while(parameterNames.hasMoreElements()) {
-				String parameterName = (String)parameterNames.nextElement();
-				
-				if("employee_id".equals(parameterName)) {
-					serviceParams.put("employee_id", request.getParameter(parameterName));
-				}else if("reg_date".equals(parameterName)) {
-					serviceParams.put("reg_date", request.getParameter(parameterName));
-				}else if("approval_flag".equals(parameterName)) {
-					serviceParams.put("approval_flag", request.getParameter(parameterName));
-				}
-			}
-		}else {//파라미터가 존재하지 않으면
-			
-		}
-				
-		dailyReportListMap = dailyReportService.selectDailyReportList("manager", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
-		
-		
-		HashMap<String, Object> TeamMemeberMenuList = dailyReportService.selectTeamMemberList(user.getEmployee_id());
-		totalUnapprovalNum = (Integer) TeamMemeberMenuList.get("totalUnapprovalNum");
-		memberList = (List<DailyReportTeamListElement>) TeamMemeberMenuList.get("memberList");
-		
-		
-		model.addAttribute("dailyReportList", dailyReportListMap.get("dailyReportList"));
-		model.addAttribute("totalPageNum", dailyReportListMap.get("totalPageNum"));
-		model.addAttribute("totalUnapprovalNum", totalUnapprovalNum);
-		model.addAttribute("memberList", memberList);
-	
-		
-		return dailyReportListMap;
-	}*/
-	
-	
-	
-	
-	
-	/*@RequestMapping(value="/main/employee/{id}/{page}") 
-	public @ResponseBody HashMap<String , Object> Ajax_goMain_Employee(Model model, HttpServletRequest request, HttpSession session, @PathVariable("id") String employee_id, @PathVariable("page") int page){
-		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
-		HashMap<String, Object> dailyReportListMap = null;		
-		HashMap<String, Object> serviceParams = new HashMap<String, Object>();
-		int totalUnapprovalNum = 0;
-		List<DailyReportTeamListElement> memberList = null;
-				
-		
-		Enumeration parameterNames = request.getParameterNames();
-		
-		if(parameterNames.hasMoreElements()) { //파라미터가 존재하면
-			while(parameterNames.hasMoreElements()) {
-				String parameterName = (String)parameterNames.nextElement();
-				
-				if("reg_date".equals(parameterName)) {
-					serviceParams.put("reg_date", request.getParameter(parameterName));
-				}else if("approval_flag".equals(parameterName)) {
-					serviceParams.put("approval_flag", request.getParameter(parameterName));
-				}
-			}
-		}else {//파라미터가 존재하지 않으면
-			
-		}
-				
-		dailyReportListMap = dailyReportService.selectDailyReportList("employee", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
-		
-		
-		HashMap<String, Object> TeamMemeberMenuList = dailyReportService.selectTeamMemberList(user.getEmployee_id());
-		totalUnapprovalNum = (Integer) TeamMemeberMenuList.get("totalUnapprovalNum");
-		memberList = (List<DailyReportTeamListElement>) TeamMemeberMenuList.get("memberList");
-		
-		
-		model.addAttribute("dailyReportList", dailyReportListMap.get("dailyReportList"));
-		model.addAttribute("totalPageNum", dailyReportListMap.get("totalPageNum"));
-		model.addAttribute("totalUnapprovalNum", totalUnapprovalNum);
-		model.addAttribute("memberList", memberList);
-
-		return dailyReportListMap;
-	}*/
 	
 
 }

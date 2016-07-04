@@ -47,7 +47,7 @@
 	      	and d.approval_flag = #{approval_flag}
 	      </if>
 	      ) a  		
-	where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx} + #{perContentNum} - 1
+	where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
 	order by idx asc 
 
 </select>
@@ -92,7 +92,7 @@
 	      	and d.approval_flag = #{approval_flag}
 	      </if>
 	      ) a  		
-	where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx} + #{perContentNum} - 1
+	where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
 	order by idx asc 
 
 </select>
@@ -128,7 +128,8 @@
 	      where department_id = (select department_id from department where manager_id = #{value})
 	            and approval_flag = 0
 	      group by employee_id) a, employee b
-	where a.employee_id(+) = b.employee_id
+	where 	b.employee_id != #{value}
+			and a.employee_id(+) = b.employee_id
   order by b.employee_name asc
 </select>
 
