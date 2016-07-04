@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="kr.co.bne.common.DailyReportListElement"%>
 <%@page import="kr.co.bne.common.DailyReportTeamListElement"%>
 <%@page import="java.util.List"%>
@@ -23,13 +24,19 @@ if("manager".equals(position)) {
 	managerFlag = false;
 }
 
-List<DailyReportListElement> reportList = (List<DailyReportListElement>) request.getAttribute("reportList");
+
+List<DailyReportListElement> dailyReportList = (List<DailyReportListElement>) request.getAttribute("dailyReportList");
 int totalPageNum = (Integer) request.getAttribute("totalPageNum");
 int currentPage = (Integer) request.getAttribute("currentPage");
+HashMap<String, Object> serviceParams = (HashMap<String, Object>) request.getAttribute("serviceParmas");
+String serviceParamsStr = serviceParams.toString();
 
 %>    
 
+
+
 <input type="hidden" value=<%=totalPageNum %> id="totalPageNum">
+<input type="hidden" value=<%=serviceParamsStr %> id="serviceParamsStr">
 
 
 <div class="content-frame">                                    
@@ -61,10 +68,9 @@ int currentPage = (Integer) request.getAttribute("currentPage");
                         <%if(managerFlag) { %>
                         <div class="block">
                             <div class="list-group border-bottom">
-                            	<a href="#" class="list-group-item active"><span class="fa fa-inbox"></span> 전체 보기 <span class="badge badge-success"><%=totalUnapprovalNum %></span></a>
-                            	
+                            	<a href="/dailyReport/main" class="list-group-item active"><span class="fa fa-inbox"></span> 전체 보기 <span class="badge badge-success"><%=totalUnapprovalNum %></span></a>
                             	<%for(DailyReportTeamListElement el : memberList) {%>
-                            		<a href="#" class="list-group-item" employee_id=<%=el.getEmployee_id() %>><span class="fa fa-star"></span> <%=el.getEmployee_name() %> <span class="badge badge-warning"><%=el.getUnApproval() %></span></a>	
+                            		<a id="test" onclick="redirect('/dailyReport/main/1', <%=serviceParamsStr %>);" class="list-group-item" employee_id=<%=el.getEmployee_id() %>><span class="fa fa-star"></span> <%=el.getEmployee_name() %> <span class="badge badge-warning"><%=el.getUnApproval() %></span></a>	
                             	<%} %>
                             </div>                        
                         </div>
@@ -127,7 +133,7 @@ int currentPage = (Integer) request.getAttribute("currentPage");
 
 			<div class="panel-body mail">
 
-				<% for(DailyReportListElement el : reportList) { %>
+				<% for(DailyReportListElement el : dailyReportList) { %>
 
 				<div class="mail-item mail-read mail-info" idx=<%=el.getIdx() %>>
 					<%if(el.getApproval_flag() == 0) { %>
@@ -146,13 +152,13 @@ int currentPage = (Integer) request.getAttribute("currentPage");
 
 				</div>
 				<div class="panel-footer">
-					<ul class="pagination pagination-sm pull-right">
+					<ul class="pagination pagination-sm pull-right" id="pageIndexList">
 						<%if(currentPage == 1) { %>
 						<li class="disabled">
 						<%} else { %>
 						<li>
 						<%} %> 
-						<a href="/dailyReport/main/1">«</a></li>
+						<a href="/dailyReport/main/1" id="goFirstPageButton">«</a></li>
 
 						<%
                            int endIdx = (totalPageNum < currentPage + 3) ? totalPageNum : (currentPage + 3);
@@ -160,8 +166,9 @@ int currentPage = (Integer) request.getAttribute("currentPage");
 								<%if(currentPage == i) { %>
 									<li class="active">
 								<%} else { %>
-									<li><a href="/dailyReport/main/<%=i%>"><%=i %></a></li>
-								<%} %>						
+									<li>
+								<%} %>					
+								<a onclick="redirect('/dailyReport/main/<%=i%>', {'type':'MEMBER', 'employee_id':' ' });"><%=i %></a></li>	
 							<%} %>
 						<li><a href="/dailyReport/main/<%=totalPageNum%>">»</a></li>
 					</ul>
@@ -173,11 +180,38 @@ int currentPage = (Integer) request.getAttribute("currentPage");
                 </div>
                 
                 
-                
+               
         <script>
-        
+        	
         	function goWriteForm() {
         		location.href= "/dailyReport/write"; 
+        	}
+
+        	
+        	
+        	function redirect(path, params) {
+        		var form = document.createElement("form");
+        		form.setAttribute("method", "post");
+        	    form.setAttribute("action", path);
+        	    
+        	    
+        	    
+        		if(params["type"] === "ALL") {
+        			alert("ALL");
+        		}else if(params["type"] === "MEMBER") {
+        			var hiddenField = document.createElement("input");
+
+        	        hiddenField.setAttribute("type", "hidden");
+        	        hiddenField.setAttribute("name", "employee_id");
+        	        hiddenField.setAttribute("value", params["employee_id"]);
+        	        
+        	        form.appendChild(hiddenField);
+        	        
+        	        $('#pageIndexList').attr('employee_id') = params['employee_id'];
+        		}
+        		
+        		document.body.appendChild(form);
+        	    form.submit();
         	}
         
         </script>

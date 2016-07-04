@@ -10,7 +10,7 @@ import kr.co.bne.common.DailyReportListElement;
 import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dao.DailyReportDAO;
 
-@Service
+@Service("dailyReportService")
 public class DailyReportService {
 
 	@Autowired
@@ -29,12 +29,30 @@ public class DailyReportService {
 	}
 	
 	
-	public HashMap<String, Object> selectDailyReportList_All(int department_id, int startIdx, int perContentNum, String user_id) {
-		List<DailyReportListElement> reportList = dailyReportDAO.selectDailyReportList_All(department_id, startIdx, perContentNum, user_id);
-		int totalPageNum = dailyReportDAO.getPagingNum_All(department_id, user_id, perContentNum);
-		
+	
+	public HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum) {
+		HashMap<String, Object> map = new HashMap<String, Object>();		
+		return selectDailyReportList(position, user_id, startIdx, perContentNum, map);
+	}
+	
+	
+	
+	public HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum, HashMap<String, Object> params) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
-		result.put("reportList", reportList);
+		List<DailyReportListElement> dailyReportList = null;
+		int totalPageNum = 0;
+		
+		if(("manager").equals(position)) {
+			//매니저일 때 쿼리
+			dailyReportList = dailyReportDAO.selectDailyReportList_Manager(user_id, startIdx, perContentNum, params);
+			totalPageNum = dailyReportDAO.getPagingNum_DailyReportList_Manager(user_id, perContentNum, params);
+		}else {
+			//팀원일 때 쿼리
+			dailyReportList = dailyReportDAO.selectDailyReportList_Member(user_id, perContentNum, params);
+			totalPageNum = dailyReportDAO.getPagingNum_DailyReportList_Member(user_id, perContentNum, params);
+		}
+		
+		result.put("dailyReportList", dailyReportList);
 		result.put("totalPageNum", totalPageNum);
 		
 		return result;

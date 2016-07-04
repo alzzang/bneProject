@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.bne.common.DailyReportListElement;
 import kr.co.bne.common.DailyReportTeamListElement;
+import oracle.net.aso.s;
 
 
 @Repository("dailyReportDAO")
@@ -18,32 +19,78 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	private SqlSession sqlSession;
 	
 	
+	
 	@Override
-	public List<DailyReportListElement> selectDailyReportList_All(int department_id, int startIdx, int perContentNum, String employee_id) throws RuntimeException {
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("department_id", department_id);
-		params.put("employee_id", employee_id);
-		params.put("startIdx", startIdx);
-		params.put("perContentNum", perContentNum);
+	public List<DailyReportListElement> selectDailyReportList_Manager(String user_id, int startIdx, int perContentNum, HashMap<String, Object> params) throws RuntimeException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		if(params != null) {
+			map.putAll(params);
+		}
+		map.put("user_id", user_id);
+		map.put("startIdx", startIdx);
+		map.put("perContentNum", perContentNum);
 		
-		List<DailyReportListElement> list = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyReportList_All", params);
-		
+		List<DailyReportListElement> list = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyReportList_Manager", map);
+	
 		return list;
 	}
 	
 	
 	
 	@Override
-	public int getPagingNum_All(int department_id, String employee_id, int perContentNum) throws RuntimeException {
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("department_id", department_id);
-		params.put("employee_id", employee_id);
-		params.put("perContentNum", perContentNum);
-		int pageNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getPagingNum_All", params);
+	public int getPagingNum_DailyReportList_Manager(String user_id, int perContentNum, HashMap<String, Object> params) throws RuntimeException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		if(params != null) {
+			map.putAll(params);
+		}
+		map.put("user_id", user_id);
+		map.put("perContentNum", perContentNum);
+		
+		int pageNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getPagingNum_DailyReportList_Manager", map);
 		
 		return pageNum;
 	}
 	
+	
+	
+	
+	@Override
+	public List<DailyReportListElement> selectDailyReportList_Member(String user_id, int perContentNum, HashMap<String, Object> params) throws RuntimeException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		if(params != null) {
+			map.putAll(params);
+		}
+		map.put("user_id", user_id);
+		map.put("perContentNum", perContentNum);
+		
+		List<DailyReportListElement> list = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyReportList_Member", map);
+		
+		return list;
+	}
+	
+	
+	
+	
+	@Override
+	public int getPagingNum_DailyReportList_Member(String user_id, int perContentNum, HashMap<String, Object> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		if(params != null) {
+			map.putAll(params);
+		}
+		map.put("user_id", user_id);
+		map.put("perContentNum", perContentNum);
+		
+		int pageNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getPagingNum_DailyReportList_Member", map);
+		
+		return pageNum;
+	}
+	
+
+
 	
 	
 	@Override
