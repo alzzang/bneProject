@@ -1,13 +1,21 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %> --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="/js/dailysettings.js"></script>
  <script>
 /* $( window ).load(function innerContent(){
 	var content='${dailyReport.content}';
 	$('#dailyReportContent').prepend(content);
 }); */
+$(document).ready(function(){
+	var a = ${dailyReport.drsales};
+	var b = ${dailyReport.wpsales}
+    aa(a,b);
+});
+
 $('#drivingDistance').bind('load', function() {
 	alert('abc');
 	var result=${dailyReport.after_gauge}-${dailyReport.before_gauge};
@@ -77,20 +85,43 @@ $( "#drivingDistance" ).attr( "value", result ); */
 			<div class="panel panel-default">
 				<div class="panel-heading ui-draggable-handle">
 					<div class="pull-left">
-						<img src="/assets/images/users/user2.jpg" class="panel-title-image"
+						<img src="/user/download/${dailyReport.file_position}/" class="panel-title-image"
 							alt="John Doe">
 						<h3 class="panel-title">
-							John Doe <small>johndoe@domain.com</small>
+							${dailyReport.employee_name}<!-- <small>johndoe@domain.com</small> -->
 						</h3>
 					</div>
-					<div class="pull-right">
-						<button class="btn btn-success pull-right">
-					<span class="fa fa-check"></span> 승인
-				</button>
+					
+				 
+				 <c:if test="${0 eq dailyReport.approval_flag && user.position eq 'manager'}">
+					 <div class="pull-right" id="approvalDiv">
+						<button class="btn btn-success pull-right" onclick="approvalDaily()">
+					<span class="fa fa-check" ></span> 승인 
+					
+					</button>
 					</div>
+					</c:if>
+					
+					<c:if test="${user.employee_id eq dailyReport.employee_id}">
+					<div class="pull-right" id="approvalDiv">
+						<button class="btn btn-success pull-right" onclick="approvalDaily()">
+					<span class="fa fa-check" ></span> 수정
+					
+					</button>
+					</div>
+					</c:if>
+					
+					<%-- 
+	
+						 <div class="pull-right">
+						<button class="btn btn-success pull-right">
+					<span class="fa fa-check"></span> 승인 ${user.position} ${dailyReport.approval_flag}
+					</button>
+					</div> --%>
+					
 				</div>
 
-
+			<div>${user.employee_id} , ${dailyReport.employee_id}</div> 
 				<div class="panel-body">
 					<div class="form-group">
 						<label class="col-md-3 col-xs-12 control-label">제목</label>
@@ -124,10 +155,11 @@ $( "#drivingDistance" ).attr( "value", result ); */
 							<div class="input-group">
 								<span class="input-group-addon" style="padding-bottom: 10px;"><span
 									class="fa fa-won"></span></span> <input type="text"
-									class="form-control" readonly="readonly" style="cursor: default;" style="cursor: default;" value="${dailyReport.sales}"> <span class="progress"> <span
+									class="form-control" id="aaaaa" style="cursor: default;" style="cursor: default;" readonly="readonly" value="${dailyReport.drsales}"> 
+									<span class="progress" > <span
 									class="progress-bar progress-bar-danger" role="progressbar"
-									aria-valuenow="150" aria-valuemin="0" aria-valuemax="100"
-									style="width: 0%"> </span>
+									aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+									style="width: 0.01%" id="progressCondition">0%</span>
 								</span>
 
 							</div>
@@ -167,13 +199,11 @@ $( "#drivingDistance" ).attr( "value", result ); */
 						<div class="col-md-6 col-xs-12">
 							<div class="input-group">
 								<ul class="list-tags">
-                                        <li><a href="#" ><span class="fa fa-tag"></span> amet</a></li>
-                                        <li><a href="#"><span class="fa fa-tag"></span> rutrum</a></li>
-                                        <li><a href="#"><span class="fa fa-tag"></span> nunc</a></li>
-                                        <li><a href="#"><span class="fa fa-tag"></span> tempor</a></li>
-                                        <li><a href="#"><span class="fa fa-tag"></span> eros</a></li>
-                                        <li><a href="#"><span class="fa fa-tag"></span> suspendisse</a></li>
-                                        <li><a href="#"><span class="fa fa-tag"></span> dolor</a></li>
+								<c:forEach var="result" items="${counselList}">
+								<li><a href="#" ><span class="fa fa-tag"></span>${result.title }</a></li>
+								
+								</c:forEach>
+ 
                                     </ul>
 							</div>
 						</div>
@@ -191,18 +221,64 @@ $( "#drivingDistance" ).attr( "value", result ); */
 						</div>
 						
 						<br><br>
-						<%if(false) { %> <!-- 팀원일 때 -->
+						<!-- 팀원이고 커멘트가 달리지 않았을 때(빈화면)
+						     팀원이고 커멘트가  달렸을 때(작성된 멘트 보여주기)
+						     팀장이고 커멘트가 달리지 않았을 때(input type)
+						     팀장이고 승인이 되었을 때(작성된 멘트 및 수정버튼 생성)
+
+"${0 eq dailyReport.approval_flag && user.position eq 'manager'}"
+						 -->
+						 <c:choose>
+						 <c:when test="${dailyReport.manager_comment eq null && user.position eq 'employee'}">
+						 </c:when>
+						 <c:when test="${dailyReport.manager_comment ne null && user.position eq 'employee'}">
+						 <div class="timeline-body comments">
+                                 <div class="comment-item">
+                                          <img src="/user/download/${dailyReport.manager_file_position}/">
+                                             <p class="comment-head">
+                                                  <a href="#">${dailyReport.manager_name}</a> <!-- <span class="text-muted">@bradpitt</span> -->
+                                             </p>
+                                             ${dailyReport.manager_comment}
+                                               <!--  <small class="text-muted">10h ago</small> -->
+                                 </div>                                            
+                         </div>
+						 </c:when>
+						 <c:when test="${dailyReport.manager_comment eq null && user.position eq 'manager'}">
+						 <div class="form-group push-up-20">
+							<div class="col-md-12">
+								<div class="input-group">
+									<input class="form-control" placeholder="팀장 의견">
+									<span class="input-group-addon"><span
+										class="fa fa-pencil"></span></span>
+								</div>
+							</div>
+						 </div>
+						 </c:when>
+						 <c:when test="${dailyReport.manager_comment ne null && user.position eq 'manager'}">
+						<div class="timeline-body comments">
+                                 <div class="comment-item">
+                                          <img src="/user/download/${dailyReport.manager_file_position}/">
+                                             <p class="comment-head">
+                                                  <a href="#">${dailyReport.manager_name}</a> <!-- <span class="text-muted">@bradpitt</span> -->
+                                             </p>
+                                             ${dailyReport.manager_comment}
+                                               <!--  <small class="text-muted">10h ago</small> -->
+                                 </div>                                            
+                         </div>
+                         </c:when>
+						 </c:choose>
+					<%-- 	<%if(true) { %> <!-- 팀원일 때 -->
 						<div class="timeline-body comments">
                                             <div class="comment-item">
-                                                <img src="/assets/images/users/user4.jpg">
+                                                <img src="/user/download/${dailyReport.manager_file_position}/">
                                                 <p class="comment-head">
-                                                    <a href="#">Brad Pitt</a> <span class="text-muted">@bradpitt</span>
+                                                    <a href="#">${dailyReport.manager_name}</a> <!-- <span class="text-muted">@bradpitt</span> -->
                                                 </p>
                                                 <p>Awesome, man, that is awesome...</p>
                                                 <small class="text-muted">10h ago</small>
                                             </div>                                            
                                         </div>
-						<%}else if(true) { %> <!-- 팀장일 때 -->
+						<%}else if(false) { %> <!-- 팀장일 때 -->
 						<div class="form-group push-up-20">
 							<div class="col-md-12">
 								<div class="input-group">
@@ -211,7 +287,7 @@ $( "#drivingDistance" ).attr( "value", result ); */
 										class="fa fa-pencil"></span></span>
 								</div>
 							</div>
-						<%} %>
+						<%} %> --%>
 						</div>
 						
 						
@@ -222,6 +298,8 @@ $( "#drivingDistance" ).attr( "value", result ); */
 			</div>
 
 		</form>
+
+		<input type="hidden" value="${dailyReport.daily_report_id }" id="report_id">
 	</div>
 
 </div>

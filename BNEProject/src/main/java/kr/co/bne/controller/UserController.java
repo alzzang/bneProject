@@ -67,7 +67,7 @@ public class UserController {
 		int byteRead = -1;
 		FileInputStream inputStream;
 		OutputStream outStream;
-
+		
 		File f = new File("c:/uploaded-files/" + employee_id);
 
 		inputStream = new FileInputStream(f);

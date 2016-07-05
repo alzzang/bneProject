@@ -10,6 +10,7 @@
 <link href="/../css/smart_editor2.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	body { margin: 10px; }
+	#smart_editor2 {width:670px;}
 </style>
 <script type="text/javascript" src="/../js/lib/jindo2.all.js" charset="utf-8"></script>
 <script type="text/javascript" src="/../js/lib/jindo_component.js" charset="utf-8"></script>
@@ -781,4 +782,7 @@
 
 
 </body>
+<style type="text/css">
+#smart_editor2 {width:650px !important; } 
+</style>
 </html>

@@ -16,9 +16,15 @@
 	]]>
 	</insert>
 	
-	<select id="selectDailyReport" parameterType="String" resultType="DailyReport">
+	<select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
 	<![CDATA[
-	select * from DAILY_REPORT where DAILY_REPORT_ID=#{id}
+	select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
+dr.AFTER_GAUGE,dr.CONTENT,wp.SALES as wpsales,dr.MANAGER_COMMENT, dr.APPROVAL_FLAG,e1.EMPLOYEE_NAME manager_name,e1.FILE_POSITION manager_file_position
+from employee e, employee e1, daily_report dr, WEEKLY_REPORT wr, WEEKLY_PLAN wp, department d
+where e.employee_id=dr.employee_id and  e.EMPLOYEE_ID=wr.EMPLOYEE_ID and 
+wr.WEEKLY_REPORT_ID=wp.WEEKLY_REPORT_ID and wp.REG_DATE=dr.REG_DATE and 
+e.EMPLOYEE_ID=dr.EMPLOYEE_ID and d.department_id=dr.department_id and e1.EMPLOYEE_ID=d.MANAGER_ID
+and dr.daily_report_id=#{id}
 	]]>
 	</select>
 	
@@ -29,4 +35,19 @@
 		where e.EMPLOYEE_ID=r.EMPLOYEE_ID and r.WEEKLY_REPORT_ID=p.WEEKLY_REPORT_ID and p.REG_DATE=#{reg_date} and e.EMPLOYEE_ID=#{employee_id}
 	]]>
 	</select>
+	
+	<select id="selectCounselRecordList" parameterType="String" resultType="CounsellingRecord">
+	<![CDATA[
+	select cr.COUNSEL_ID,cr.title
+	from daily_report dr,counsel_record cr
+	where dr.daily_report_id=cr.daily_report_id and cr.daily_report_id=#{id} order by counsel_id
+	]]>
+	</select>
+	
+	<update id="updateApproval" parameterType="String">
+		<![CDATA[
+		update daily_report set approval_flag=1 where daily_report_id=#{daily_report_id}
+		]]>
+	</update>
+	
 </mapper>

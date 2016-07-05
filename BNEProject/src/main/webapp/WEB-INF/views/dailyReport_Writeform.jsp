@@ -16,8 +16,84 @@
 /* $( "#dailyReportSubmit" ).click(function() {
 	  $( "#dailyform" ).submit();
 }); */
+var jsonArray=new Array();
+/* function test1(){
+	str++;
+	alert(str);
+	
+} */
+$.fn.serializeObject = function()
+{
+   var o = {};
+/*    var a = this.serializeArray(); */
+   $.each(a, function() {
+       if (o[this.name]) {
+           if (!o[this.name].push) {
+               o[this.name] = [o[this.name]];
+           }
+          o[this.name].push(this.value || '');
+       } else {
+           o[this.name] = this.value || '';
+       }
+   });
+   return o;
+};
+
+function testJSON1(){
+	/* alert(this); */
+	  var o = {};
+	   var a = $( "#dailyform" ).serializeArray();
+	   $.each(a, function() {
+		     if (o[this.name]) {
+	           if (!o[this.name].push) {
+	               o[this.name] = [o[this.name]];
+	           }
+	          o[this.name].push(this.value || '');
+	       } else {
+	           o[this.name] = this.value || '';
+	       } 
+		  /*  alert(JSON.stringify(o)); */
+	   });
+	   jsonArray.push(o);
+	   /* alert('배열'+JSON.stringify(jsonArray));
+	    */
+	    var t=JSON.stringify(jsonArray);
+	   localStorage.setItem("tt", t);
+	   alert(localStorage.getItem("tt"));
+	  /*  var t=JSON.stringify(a); */
+	/*    $.ajax({
+			type : "POST",
+			url : "/dailyReport/jsontest",
+			data : {
+			 
+				dd : t
+			},
+			success : function(data) {
+				alert(data);
+				
+				
+			} */
+			/* error : function(){
+				alert('실패했습니다.');
+			} */
+	//	})
+	  /*  alert(t);
+	   $.each(a, function() {
+	       if (o[$( this).name]) {
+	           if (!o[$( this ).name].push) {
+	               o[$( this ).name] = [o[$( this).name]];
+	           }
+	          o[$( this ).name].push($( this ).value || '');
+	       } else {
+	           o[$( this ).name] = $( this ).value || '';
+	       }
+	   });
+	   alert(JSON.stringify(o));
+	   return o; */
+}
 
 
+ 
 </script>
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -73,7 +149,7 @@
 			<div class="col-md-12">
 
 				<form class="form-horizontal" action="/dailyReport/writeform"
-					id="dailyform">
+					id="dailyform" >
 					<div class="panel panel-default">
 						<div class="panel-heading ui-draggable-handle">
 							<h3 class="panel-title">일일 업무 보고 작성</h3>
@@ -133,7 +209,7 @@
 								<input type="text"
 											class="form-control"
 											id="dailyGoal"
-											pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" readonly="readonly">
+											pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" readonly="readonly" required="required">
 								</div>
 
 
@@ -191,13 +267,13 @@
 												
 											%>
 
-											<li><a href="#"><span class="fa fa-plus"></span>추가</a></li>
+											<li><a href="#" onclick="testJSON1()"><span class="fa fa-plus"></span>추가</a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
-	
-							<jsp:include page="../../SmartEditor2.jsp"></jsp:include>
+							<jsp:include page="SmartEditor2.jsp"></jsp:include>
+							<%-- <jsp:include page="../../SmartEditor2.jsp"></jsp:include> --%>
 							<div class="panel-footer">
 								<button class="btn btn-primary pull-right"
 									id="dailyReportSubmit" onclick="submitContents()">Submit</button>
@@ -206,7 +282,7 @@
 						</div>
 						<input type="hidden" name="department_id" value="${sessionScope.user.department_id}">
 						<input type="hidden" name="employee_id" value="${sessionScope.user.employee_id}">
-						
+						<input type="hidden" id="counsellingJSON" name="counsellingJSON" value="">
 				</form>
 
 			</div>
@@ -266,14 +342,26 @@ function searchSalesGoal(reg_date) {
 		type : "POST",
 		url : "/dailyReport/dailysales",
 		data : {
+		 
 			reg_date : $('#reg_date').val()
 		},
 		success : function(data) {
 			var result=parseInt(data);
-			$('#dailyGoal').attr('value',result);
-			  $('#aaaa').attr('onKeyUp', 'aa(this.value,'+result+')'); 
+			if(result==-1){
+				alert('해당 목표액이 존재하지 않습니다');
+				$('#dailyGoal').attr('value',0);
+				$('#aaaa').attr('onKeyUp', 'aa(this.value,'+0+')');
+				/* $( '#dailyGoal' ).removeData() */;
+			}else{
+				$('#dailyGoal').attr('value',result);
+				  $('#aaaa').attr('onKeyUp', 'aa(this.value,'+result+')'); 
+			}
+			
 			/* $('#aaaa').attr('onKeyUp', 'alert("aa")'); */
 		}
+		/* error : function(){
+			alert('실패했습니다.');
+		} */
 	})
 }
 
