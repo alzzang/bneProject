@@ -2,6 +2,26 @@
  * 
  */
 
+function testJSON1(){
+
+	  var o = {};
+	   var a = $( "#dailyform" ).serializeArray();
+	   $.each(a, function() {
+		     if (o[this.name]) {
+	           if (!o[this.name].push) {
+	               o[this.name] = [o[this.name]];
+	           }
+	          o[this.name].push(this.value || '');
+	       } else {
+	           o[this.name] = this.value || '';
+	       } 
+	   });
+	   jsonArray.push(o);
+	    var t=JSON.stringify(jsonArray);
+	   localStorage.setItem("tt", t);
+	   alert(localStorage.getItem("tt"));
+}
+
 function aa(money,goal){
 	
 
@@ -29,12 +49,12 @@ function aa(money,goal){
 	
 }
 
-function computeGuage(){
+/*function computeGuage(){
 	  var before=$('#before_gauge').val();
 	  var after=$('#after_gauge').val();
 	  var result=after-before;
 	  $('#result_guage').val(result);
-}
+}*/
 
 function approvalDaily() {
     /*var txt;*/
@@ -58,4 +78,37 @@ function approvalDaily() {
         /*txt = "You pressed Cancel!";*/
     }
     /*document.getElementById("demo").innerHTML = txt;*/
+}
+
+function computeGuage(){
+	  var before=$('#before_gauge').val();
+	  var after=$('#after_gauge').val();
+	  var result=after-before;
+	  $('#result_guage').val(result);
+}
+
+
+function searchSalesGoal(reg_date) {
+
+	$.ajax({
+		type : "POST",
+		url : "/dailyReport/dailysales",
+		data : {
+		 
+			reg_date : $('#reg_date').val()
+		},
+		success : function(data) {
+			var result=parseInt(data);
+			if(result==-1){
+				alert('해당 목표액이 존재하지 않습니다');
+				$('#dailyGoal').attr('value',0);
+				$('#aaaa').attr('onKeyUp', 'aa(this.value,'+0+')');
+			}else{
+				$('#dailyGoal').attr('value',result);
+				  $('#aaaa').attr('onKeyUp', 'aa(this.value,'+result+')'); 
+			}
+
+		}
+
+	})
 }

@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import kr.co.bne.dto.CounsellingRecordDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
@@ -45,17 +50,34 @@ public class DailyReportController {
 		DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(sessionid.getEmployee_id());
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
 		model.addObject("employee", employee);
+		
+		
 		System.out.println(employee);
 		return model;
 	}
 	@RequestMapping("/writeform")
 	public ModelAndView goWrite(@ModelAttribute DailyReportDTO dailyReportDTO  ,HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
-		System.out.println(dailyReportDTO);
 		dailyReportService.writeDailyReport(dailyReportDTO);
+		System.out.println(dailyReportDTO);
 		
 		
-		System.out.println("JSON"+req.getParameter("counsellingJSON"));
+		/*DailyReportDTO dto = new DailyReportDTO();
+		dto.setApproval_flag(1);
+		String jsonStr = (new Gson()).toJson(dto);
+		System.out.println(jsonStr);*/
+		
+		JsonParser parser=new JsonParser();
+		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
+		DailyReportDTO result = (new Gson()).fromJson(json.get(0), DailyReportDTO.class);
+		
+		//System.out.println(result.getApproval_flag());
+		System.out.println("여기"+result);
+		/*JsonParser parser=new JsonParser();
+		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));*/
+		/*System.out.println(json.get(0));
+		System.out.println(json.get(1).toString());
+		System.out.println("JSON"+req.getParameter("counsellingJSON"));*/
 		return model;
 	}
 	
