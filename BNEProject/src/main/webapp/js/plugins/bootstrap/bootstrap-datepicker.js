@@ -36,7 +36,14 @@
 			return this[method].apply(this, arguments);
 		};
 	}
-
+	
+	/*
+		추가 function 태우
+	*/
+	/*function aa(e){
+		alert(e);
+	}*/
+	
 	var DateArray = (function(){
 		var extras = {
 			get: function(i){
@@ -499,13 +506,15 @@
 
 		setValue: function(){
 			var formatted = this.getFormattedDate();
+			/*alert('last'+formatted);*/
 			if (!this.isInput){
 				if (this.component){
 					this.element.find('input').val(formatted).change();
 				}
 			}
 			else {
-				this.element.val(formatted).change();
+				this.element.val(formatted);
+				
 			}
 		},
 
@@ -515,6 +524,17 @@
 
 			var lang = this.o.language;
 			return $.map(this.dates, function(d){
+				
+				
+				
+				
+				
+				/*alert('DP'+DPGlobal.formatDate(d, format, lang));
+				
+				*/
+				
+				
+				
 				return DPGlobal.formatDate(d, format, lang);
 			}).join(this.o.multidateSeparator);
 		},
@@ -622,6 +642,7 @@
 				dates = this.isInput
 						? this.element.val()
 						: this.element.data('date') || this.element.find('input').val();
+						
 				if (dates && this.o.multidate)
 					dates = dates.split(this.o.multidateSeparator);
 				else
@@ -717,8 +738,10 @@
 				date.getUTCDate() === today.getDate()){
 				cls.push('today');
 			}
-			if (this.dates.contains(date) !== -1)
+			if (this.dates.contains(date) !== -1){
 				cls.push('active');
+			}
+				
 			if (date.valueOf() < this.o.startDate || date.valueOf() > this.o.endDate ||
 				$.inArray(date.getUTCDay(), this.o.daysOfWeekDisabled) !== -1){
 				cls.push('disabled');
@@ -931,7 +954,7 @@
 							case 'today':
 								var date = new Date();
 								date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
-
+					/*			alert(date);*/
 								this.showMode(-2);
 								var which = this.o.todayBtn === 'linked' ? null : 'view';
 								this._setDate(date, which);
@@ -1593,6 +1616,11 @@
 				if (seps.length)
 					date.push(seps.shift());
 				date.push(val[format.parts[i]]);
+				/////////////////////////
+				/*
+					숫자로 변환해주는부분
+				*/
+				///////////////////////
 			}
 			return date.join('');
 		},

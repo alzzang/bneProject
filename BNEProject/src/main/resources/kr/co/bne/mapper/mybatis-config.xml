@@ -14,6 +14,9 @@
 		<typeAlias alias="WeeklyPlan" type="kr.co.bne.dto.WeeklyPlanDTO"/>
 		<typeAlias alias="WeeklyReport" type="kr.co.bne.dto.WeeklyReportDTO"/>
 		
+		<!--DailyReport 태우 추가-->
+		<typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>
+		<typeAlias alias="DailyReportDetail" type="kr.co.bne.dto.DailyReportDetailDTO"/>
 	</typeAliases>
 
 	<mappers>

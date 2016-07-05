@@ -50,10 +50,11 @@ public class EmployeeDTO {
 	public void setDepartment_id(int department_id) {
 		this.department_id = department_id;
 	}
-	
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		return "EmployeeDTO [employee_id=" + employee_id + ", employee_name=" + employee_name + ", password=" + password
+				+ ", department_name=" + department_name + ", position=" + position + ", file_position=" + file_position
+				+ ", department_id=" + department_id + "]";
+	}
 	
 }
