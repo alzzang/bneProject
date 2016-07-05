@@ -38,7 +38,7 @@
 			
 			<tr>
 			<th class="col-md-1">상담내역</th>
-	<td colspan="5" ><textarea class="summernote" id="mysummernote" contenteditable="false" ><p>sdlkfjsdaklfj</p></textarea></td>
+	<td colspan="5" ><textarea class="summernote" id="mysummernote" ><p>sdlkfjsdaklfj</p><p>sdlkfjsdaklfj</p><p>sdlkfjsdaklfj</p><p>sdlkfjsdaklfj</p>	</textarea></td>
 	</tr>
 	
 		</thead>
