@@ -73,6 +73,7 @@ public class DailyReportController {
 		
 		//System.out.println(result.getApproval_flag());
 		System.out.println("여기"+result);
+		
 		/*JsonParser parser=new JsonParser();
 		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));*/
 		/*System.out.println(json.get(0));
