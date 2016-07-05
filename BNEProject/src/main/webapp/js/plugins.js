@@ -783,13 +783,13 @@ $(function() {
 								/*
 								 * var v = event.allDay; alert(v);
 								 */
-								if (isElemOverDiv($('div#trash>a'))) {
+								if (isElemOverDiv($('div#test1>a'))) {
 									console.log(event._id);
 									calendar.fullCalendar('removeEvents',
 											event._id);
 								}
 								/* calendar.fullCalendar('destroyEl',$('div#test1>a')); */
-								$('div#trash>a').remove();
+								$('div#test1>a').remove();
 							}
 						});
 

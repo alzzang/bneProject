@@ -55,8 +55,10 @@
 			<li class="xn-title">Navigation</li>
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">Home</span></a></li>
-			<li class=""><a href="index.html"><span
+			<li class=""><a href="weeklywrite"><span
 					class="fa fa-desktop"></span> <span class="xn-text">주간 계획</span></a></li>
+			<li class=""><a href="weeklywrite"><span
+					class="fa fa-desktop"></span> <span class="xn-text">주간 계획 작성</span></a></li>
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">일일 업무 보고</span></a>
 			</li>

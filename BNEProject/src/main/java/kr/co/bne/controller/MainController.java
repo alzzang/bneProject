@@ -10,8 +10,5 @@ public class MainController {
 		return "main";
 	}
 	
-	@RequestMapping("/weeklywrite")
-	public String WeeklyWriteForm(){
-		return "weeklyWriteForm";
-	}
+
 }
