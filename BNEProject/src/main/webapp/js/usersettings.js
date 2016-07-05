@@ -1,5 +1,17 @@
+function getStorage(sec_id) {
+    if(typeof(Storage) !== "undefined") {
+    	
+    	if (localStorage.secClient) {
+    
+    		alert(localStorage.getItem["secClient"]);
+    	   		
+    		
+    	
+         } 
+}
+}
+
 function selectSecontClient(value) {
-	
 	$.ajax({
 		type : "POST",
 		url : "/counselling/secondaryClient",
@@ -17,6 +29,11 @@ function selectSecontClient(value) {
 			$("#client_id").val(list[0].client_id);
 			$("#representative").val(list[0].representative);
 			
+			
+			window.localStorage.clear();
+			localStorage.setItem('secClient', list);
+			
+			
 			if (len > 0) {
 				for (var i = 0; i < len; i++) {
 					var html = "<option value='' disabled selected hidden='ture'>선택하세요!</option> ";
@@ -26,7 +43,12 @@ function selectSecontClient(value) {
 			}
 		}
 	})
+
 }
+
+
+
+
 
 $(function() {
 	
@@ -34,6 +56,13 @@ $(function() {
 		$("#sec_client_id").empty();
 			selectSecontClient($(this).val());
 	});
+
+	
+	$("#sec_client_id").change(function(){
+		getStorage($(this).val());
+	});
+
+	
 	
 	
 	$("#mysummernote").destroy();

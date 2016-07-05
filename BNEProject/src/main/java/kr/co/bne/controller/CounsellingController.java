@@ -47,11 +47,11 @@ public class CounsellingController {
 	
 	@RequestMapping(value = "/readCounsellingRecord/{counsellingId}", method = { RequestMethod.GET })
 	public String getCounsellingRecord(@PathVariable int counsellingId,ModelAndView mv) {
-		System.out.println(counsellingId);
+		
 		
 		CounsellingRecordDTO counsellingRecord = counsellingRecordService.getCounsellingRecord(counsellingId);
-		System.out.println(counsellingRecord);
-		System.out.println(counsellingRecord.getRepresentative());
+		
+		
 		mv.setViewName("main2");
 		mv.addObject("counsellingrecord", counsellingRecord);
 		//counsellingRecordService.getCounsellingRecord(counsellingId);

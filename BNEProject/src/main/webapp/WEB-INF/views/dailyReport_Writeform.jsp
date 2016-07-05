@@ -2,6 +2,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<style type="text/css">
+.modal .modal-admin{ width: 750px; }
+   
+</style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="/js/dailysettings.js"></script>
 <script>
@@ -95,6 +102,7 @@ function testJSON1(){
 
  
 </script>
+
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -267,7 +275,7 @@ function testJSON1(){
 												
 											%>
 
-											<li><a href="#" onclick="testJSON1()"><span class="fa fa-plus"></span>추가</a></li>
+											<li><a href="#" data-toggle="modal" data-target="#myModal2"><span class="fa fa-plus"></span>추가</a></li>
 										</ul>
 									</div>
 								</div>
@@ -283,18 +291,142 @@ function testJSON1(){
 						<input type="hidden" name="department_id" value="${sessionScope.user.department_id}">
 						<input type="hidden" name="employee_id" value="${sessionScope.user.employee_id}">
 						<input type="hidden" id="counsellingJSON" name="counsellingJSON" value="">
+					</div>
 				</form>
 
 			</div>
 		</div>
 
 
-
+	
 	</div>
 
 	<!-- END CONTENT FRAME BODY -->
 
 </div>
+<div id="myModal2"  class="modal fade" role="dialog">
+	<div class="modal-dialog modal-admin">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+			
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"><span class="fa fa-arrow-circle-o-left"></span> 상담일지 작성</h4>
+				
+			</div>
+			<div class="modal-body">
+			<div class="page-title">
+	 <h2>
+		
+	</h2>  
+</div> 
+<!-- END PAGE TITLE -->
+
+<!-- PAGE CONTENT WRAPPER -->
+
+<div class="page-content-wrap">
+	<div class="row">
+		<div class="col-md-12">
+			<form action="/counselling/writeCounsellingRecord" method="POST" class="form-horizontal">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<!-- <div class="form-group">
+							<label class="col-md-3 col-xs-12 control-label">제목</label>
+							<div class="col-md-6 col-xs-12">
+								<div class="input-group">
+									<span class="input-group-addon"><span
+										class="fa fa-pencil"></span></span> <input type="text"
+										class="form-control" name="title">
+								</div>
+								<span class="help-block">This is sample of text field</span>
+							</div>
+						</div> -->
+						
+						
+						
+						
+						<div class="form-group">
+							<label class="col-md-2 col-xs-12 control-label">제목</label>
+							<div class="col-md-8 col-xs-12">
+								<div class="input-group">
+									<span class="input-group-addon"><span
+										class="fa fa-pencil"></span></span> 
+										<input type="text" class="form-control" name="title">
+								</div>
+								<span class="help-block">This is text field</span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-2 col-xs-12 control-label">Text
+								Field</label>
+							<div class="col-md-8 col-xs-12">
+								<textarea class="form-control summernote" name="content"
+									rows="5"></textarea>
+
+								<span class="help-block">This is text field</span>
+							</div>
+						</div>
+
+
+
+						<div class="form-group">
+							<label class="col-md-2 col-xs-12 control-label">고객명</label> <span
+								class="col-md-4 col-xs-12"> <select class="form-control"
+								name="counsel_id" id="counsel_id" required>
+									<option value="" disabled selected hidden="true">선택하세요!</option>
+									<option value="1">동작대리점</option>
+									<option value="2">검암대리점</option>
+							</select> <span class="help-block">Select box </span>
+							</span> 
+							<span class="col-md-2 col-xs-12"> 
+							<input type="text" class="form-control" placeholder="고객코드" readonly id="client_id">
+							</span>
+							 
+							 <span class="col-md-2 col-xs-12"> 
+							 <input type="text" class="form-control" placeholder="대표자" readonly id="representative">
+							</span>
+
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-2 col-xs-12 control-label">2차거래선</label>
+							<span class="col-md-5 col-xs-12">
+								<select class="form-control" name="sec_client_id"
+									id="sec_client_id" required>
+								</select> <span class="help-block">Select box </span>
+							</span>
+							<span class="col-md-3 col-xs-12"> <input type="text"
+								class="form-control" placeholder="주소" readonly
+								id="address">
+							</span>
+						
+						</div>
+					</div>
+
+					<div class="panel-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary pull-right">Submit</button>
+					</div> 
+				</div>
+				</form>
+			
+			
+		</div>
+	</div>
+</div>
+			</div>
+			<div class="modal-footer">
+				<!-- 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary pull-right">Submit</button>	 -->
+			</div>
+		</div>
+
+	</div>
+	
+</div>
+
 
 
 <script type="text/javascript">
