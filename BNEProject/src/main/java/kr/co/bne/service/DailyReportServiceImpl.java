@@ -64,4 +64,16 @@ public class DailyReportServiceImpl implements DailyReportService {
 		dao.updateApproval(daily_report_id);
 	}
 
+	@Override
+	public DailyReportDTO searchDailyReport(String id) {
+		// TODO Auto-generated method stub
+		return dao.updateDailyReport(id);
+	}
+
+	@Override
+	public void updateDailyReport(DailyReportDTO dailyReportDTO) {
+		// TODO Auto-generated method stub
+		dao.updateReport(dailyReportDTO);
+	}
+
 }

@@ -102,9 +102,9 @@ $( "#drivingDistance" ).attr( "value", result ); */
 					</div>
 					</c:if>
 					
-					<c:if test="${user.employee_id eq dailyReport.employee_id}">
-					<div class="pull-right" id="approvalDiv">
-						<button class="btn btn-success pull-right" onclick="approvalDaily()">
+					<c:if test="${user.employee_id eq dailyReport.employee_id &&dailyReport.approval_flag eq 0}">
+					<div class="pull-right">
+						<button class="btn btn-success pull-right" onclick="updateDaily(${dailyReport.daily_report_id})" >
 					<span class="fa fa-check" ></span> 수정
 					
 					</button>
@@ -121,7 +121,7 @@ $( "#drivingDistance" ).attr( "value", result ); */
 					
 				</div>
 
-			<div>${user.employee_id} , ${dailyReport.employee_id}</div> 
+			<div></div> 
 				<div class="panel-body">
 					<div class="form-group">
 						<label class="col-md-3 col-xs-12 control-label">제목</label>

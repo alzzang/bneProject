@@ -48,5 +48,15 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		sqlSession.update("kr.co.bne.mapper.DailyReport.updateApproval",daily_report_id);
 		
 	}
+	@Override
+	public DailyReportDTO updateDailyReport(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.DailyReport", id);
+	}
+	@Override
+	public void updateReport(DailyReportDTO dailyReportDTO) {
+		// TODO Auto-generated method stub
+		sqlSession.update("kr.co.bne.mapper.DailyReport.updateReport", dailyReportDTO);
+	}
 
 }

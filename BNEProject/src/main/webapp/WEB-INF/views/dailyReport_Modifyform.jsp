@@ -43,8 +43,19 @@ function testJSON1(){
 	   alert(localStorage.getItem("tt"));
 }
  */
-
+ $(document).ready(function(){
+	 searchSalesGoal('${dailyReport.reg_date}');
+	 computeGuage();
+	 
+});
  
+ $(window).load( function(){
+	 var a=${dailyReport.sales};
+	 var b=$('#dailyGoal').val();
+	 aa(a,b);
+	 setUpdateContents('${dailyReport.content}');
+	 //pasteHTML();
+ });
 </script>
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -99,7 +110,7 @@ function testJSON1(){
 		<div class="row">
 			<div class="col-md-12">
 
-				<form class="form-horizontal" action="/dailyReport/writeform"
+				<form class="form-horizontal" action="/dailyReport/updateform"
 					id="dailyform" method="post">
 					<div class="panel panel-default">
 						<div class="panel-heading ui-draggable-handle">
@@ -117,13 +128,12 @@ function testJSON1(){
 									<div class="input-group">
 										<span class="input-group-addon"><span
 											class="fa fa-pencil"></span></span> <input type="text"
-											class="form-control" name="title" required="required">
+											class="form-control" name="title" required="required" value="${dailyReport.title}">
 									</div>
 								</div>
 
 
 							</div>
-
 
 
 							<div class="form-group">
@@ -132,7 +142,7 @@ function testJSON1(){
 									<div class="input-group">
 										<span class="input-group-addon"><span
 											class="fa fa-calendar"></span></span> <input type="text" 
-											class="form-control datepicker"  value="" name="reg_date" onchange="searchSalesGoal(this.value)" required="required" id="reg_date">
+											class="form-control datepicker"  value="${dailyReport.reg_date}" name="reg_date" onchange="searchSalesGoal(this.value)"  required="required" id="reg_date">
 									</div>
 								</div>
 							</div>
@@ -146,7 +156,7 @@ function testJSON1(){
 											class="fa fa-won"></span></span> <input type="text"
 											class="form-control"
 											id="aaaa" 
-											name="sales"  pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" required="required">
+											name="sales"  pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" required="required" value="${dailyReport.sales}">
 										<span class="progress"> <span
 											class="progress-bar progress-bar-danger" role="progressbar"
 											aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
@@ -172,14 +182,14 @@ function testJSON1(){
 								<div class="col-md-2 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">출근 시 계기판</span> <input
-											type="text" class="form-control" value="0" onchange="computeGuage()" name="before_gauge" id="before_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
+											type="text" class="form-control" value="${dailyReport.before_gauge }" onchange="computeGuage()" name="before_gauge" id="before_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
 									</div>
 								</div>
 
 								<div class="col-md-2 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">퇴근 시 계기판</span> <input
-											type="text" value="0" class="form-control" onchange="computeGuage()" name="after_gauge" id="after_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
+											type="text" value="${dailyReport.after_gauge }" class="form-control" onchange="computeGuage()" name="after_gauge" id="after_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
 									</div>
 								</div>
 
@@ -231,6 +241,7 @@ function testJSON1(){
 							</div>
 
 						</div>
+						<input type="hidden" name="daily_report_id" value="${dailyReport.daily_report_id }">
 						<input type="hidden" name="department_id" value="${sessionScope.user.department_id}">
 						<input type="hidden" name="employee_id" value="${sessionScope.user.employee_id}">
 						<input type="hidden" id="counsellingJSON" name="counsellingJSON" value="">

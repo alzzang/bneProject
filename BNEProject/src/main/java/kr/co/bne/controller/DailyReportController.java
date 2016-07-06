@@ -40,7 +40,16 @@ public class DailyReportController {
 			return "dailyReportMain";
 		
 	}
-
+	@RequestMapping(value="/update")
+	public ModelAndView goUpdate(@RequestParam("daily_report_id")String id,HttpServletRequest req,HttpServletResponse res){
+		DailyReportDTO dailyreport=dailyReportService.searchDailyReport(id);
+		String[] tt=dailyreport.getReg_date().split(" ");
+		dailyreport.setReg_date(tt[0]);
+		ModelAndView model=new ModelAndView("updateDailyReport");
+		model.addObject("dailyReport",dailyreport);
+		 
+		return model;
+	}
 	
 	@RequestMapping("/write")
 	public ModelAndView goWriteform(HttpServletRequest req, HttpServletResponse res) {
@@ -103,6 +112,14 @@ public class DailyReportController {
 		return "inputarea";
 	}
 	
+	@RequestMapping("/updateform")
+	public  ModelAndView  goUpdateForm(@ModelAttribute DailyReportDTO dailyReportDTO ,HttpServletRequest req,HttpServletResponse res){
+		ModelAndView model=new ModelAndView("dailyReportMain");
+		System.out.println(dailyReportDTO);
+		dailyReportService.updateDailyReport(dailyReportDTO);
+		return model;
+	}
+	
 	@RequestMapping("/dailysales")
 	public void goDailysales(@RequestParam("reg_date")String reg_date, HttpServletRequest req,HttpServletResponse res) throws IOException{
 		
@@ -143,7 +160,6 @@ public class DailyReportController {
 	@RequestMapping("/jsontest")
 	public void goJSON(HttpServletRequest req,HttpServletResponse res){
 		String aa=req.getParameter("dd");
-		System.out.println("aa"+aa);
 	}
 
 }

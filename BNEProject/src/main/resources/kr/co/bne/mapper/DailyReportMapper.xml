@@ -50,4 +50,15 @@ and dr.daily_report_id=#{id}
 		]]>
 	</update>
 	
+	<select id="DailyReport" parameterType="String" resultType="DailyReport">
+		<![CDATA[
+		select * from daily_report where daily_report_id=#{id}
+		]]>
+	</select>
+	
+	<update id="updateReport" parameterType="DailyReport">
+		<![CDATA[
+		update daily_report set title=#{title},reg_date=#{reg_date},sales=#{sales},before_gauge=#{before_gauge},after_gauge=#{after_gauge},content=#{content} where daily_report_id=#{daily_report_id}
+		]]>
+	</update>
 </mapper>

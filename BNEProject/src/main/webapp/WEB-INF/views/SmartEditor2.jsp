@@ -74,6 +74,10 @@ function setDefaultFont() {
 	var nFontSize = 24;
 	oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
 }
+
+function setUpdateContents(content){
+	oEditors.getById["ir1"].exec("UPDATE_CONTENTSS_FIELD", [content]);
+}
 </script>
 
 <!-- </body> -->

@@ -17,4 +17,6 @@ public interface DailyReportService {
 	public EmployeeDTO searchImage(String employee_id);
 	public List<CounsellingRecordDTO> searchCounselRecord(String id);
 	public void approvalDailyReport(String daily_report_id);
+	public DailyReportDTO searchDailyReport(String id);
+	public void updateDailyReport(DailyReportDTO dailyReportDTO);
 }

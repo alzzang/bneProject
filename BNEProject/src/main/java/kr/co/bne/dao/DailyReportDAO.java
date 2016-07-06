@@ -15,4 +15,6 @@ public interface DailyReportDAO {
 	public int selectDailySalesGoal(HashMap<String, String> map);
 	public List<CounsellingRecordDTO> selectCounselList(String id);
 	public void updateApproval(String daily_report_id);
+	public DailyReportDTO updateDailyReport(String id);
+	public void updateReport(DailyReportDTO dailyReportDTO);
 }

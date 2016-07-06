@@ -1,6 +1,12 @@
 /**
  * 
  */
+function updateDaily(id){
+	event.preventDefault();
+	var url = "update?daily_report_id="+id;    
+	alert(url);
+	location.href=url;
+}
 
 function testJSON1(){
 
@@ -24,7 +30,7 @@ function testJSON1(){
 
 function aa(money,goal){
 	
-
+	/*alert(money+':'+goal);*/
 	
 	var achievementRate=money/goal*10000;
 	achievementRate=Math.round(achievementRate);
@@ -48,13 +54,6 @@ function aa(money,goal){
 	
 	
 }
-
-/*function computeGuage(){
-	  var before=$('#before_gauge').val();
-	  var after=$('#after_gauge').val();
-	  var result=after-before;
-	  $('#result_guage').val(result);
-}*/
 
 function approvalDaily() {
     /*var txt;*/
