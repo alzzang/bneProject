@@ -57,6 +57,7 @@ $(function() {
 
 	$("#counsel_id").change(function() {
 		$("#sec_client_id").empty();
+		alert('12');
 		$("#address").val("");
 		selectSecontClient($(this).val());
 	});
