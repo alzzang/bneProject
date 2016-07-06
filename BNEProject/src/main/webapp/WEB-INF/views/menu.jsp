@@ -16,8 +16,10 @@
 		<ul class="x-navigation">
 			<li class="xn-logo"><a href="/main">BnE</a> <a
 				href="#" class="x-navigation-control"></a></li>
-			<li class="xn-profile active"><a href="#" class="profile-mini">
-					<img src="/assets/images/users/avatar.jpg" alt="John Doe">
+			<li class="xn-profile active">
+			
+			<a href="#" class="profile-mini" >
+						<img src="/assets/images/users/avatar.jpg" alt="John Doe">
 			</a>
 				<div class="profile">
 					<div class="profile-image">
