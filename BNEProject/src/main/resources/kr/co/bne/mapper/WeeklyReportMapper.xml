@@ -8,15 +8,14 @@
 		<![CDATA[
 		SELECT  SUM(RESULT) AS RECENT_SALES_SUM
 		FROM    (SELECT CASE WHEN TO_CHAR(NEXT_DAY(LPD.LAST_PLAN_DATE, 2), 'YYYYMM') = TO_CHAR(LPD.LAST_PLAN_DATE, 'YYYYMM')
-		            		     THEN DR.SALES ELSE 0
-		              			  END AS RESULT
-		         	  FROM   DAILY_REPORT DR,(SELECT	TRUNC(MAX(PD.START_TIME),'DD') AS LAST_PLAN_DATE
-		                   						              FROM		WEEKLY_REPORT WR, WEEKLY_PLAN WP, PLAN_DETAIL PD
-		                                 					WHERE		WR.EMPLOYEE_ID = #{value} AND
-		                                         							WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID AND
-		                                         							WP.WEEKLY_PLAN_ID = PD.WEEKLY_PLAN_ID) LPD 
-		         	WHERE  DR.REG_DATE < LPD.LAST_PLAN_DATE + 1 AND 
-		            		    TO_CHAR(DR.REG_DATE, 'YYYYMM') = TO_CHAR(LPD.LAST_PLAN_DATE, 'YYYYMM'))
+            				     THEN DR.SALES ELSE 0
+     		          	         END AS RESULT
+         			  FROM   DAILY_REPORT DR,(SELECT  TRUNC(MAX(WP.REG_DATE),'DD') AS LAST_PLAN_DATE
+                       								          FROM    WEEKLY_REPORT WR, WEEKLY_PLAN WP
+                                 							  WHERE   WR.EMPLOYEE_ID = #{value} AND
+                                         									WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID) LPD 
+         WHERE  DR.REG_DATE < LPD.LAST_PLAN_DATE + 1 AND 
+         		      TO_CHAR(DR.REG_DATE, 'YYYYMM') = TO_CHAR(LPD.LAST_PLAN_DATE, 'YYYYMM'))
 		]]>
 	</select>
 	
@@ -26,24 +25,26 @@
 		SELECT    CASE WHEN TO_CHAR(NEXT_DAY(LPD.LAST_PLAN_DATE, 2), 'YYYYMM') = TO_CHAR(LPD.LAST_PLAN_DATE, 'YYYYMM')
 			          THEN MG.SALES_GOAL ELSE 0
 			          END AS MONTHLY_SALES_GOAL
-		FROM      MONTHLY_GOAL MG, (SELECT	TRUNC(MAX(PD.START_TIME),'DD') AS LAST_PLAN_DATE
-							                            FROM   WEEKLY_REPORT WR, WEEKLY_PLAN WP, PLAN_DETAIL PD
-							                            WHERE WR.EMPLOYEE_ID = #{value} AND
-							                                   		WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID AND
-							                                   		WP.WEEKLY_PLAN_ID = PD.WEEKLY_PLAN_ID) LPD
-		WHERE     EMPLOYEE_ID = #{value} AND
-				        YEAR = TO_NUMBER(TO_CHAR(LPD.LAST_PLAN_DATE, 'YYYY')) AND
-				        MONTH = TO_NUMBER(TO_CHAR(LPD.LAST_PLAN_DATE, 'MM'))
+		FROM      MONTHLY_GOAL MG, (SELECT  TRUNC(MAX(WP.REG_DATE),'DD') AS LAST_PLAN_DATE
+							                            FROM    WEEKLY_REPORT WR, WEEKLY_PLAN WP
+							                            WHERE   WR.EMPLOYEE_ID = #{value} AND
+							                    		                WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID) LPD
+		WHERE    EMPLOYEE_ID = #{value} AND
+			          YEAR = TO_NUMBER(TO_CHAR(LPD.LAST_PLAN_DATE, 'YYYY')) AND
+			          MONTH = TO_NUMBER(TO_CHAR(LPD.LAST_PLAN_DATE, 'MM'))
 		]]>
 	</select>
 	
 	<!-- 새로 작성시 필요한 날짜 리스트 -->
-	<select id="selectDayList" parameterType="String" resultType="Integer">
-		SELECT   DISTINCT TRUNC(PD.START_TIME, 'DD') AS REPORT_PLAN_DAYS
-		FROM     WEEKLY_REPORT WR, WEEKLY_PLAN WP, PLAN_DETAIL PD
-		WHERE    WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID AND
-				       WP.WEEKLY_PLAN_ID = PD.WEEKLY_PLAN_ID AND
-				       WR.EMPLOYEE_ID = #{value}
-		ORDER BY 1
+	<select id="selectDayList" parameterType="String" resultType="String">
+		<![CDATA[
+		SELECT    REPORT_PLAN_DAYS
+		FROM     (SELECT   TRUNC(WP.REG_DATE+7, 'DD') AS REPORT_PLAN_DAYS, RANK() OVER (ORDER BY WP.REG_DATE DESC ) as RK
+			          FROM     WEEKLY_REPORT WR, WEEKLY_PLAN WP
+			          WHERE    WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID AND
+			                   WR.EMPLOYEE_ID = #{value}
+			          ORDER BY 1)
+		WHERE     RK <= 5     
+		]]>
 	</select>
 </mapper>

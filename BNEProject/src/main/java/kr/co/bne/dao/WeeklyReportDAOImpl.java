@@ -21,6 +21,7 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 
 	@Override
 	public int selectSalesGoal(String employee_id) throws Exception {
+		System.out.println(employee_id);
 		int result = sqlSession.selectOne(namespace + "selectSalesGoal", employee_id);
 		return result;
 	}
