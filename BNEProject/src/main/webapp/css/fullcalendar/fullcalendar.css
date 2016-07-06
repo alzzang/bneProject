@@ -722,3 +722,19 @@ a.fc-more:hover {
 .fc-time-grid-event .fc-resizer:after {
     content: "="
 }
+ul.fc-panel-controls {
+	top:-13px;
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+    position: relative;
+}
+
+ul.fc-panel-controls > li{
+float: left;
+}
+.fc-panel-remove {
+    float: left;
+    color: #eee;
+}

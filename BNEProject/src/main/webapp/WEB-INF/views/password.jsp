@@ -26,7 +26,8 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label">Password</label>
 							<div class="col-md-2">
-								<input type="text" class="form-control" name="password" id="password"
+								<input type="password" class="form-control" name="password" id="password"
+									title="Password must contain at least 6 characters, including UPPER/lowercase and numbers." required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
 									placeholder="Password">
 							</div>
 						</div>
@@ -34,6 +35,7 @@
 							<label class="col-md-2 control-label">New Password</label>
 							<div class="col-md-2">
 								<input type="password" class="form-control" name="newpassword"
+									title="Password must contain at least 6 characters, including UPPER/lowercase and numbers." required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
 									placeholder="New Password" id="newpassword">
 							</div>
 						</div>
@@ -41,7 +43,8 @@
 							<label class="col-md-2 control-label">Re-New Password</label>
 							<div class="col-md-2">
 								<input type="password" class="form-control" name="renewpassword" id="renewpassword"
-									placeholder="Re-New Password" id="renewpassword">
+											
+									title="Password must contain at least 6 characters, including UPPER/lowercase and numbers." required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" placeholder="Re-New Password" id="renewpassword">
 							</div>
 						</div>
 
