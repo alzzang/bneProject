@@ -32,7 +32,7 @@
 					<div class="profile-controls">
 						<a href="/user/changeProfile" class="profile-control-left">
 						<span class="fa fa-gear"></span></a> 
-						<a href="/counselling/readCounsellingRecord/21"
+						<a href="/counselling/readCounsellingRecord/44"
 							class="profile-control-right" >
 							<span class="fa fa-envelope"></span></a>
 					</div>

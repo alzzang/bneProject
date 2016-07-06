@@ -8,7 +8,7 @@
 	<![CDATA[insert into counsel_record values(counsel_record_seq.nextval,#{department_id},#{daily_report_id},sysdate,#{title},#{content},#{sec_client_id})]]>
 </insert>
 <select id="selectCounsellingRecord" parameterType="Integer" resultType="CounsellingRecord">
-	<![CDATA[select s.*, r.*,c.REPRESENTATIVE from SECONDARY_CLIENT s,COUNSEL_RECORD r, client c where s.CLIENT_ID=c.CLIENT_ID and s.SEC_CLIENT_ID=r.SEC_CLIENT_ID and r.COUNSEL_ID=#{value}]]>
+	<![CDATA[select s.*, r.*,c.REPRESENTATIVE,c.client_name from SECONDARY_CLIENT s,COUNSEL_RECORD r, client c where s.CLIENT_ID=c.CLIENT_ID and s.SEC_CLIENT_ID=r.SEC_CLIENT_ID and r.COUNSEL_ID=#{value}]]>
 </select>
 
 </mapper>

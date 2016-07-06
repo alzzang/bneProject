@@ -46,17 +46,17 @@ public class CounsellingController {
 	}
 	
 	@RequestMapping(value = "/readCounsellingRecord/{counsellingId}", method = { RequestMethod.GET })
-	public String getCounsellingRecord(@PathVariable int counsellingId,ModelAndView mv) {
+	public ModelAndView getCounsellingRecord(@PathVariable int counsellingId) {
 		
 		
 		CounsellingRecordDTO counsellingRecord = counsellingRecordService.getCounsellingRecord(counsellingId);
 		
-		
+		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main2");
 		mv.addObject("counsellingrecord", counsellingRecord);
 		//counsellingRecordService.getCounsellingRecord(counsellingId);
 		
-		return "main2";
+		return mv;
 	}
 
 	@RequestMapping(value = "/secondaryClient", method = { RequestMethod.POST })
@@ -67,7 +67,8 @@ public class CounsellingController {
 		JSONObject jobj;
 
 		List<SecondaryClientDTO> secondaryClient = secondaryClientService.getSecondaryClient(clientId);
-
+		
+		System.out.println(secondaryClient);
 		for (SecondaryClientDTO temp : secondaryClient) {
 			jobj = new JSONObject();
 			jobj.put("client_id", temp.getClient_id());
@@ -78,7 +79,8 @@ public class CounsellingController {
 			jobj.put("sec_client_name", temp.getSec_client_name());
 			jarr.put(jobj);
 		}
-
+		
+		System.out.println(jarr);
 		res.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = res.getWriter();
 		pw.println(jarr.toString());

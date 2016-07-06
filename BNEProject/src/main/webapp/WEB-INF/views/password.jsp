@@ -7,6 +7,8 @@
 <!-- <link rel="stylesheet" type="text/css" id="theme"
 	href="/css/theme-default.css" /> -->
 <title>Insert title here</title>
+
+
 </head>
 <body>
 	<ul class="breadcrumb">
@@ -61,16 +63,100 @@
 
 					</div>
 				</div>
-				
-<!-- <form id="myForm" method="POST" action="...">
-		<p>Username: <input id="field_username" title="Username must not be blank and contain only letters, numbers and underscores." type="text" required pattern="\w+" name="username"></p>
-		<p>Password: <input id="field_pwd1" title="Password must contain at least 6 characters, including UPPER/lowercase and numbers." type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" name="pwd1"></p>
-		<p>Confirm Password: <input id="field_pwd2" title="Please enter the same Password as above." type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" name="pwd2"></p>
-		<p><input type="submit" value="Submit"></p>
-	 </form>		 -->
-
 			
 		</form>
 	</div>
+<script type="text/javascript">
+var checkPassword = function(str) {
+	var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+	return re.test(str);
+};
+
+var checkForm = function(e) {
+
+	if (this.password.value == "") {
+		alert("Error: password cannot be blank!");
+		this.password.focus();
+		e.preventDefault(); // equivalent to return false
+		return;
+	}
+	re = /^\w+$/;
+	if (!re.test(this.password.value)) {
+		alert("Error: password must contain only letters, numbers and underscores!");
+		this.password.focus();
+		e.preventDefault();
+		return;
+	}
+	if (this.newpassword.value != ""
+			&& this.newpassword.value == this.renewpassword.value) {
+		if (!checkPassword(this.newpassword.value)) {
+			alert("The password you have entered is not valid!");
+			this.newpassword.focus();
+			e.preventDefault();
+			return;
+		}
+	} else {
+		alert("Error: Please check that you've entered and confirmed your password!");
+		this.newpassword.focus();
+		e.preventDefault();
+		return;
+	}
+};
+
+var myForm = document.getElementById("myPasswordForm");
+myForm.addEventListener("submit", checkForm, true);
+
+// HTML5 form validation
+
+var supports_input_validity = function() {
+	var i = document.createElement("input");
+	return "setCustomValidity" in i;
+}
+
+if (supports_input_validity()) {
+	var usernameInput = document.getElementById("password");
+	usernameInput.setCustomValidity(usernameInput.title);
+
+	var pwd1Input = document.getElementById("newpassword");
+	pwd1Input.setCustomValidity(pwd1Input.title);
+
+	var pwd2Input = document.getElementById("renewpassword");
+
+	// input key handlers
+
+	usernameInput
+			.addEventListener(
+					"keyup",
+					function() {
+						usernameInput
+								.setCustomValidity(this.validity.patternMismatch ? usernameInput.title
+										: "");
+					}, false);
+
+	pwd1Input
+			.addEventListener(
+					"keyup",
+					function() {
+						this
+								.setCustomValidity(this.validity.patternMismatch ? pwd1Input.title
+										: "");
+						if (this.checkValidity()) {
+							pwd2Input.pattern = this.value;
+							pwd2Input.setCustomValidity(pwd2Input.title);
+						} else {
+							pwd2Input.pattern = this.pattern;
+							pwd2Input.setCustomValidity("");
+						}
+					}, false);
+	pwd2Input
+			.addEventListener(
+					"keyup",
+					function() {
+						this
+								.setCustomValidity(this.validity.patternMismatch ? pwd2Input.title
+										: "");
+					}, false);
+}
+</script>
 </body>
 </html>
