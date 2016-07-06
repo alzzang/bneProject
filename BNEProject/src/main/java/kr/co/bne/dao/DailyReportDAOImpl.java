@@ -21,7 +21,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	
 	
 	@Override
-	public List<DailyReportListElement> selectDailyReportList_Manager(String user_id, int startIdx, int perContentNum, HashMap<String, Object> params) throws RuntimeException {
+	public List<DailyReportListElement> selectDailyReportList(String user_id, int startIdx, int perContentNum, HashMap<String, Object> params) throws RuntimeException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		if(params != null) {
@@ -31,7 +31,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		map.put("startIdx", startIdx);
 		map.put("perContentNum", perContentNum);
 		
-		List<DailyReportListElement> list = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyReportList_Manager", map);
+		List<DailyReportListElement> list = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyReportList", map);
 	
 		return list;
 	}
@@ -39,7 +39,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	
 	
 	@Override
-	public int getPagingNum_DailyReportList_Manager(String user_id, int perContentNum, HashMap<String, Object> params) throws RuntimeException {
+	public int getPagingNum_DailyReportList(String user_id, int perContentNum, HashMap<String, Object> params) throws RuntimeException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		if(params != null) {
@@ -48,46 +48,11 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		map.put("user_id", user_id);
 		map.put("perContentNum", perContentNum);
 		
-		int pageNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getPagingNum_DailyReportList_Manager", map);
+		int pageNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getPagingNum_DailyReportList", map);
 		
 		return pageNum;
 	}
 	
-	
-	
-	
-	@Override
-	public List<DailyReportListElement> selectDailyReportList_Member(String user_id, int perContentNum, HashMap<String, Object> params) throws RuntimeException {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-
-		if(params != null) {
-			map.putAll(params);
-		}
-		map.put("user_id", user_id);
-		map.put("perContentNum", perContentNum);
-		
-		List<DailyReportListElement> list = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyReportList_Member", map);
-		
-		return list;
-	}
-	
-	
-	
-	
-	@Override
-	public int getPagingNum_DailyReportList_Member(String user_id, int perContentNum, HashMap<String, Object> params) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-
-		if(params != null) {
-			map.putAll(params);
-		}
-		map.put("user_id", user_id);
-		map.put("perContentNum", perContentNum);
-		
-		int pageNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getPagingNum_DailyReportList_Member", map);
-		
-		return pageNum;
-	}
 	
 
 
@@ -102,8 +67,17 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	
 	
 	@Override
-	public int getTotalUnapprovalNum(String user_id) throws RuntimeException {
-		int TotalUnapprovalNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getTotalUnapprovalNum", user_id);
+	public int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException {
+		int TotalUnapprovalNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getTotalUnapprovalNum_Manager", user_id);
+		
+		return TotalUnapprovalNum;
+	}
+	
+	
+	
+	@Override
+	public int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException {
+		int TotalUnapprovalNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getTotalUnapprovalNum_Member", user_id);
 		
 		return TotalUnapprovalNum;
 	}

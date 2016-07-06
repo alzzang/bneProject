@@ -8,22 +8,16 @@ import kr.co.bne.common.DailyReportTeamListElement;
 
 public interface DailyReportDAO {
 
-	List<DailyReportListElement> selectDailyReportList_Manager(String user_id, int startIdx, int perContentNum,
+	List<DailyReportListElement> selectDailyReportList(String user_id, int startIdx, int perContentNum,
 			HashMap<String, Object> params) throws RuntimeException;
 
-	int getPagingNum_DailyReportList_Manager(String user_id, int perContentNum, HashMap<String, Object> params)
+	int getPagingNum_DailyReportList(String user_id, int perContentNum, HashMap<String, Object> params)
 			throws RuntimeException;
-
-	List<DailyReportListElement> selectDailyReportList_Member(String user_id, int perContentNum,
-			HashMap<String, Object> params) throws RuntimeException;
-
-	int getPagingNum_DailyReportList_Member(String user_id, int perContentNum, HashMap<String, Object> params);
 
 	List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException;
 
-	int getTotalUnapprovalNum(String user_id) throws RuntimeException;
+	int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException;
 
-	
-	
+	int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException;
 
 }

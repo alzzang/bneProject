@@ -27,7 +27,7 @@ public class DailyReportDAOTest {
 		/*map.put("employee_id", "1");
 		map.put("reg_date", "2016-06-27");*/
 		
-		List<DailyReportListElement> list = dailyReportDAO.selectDailyReportList_Manager("2", 1, 15, map);
+		List<DailyReportListElement> list = dailyReportDAO.selectDailyReportList("2", 1, 15, map);
 		
 		int cnt = 1;
 		for(DailyReportListElement el : list) {
@@ -42,7 +42,7 @@ public class DailyReportDAOTest {
 		map.put("employee_id", "1");
 		/*map.put("reg_date", "2016-06-27");*/
 		
-		int num = dailyReportDAO.getPagingNum_DailyReportList_Manager("2", 25, map);
+		int num = dailyReportDAO.getPagingNum_DailyReportList("2", 25, map);
 		System.out.println(num);
 	}
 	
@@ -53,7 +53,7 @@ public class DailyReportDAOTest {
 		//map.put("reg_date", "2016-06-27");
 		map.put("approval_flag", 0);
 		
-		int num = dailyReportDAO.getPagingNum_DailyReportList_Member("1", 25, map);
+		int num = dailyReportDAO.getPagingNum_DailyReportList("1", 25, map);
 		System.out.println(num);
 	}
 

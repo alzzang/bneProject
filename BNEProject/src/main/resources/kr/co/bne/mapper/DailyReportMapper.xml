@@ -29,8 +29,8 @@
 
 
 
-<!-- 전체 리스트 페이징(팀장 뷰에서 쓰일 것) -->
-<select id="selectDailyReportList_Manager" parameterType="hashmap" resultMap="DailyReportListElement"> 
+<!-- 전체 리스트 페이징 -->
+<select id="selectDailyReportList" parameterType="hashmap" resultMap="DailyReportListElement"> 
 
 	select idx, employee_id, employee_name, title, reg_date, approval_flag
 	from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
@@ -54,8 +54,8 @@
 
 
 
-<!-- 전체 리스트 페이지 갯수 (팀장 뷰에서 쓰일 것) -->
-<select id="getPagingNum_DailyReportList_Manager" parameterType="hashmap" resultType="int"> 
+<!-- 전체 리스트 페이지 갯수 -->
+<select id="getPagingNum_DailyReportList" parameterType="hashmap" resultType="int"> 
 
 	select ceil(count(*)/#{perContentNum}) cnt
 	from daily_report d , employee e
@@ -77,49 +77,6 @@
 
 
 
-<!-- 전체 리스트 페이징(팀원 뷰에서 쓰일 것) -->
-<select id="selectDailyReportList_Member" parameterType="hashmap" resultMap="DailyReportListElement"> 
-
-	select idx, employee_id, employee_name, title, reg_date, approval_flag
-	from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
-	      from daily_report d , employee e
-	      where d.employee_id = e.employee_id
-	            and d.employee_id = #{user_id}
-	      <if test="reg_date != null">
-	      	and to_char(d.reg_date, 'yyyy-mm-dd') = #{reg_date}
-	      </if>
-	      <if test="approval_flag != null">
-	      	and d.approval_flag = #{approval_flag}
-	      </if>
-	      ) a  		
-	where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
-	order by idx asc 
-
-</select>
-
-
-
-
-
-<!-- 전체 리스트 페이지 갯수 (팀원 뷰에서 쓰일 것) -->
-<select id="getPagingNum_DailyReportList_Member" parameterType="hashmap" resultType="int"> 
-
-	select ceil(count(*)/#{perContentNum}) cnt
-	from daily_report d , employee e
-	where d.employee_id = e.employee_id
-		and d.employee_id = #{user_id}
-	<if test="reg_date != null">
-	   	and to_char(d.reg_date, 'yyyy-mm-dd') = #{reg_date}
-	</if>
-	<if test="approval_flag != null">
-	   	and d.approval_flag = #{approval_flag}
-	</if> 		
-
-</select>
-
-
-
-
 
 
 <select id="selectTeamMemberList" parameterType="java.lang.String" resultMap="DailyReportTeamListElement"> 
@@ -137,11 +94,21 @@
 
 
 
-<select id="getTotalUnapprovalNum" parameterType="java.lang.String" resultType="int">
+<select id="getTotalUnapprovalNum_Manager" parameterType="String" resultType="int">
 	select count(*) from DAILY_REPORT
   	where department_id = (select department_id from department where manager_id = #{value}) 
     	    and APPROVAL_FLAG = 0
 </select>
+
+
+
+
+<select id="getTotalUnapprovalNum_Member" parameterType="String" resultType="int">
+	select count(*) from DAILY_REPORT
+  	where employee_id = #{value}
+    	    and APPROVAL_FLAG = 0
+</select>
+
 
 
 

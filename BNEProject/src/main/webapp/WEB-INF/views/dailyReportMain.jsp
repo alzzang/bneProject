@@ -16,12 +16,11 @@ String url = (String) request.getAttribute("url");
 
 String position = ((EmployeeDTO) session.getAttribute("user")).getPosition();
 boolean managerFlag = false; //manager면 true;
-int totalUnapprovalNum = 0;
+int totalUnapprovalNum = (Integer) request.getAttribute("totalUnapprovalNum");
 List<DailyReportTeamListElement> memberList = null;
 
 if("manager".equals(position)) {
 	managerFlag = true;
-	totalUnapprovalNum = (Integer) request.getAttribute("totalUnapprovalNum");
 	memberList = (List<DailyReportTeamListElement>) request.getAttribute("memberList");
 }else { 
 	managerFlag = false;
@@ -48,6 +47,24 @@ if(request.getAttribute("currentApproval_flag") != null) {
 }
 
 String serviceParamsStr = (String) request.getAttribute("serviceParamsStr");
+
+
+
+int startIdx = 0;
+int endIdx = 0;
+
+for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
+	startIdx = 1 + (i-1)*4;
+	endIdx = i*4;
+	
+	if((currentPage >= startIdx) && (currentPage <= endIdx)) {
+		if(endIdx >= totalPageNum) {
+			endIdx = totalPageNum;
+		}
+		
+		break;		
+	}
+}
 
 %>    
 
@@ -158,16 +175,21 @@ String serviceParamsStr = (String) request.getAttribute("serviceParamsStr");
                             
                            <div class="panel-footer">                                
                                 <ul class="pagination pagination-sm pull-right">
-                                    <li class="disabled"><a href="#">«</a></li>
-                                    <%for(int i=1; i<=totalPageNum; i++) { %>
+                                    <%if(startIdx > 1) {%>
+                                    <li class="disabled"><a href="<%=url %>/<%=startIdx-1 %>">«</a></li>
+                                    <%} %>
+                                    <%for(int i=startIdx; i<=endIdx; i++) { %>
                                     	<%if(currentPage == i) {%>
                                     	<li class="active">
                                     	<%}else { %>
                                     	<li  style="cursor: pointer;">
                                     	<%} %>
                                     	<a onclick="viewList('page', <%=i%>)"><%=i %></a></li>
-                                    <%} %>                                 
-                                    <li><a href="#">»</a></li>
+                                    <%} %> 
+                                    
+                                    <%if(totalPageNum > endIdx) {%>                                
+                                    <li><a href="<%=url %>/<%=endIdx+1 %>">»</a></li>
+                                    <%} %>
                                 </ul>
                             </div>                   
                         </div>

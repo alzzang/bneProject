@@ -18,7 +18,8 @@ public class DailyReportService {
 	
 	
 	public HashMap<String, Object> selectTeamMemberList(String user_id) {
-		int totalUnapprovalNum = dailyReportDAO.getTotalUnapprovalNum(user_id);
+		int totalUnapprovalNum = dailyReportDAO.getTotalUnapprovalNum_Manager(user_id);
+		
 		List<DailyReportTeamListElement> memberList = dailyReportDAO.selectTeamMemberList(user_id);
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
@@ -26,6 +27,16 @@ public class DailyReportService {
 		result.put("memberList", memberList);
 		
 		return result;
+	}
+	
+	
+	
+	public int getgetTotalUnapprovalNum(String position, String user_id) {
+		if(position.equals("manager")) {
+			return dailyReportDAO.getTotalUnapprovalNum_Manager(user_id);
+		}else {
+			return dailyReportDAO.getTotalUnapprovalNum_Member(user_id);
+		}
 	}
 	
 	
@@ -42,15 +53,10 @@ public class DailyReportService {
 		List<DailyReportListElement> dailyReportList = null;
 		int totalPageNum = 0;
 		
-		if(("manager").equals(position)) {
-			//매니저일 때 쿼리
-			dailyReportList = dailyReportDAO.selectDailyReportList_Manager(user_id, startIdx, perContentNum, params);
-			totalPageNum = dailyReportDAO.getPagingNum_DailyReportList_Manager(user_id, perContentNum, params);
-		}else {
-			//팀원일 때 쿼리
-			dailyReportList = dailyReportDAO.selectDailyReportList_Member(user_id, perContentNum, params);
-			totalPageNum = dailyReportDAO.getPagingNum_DailyReportList_Member(user_id, perContentNum, params);
-		}
+		
+		dailyReportList = dailyReportDAO.selectDailyReportList(user_id, startIdx, perContentNum, params);
+		totalPageNum = dailyReportDAO.getPagingNum_DailyReportList(user_id, perContentNum, params);
+		
 		
 		result.put("dailyReportList", dailyReportList);
 		result.put("totalPageNum", totalPageNum);
