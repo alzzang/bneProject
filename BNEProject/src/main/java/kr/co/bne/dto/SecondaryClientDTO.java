@@ -1,10 +1,25 @@
 package kr.co.bne.dto;
 
 public class SecondaryClientDTO {
+	private int daily_report_id;
 	private int sec_client_id;
 	private String address;
 	private String sec_client_name;
 	private int client_id;
+	private String client_name;
+	private String representative;
+	public String getClient_name() {
+		return client_name;
+	}
+	public void setClient_name(String client_name) {
+		this.client_name = client_name;
+	}
+	public String getRepresentative() {
+		return representative;
+	}
+	public void setRepresentative(String representative) {
+		this.representative = representative;
+	}
 	public SecondaryClientDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -16,6 +31,13 @@ public class SecondaryClientDTO {
 		this.sec_client_name = sec_client_name;
 		this.client_id = client_id;
 	}
+	public int getDaily_report_id() {
+		return daily_report_id;
+	}
+	public void setDaily_report_id(int daily_report_id) {
+		this.daily_report_id = daily_report_id;
+	}
+	
 	public int getSec_client_id() {
 		return sec_client_id;
 	}

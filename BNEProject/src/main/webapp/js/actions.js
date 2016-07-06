@@ -508,11 +508,7 @@ function x_navigation(){
     
     $(".x-navigation li").click(function(event){
        
-<<<<<<< HEAD
-    /*	event.stopPropagation();
-=======
 /*    	event.stopPropagation();
->>>>>>> refs/remotes/origin/develop
           	
         var li = $(this);
                 
@@ -530,13 +526,13 @@ function x_navigation(){
                 else
                     return false;
 <<<<<<< HEAD
-            }  */                                   
+            }                                     
     });
     
 =======
             }    */                                 
     });    
->>>>>>> refs/remotes/origin/develop
+>>>>>>> branch 'develop' of https://github.com/alzzang/bneProject.git
     /* XN-SEARCH */
     $(".xn-search").on("click",function(){
         $(this).find("input").focus();

@@ -15,8 +15,17 @@
 	</definition>
 	
 	<definition name="main" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/dropzone.jsp"/>
+
+		<put-attribute name="body" value="/WEB-INF/views/board.jsp" />
 	</definition>
+	
+	<definition name="main2" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/counsellingForm.jsp" />
+	</definition>
+	
+	
+	
+	
 	
 	<definition name="dailyReportDetail" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReportDetail.jsp"/>
