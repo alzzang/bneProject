@@ -175,6 +175,8 @@ for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
                             
                            <div class="panel-footer">                                
                                 <ul class="pagination pagination-sm pull-right">
+                                    
+                                    <%if(startIdx != 0) { %>
                                     <%if(startIdx > 1) {%>
                                     <li class="disabled"><a href="<%=url %>/<%=startIdx-1 %>">«</a></li>
                                     <%} %>
@@ -189,6 +191,7 @@ for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
                                     
                                     <%if(totalPageNum > endIdx) {%>                                
                                     <li><a href="<%=url %>/<%=endIdx+1 %>">»</a></li>
+                                    <%} %>
                                     <%} %>
                                 </ul>
                             </div>                   
