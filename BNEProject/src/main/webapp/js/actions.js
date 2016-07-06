@@ -508,7 +508,11 @@ function x_navigation(){
     
     $(".x-navigation li").click(function(event){
        
+<<<<<<< HEAD
     /*	event.stopPropagation();
+=======
+/*    	event.stopPropagation();
+>>>>>>> refs/remotes/origin/develop
           	
         var li = $(this);
                 
@@ -525,9 +529,14 @@ function x_navigation(){
                     return true;
                 else
                     return false;
+<<<<<<< HEAD
             }  */                                   
     });
     
+=======
+            }    */                                 
+    });    
+>>>>>>> refs/remotes/origin/develop
     /* XN-SEARCH */
     $(".xn-search").on("click",function(){
         $(this).find("input").focus();

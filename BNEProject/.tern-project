@@ -9,6 +9,7 @@
     },
     "browser-extension": {
       
+<<<<<<< HEAD
     },
     "gcharts": {
       
@@ -29,5 +30,11 @@
   "libs": [
     "browser",
     "jquery"
+=======
+    }
+  },
+  "libs": [
+    "browser"
+>>>>>>> refs/remotes/origin/develop
   ]
 }
