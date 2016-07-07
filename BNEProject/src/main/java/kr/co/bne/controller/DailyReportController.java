@@ -2,6 +2,7 @@ package kr.co.bne.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -67,27 +68,16 @@ public class DailyReportController {
 	@RequestMapping("/writeform")
 	public ModelAndView goWrite(@ModelAttribute DailyReportDTO dailyReportDTO  ,HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
-		dailyReportService.writeDailyReport(dailyReportDTO);
-		System.out.println(dailyReportDTO);
-		
-		
-		/*DailyReportDTO dto = new DailyReportDTO();
-		dto.setApproval_flag(1);
-		String jsonStr = (new Gson()).toJson(dto);
-		System.out.println(jsonStr);*/
-		
 		JsonParser parser=new JsonParser();
 		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
-		DailyReportDTO result = (new Gson()).fromJson(json.get(0), DailyReportDTO.class);
+		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
+		for(int i=0;i<json.size();i++){
+			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
+			list.add(dto);
+			System.out.println(dto);
+		}
+		dailyReportService.writeDailyReport(dailyReportDTO,list);
 		
-		//System.out.println(result.getApproval_flag());
-		System.out.println("여기"+result);
-		
-		/*JsonParser parser=new JsonParser();
-		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));*/
-		/*System.out.println(json.get(0));
-		System.out.println(json.get(1).toString());
-		System.out.println("JSON"+req.getParameter("counsellingJSON"));*/
 		return model;
 	}
 	

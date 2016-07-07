@@ -1,6 +1,6 @@
 package kr.co.bne.dto;
 
-public class CounsellingRecordDTO extends SecondaryClientDTO {
+public class CounsellingRecordDTO  {
 	private int counsel_id;
 	private int department_id;
 	private int daily_report_id;

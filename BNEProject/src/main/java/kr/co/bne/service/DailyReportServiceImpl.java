@@ -29,15 +29,20 @@ public class DailyReportServiceImpl implements DailyReportService {
 	}
 
 	@Override
-	public void writeDailyReport(DailyReportDTO dailyReportDTO) {
+	public void writeDailyReport(DailyReportDTO dailyReportDTO,List<CounsellingRecordDTO> list) {
 		// TODO Auto-generated method stub
 		dao.insertDailyReport(dailyReportDTO);
+		int seq=dailyReportDTO.getDaily_report_id();
+		for(int i=0;i<list.size();i++){
+			list.get(i).setDaily_report_id(seq);
+			dao.insertCounsellingRecord(list.get(i));
+		}
 	}
 
 	@Override
 	public DailyReportDetailDTO viewReport(String id) {
 		// TODO Auto-generated method stub
-		return dao.selectDailyReport(id);
+		return dao.selectDailyReport(id);  
 	}
 
 	@Override
@@ -74,6 +79,15 @@ public class DailyReportServiceImpl implements DailyReportService {
 	public void updateDailyReport(DailyReportDTO dailyReportDTO) {
 		// TODO Auto-generated method stub
 		dao.updateReport(dailyReportDTO);
+	}
+
+	@Override
+	public void writeCounsellingRecord(List<CounsellingRecordDTO> result) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<result.size();i++){
+			dao.insertCounsellingRecord(result.get(i));
+		}
+		
 	}
 
 }

@@ -11,11 +11,16 @@
 	</select>
 	
 	<insert id="insertDailyReport" parameterType="DailyReport">
-	<![CDATA[
 	 insert into daily_report values(daily_report_seq.nextval,#{department_id},#{employee_id},#{title},#{reg_date},#{sales},#{before_gauge},#{after_gauge},#{content},'',0)
-	]]>
-	</insert>
+	<selectKey keyProperty="daily_report_id" resultType="Integer" order="AFTER">
+		select daily_report_seq.CURRVAL from dual
+	</selectKey>
 	
+	</insert>
+
+
+
+
 	<select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
 	<![CDATA[
 	select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
@@ -61,4 +66,9 @@ and dr.daily_report_id=#{id}
 		update daily_report set title=#{title},reg_date=#{reg_date},sales=#{sales},before_gauge=#{before_gauge},after_gauge=#{after_gauge},content=#{content} where daily_report_id=#{daily_report_id}
 		]]>
 	</update>
+	
+	<insert id="insertCounsellingList" parameterType="CounsellingRecord">
+		INSERT INTO COUNSEL_RECORD (counsel_id,department_id,daily_report_id,reg_date,title,content,sec_client_id) values (counsel_record_seq.nextval,#{department_id},#{daily_report_id},sysdate,#{title},#{content},#{sec_client_id})
+	</insert>
+	
 </mapper>

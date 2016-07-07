@@ -12,46 +12,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- <script src="/js/dailysettings.js"></script> -->
 <script>
-/* function comma(str) {
-    str = String(str);
-    alert(str);
-    document.getElementById('a').innerHTML = str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-} */
 
-
-
-/* $( "#dailyReportSubmit" ).click(function() {
-	  $( "#dailyform" ).submit();
-}); */
 var jsonArray=new Array();
-/* function test1(){
-	str++;
-	alert(str);
-	
-} */
-/* 
-function testJSON1(){
+var removeId=0;
 
-	  var o = {};
-	   var a = $( "#dailyform" ).serializeArray();
-	   $.each(a, function() {
-		     if (o[this.name]) {
-	           if (!o[this.name].push) {
-	               o[this.name] = [o[this.name]];
-	           }
-	          o[this.name].push(this.value || '');
-	       } else {
-	           o[this.name] = this.value || '';
-	       } 
-	   });
-	   jsonArray.push(o);
-	    var t=JSON.stringify(jsonArray);
-	   localStorage.setItem("tt", t);
-	   alert(localStorage.getItem("tt"));
-}
- */
-
- 
 </script>
 
 <div class="content-frame">
@@ -212,16 +176,6 @@ function testJSON1(){
 												
 											%>
 											<li><a href="#"><span class="fa fa-tag"></span> amet</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													rutrum</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span> nunc</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													tempor</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span> eros</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													suspendisse</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													dolor</a></li>
 											<%
 												
 											%>
@@ -279,31 +233,16 @@ function testJSON1(){
 <div class="page-content-wrap">
 	<div class="row">
 		<div class="col-md-12">
-			<form action="#" method="POST" class="form-horizontal">
+			<form action="#" onsubmit="event.preventDefault();" method="POST" class="form-horizontal" id="dailyModalForm">
 				<div class="panel panel-default">
-					<div class="panel-body">
-						<!-- <div class="form-group">
-							<label class="col-md-3 col-xs-12 control-label">제목</label>
-							<div class="col-md-6 col-xs-12">
-								<div class="input-group">
-									<span class="input-group-addon"><span
-										class="fa fa-pencil"></span></span> <input type="text"
-										class="form-control" name="title">
-								</div>
-								<span class="help-block">This is sample of text field</span>
-							</div>
-						</div> -->
-						
-						
-						
-						
+					<div class="panel-body">										
 						<div class="form-group">
 							<label class="col-md-2 col-xs-12 control-label">제목</label>
 							<div class="col-md-8 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span
 										class="fa fa-pencil"></span></span> 
-										<input type="text" class="form-control" name="title">
+										<input type="text" class="form-control" name="title" id="modalTitle">
 								</div>
 								<span class="help-block">This is text field</span>
 							</div>
@@ -314,13 +253,11 @@ function testJSON1(){
 								Field</label>
 							<div class="col-md-8 col-xs-12">
 								<textarea class="form-control summernote" name="content"
-									rows="5"></textarea>
+									rows="5" id="modalContent"></textarea>
 
 								<span class="help-block">This is text field</span>
 							</div>
 						</div>
-
-
 
 						<div class="form-group">
 							<label class="col-md-2 col-xs-12 control-label">고객명</label> <span
@@ -332,11 +269,11 @@ function testJSON1(){
 							</select> <span class="help-block">Select box </span>
 							</span> 
 							<span class="col-md-2 col-xs-12"> 
-							<input type="text" class="form-control" placeholder="고객코드" readonly id="client_id">
+							<input type="text" class="form-control" placeholder="고객코드" readonly id="client_id" name="client_id">
 							</span>
 							 
 							 <span class="col-md-2 col-xs-12"> 
-							 <input type="text" class="form-control" placeholder="대표자" readonly id="representative">
+							 <input type="text" class="form-control" placeholder="대표자" readonly id="representative" name="representative">
 							</span>
 
 						</div>
@@ -350,18 +287,19 @@ function testJSON1(){
 							</span>
 							<span class="col-md-3 col-xs-12"> <input type="text"
 								class="form-control" placeholder="주소" readonly
-								id="address">
+								id="address" name="address">
 							</span>
 						
 						</div>
 					</div>
 
 					<div class="panel-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary pull-right">Submit</button>
+					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON1()">Submit</button>
 					</div> 
 				</div>
-				</form>
+				<input type="hidden" value="${sessionScope.user.department_id }" name="department_id">
+				<input type="hidden" value="" id="temp_scId">
+			</form>
 			
 			
 		</div>

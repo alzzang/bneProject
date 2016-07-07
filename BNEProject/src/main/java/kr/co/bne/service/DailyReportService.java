@@ -11,7 +11,7 @@ import kr.co.bne.dto.EmployeeDTO;
 
 public interface DailyReportService {
 	public DailyReportEmployeeDTO searchPreSales(String employee_id);
-	public void writeDailyReport(DailyReportDTO dailyReportDTO);
+	public void writeDailyReport(DailyReportDTO dailyReportDTO, List<CounsellingRecordDTO> list);
 	public DailyReportDetailDTO viewReport(String id);
 	public int searchDailySales(HashMap<String, String> map);
 	public EmployeeDTO searchImage(String employee_id);
@@ -19,4 +19,5 @@ public interface DailyReportService {
 	public void approvalDailyReport(String daily_report_id);
 	public DailyReportDTO searchDailyReport(String id);
 	public void updateDailyReport(DailyReportDTO dailyReportDTO);
+	public void writeCounsellingRecord(List<CounsellingRecordDTO> result);
 }

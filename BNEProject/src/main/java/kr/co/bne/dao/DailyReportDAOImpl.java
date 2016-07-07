@@ -22,9 +22,9 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectEmployee", employee_id);
 	}
 	@Override
-	public void insertDailyReport(DailyReportDTO dailyReportDTO) {
+	public int insertDailyReport(DailyReportDTO dailyReportDTO) {
 		// TODO Auto-generated method stub
-		sqlSession.insert("kr.co.bne.mapper.DailyReport.insertDailyReport", dailyReportDTO);
+		return sqlSession.insert("kr.co.bne.mapper.DailyReport.insertDailyReport", dailyReportDTO);
 		
 	}
 	@Override
@@ -57,6 +57,11 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	public void updateReport(DailyReportDTO dailyReportDTO) {
 		// TODO Auto-generated method stub
 		sqlSession.update("kr.co.bne.mapper.DailyReport.updateReport", dailyReportDTO);
+	}
+	@Override
+	public void insertCounsellingRecord(CounsellingRecordDTO result) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("kr.co.bne.mapper.DailyReport.insertCounsellingList", result);
 	}
 
 }

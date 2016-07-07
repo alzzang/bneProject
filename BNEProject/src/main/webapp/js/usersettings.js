@@ -48,20 +48,25 @@ function selectSecontClient(value) {
 							$("#sec_client_id").append(html);
 						}
 					}
+					$("#sec_client_id").val($("#temp_scId").val());
 				}
 			})
 
 }
 
 $(function() {
-
+	$('#myModal2').on('hidden.bs.modal', function() {
+	       $(this).find('form')[0].reset();
+	       $(this).find('.note-editable').empty();
+	   });
 	$("#counsel_id").change(function() {
 		$("#sec_client_id").empty();
-		alert('12');
 		$("#address").val("");
 		selectSecontClient($(this).val());
 	});
 
+	
+	
 	$("#sec_client_id").change(function() {
 		getStorage($(this).val());
 	});
