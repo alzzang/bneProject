@@ -14,12 +14,9 @@
 		<put-attribute name="body" value="/WEB-INF/views/dailyReportMain.jsp"/>
 	</definition>
 	
-	<definition name="main" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/counsellingForm.jsp" />
-	</definition>
+
 	
 	<definition name="main" extends="tilesbase">
-
 		<put-attribute name="body" value="/WEB-INF/views/board.jsp" />
 	</definition>
 	
@@ -35,7 +32,6 @@
 		<put-attribute name="body" value="/WEB-INF/views/dailyReportDetail.jsp"/>
 	</definition>
 	
-	<definition name="login" template="/WEB-INF/views/pages-login.jsp"/>
 
 	
 	<definition name="edit" template="/WEB-INF/views/SmartEditor2Skin.jsp"/>
@@ -46,14 +42,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/password.jsp"/>
 	</definition>
 	
-		
 	
-
-		
-	<definition name="password" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/password.jsp" />
-	</definition>
-
 
 	<definition name="login" template="/WEB-INF/views/pages-login.jsp" />
 

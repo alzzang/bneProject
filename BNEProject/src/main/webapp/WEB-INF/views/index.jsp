@@ -524,7 +524,6 @@
 						<!-- END VISITORS BLOCK -->
 
 					</div>
-=======
     <head>        
         <!-- META SECTION -->
         <title>Joli Admin - Responsive Bootstrap Admin Template</title>            

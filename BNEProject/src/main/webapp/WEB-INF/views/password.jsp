@@ -66,7 +66,6 @@
 			
 		</form>
 	</div>
-<<<<<<< HEAD
 	
 <script type="text/javascript">
 var checkPassword = function(str) {
@@ -160,7 +159,6 @@ if (supports_input_validity()) {
 					}, false);
 }
 </script>
-=======
 	<script type="text/javascript">
 	var checkPassword = function(str)
     {
@@ -243,6 +241,5 @@ if (supports_input_validity()) {
 
     }
 	</script>
->>>>>>> refs/remotes/origin/Jiyeon
 </body>
 </html>

@@ -9,7 +9,6 @@
     },
     "browser-extension": {
       
-<<<<<<< HEAD
     },
     "gcharts": {
       
@@ -30,11 +29,9 @@
   "libs": [
     "browser",
     "jquery"
-=======
     }
   },
   "libs": [
     "browser"
->>>>>>> branch 'develop' of https://github.com/alzzang/bneProject.git
   ]
 }
