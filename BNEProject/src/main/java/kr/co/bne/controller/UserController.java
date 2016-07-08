@@ -67,7 +67,7 @@ public class UserController {
 		int byteRead = -1;
 		FileInputStream inputStream;
 		OutputStream outStream;
-
+		
 		File f = new File("c:/uploaded-files/" + employee_id);
 
 		inputStream = new FileInputStream(f);
@@ -115,7 +115,7 @@ public class UserController {
 
 	@RequestMapping(value = "/validCheck", method = { RequestMethod.POST })
 	public String validCheck(@RequestParam("id") String id, @RequestParam("password") String rawPassword,
-			HttpServletRequest req, HttpServletResponse res) throws IOException {
+		HttpServletRequest req, HttpServletResponse res) throws IOException {
 
 		HttpSession session = req.getSession();
 		EmployeeDTO employeeDTO = new EmployeeDTO();

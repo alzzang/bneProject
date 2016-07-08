@@ -740,7 +740,7 @@ $(function() {
         }
 
         if(action == 'destroy'){
-            $(".mpb").remove();
+           /* $(".mpb").remove();*/
         }                
         
     }

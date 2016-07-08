@@ -4,8 +4,9 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+	
 	<typeAliases>
-		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/>
+		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/> 
 		<typeAlias alias="CounsellingRecord" type="kr.co.bne.dto.CounsellingRecordDTO"/>
 		<typeAlias alias="DailyReport" type="kr.co.bne.dto.DailyReportDTO"/>
 		<typeAlias alias="Department" type="kr.co.bne.dto.DepartmentDTO"/>
@@ -14,6 +15,9 @@
 		<typeAlias alias="WeeklyPlan" type="kr.co.bne.dto.WeeklyPlanDTO"/>
 		<typeAlias alias="WeeklyReport" type="kr.co.bne.dto.WeeklyReportDTO"/>
 		
+		<!--DailyReport 태우 추가-->
+		<typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>
+		<typeAlias alias="DailyReportDetail" type="kr.co.bne.dto.DailyReportDetailDTO"/>
 	</typeAliases>
 
 	<mappers>

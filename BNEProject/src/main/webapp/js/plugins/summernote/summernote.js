@@ -1106,7 +1106,7 @@
       styleWithSpan: true,          // style with span (Chrome and FF only)
 
       disableLinkTarget: false,     // hide link Target Checkbox
-      disableDragAndDrop: false,    // disable drag and drop event
+      disableDragAndDrop: true,    // disable drag and drop event
       disableResizeEditor: false,   // disable resizing editor
 
       codemirror: {                 // codemirror options
@@ -1129,7 +1129,7 @@
         ['para', ['ul', 'ol', 'paragraph']],
         ['height', ['height']],
         ['table', ['table']],
-        ['insert', ['link', 'picture', 'video', 'hr']],
+        ['insert', ['link', /*'picture', 'video',*/ 'hr']],
         ['view', ['fullscreen', 'codeview']],
         ['help', ['help']]
       ],

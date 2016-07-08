@@ -14,22 +14,11 @@
 		<!-- START X-NAVIGATION -->
 
 		<ul class="x-navigation">
-
-			<li class="xn-logo"><a href="/main">BnE</a> <a href="#"
-				class="x-navigation-control"></a></li>
-
-
-
-
-			<li class="xn-profile active">
-				<%-- <a href="#" class="profile-mini"	>
-			
-			<img src="/user/download/${sessionScope.user.file_position}/"></a> --%>
-				
-				<a href="#" class="profile-mini">
-				 
-				 <img src="/user/download/${sessionScope.user.file_position}/"></a>
-
+			<li class="xn-logo"><a href="/main">BnE</a> <a
+				href="#" class="x-navigation-control"></a></li>
+			<li class="xn-profile active"><a href="#" class="profile-mini">
+					<img src="/assets/images/users/avatar.jpg" alt="John Doe">
+			</a>
 				<div class="profile">
 					<div class="profile-image">
 					<a href="#" data-toggle="modal" data-target="#myModal">
@@ -43,7 +32,7 @@
 					<div class="profile-controls">
 						<a href="/user/changeProfile" class="profile-control-left">
 						<span class="fa fa-gear"></span></a> 
-						<a href="pages-messages.html"
+						<a href="/counselling/readCounsellingRecord/44"
 							class="profile-control-right" >
 							<span class="fa fa-envelope"></span></a>
 					</div>
@@ -57,9 +46,16 @@
 					class="fa fa-desktop"></span> <span class="xn-text">Home</span></a></li>
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">주간 계획</span></a></li>
-			<li class=""><a href="index.html"><span
-					class="fa fa-desktop"></span> <span class="xn-text">일일 업무 보고</span></a>
-			</li>
+			<li class="xn-openable"><a href="#"><span
+					class="fa fa-file-text-o"></span> <span class="xn-text">일일 업무 보고</span></a>
+				<ul>
+					<li><a href="layout-boxed.html">메인</a></li>		
+					
+					<!-- 사원 목록 -->			
+					<li><a href="layout-nav-toggled.html">이동우</a><div class="informer informer-danger">4</div></li>
+					<li><a href="layout-nav-top.html">이태우</a><div class="informer informer-danger">4</div></li>
+					<!--  -->				
+				</ul></li>
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">프로필</span></a></li>
 

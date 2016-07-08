@@ -1,6 +1,6 @@
 package kr.co.bne.dto;
 
-public class CounsellingRecordDTO {
+public class CounsellingRecordDTO extends SecondaryClientDTO {
 	private int counsel_id;
 	private int department_id;
 	private int daily_report_id;
@@ -8,6 +8,7 @@ public class CounsellingRecordDTO {
 	private String title;
 	private String content;
 	private int sec_client_id;
+	
 	public CounsellingRecordDTO() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -26,6 +26,10 @@
 	</update>
 
 	
-
+	<select id="selectImage" resultType="Employee">
+	<![CDATA[
+	select employee_name,file_position from employee where employee_id='1'
+	]]>
+	</select>
 
 </mapper>
