@@ -129,11 +129,6 @@ $(function() {
 			});
 		}
 	};
-<<<<<<< HEAD
-=======
-		
-	
-	    
->>>>>>> refs/remotes/origin/Jiyeon
+
 
 })

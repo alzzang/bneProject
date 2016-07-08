@@ -36,7 +36,7 @@
 	</definition>
 	
 	<definition name="login" template="/WEB-INF/views/pages-login.jsp"/>
-<<<<<<< HEAD
+
 	
 	<definition name="edit" template="/WEB-INF/views/SmartEditor2Skin.jsp"/>
 	
@@ -48,7 +48,7 @@
 	
 		
 	
-=======
+
 		
 	<definition name="password" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/password.jsp" />
@@ -61,7 +61,7 @@
 
 
 
->>>>>>> refs/remotes/origin/Jiyeon
+
 	<definition name="WeeklyWriteForm" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/WeeklyWriteForm.jsp"/>
 	</definition>

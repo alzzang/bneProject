@@ -225,7 +225,7 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.1</version>
 		</dependency>
-<<<<<<< HEAD
+
 		
 		
 		<dependency>
@@ -234,7 +234,7 @@
          <version>2.3.1</version>
       </dependency>
 		
-=======
+
 
 
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
@@ -245,7 +245,7 @@
 		</dependency>
 
 
->>>>>>> refs/remotes/origin/Jiyeon
+
 	</dependencies>
 
 
