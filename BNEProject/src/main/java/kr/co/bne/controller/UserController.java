@@ -30,7 +30,6 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-
 	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
@@ -45,15 +44,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest request,
+	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
 		String fileName = null;
-		Map<String, MultipartFile> fileMap = request.getFileMap();
+		Map<String, MultipartFile> fileMap = req.getFileMap();
 		for (MultipartFile multipartFile : fileMap.values()) {
 			fileName=saveFileToLocalDisk(multipartFile, id);
 			userService.modifyFilePosition(id, fileName);
 		}
-		setFileName(fileName,request);
+		setFileName(fileName,req);
 		
 	}
 
