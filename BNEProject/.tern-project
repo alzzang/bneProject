@@ -1,0 +1,40 @@
+{
+  "ecmaVersion": 5,
+  "plugins": {
+    "guess-types": {
+      
+    },
+    "outline": {
+      
+    },
+    "browser-extension": {
+      
+<<<<<<< HEAD
+    },
+    "gcharts": {
+      
+    },
+    "jquery-ui1-12": {
+      
+    },
+    "bootstrap": {
+      
+    },
+    "jquery-extension": {
+      
+    },
+    "jquery-mobile1.5": {
+      
+    }
+  },
+  "libs": [
+    "browser",
+    "jquery"
+=======
+    }
+  },
+  "libs": [
+    "browser"
+>>>>>>> branch 'develop' of https://github.com/alzzang/bneProject.git
+  ]
+}

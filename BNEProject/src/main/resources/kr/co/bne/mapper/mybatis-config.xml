@@ -4,8 +4,9 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+	
 	<typeAliases>
-		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/>
+		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/> 
 		<typeAlias alias="CounsellingRecord" type="kr.co.bne.dto.CounsellingRecordDTO"/>
 		<typeAlias alias="DailyReport" type="kr.co.bne.dto.DailyReportDTO"/>
 		<typeAlias alias="Department" type="kr.co.bne.dto.DepartmentDTO"/>
@@ -13,10 +14,23 @@
 		<typeAlias alias="SecondaryClient" type="kr.co.bne.dto.SecondaryClientDTO"/>
 		<typeAlias alias="WeeklyPlan" type="kr.co.bne.dto.WeeklyPlanDTO"/>
 		<typeAlias alias="WeeklyReport" type="kr.co.bne.dto.WeeklyReportDTO"/>
+		
+		<!--DailyReport 태우 추가-->
+		<typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>
+		<typeAlias alias="DailyReportDetail" type="kr.co.bne.dto.DailyReportDetailDTO"/>
 	</typeAliases>
 
 	<mappers>
 	<!-- <mapper resource="kr/co/ggb/mapper/BoardMapper.xml"/> -->
-		<mapper resource=""/>
+
+		<mapper resource="kr/co/bne/mapper/ClientMapper.xml"/>
+		<mapper resource="kr/co/bne/mapper/CounsellingRecordMapper.xml"/>
+		<mapper resource="kr/co/bne/mapper/DailyReportMapper.xml"/>
+		<mapper resource="kr/co/bne/mapper/DepartmentMapper.xml"/>		
+		<mapper resource="kr/co/bne/mapper/EmployeeMapper.xml"/>
+		<mapper resource="kr/co/bne/mapper/SecondaryClientMapper.xml"/>
+		<mapper resource="kr/co/bne/mapper/WeeklyPlanMapper.xml"/>
+		<mapper resource="kr/co/bne/mapper/WeeklyReportMapper.xml"/>		
+
 	</mappers>
 </configuration>

@@ -558,7 +558,6 @@ $(function() {
 
                     }
                 });
-                
                 $("#new-event").on("click",function(){
                     var et = $("#new-event-text").val();
                     if(et != ''){
@@ -576,13 +575,133 @@ $(function() {
             }
         }
     }();
-    
+        var fullCalendarWeek = function(){
+        
+        var calendar = function(){
+        	
+            if($("#calendarWeek").length > 0){
+                
+                function prepare_external_list(){
+                    
+                    $('#external-events .external-event').each(function() {
+                            var eventObject = {title: $.trim($(this).text())};
+
+                            $(this).data('eventObject', eventObject);
+                            $(this).draggable({
+                                    zIndex: 999,
+                                    revert: true,
+                                    revertDuration: 0
+                            });
+                    });                    
+                    
+                }
+                
+             
+                var date = new Date();
+                var d = date.getDate();
+                var m = date.getMonth();
+                var y = date.getFullYear();
+                var idx = 0;
+
+                prepare_external_list();
+
+                var calendar = $('#calendarWeek').fullCalendar({
+                    header: {
+                        left: '',
+                        center: 'title',
+                        right: ''
+                    },
+                    editable: true,
+                    eventSources: {url: "assets/ajax_fullcalendar.php"},
+                    droppable: true,
+                    selectable: true,
+                    selectHelper: true,
+                    select: function(start, end, allDay) {
+                        var title = prompt('Event Title:');
+                        if (title) {
+                            calendar.fullCalendar('renderEvent',
+                            {
+                                title: title,
+                                start: start,
+                                end: end,
+                                allDay: allDay
+                            },
+                            true
+                            );
+                        }
+                        calendar.fullCalendar('unselect');
+                    },
+                    drop: function(date, allDay) {
+                 
+                        var originalEventObject = $(this).data('eventObject');
+
+                        var copiedEventObject = $.extend({}, originalEventObject);
+
+                        copiedEventObject.start = date;
+                        copiedEventObject.allDay = allDay;
+
+                        $('#calendarWeek').fullCalendar('renderEvent', copiedEventObject, true);
+
+
+                        if ($('#drop-remove').is(':checked')) {
+                            $(this).remove();
+                        }
+
+                    },
+                    eventDragStop: function(event, jsEvent, ui, view) { 
+/*                    	alert(event.title());*/
+                        //console.log(event.id);
+/*                    	var v = event.allDay;
+                    	alert(v);*/
+                         if (isElemOverDiv($('div#trash>a'))) {
+                        	 console.log(event._id);
+                        	 calendar.fullCalendar('removeEvents', event._id);
+                         }
+                         /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
+                         $('div#trash>a').remove();
+                     }
+                    
+
+                });
+                
+                $("#new-event").on("click",function(){
+                    var et = $("#new-event-text").val();
+                    if(et != ''){
+                        $("#external-events").prepend('<a class="list-group-item external-event">'+et+'</a>');
+                        prepare_external_list();
+                    }
+                });
+                
+            }            
+        }
+        
+        var isElemOverDiv = function(draggedItem) {
+            var draggedItem1 = $(draggedItem);
+            
+            if($('div#test1>a').length){
+                var left = draggedItem1.position().left;
+                var top = draggedItem1.position().top;
+/*                alert(top+","+left);*/
+                if(left<0 || top<0 || top>390){
+                	return true;
+                }            
+            }
+            return false;
+        }
+        
+        return {
+            init: function(){
+            	 $('#calendarWeek').children('.fc-view-container').children().append('<div id="calendarTrash" style="float: right; padding-top: 5px; padding-right: 5px; padding-left: 5px;"><span class="ui-icon ui-icon-trash"></span></div>');
+                calendar();
+            }
+        }
+    }();
     formElements.init();
     uiElements.init();
     templatePlugins.init();    
     
     fullCalendar.init();
-    
+    fullCalendarWeek.init();
     /* My Custom Progressbar */
     $.mpb = function(action,options){
 
@@ -621,7 +740,7 @@ $(function() {
         }
 
         if(action == 'destroy'){
-            $(".mpb").remove();
+           /* $(".mpb").remove();*/
         }                
         
     }
@@ -641,3 +760,6 @@ Object.size = function(obj) {
     }
     return size;
 };
+
+
+
