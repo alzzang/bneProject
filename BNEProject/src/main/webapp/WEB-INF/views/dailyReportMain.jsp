@@ -163,7 +163,8 @@ for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
                                 	<%	String className = report.getApproval_flag() == 1 ? "mail-star" : "mail-star starred";	%>
                                 	<div class="mail-item mail-read mail-info">                                    
 	                                    <div class="<%=className%>">
-	                                        <span class="fa fa-star-o"></span>
+	                                    	<%className = report.getApproval_flag() == 1 ? "fa fa-check-circle-o" : "fa fa-circle-o";	%>
+	                                        <span class="<%=className%>"></span>
 	                                    </div>
 	                                    <div class="mail-user"><%=report.getEmployee_name() %></div>                                    
 	                                    <a href="/dailyReport/detail" class="mail-text"><%=report.getTitle() %></a>                                    
