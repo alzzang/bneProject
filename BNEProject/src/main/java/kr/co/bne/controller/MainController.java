@@ -12,11 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainController {
-	@RequestMapping(value= "/main")
+	@RequestMapping("/main")
 	public String goMain() {
+<<<<<<< HEAD
 			return "main";
+=======
+		return "main";
+>>>>>>> refs/remotes/origin/Jiyeon
 	}
 	
+<<<<<<< HEAD
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){
 
@@ -27,6 +32,8 @@ public class MainController {
 	{
 		return "edit";
 	}
+=======
+>>>>>>> refs/remotes/origin/Jiyeon
 	@RequestMapping("/WeeklyWrite")
 	public String WeeklyWriteForm(){
 		return "WeeklyWriteForm";

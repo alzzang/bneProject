@@ -32,6 +32,16 @@
 		</dependency>
 
 
+		<!-- Spring test -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>3.0.5.RELEASE</version>
+		</dependency>
+
+
+
 		<!-- Spring jdbc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -215,6 +225,7 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.1</version>
 		</dependency>
+<<<<<<< HEAD
 		
 		
 		<dependency>
@@ -223,7 +234,28 @@
          <version>2.3.1</version>
       </dependency>
 		
+=======
+
+
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
+
+>>>>>>> refs/remotes/origin/Jiyeon
 	</dependencies>
+
+
+
+
+
+
+
+
+
 
 	<repositories>
 		<repository>

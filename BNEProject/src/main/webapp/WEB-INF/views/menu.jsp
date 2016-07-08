@@ -14,6 +14,7 @@
 
 		<!-- START X-NAVIGATION -->
 
+<<<<<<< HEAD
 		<ul class="x-navigation ">
 			<li class="xn-logo"><a href="/main">BnE</a> <a
 				href="#" class="x-navigation-control"></a></li>
@@ -23,12 +24,37 @@
 						<img src="/user/download/${sessionScope.fileName}/">
 			</a>
 				
+=======
+		<ul class="x-navigation">
+
+			<li class="xn-logo"><a href="/main">BnE</a> <a href="#"
+				class="x-navigation-control"></a></li>
+
+
+
+
+			<li class="xn-profile active">
+				<%-- <a href="#" class="profile-mini"	>
+			
+			<img src="/user/download/${sessionScope.user.file_position}/"></a> --%>
+				
+				<a href="#" class="profile-mini">
+				 
+				 <img src="/user/download/${sessionScope.user.file_position}/"></a>
+
+>>>>>>> refs/remotes/origin/Jiyeon
 				<div class="profile">
 					<div class="profile-image">
+<<<<<<< HEAD
 					<a href="#" data-toggle="modal" data-target="#myModal1">
 						<span class="fa fa-gear " style="position:absolute"> </span>
 						<img src="/user/download/${sessionScope.fileName}/">
 					</a>
+=======
+					<a href="#" data-toggle="modal" data-target="#myModal">
+						<img src="/user/download/${sessionScope.user.file_position}/">
+						</a>
+>>>>>>> refs/remotes/origin/Jiyeon
 					</div>
 					<div class="profile-data">
 						<div class="profile-data-name">${sessionScope.user.employee_name}</div>
@@ -51,6 +77,7 @@
 					class="fa fa-desktop"></span> <span class="xn-text">Home</span></a></li>
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">주간 계획</span></a></li>
+<<<<<<< HEAD
 			<li class="xn-openable"><a href="#"><span
 					class="fa fa-file-text-o"></span> <span class="xn-text">일일 업무 보고</span></a>
 				<ul>
@@ -61,6 +88,11 @@
 					<li><a href="layout-nav-top.html">이태우</a><div class="informer informer-danger">4</div></li>
 					<!--  -->				
 				</ul></li>
+=======
+			<li class=""><a href="index.html"><span
+					class="fa fa-desktop"></span> <span class="xn-text">일일 업무 보고</span></a>
+			</li>
+>>>>>>> refs/remotes/origin/Jiyeon
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">프로필</span></a></li>
 

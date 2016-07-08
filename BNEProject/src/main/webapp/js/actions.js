@@ -2,12 +2,131 @@ $(document)
 		.ready(
 				function() {
 
+<<<<<<< HEAD
 					/* PROGGRESS START */
 					$.mpb("show", {
 						value : [ 0, 50 ],
 						speed : 5
 					});
 					/* END PROGGRESS START */
+=======
+    // XN PANEL DRAGGING
+    $( ".xn-panel-dragging" ).draggable({
+        containment: ".page-content", handle: ".panel-heading", scroll: false,
+        start: function(event,ui){
+            html_click_avail = false;
+            $(this).addClass("dragged");
+        },
+        stop: function( event, ui ) {
+            $(this).resizable({
+                maxHeight: 400,
+                maxWidth: 600,
+                minHeight: 200,
+                minWidth: 200,
+                helper: "resizable-helper",
+                start: function( event, ui ) {
+                    html_click_avail = false;
+                },
+                stop: function( event, ui ) {
+                    $(this).find(".panel-body").height(ui.size.height - 82);
+                    $(this).find(".scroll").mCustomScrollbar("update");
+                                            
+                    setTimeout(function(){
+                        html_click_avail = true; 
+                    },1000);
+                                            
+                }
+            })
+            
+            setTimeout(function(){
+                html_click_avail = true; 
+            },1000);            
+        }
+    });
+    // END XN PANEL DRAGGING
+    
+    /* DROPDOWN TOGGLE */
+    $(".dropdown-toggle").on("click",function(){
+        onresize();
+    });
+    /* DROPDOWN TOGGLE */
+    
+    /* MESSAGE BOX */
+    $(".mb-control").on("click",function(){
+        var box = $($(this).data("box"));
+        if(box.length > 0){
+            box.toggleClass("open");
+            
+            var sound = box.data("sound");
+            
+            if(sound === 'alert')
+                playAudio('alert');
+            
+            if(sound === 'fail')
+                playAudio('fail');
+            
+        }        
+        return false;
+    });
+    $(".mb-control-close").on("click",function(){
+       $(this).parents(".message-box").removeClass("open");
+       return false;
+    });    
+    /* END MESSAGE BOX */
+    
+    /* CONTENT FRAME */
+    $(".content-frame-left-toggle").on("click",function(){
+        $(".content-frame-left").is(":visible") 
+        ? $(".content-frame-left").hide() 
+        : $(".content-frame-left").show();
+        page_content_onresize();
+    });
+    $(".content-frame-right-toggle").on("click",function(){
+        $(".content-frame-right").is(":visible") 
+        ? $(".content-frame-right").hide() 
+        : $(".content-frame-right").show();
+        page_content_onresize();
+    });    
+    /* END CONTENT FRAME */
+    
+    /* MAILBOX */
+    $(".mail").on("click",function(){
+        $(this).toggleClass("starred");
+    });
+    
+    $(".mail-checkall .iCheck-helper").on("click",function(){
+        
+        var prop = $(this).prev("input").prop("checked");
+                    
+        $(".mail .mail-item").each(function(){            
+            var cl = $(this).find(".mail-checkbox > div");            
+            cl.toggleClass("checked",prop).find("input").prop("checked",prop);                        
+        }); 
+        
+    });
+    /* END MAILBOX */
+    
+    /* PANELS */
+    
+    $(".panel-fullscreen").on("click",function(){
+        panel_fullscreen($(this).parents(".panel"));
+        return false;
+    });
+    
+    $(".panel-collapse").on("click",function(){
+        panel_collapse($(this).parents(".panel"));
+        $(this).parents(".dropdown").removeClass("open");
+        return false;
+    });    
+    $(".panel-remove").on("click",function(){
+        panel_remove($(this).parents(".panel"));
+        $(this).parents(".dropdown").removeClass("open");
+        return false;
+    });
+    $(".panel-refresh").on("click",function(){
+        var panel = $(this).parents(".panel");
+        panel_refresh(panel);
+>>>>>>> refs/remotes/origin/Jiyeon
 
 					var html_click_avail = true;
 
