@@ -57,6 +57,8 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 		<jsp:forward page="/user/login" />
 	</c:if>
 
+	<input type="hidden" id='fileName' value='${sessionScope.fileName}'> 
+
 	<div class="page-container">
 
 		<div
@@ -142,6 +144,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 		src="/js/plugins/daterangepicker/daterangepicker.js"></script>
 		<script type="text/javascript" src="/js/plugins/fullcalendar/fullcalendar.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/dropzone/dropzone.min.js"></script>
+		
 	<script type="text/javascript" src="/js/plugins/summernote/summernote.js"></script>
 	<!-- END THIS PAGE PLUGINS-->
 

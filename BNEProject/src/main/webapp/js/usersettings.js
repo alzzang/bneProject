@@ -13,10 +13,21 @@ function getStorage(sec_id) {
 	}
 }
 
-function selectSecontClient(value) {
+function updateImage() {
+	$.ajax({
+		type : "POST",
+		url : "/user/defaultFile",
+		data : {
+			id : $('#employee_id').val()
+		},
+		success : function(data) {
+			location.reload(); 
+		},
+	})
+}
 
-	$
-			.ajax({
+function selectSecontClient(value) {
+		$.ajax({
 				type : "POST",
 				url : "/counselling/secondaryClient",
 				data : {
@@ -31,9 +42,9 @@ function selectSecontClient(value) {
 					console.log(str);
 					var len = Object.keys(list).length;
 					console.log(list)
-					
+
 					var len = Object.keys(data).length;
-					
+
 					$("#client_id").val(list[0].client_id);
 					$("#representative").val(list[0].representative);
 
@@ -50,10 +61,31 @@ function selectSecontClient(value) {
 					}
 				}
 			})
-
 }
 
 $(function() {
+	
+	$('#myModal1').on('shown.bs.modal',	function() {
+
+		var myDropzone = Dropzone.forElement("#myDropzone");
+					var mockFile = {
+						name : $('#fileName').val(),
+						accepted : true,
+						size : 12345,
+						status : Dropzone.ACCEPTED
+					};
+					myDropzone.options.addedfile.call(myDropzone, mockFile);
+					myDropzone.options.thumbnail.call(myDropzone, mockFile,
+							"/user/download/" + $('#fileName').val() + "/");
+					myDropzone.emit("complete", mockFile);
+					myDropzone.files.push(mockFile);
+			});
+		
+	$('#myModal1,#myModal2').on('hidden.bs.modal', function() {
+		$(this).find('form')[0].reset();
+		$(this).find('.note-editable').empty();
+		$(this).find('#myDropzone').filter($('.dz-preview').remove());
+	});
 
 	$("#counsel_id").change(function() {
 		$("#sec_client_id").empty();
@@ -74,18 +106,23 @@ $(function() {
 		styleWithSpan : false,
 		toolbar : []
 	});
-
+	
 	Dropzone.options.myDropzone = {
-
+		paramName : 'NewImages',
 		url : "/user/upload",
 		acceptedFiles : 'image/*',
 		autoDiscover : false,
 		autoProcessQueue : false,
+
 		init : function() {
 			var submitButton = document.querySelector("#submitButton");
 			var myDropzone = this;
 			submitButton.addEventListener("click", function() {
-				myDropzone.processQueue();
+				if (myDropzone.getQueuedFiles().length > 0) {
+					myDropzone.processQueue();
+				} else {
+					updateImage();
+				}
 			});
 			this.on('success', function() {
 				location.reload();

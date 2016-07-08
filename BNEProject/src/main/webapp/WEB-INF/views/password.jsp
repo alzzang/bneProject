@@ -66,6 +66,7 @@
 			
 		</form>
 	</div>
+	
 <script type="text/javascript">
 var checkPassword = function(str) {
 	var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;

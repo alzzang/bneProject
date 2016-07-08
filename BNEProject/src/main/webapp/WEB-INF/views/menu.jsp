@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+
 <div id="mCSB_1"
 	class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside"
 	tabindex="0">
@@ -13,19 +14,21 @@
 
 		<!-- START X-NAVIGATION -->
 
-		<ul class="x-navigation">
+		<ul class="x-navigation ">
 			<li class="xn-logo"><a href="/main">BnE</a> <a
 				href="#" class="x-navigation-control"></a></li>
 			<li class="xn-profile active">
 			
-			<a href="#" class="profile-mini" >
-						<img src="/assets/images/users/avatar.jpg" alt="John Doe">
+			<a href="#" class="profile-mini" data-toggle="modal" data-target="#myModal1" >
+						<img src="/user/download/${sessionScope.fileName}/">
 			</a>
+				
 				<div class="profile">
 					<div class="profile-image">
-					<a href="#" data-toggle="modal" data-target="#myModal">
-						<img src="/user/download/${sessionScope.user.file_position}/">
-						</a>
+					<a href="#" data-toggle="modal" data-target="#myModal1">
+						<span class="fa fa-gear " style="position:absolute"> </span>
+						<img src="/user/download/${sessionScope.fileName}/">
+					</a>
 					</div>
 					<div class="profile-data">
 						<div class="profile-data-name">${sessionScope.user.employee_name}</div>
@@ -191,7 +194,7 @@
 
 <!-- <a href="#" data-toggle="modal" data-target="#myModal">Open Modal</a> -->
 <!-- Modal -->
-<div id="myModal"  class="modal fade" role="dialog">
+<div id="myModal1"  class="modal fade" role="dialog">
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
@@ -215,15 +218,16 @@
 						<div class="dz-default dz-message">
 							<span>Drop files here to upload</span>
 						</div>
-						<input type="text" hidden="true" name="id"
+						<input type="text" hidden="true" name="id" id="employee_id"
 							value="${sessionScope.user.employee_id}">
 
 					</form>
-					<button class="btn btn-default">Clear Form</button>
-					<input class="btn btn-primary pull-right" type="button" value="저장" id="submitButton">
+					
+					
 				</div>
 			</div>
 			<div class="modal-footer">
+				<input class="btn btn-primary " type="button" value="저장" id="submitButton">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>

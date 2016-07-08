@@ -328,7 +328,7 @@ function testJSON1(){
 <div class="page-content-wrap">
 	<div class="row">
 		<div class="col-md-12">
-			<form action="/counselling/writeCounsellingRecord" method="POST" class="form-horizontal">
+			<form action="#" method="POST" class="form-horizontal" >
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<!-- <div class="form-group">
