@@ -32,8 +32,8 @@
 <!-- 전체 리스트 페이징 -->
 <select id="selectDailyReportList" parameterType="hashmap" resultMap="DailyReportListElement"> 
 
-	select idx, employee_id, employee_name, title, reg_date, approval_flag
-	from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
+	select daily_report_id idx, employee_id, employee_name, title, reg_date, approval_flag
+	from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.daily_report_id, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
 	      from daily_report d , employee e
 	      where d.employee_id = e.employee_id
 	      and d.department_id = (select department_id from employee where employee_id = #{user_id})
