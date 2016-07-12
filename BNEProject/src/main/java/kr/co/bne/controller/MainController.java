@@ -34,6 +34,7 @@ public class MainController {
 
 	@RequestMapping("/WeeklyWrite")
 	public String WeeklyWriteForm(){
+		
 		return "WeeklyWriteForm";
 	}
 }
