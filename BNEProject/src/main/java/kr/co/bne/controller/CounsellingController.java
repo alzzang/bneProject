@@ -2,13 +2,13 @@ package kr.co.bne.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.annotations.Param;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +39,7 @@ public class CounsellingController {
 	public String setCounsellingRecord(HttpServletResponse res,HttpServletRequest req,
 			@ModelAttribute CounsellingRecordDTO counsellingRecordDTO) {
 		
-		System.out.println(counsellingRecordDTO);
+		
 		counsellingRecordService.setCounsellingRecord(counsellingRecordDTO);
 		
 		return "main2";
@@ -79,8 +79,7 @@ public class CounsellingController {
 			jobj.put("sec_client_name", temp.getSec_client_name());
 			jarr.put(jobj);
 		}
-		
-		System.out.println(jarr);
+				
 		res.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = res.getWriter();
 		pw.println(jarr.toString());

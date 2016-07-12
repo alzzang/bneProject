@@ -41,5 +41,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.bne.mapper.Employee.selectImage", employee_id);
 	}
+	@Override
+	public void updateFile(String id) {
+		// TODO Auto-generated method stub
+		sqlSession.update("kr.co.bne.mapper.Employee.defaultUpdateFile",id);
+		
+	}
 
 }

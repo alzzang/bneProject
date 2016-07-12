@@ -8,6 +8,9 @@ import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
 
+import kr.co.bne.common.DailyReportListElement;
+import kr.co.bne.common.DailyReportTeamListElement;
+
 public interface DailyReportDAO {
 	public DailyReportEmployeeDTO selectPreSales(String employee_id);
 	public void insertDailyReport(DailyReportDTO dailyReportDTO);
@@ -15,4 +18,17 @@ public interface DailyReportDAO {
 	public int selectDailySalesGoal(HashMap<String, String> map);
 	public List<CounsellingRecordDTO> selectCounselList(String id);
 	public void updateApproval(String daily_report_id);
+	
+	
+	List<DailyReportListElement> selectDailyReportList(String user_id, int startIdx, int perContentNum,
+			HashMap<String, Object> params) throws RuntimeException;
+
+	int getPagingNum_DailyReportList(String user_id, int perContentNum, HashMap<String, Object> params)
+			throws RuntimeException;
+
+	List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException;
+
+	int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException;
+
+	int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException;
 }
