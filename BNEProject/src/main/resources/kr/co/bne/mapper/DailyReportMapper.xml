@@ -30,23 +30,23 @@
 <!-- 전체 리스트 페이징 -->
 <select id="selectDailyReportList" parameterType="hashmap" resultMap="DailyReportListElement"> 
 
-	select idx, employee_id, employee_name, title, reg_date, approval_flag
-	from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
-	      from daily_report d , employee e
-	      where d.employee_id = e.employee_id
-	      and d.department_id = (select department_id from employee where employee_id = #{user_id})
-	      <if test="employee_id != null">
-	      	and d.employee_id = #{employee_id}
-	      </if>
-	      <if test="reg_date != null">
-	      	and to_char(d.reg_date, 'yyyy-mm-dd') = #{reg_date}
-	      </if>
-	      <if test="approval_flag != null">
-	      	and d.approval_flag = #{approval_flag}
-	      </if>
-	      ) a  		
-	where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
-	order by idx asc 
+	select daily_report_id idx, employee_id, employee_name, title, reg_date, approval_flag
+   from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.daily_report_id, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
+         from daily_report d , employee e
+         where d.employee_id = e.employee_id
+         and d.department_id = (select department_id from employee where employee_id = #{user_id})
+         <if test="employee_id != null">
+            and d.employee_id = #{employee_id}
+         </if>
+         <if test="reg_date != null">
+            and to_char(d.reg_date, 'yyyy-mm-dd') = #{reg_date}
+         </if>
+         <if test="approval_flag != null">
+            and d.approval_flag = #{approval_flag}
+         </if>
+         ) a        
+   where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
+   order by idx asc  
 
 </select>
 
@@ -118,11 +118,16 @@
 	</select>
 	
 	<insert id="insertDailyReport" parameterType="DailyReport">
-	<![CDATA[
 	 insert into daily_report values(daily_report_seq.nextval,#{department_id},#{employee_id},#{title},#{reg_date},#{sales},#{before_gauge},#{after_gauge},#{content},'',0)
-	]]>
-	</insert>
+	<selectKey keyProperty="daily_report_id" resultType="Integer" order="AFTER">
+		select daily_report_seq.CURRVAL from dual
+	</selectKey>
 	
+	</insert>
+
+
+
+
 	<select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
 	<![CDATA[
 	select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
@@ -143,18 +148,40 @@ and dr.daily_report_id=#{id}
 	]]>
 	</select>
 	
-	<select id="selectCounselRecordList" parameterType="String" resultType="CounsellingRecord">
+	<select id="selectCounselRecordList" parameterType="String" resultType="CounsellingDetail">
 	<![CDATA[
-	select cr.COUNSEL_ID,cr.title
-	from daily_report dr,counsel_record cr
-	where dr.daily_report_id=cr.daily_report_id and cr.daily_report_id=#{id} order by counsel_id
+	select cr.COUNSEL_ID,d.department_name, e.EMPLOYEE_NAME,cr.REG_DATE,cr.title,c.CLIENT_ID, c.CLIENT_NAME,c.REPRESENTATIVE,sc.sec_client_id, sc.SEC_CLIENT_NAME,sc.ADDRESS,cr.CONTENT
+	from daily_report dr,counsel_record cr,employee e,DEPARTMENT d,SECONDARY_CLIENT sc,CLIENT c
+	where dr.daily_report_id=cr.daily_report_id and dr.employee_id=e.employee_id and d.department_id=e.department_id and cr.SEC_CLIENT_ID=sc.SEC_CLIENT_ID and sc.CLIENT_ID=c.CLIENT_ID and cr.daily_report_id=#{id} order by cr.COUNSEL_ID
 	]]>
 	</select>
-	
 	<update id="updateApproval" parameterType="String">
 		<![CDATA[
 		update daily_report set approval_flag=1 where daily_report_id=#{daily_report_id}
 		]]>
 	</update>
 	
+	<select id="DailyReport" parameterType="String" resultType="DailyReport">
+		<![CDATA[
+		select * from daily_report where daily_report_id=#{id}
+		]]>
+	</select>
+	
+	<update id="updateReport" parameterType="DailyReport">
+		<![CDATA[
+		update daily_report set title=#{title},reg_date=#{reg_date},sales=#{sales},before_gauge=#{before_gauge},after_gauge=#{after_gauge},content=#{content} where daily_report_id=#{daily_report_id}
+		]]>
+	</update>
+	
+	<insert id="insertCounsellingList" parameterType="CounsellingRecord">
+		INSERT INTO COUNSEL_RECORD (counsel_id,department_id,daily_report_id,reg_date,title,content,sec_client_id) values (counsel_record_seq.nextval,#{department_id},#{daily_report_id},sysdate,#{title},#{content},#{sec_client_id})
+	</insert>
+	
+	<update id="updateCounsellingList" parameterType="CounsellingRecord">
+		update counsel_record set reg_date=sysdate,title=#{title},content=#{content},sec_client_id=#{sec_client_id} where counsel_id=#{counsel_id}
+	</update>
+	
+	<delete id="deleteCounsellingList" parameterType="Integer">
+		delete from counsel_record where counsel_id=#{counsel_id}
+	</delete>
 </mapper>

@@ -27,7 +27,9 @@ function updateImage() {
 }
 
 function selectSecontClient(value) {
-		$.ajax({
+
+	$
+			.ajax({
 				type : "POST",
 				url : "/counselling/secondaryClient",
 				data : {
@@ -42,9 +44,9 @@ function selectSecontClient(value) {
 					console.log(str);
 					var len = Object.keys(list).length;
 					console.log(list)
-
+					
 					var len = Object.keys(data).length;
-
+					
 					$("#client_id").val(list[0].client_id);
 					$("#representative").val(list[0].representative);
 
@@ -59,13 +61,14 @@ function selectSecontClient(value) {
 							$("#sec_client_id").append(html);
 						}
 					}
+					$("#sec_client_id").val($("#temp_scId").val());
 				}
 			})
+
 }
 
 $(function() {
-	
-	$('#myModal1').on('shown.bs.modal',	function() {
+$('#myModal1').on('shown.bs.modal',	function() {
 
 		var myDropzone = Dropzone.forElement("#myDropzone");
 					var mockFile = {
@@ -81,18 +84,30 @@ $(function() {
 					myDropzone.files.push(mockFile);
 			});
 		
+		
 	$('#myModal1,#myModal2').on('hidden.bs.modal', function() {
-		$(this).find('form')[0].reset();
-		$(this).find('.note-editable').empty();
-		$(this).find('#myDropzone').filter($('.dz-preview').remove());
-	});
-
-	$("#counsel_id").change(function() {
+		$("#sec_client_id").val('');
+	       $(this).find('form')[0].reset();
+	       $(this).find('.note-editable').empty();
+	       $(this).find('#myDropzone').filter($('.dz-preview').remove());
+	   });
+	$('#myModal4').on('hidden.bs.modal', function() {
+		$("#sec_client_id").val('');
+	       $(this).find('form')[0].reset();
+	       $(this).find('.note-editable').empty();
+	   });
+	$("#counselling_id").change(function() {
 		$("#sec_client_id").empty();
 		$("#address").val("");
+		$("#temp_scId").val('');
 		selectSecontClient($(this).val());
 	});
-
+	$('#modalAdd').on('click',function(){
+		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON1()">Submit</button>');
+	});
+	
+	
+	
 	$("#sec_client_id").change(function() {
 		getStorage($(this).val());
 	});
@@ -106,8 +121,8 @@ $(function() {
 		styleWithSpan : false,
 		toolbar : []
 	});
-	
-	Dropzone.options.myDropzone = {
+
+		Dropzone.options.myDropzone = {
 		paramName : 'NewImages',
 		url : "/user/upload",
 		acceptedFiles : 'image/*',
@@ -129,6 +144,5 @@ $(function() {
 			});
 		}
 	};
-
 
 })
