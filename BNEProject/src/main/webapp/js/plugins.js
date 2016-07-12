@@ -145,7 +145,7 @@ $(function() {
         //END Bootstrap file input
         
         return {// Init all form element features
-		init: function(){                    
+      init: function(){                    
                     feDatepicker();                    
                     feTimepicker();
                     feColorpicker();
@@ -578,7 +578,7 @@ $(function() {
         var fullCalendarWeek = function(){
         
         var calendar = function(){
-        	
+           
             if($("#calendarWeek").length > 0){
                 
                 function prepare_external_list(){
@@ -602,7 +602,7 @@ $(function() {
                 var m = date.getMonth();
                 var y = date.getFullYear();
                 var idx = 0;
-         	
+            
                 
                 prepare_external_list();
 
@@ -651,25 +651,17 @@ $(function() {
 
                     },
                     eventDragStop: function(event, jsEvent, ui, view) { 
-/*                    	alert(event.title());*/
+/*                       alert(event.title());*/
                         //console.log(event.id);
-/*                    	var v = event.allDay;
-                    	alert(v);*/
+/*                       var v = event.allDay;
+                       alert(v);*/
                          if (isElemOverDiv($('div#trash>a'))) {
-                        	 console.log(event._id);
-                        	 calendar.fullCalendar('removeEvents', event._id);
+                            console.log(event._id);
+                            calendar.fullCalendar('removeEvents', event._id);
                          }
                          /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
                          $('div#trash>a').remove();
-                     },
-                     
-                     setEditable: function(b){
-                    	 this.editable = b;
                      }
-                    
-                    
-                    
-
                 });
 
                 
@@ -692,7 +684,7 @@ $(function() {
                 var top = draggedItem1.position().top;
 /*                alert(top+","+left);*/
                 if(left<0 || top<0 || top>390){
-                	return true;
+                   return true;
                 }            
             }
             return false;
@@ -700,7 +692,7 @@ $(function() {
         
         return {
             init: function(){
-            	 $('#calendarWeek').children('.fc-view-container').children().append('<div id="calendarTrash" style="float: right; padding-top: 5px; padding-right: 5px; padding-left: 5px;"><span class="ui-icon ui-icon-trash"></span></div>');
+                $('#calendarWeek').children('.fc-view-container').children().append('<div id="calendarTrash" style="float: right; padding-top: 5px; padding-right: 5px; padding-left: 5px;"><span class="ui-icon ui-icon-trash"></span></div>');
                 calendar();
             }
         }
@@ -769,6 +761,5 @@ Object.size = function(obj) {
     }
     return size;
 };
-
 
 

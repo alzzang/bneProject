@@ -66,6 +66,49 @@ $(function(){
 	}
 	
 	var getPlanData = function(s){
+		
+		var weekDay = s.parentElement.attributes.id.value;
+		var planData = s.innerText.trim();
+		
+		var tdArr = $("div#test1>table>thead>tr>td>div>table>thead>tr>th");
+		var weekdayMap = new Map();
+		for(var i=1; i<tdArr.length; i++){
+			var splitTdArr = tdArr[i].innerText.split(' ');
+			weekdayMap.put(splitTdArr[0].toLowerCase(), splitTdArr[1]);
+		}
+		
+		var weekDayDate = weekdayMap.get(weekDay);
+		var strArr = planData.split('\n');
+		
+		var eventTime = strArr[0];
+		var content = strArr[1];
+		
+		var startTime = "";
+		var endTime = "";
+		
+		if(eventTime.search("-") > 0){
+			var timeArr = eventTime.split(" - ");
+			startTime = timeArr[0];
+			endTime = timeArr[1];
+		}else{
+			var startTimeArr = eventTime.split(':');
+			var endTimeHours = Number(startTimeArr[0]) + 2;
+			
+			var endTimeMinutes = startTimeArr[1];
+			endTime = endTimeHours + ":" + endTimeMinutes;
+			startTime = eventTime;
+		}
+		
+		var finalStartDate = weekDay + " "+  weekDayDate + " " + startTime; 
+		var finalEndDate = weekDay + " "+  weekDayDate + " " + endTime; 
+		
+		
+		alert("시작시간 : " + finalStartDate + 
+				"\n종료시간 : " +  finalEndDate +
+				"\n내용 : " + content); 
+	}
+	
+	var getPlanData = function(s){
 
 		
 		var weekDay = s.parentElement.attributes.id.value;
@@ -120,7 +163,6 @@ $(function(){
 		
 		
 	})
-	
 	    $('#calendarWeek').fullCalendar('renderEvent',{
 	    "title":"dd",
 		    "allDay":"",

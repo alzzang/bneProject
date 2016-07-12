@@ -51,10 +51,8 @@
 
 
 
-
-	<definition name="WeeklyWriteForm" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/WeeklyWriteForm.jsp"/>
-
+	<definition name="weeklyWriteForm" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/weeklyWriteForm.jsp" />
 	</definition>
 
 	<definition name="aaa" extends="tilesbase">
