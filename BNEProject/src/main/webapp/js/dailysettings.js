@@ -215,7 +215,7 @@ function removeTag(seq,val){
 	   alert(localStorage.getItem("tt"));
 }
 
-function aa(money,goal){
+function changeProgress(money,goal){
 	
 	/*alert(money+':'+goal);*/
 	
@@ -288,10 +288,10 @@ function searchSalesGoal(reg_date) {
 			if(result==-1){
 				alert('해당 목표액이 존재하지 않습니다');
 				$('#dailyGoal').attr('value',0);
-				$('#aaaa').attr('onKeyUp', 'aa(this.value,'+0+')');
+				$('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+0+')');
 			}else{
 				$('#dailyGoal').attr('value',result);
-				  $('#aaaa').attr('onKeyUp', 'aa(this.value,'+result+')'); 
+				  $('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+result+')'); 
 			}
 
 		}

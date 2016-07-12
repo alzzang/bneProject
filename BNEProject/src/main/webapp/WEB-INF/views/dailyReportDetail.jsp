@@ -13,7 +13,7 @@
 $(document).ready(function(){
 	var a = ${dailyReport.drsales};
 	var b = ${dailyReport.wpsales}
-    aa(a,b);
+	changeProgress(a,b);
 /*     var t=jQuery.parseJSON( '${aa}' );
     alert(t);
     alert(JSON.stringify(t)); */

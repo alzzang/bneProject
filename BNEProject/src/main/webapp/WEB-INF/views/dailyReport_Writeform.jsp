@@ -117,7 +117,7 @@ var removeId=0;
 										<span class="input-group-addon" style="padding-bottom: 10px;"><span
 											class="fa fa-won"></span></span> <input type="text"
 											class="form-control"
-											id="aaaa" 
+											id="inputSales" 
 											name="sales"  pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" required="required">
 										<span class="progress"> <span
 											class="progress-bar progress-bar-danger" role="progressbar"

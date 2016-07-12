@@ -98,9 +98,6 @@ public class DailyReportController {
 		model.addObject("dailyReport", dailyReport);
 		model.addObject("counselList",counsellingRecord);
 		
-		/*String aa=new Gson().toJson(counsellingRecord);
-		model.addObject("aa", aa);
-		System.out.println(":"+aa);*/
 		return model;
 	}
 	
@@ -163,9 +160,9 @@ public class DailyReportController {
 		dailyReportService.approvalDailyReport(daily_report_id);
 	}
 	
-	@RequestMapping("/jsontest")
+/*	@RequestMapping("/jsontest")
 	public void goJSON(HttpServletRequest req,HttpServletResponse res){
 		String aa=req.getParameter("dd");
-	}
+	}*/
 
 }

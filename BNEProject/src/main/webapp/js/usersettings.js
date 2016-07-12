@@ -66,7 +66,6 @@ $(function() {
 	       $(this).find('.note-editable').empty();
 	   });
 	$("#counselling_id").change(function() {
-		alert('aa');
 		$("#sec_client_id").empty();
 		$("#address").val("");
 		$("#temp_scId").val('');

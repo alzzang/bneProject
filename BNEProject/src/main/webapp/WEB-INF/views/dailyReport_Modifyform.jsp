@@ -27,7 +27,7 @@ var jsonArray=new Array();
  $(window).load( function(){
 	 var a=${dailyReport.sales};
 	 var b=$('#dailyGoal').val();
-	 aa(a,b);
+	 changeProgress(a,b);
 	 setUpdateContents('${dailyReport.content}');
 	 //pasteHTML();
  });
@@ -130,7 +130,7 @@ var jsonArray=new Array();
 										<span class="input-group-addon" style="padding-bottom: 10px;"><span
 											class="fa fa-won"></span></span> <input type="text"
 											class="form-control"
-											id="aaaa" 
+											id="inputSales" 
 											name="sales"  pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" required="required" value="${dailyReport.sales}">
 										<span class="progress"> <span
 											class="progress-bar progress-bar-danger" role="progressbar"
@@ -320,72 +320,3 @@ var jsonArray=new Array();
 	</div>
 	
 </div>
-
-
-
-<script type="text/javascript">
-
-//function aa(money,goal){
-	
-	/* var achievementRate=money/goal*100;
-	achievementRate=Math.round(achievementRate);
-	achievementRate=achievementRate/100;
-	
-	 *//*achievementRate=Math.round10(achievementRate,-3); */
-	
-	/* if(achievementRate>100){
-		achievementRate=100;
-	}
-	
-	if(achievementRate == 0) {
-		var rate=achievementRate.toString()+'%';
-		$("#progressCondition").html(rate);
-		$("#progressCondition").css('width',0.1);
-	}
-	else{
-		var rate=achievementRate.toString()+'%';
-		$("#progressCondition").html(rate);
-		  $("#progressCondition").css('width',rate);
-	} */
-	
-	
-//}
-
-
-/* 
-
-function computeGuage(){
-	  var before=$('#before_gauge').val();
-	  var after=$('#after_gauge').val();
-	  var result=after-before;
-	  $('#result_guage').val(result);
-}
-
-
-function searchSalesGoal(reg_date) {
-
-	$.ajax({
-		type : "POST",
-		url : "/dailyReport/dailysales",
-		data : {
-		 
-			reg_date : $('#reg_date').val()
-		},
-		success : function(data) {
-			var result=parseInt(data);
-			if(result==-1){
-				alert('해당 목표액이 존재하지 않습니다');
-				$('#dailyGoal').attr('value',0);
-				$('#aaaa').attr('onKeyUp', 'aa(this.value,'+0+')');
-			}else{
-				$('#dailyGoal').attr('value',result);
-				  $('#aaaa').attr('onKeyUp', 'aa(this.value,'+result+')'); 
-			}
-
-		}
-
-	})
-} */
-
-
-</script>
