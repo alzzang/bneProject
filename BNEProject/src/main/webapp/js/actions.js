@@ -525,14 +525,14 @@ function x_navigation(){
                     return true;
                 else
                     return false;
-<<<<<<< HEAD
+
             }                                     
     });
     
-=======
+
             }    */                                 
     });    
->>>>>>> branch 'develop' of https://github.com/alzzang/bneProject.git
+
     /* XN-SEARCH */
     $(".xn-search").on("click",function(){
         $(this).find("input").focus();
