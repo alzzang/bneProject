@@ -661,15 +661,7 @@ $(function() {
                          }
                          /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
                          $('div#trash>a').remove();
-                     },
-                     
-                     setEditable: function(b){
-                    	 this.editable = b;
                      }
-                    
-                    
-                    
-
                 });
 
                 
@@ -687,7 +679,7 @@ $(function() {
         var isElemOverDiv = function(draggedItem) {
             var draggedItem1 = $(draggedItem);
             
-            if($('div#test1>a').length){
+            if($('div#trash>a').length){
                 var left = draggedItem1.position().left;
                 var top = draggedItem1.position().top;
 /*                alert(top+","+left);*/
