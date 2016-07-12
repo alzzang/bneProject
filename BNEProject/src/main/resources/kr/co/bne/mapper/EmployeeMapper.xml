@@ -20,12 +20,16 @@
 	<update id="updatePassword" parameterType="HashMap">
 	<![CDATA[update employee set password=#{password} where employee_id=#{id}]]>
 	</update>
-
+	
 	<update id="updateFile" parameterType="HashMap">
 	<![CDATA[update employee set file_position=#{filePosition} where employee_id=#{id}]]>
 	</update>
+	<update id="defaultUpdateFile" parameterType="String">
+	<![CDATA[update employee set file_position='0.png' where employee_id=#{value}]]>
+	</update>
 
 	
+
 	<select id="selectImage" resultType="Employee">
 	<![CDATA[
 	select employee_name,file_position from employee where employee_id='1'

@@ -46,4 +46,10 @@ public class UserServiceImpl implements UserService {
 		employeeDAO.updateFile(info);
 	}
 
+	@Override
+	public void modifyFilePosition(String id) {
+		// TODO Auto-generated method stub
+		employeeDAO.updateFile(id);
+	}
+
 }

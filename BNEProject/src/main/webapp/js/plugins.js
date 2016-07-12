@@ -602,21 +602,22 @@ $(function() {
                 var m = date.getMonth();
                 var y = date.getFullYear();
                 var idx = 0;
-
+         	
+                
                 prepare_external_list();
 
                 var calendar = $('#calendarWeek').fullCalendar({
                     header: {
-                        left: 'prev,next today',
+                        left: '',
                         center: 'title',
-                        right: 'month,agendaWeek,agendaDay'
+                        right: ''
                     },
                     editable: true,
                     eventSources: {url: "assets/ajax_fullcalendar.php"},
                     droppable: true,
-                    weekends:false,
                     selectable: true,
                     selectHelper: true,
+                    weekends : false,
                     select: function(start, end, allDay) {
                         var title = prompt('Event Title:');
                         if (title) {
@@ -654,16 +655,23 @@ $(function() {
                         //console.log(event.id);
 /*                    	var v = event.allDay;
                     	alert(v);*/
-                         if (isElemOverDiv($('div#test1>a'))) {
+                         if (isElemOverDiv($('div#trash>a'))) {
                         	 console.log(event._id);
                         	 calendar.fullCalendar('removeEvents', event._id);
                          }
                          /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
-                         $('div#test1>a').remove();
+                         $('div#trash>a').remove();
+                     },
+                     
+                     setEditable: function(b){
+                    	 this.editable = b;
                      }
+                    
+                    
                     
 
                 });
+
                 
                 $("#new-event").on("click",function(){
                     var et = $("#new-event-text").val();
@@ -679,7 +687,7 @@ $(function() {
         var isElemOverDiv = function(draggedItem) {
             var draggedItem1 = $(draggedItem);
             
-            if($('div#test1>a').length){
+            if($('div#trash>a').length){
                 var left = draggedItem1.position().left;
                 var top = draggedItem1.position().top;
 /*                alert(top+","+left);*/
@@ -692,6 +700,7 @@ $(function() {
         
         return {
             init: function(){
+            	 $('#calendarWeek').children('.fc-view-container').children().append('<div id="calendarTrash" style="float: right; padding-top: 5px; padding-right: 5px; padding-left: 5px;"><span class="ui-icon ui-icon-trash"></span></div>');
                 calendar();
             }
         }

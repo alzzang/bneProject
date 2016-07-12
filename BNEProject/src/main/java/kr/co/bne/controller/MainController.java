@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainController {
-	@RequestMapping(value= "/main")
+	@RequestMapping("/main")
 	public String goMain() {
-			return "main";
+
+		return "main";
+
 	}
 	
+
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){
 
