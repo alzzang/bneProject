@@ -30,23 +30,23 @@
 <!-- 전체 리스트 페이징 -->
 <select id="selectDailyReportList" parameterType="hashmap" resultMap="DailyReportListElement"> 
 
-	select idx, employee_id, employee_name, title, reg_date, approval_flag
-	from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
-	      from daily_report d , employee e
-	      where d.employee_id = e.employee_id
-	      and d.department_id = (select department_id from employee where employee_id = #{user_id})
-	      <if test="employee_id != null">
-	      	and d.employee_id = #{employee_id}
-	      </if>
-	      <if test="reg_date != null">
-	      	and to_char(d.reg_date, 'yyyy-mm-dd') = #{reg_date}
-	      </if>
-	      <if test="approval_flag != null">
-	      	and d.approval_flag = #{approval_flag}
-	      </if>
-	      ) a  		
-	where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
-	order by idx asc 
+	select daily_report_id idx, employee_id, employee_name, title, reg_date, approval_flag
+   from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.daily_report_id, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
+         from daily_report d , employee e
+         where d.employee_id = e.employee_id
+         and d.department_id = (select department_id from employee where employee_id = #{user_id})
+         <if test="employee_id != null">
+            and d.employee_id = #{employee_id}
+         </if>
+         <if test="reg_date != null">
+            and to_char(d.reg_date, 'yyyy-mm-dd') = #{reg_date}
+         </if>
+         <if test="approval_flag != null">
+            and d.approval_flag = #{approval_flag}
+         </if>
+         ) a        
+   where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
+   order by idx asc  
 
 </select>
 

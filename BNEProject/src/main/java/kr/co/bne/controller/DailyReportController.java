@@ -273,8 +273,7 @@ public class DailyReportController {
 	
 	
 	@RequestMapping("/detail")
-	public ModelAndView goViewmanager() {
-		String id="164";
+	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id) {
 		DailyReportDetailDTO dailyReport=dailyReportService.viewReport(id);
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
 		System.out.println(counsellingRecord);

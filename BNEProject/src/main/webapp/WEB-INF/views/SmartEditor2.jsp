@@ -1,26 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
- --><!-- <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"> -->
 <head>
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>네이버 :: Smart Editor 2 &#8482;</title> -->
 <script type="text/javascript" src="/../js/HuskyEZCreator.js" charset="utf-8"></script>
 </head>
-<!-- <body> -->
-<!-- <form action="sample.php" method="post"> -->
 <div class="form-group" >
 	<textarea name="content" id="ir1" rows="10" cols="100" style="width:700px; height:412px; display:none;"></textarea>
-	<!--textarea name="ir1" id="ir1" rows="10" cols="100" style="width:100%; height:412px; min-width:610px; display:none;"></textarea-->
-<!-- 	<p>
-		<input type="button" onclick="pasteHTML();" value="본문에 내용 넣기" />
-		<input type="button" onclick="showHTML();" value="본문 내용 가져오기" />
-		<input type="button" onclick="submitContents(this);" value="서버로 내용 전송" />
-		<input type="button" onclick="setDefaultFont();" value="기본 폰트 지정하기 (궁서_24)" />
-	</p> -->
 </div>
-<!-- </form>
- -->
 <script type="text/javascript">
 var oEditors = [];
 
