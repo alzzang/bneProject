@@ -3,6 +3,7 @@ package kr.co.bne.service;
 import java.util.HashMap;
 import java.util.List;
 
+import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
@@ -15,9 +16,10 @@ public interface DailyReportService {
 	public DailyReportDetailDTO viewReport(String id);
 	public int searchDailySales(HashMap<String, String> map);
 	public EmployeeDTO searchImage(String employee_id);
-	public List<CounsellingRecordDTO> searchCounselRecord(String id);
+	public List<CounsellingDetailDTO> searchCounselRecord(String id);
 	public void approvalDailyReport(String daily_report_id);
 	public DailyReportDTO searchDailyReport(String id);
 	public void updateDailyReport(DailyReportDTO dailyReportDTO);
 	public void writeCounsellingRecord(List<CounsellingRecordDTO> result);
+	public void updateDailyReport(DailyReportDTO dailyReportDTO, List<CounsellingRecordDTO> list);
 }

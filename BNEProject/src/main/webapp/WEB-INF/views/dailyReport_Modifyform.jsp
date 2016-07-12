@@ -5,48 +5,23 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- <script src="/js/dailysettings.js"></script> -->
 <script>
-/* function comma(str) {
-    str = String(str);
-    alert(str);
-    document.getElementById('a').innerHTML = str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-} */
-
-
-
-/* $( "#dailyReportSubmit" ).click(function() {
-	  $( "#dailyform" ).submit();
-}); */
+var removeId=0;
 var jsonArray=new Array();
-/* function test1(){
-	str++;
-	alert(str);
-	
-} */
-/* 
-function testJSON1(){
 
-	  var o = {};
-	   var a = $( "#dailyform" ).serializeArray();
-	   $.each(a, function() {
-		     if (o[this.name]) {
-	           if (!o[this.name].push) {
-	               o[this.name] = [o[this.name]];
-	           }
-	          o[this.name].push(this.value || '');
-	       } else {
-	           o[this.name] = this.value || '';
-	       } 
-	   });
-	   jsonArray.push(o);
-	    var t=JSON.stringify(jsonArray);
-	   localStorage.setItem("tt", t);
-	   alert(localStorage.getItem("tt"));
-}
- */
  $(document).ready(function(){
 	 searchSalesGoal('${dailyReport.reg_date}');
 	 computeGuage();
-	 
+	var counsellingArray = jQuery.parseJSON('${counsellingJson}');
+	/*   alert(JSON.stringify(counsellingArray));  */
+ 	$.each( counsellingArray, function( counselRecord, value ) {
+		   var html='<li id="'+value.counsel_id+'"><a href="#" data-toggle="modal" data-target="#myModal2" onclick="tagTest('+'\''+value.counsel_id+'\''+','+'\''+value.title+'\''+','+'\''+value.content+'\''+','+'\''+value.client_id+'\''+','+'\''+value.sec_client_id+'\''+','+'\''+value.address+'\''+','+'\''+value.client_id +'\''+','+'\''+value.representative+'\''+','+'\''+value.counsel_id+'\''+')"><span class="fa fa-tag"></span>'
+		  html+=value.title+'</a><span class="glyphicon glyphicon-remove " onclick="removeTag('+'\''+value.counsel_id+'\''+','+1+')"></span></li>';
+		  $('.list-tags').prepend(html); 
+ 	}); 
+	jsonArray=counsellingArray;
+ 	 var t=JSON.stringify(jsonArray);
+ 	localStorage.setItem("tt", t);
+ 	alert(t);
 });
  
  $(window).load( function(){
@@ -210,25 +185,7 @@ function testJSON1(){
 											class="fa fa-plus"></span></span> -->
 										<ul class="list-tags">
 
-											<%
-												
-											%>
-											<li><a href="#"><span class="fa fa-tag"></span> amet</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													rutrum</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span> nunc</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													tempor</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span> eros</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													suspendisse</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													dolor</a></li>
-											<%
-												
-											%>
-
-											<li><a href="#" onclick="testJSON1()"><span class="fa fa-plus"></span>추가</a></li>
+											<li><a href="#" data-toggle="modal" data-target="#myModal2" id="modalAdd"><span class="fa fa-plus"></span>추가</a></li>
 										</ul>
 									</div>
 								</div>
@@ -257,6 +214,113 @@ function testJSON1(){
 	<!-- END CONTENT FRAME BODY -->
 
 </div>
+<div id="myModal2"  class="modal fade" role="dialog">
+	<div class="modal-dialog modal-admin">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+			
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"><span class="fa fa-arrow-circle-o-left"></span> 상담일지 작성</h4>
+				
+			</div>
+			<div class="modal-body">
+			<div class="page-title">
+	 <h2>
+		
+	</h2>  
+</div> 
+<!-- END PAGE TITLE -->
+
+<!-- PAGE CONTENT WRAPPER -->
+
+<div class="page-content-wrap">
+	<div class="row">
+		<div class="col-md-12">
+			<form action="#" onsubmit="event.preventDefault();" method="POST" class="form-horizontal" id="dailyModalForm">
+				<div class="panel panel-default">
+					<div class="panel-body">										
+						<div class="form-group">
+							<label class="col-md-2 col-xs-12 control-label">제목</label>
+							<div class="col-md-8 col-xs-12">
+								<div class="input-group">
+									<span class="input-group-addon"><span
+										class="fa fa-pencil"></span></span> 
+										<input type="text" class="form-control" name="title" id="modalTitle">
+								</div>
+								<span class="help-block">This is text field</span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-2 col-xs-12 control-label">Text
+								Field</label>
+							<div class="col-md-8 col-xs-12">
+								<textarea class="form-control summernote" name="content"
+									rows="5" id="modalContent"></textarea>
+
+								<span class="help-block">This is text field</span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-2 col-xs-12 control-label">고객명</label> <span
+								class="col-md-4 col-xs-12"> <select class="form-control"
+								name="counselling_id" id="counselling_id" required>
+									<option value="" disabled selected hidden="true">선택하세요!</option>
+									<option value="1">동작대리점</option>
+									<option value="2">검암대리점</option>
+							</select> <span class="help-block">Select box </span>
+							</span> 
+							<span class="col-md-2 col-xs-12"> 
+							<input type="text" class="form-control" placeholder="고객코드" readonly id="client_id" name="client_id">
+							</span>
+							 
+							 <span class="col-md-2 col-xs-12"> 
+							 <input type="text" class="form-control" placeholder="대표자" readonly id="representative" name="representative">
+							</span>
+
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-2 col-xs-12 control-label">2차거래선</label>
+							<span class="col-md-5 col-xs-12">
+								<select class="form-control" name="sec_client_id"
+									id="sec_client_id" required>
+								</select> <span class="help-block">Select box </span>
+							</span>
+							<span class="col-md-3 col-xs-12"> <input type="text"
+								class="form-control" placeholder="주소" readonly
+								id="address" name="address">
+							</span>
+						
+						</div>
+					</div>
+
+					<div class="panel-footer" id="counselling-footer">
+					<!-- <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" >Submit</button> -->
+					</div> 
+				</div>
+				<input type="hidden" value="${sessionScope.user.department_id }" name="department_id">
+				<input type="hidden" value="" id="temp_scId">
+			</form>
+			
+			
+		</div>
+	</div>
+</div>
+			</div>
+			<div class="modal-footer">
+				<!-- 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary pull-right">Submit</button>	 -->
+			</div>
+		</div>
+
+	</div>
+	
+</div>
+
 
 
 <script type="text/javascript">

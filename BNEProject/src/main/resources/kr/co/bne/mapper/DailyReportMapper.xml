@@ -41,14 +41,13 @@ and dr.daily_report_id=#{id}
 	]]>
 	</select>
 	
-	<select id="selectCounselRecordList" parameterType="String" resultType="CounsellingRecord">
+	<select id="selectCounselRecordList" parameterType="String" resultType="CounsellingDetail">
 	<![CDATA[
-	select cr.COUNSEL_ID,cr.title
-	from daily_report dr,counsel_record cr
-	where dr.daily_report_id=cr.daily_report_id and cr.daily_report_id=#{id} order by counsel_id
+	select cr.COUNSEL_ID,d.department_name, e.EMPLOYEE_NAME,cr.REG_DATE,cr.title,c.CLIENT_ID, c.CLIENT_NAME,c.REPRESENTATIVE,sc.sec_client_id, sc.SEC_CLIENT_NAME,sc.ADDRESS,cr.CONTENT
+	from daily_report dr,counsel_record cr,employee e,DEPARTMENT d,SECONDARY_CLIENT sc,CLIENT c
+	where dr.daily_report_id=cr.daily_report_id and dr.employee_id=e.employee_id and d.department_id=e.department_id and cr.SEC_CLIENT_ID=sc.SEC_CLIENT_ID and sc.CLIENT_ID=c.CLIENT_ID and cr.daily_report_id=#{id} order by cr.COUNSEL_ID
 	]]>
 	</select>
-	
 	<update id="updateApproval" parameterType="String">
 		<![CDATA[
 		update daily_report set approval_flag=1 where daily_report_id=#{daily_report_id}
@@ -71,4 +70,11 @@ and dr.daily_report_id=#{id}
 		INSERT INTO COUNSEL_RECORD (counsel_id,department_id,daily_report_id,reg_date,title,content,sec_client_id) values (counsel_record_seq.nextval,#{department_id},#{daily_report_id},sysdate,#{title},#{content},#{sec_client_id})
 	</insert>
 	
+	<update id="updateCounsellingList" parameterType="CounsellingRecord">
+		update counsel_record set reg_date=sysdate,title=#{title},content=#{content},sec_client_id=#{sec_client_id} where counsel_id=#{counsel_id}
+	</update>
+	
+	<delete id="deleteCounsellingList" parameterType="Integer">
+		delete from counsel_record where counsel_id=#{counsel_id}
+	</delete>
 </mapper>

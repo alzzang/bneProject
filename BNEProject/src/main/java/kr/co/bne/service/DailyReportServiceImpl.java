@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.bne.dao.DailyReportDAO;
 import kr.co.bne.dao.EmployeeDAO;
+import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
@@ -58,7 +59,7 @@ public class DailyReportServiceImpl implements DailyReportService {
 	}
 
 	@Override
-	public List<CounsellingRecordDTO> searchCounselRecord(String id) {
+	public List<CounsellingDetailDTO> searchCounselRecord(String id) {
 		// TODO Auto-generated method stub
 		return dao.selectCounselList(id);
 	}
@@ -88,6 +89,27 @@ public class DailyReportServiceImpl implements DailyReportService {
 			dao.insertCounsellingRecord(result.get(i));
 		}
 		
+	}
+
+	@Override
+	public void updateDailyReport(DailyReportDTO dailyReportDTO, List<CounsellingRecordDTO> list) {
+		// TODO Auto-generated method stub
+		dao.updateReport(dailyReportDTO);
+		int seq=dailyReportDTO.getDaily_report_id();
+		for(int i=0;i<list.size();i++){
+			if(list.get(i).getCounsel_id()==0){
+				list.get(i).setDaily_report_id(seq);
+				dao.insertCounsellingRecord(list.get(i));
+			}
+			else if(list.get(i).getCounsel_id()<0){
+				dao.deleteCounsellingRecord(list.get(i).getCounsel_id()*-1);
+			}
+			else{
+				dao.updateCounsellingRecord(list.get(i));
+			}
+			
+			
+		}
 	}
 
 }

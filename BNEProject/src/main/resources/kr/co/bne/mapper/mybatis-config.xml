@@ -18,6 +18,7 @@
 		<!--DailyReport 태우 추가-->
 		<typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>
 		<typeAlias alias="DailyReportDetail" type="kr.co.bne.dto.DailyReportDetailDTO"/>
+		<typeAlias alias="CounsellingDetail" type="kr.co.bne.dto.CounsellingDetailDTO"/>
 	</typeAliases>
 
 	<mappers>

@@ -171,25 +171,16 @@ var removeId=0;
 										<span class="input-group-addon" style="cursor: pointer;"><span
 											class="fa fa-plus"></span></span> -->
 										<ul class="list-tags">
-
-											<%
-												
-											%>
-											<li><a href="#"><span class="fa fa-tag"></span> amet</a></li>
-											<%
-												
-											%>
-
-											<li><a href="#" data-toggle="modal" data-target="#myModal2"><span class="fa fa-plus"></span>추가</a></li>
+											<li><a href="#" data-toggle="modal" data-target="#myModal2" id="modalAdd"><span class="fa fa-plus"></span>추가</a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
 							<jsp:include page="SmartEditor2.jsp"></jsp:include>
 							<%-- <jsp:include page="../../SmartEditor2.jsp"></jsp:include> --%>
-							<div class="panel-footer">
-								<button class="btn btn-primary pull-right"
-									id="dailyReportSubmit" onclick="submitContents()">Submit</button>
+							<div class="panel-footer" >
+								 <button class="btn btn-primary pull-right"
+									id="dailyReportSubmit" onclick="submitContents()">Submit</button> 
 							</div>
 
 						</div>
@@ -262,7 +253,7 @@ var removeId=0;
 						<div class="form-group">
 							<label class="col-md-2 col-xs-12 control-label">고객명</label> <span
 								class="col-md-4 col-xs-12"> <select class="form-control"
-								name="counsel_id" id="counsel_id" required>
+								name="counselling_id" id="counselling_id" required>
 									<option value="" disabled selected hidden="true">선택하세요!</option>
 									<option value="1">동작대리점</option>
 									<option value="2">검암대리점</option>
@@ -293,7 +284,7 @@ var removeId=0;
 						</div>
 					</div>
 
-					<div class="panel-footer">
+					<div class="panel-footer" id="counselling-footer">
 					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON1()">Submit</button>
 					</div> 
 				</div>
@@ -316,71 +307,3 @@ var removeId=0;
 	
 </div>
 
-
-
-<script type="text/javascript">
-
-//function aa(money,goal){
-	
-	/* var achievementRate=money/goal*100;
-	achievementRate=Math.round(achievementRate);
-	achievementRate=achievementRate/100;
-	
-	 *//*achievementRate=Math.round10(achievementRate,-3); */
-	
-	/* if(achievementRate>100){
-		achievementRate=100;
-	}
-	
-	if(achievementRate == 0) {
-		var rate=achievementRate.toString()+'%';
-		$("#progressCondition").html(rate);
-		$("#progressCondition").css('width',0.1);
-	}
-	else{
-		var rate=achievementRate.toString()+'%';
-		$("#progressCondition").html(rate);
-		  $("#progressCondition").css('width',rate);
-	} */
-	
-	
-//}
-
-
-/* 
-
-function computeGuage(){
-	  var before=$('#before_gauge').val();
-	  var after=$('#after_gauge').val();
-	  var result=after-before;
-	  $('#result_guage').val(result);
-}
-
-
-function searchSalesGoal(reg_date) {
-
-	$.ajax({
-		type : "POST",
-		url : "/dailyReport/dailysales",
-		data : {
-		 
-			reg_date : $('#reg_date').val()
-		},
-		success : function(data) {
-			var result=parseInt(data);
-			if(result==-1){
-				alert('해당 목표액이 존재하지 않습니다');
-				$('#dailyGoal').attr('value',0);
-				$('#aaaa').attr('onKeyUp', 'aa(this.value,'+0+')');
-			}else{
-				$('#dailyGoal').attr('value',result);
-				  $('#aaaa').attr('onKeyUp', 'aa(this.value,'+result+')'); 
-			}
-
-		}
-
-	})
-} */
-
-
-</script>

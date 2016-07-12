@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
@@ -38,7 +39,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectDailySalesGoal", map);
 	}
 	@Override
-	public List<CounsellingRecordDTO> selectCounselList(String id) {
+	public List<CounsellingDetailDTO> selectCounselList(String id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectCounselRecordList", id);
 	}
@@ -63,5 +64,16 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		// TODO Auto-generated method stub
 		sqlSession.insert("kr.co.bne.mapper.DailyReport.insertCounsellingList", result);
 	}
+	@Override
+	public void updateCounsellingRecord(CounsellingRecordDTO counsellingRecordDTO) {
+		// TODO Auto-generated method stub
+		sqlSession.update("kr.co.bne.mapper.DailyReport.updateCounsellingList", counsellingRecordDTO);
+	}
+	@Override
+	public void deleteCounsellingRecord(int counsel_id) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteCounsellingList", counsel_id);
+	}
+	
 
 }

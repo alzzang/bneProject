@@ -56,15 +56,26 @@ function selectSecontClient(value) {
 
 $(function() {
 	$('#myModal2').on('hidden.bs.modal', function() {
+		$("#sec_client_id").val('');
 	       $(this).find('form')[0].reset();
 	       $(this).find('.note-editable').empty();
 	   });
-	$("#counsel_id").change(function() {
+	$('#myModal4').on('hidden.bs.modal', function() {
+		$("#sec_client_id").val('');
+	       $(this).find('form')[0].reset();
+	       $(this).find('.note-editable').empty();
+	   });
+	$("#counselling_id").change(function() {
+		alert('aa');
 		$("#sec_client_id").empty();
 		$("#address").val("");
+		$("#temp_scId").val('');
 		selectSecontClient($(this).val());
 	});
-
+	$('#modalAdd').on('click',function(){
+		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON1()">Submit</button>');
+	});
+	
 	
 	
 	$("#sec_client_id").change(function() {
