@@ -276,7 +276,6 @@ public class DailyReportController {
 	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id) {
 		DailyReportDetailDTO dailyReport=dailyReportService.viewReport(id);
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
-		System.out.println(counsellingRecord);
 		ModelAndView model=new ModelAndView("dailyReportDetail");
 		model.addObject("dailyReport", dailyReport);
 		model.addObject("counselList",counsellingRecord);
