@@ -607,9 +607,9 @@ $(function() {
 
                 var calendar = $('#calendarWeek').fullCalendar({
                     header: {
-                        left: 'prev,next today',
+                        left: '',
                         center: 'title',
-                        right: 'month,agendaWeek,agendaDay'
+                        right: ''
                     },
                     editable: true,
                     eventSources: {url: "assets/ajax_fullcalendar.php"},

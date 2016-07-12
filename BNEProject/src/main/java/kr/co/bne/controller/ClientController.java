@@ -21,10 +21,8 @@ public class ClientController {
 	
 	@RequestMapping(value = "/getClient", method = { RequestMethod.GET })
 	public void getClient(HttpServletResponse res,HttpServletRequest req, ModelAndView mv) {
-		
-		System.out.println(clientService.getClient());
+				
 		req.setAttribute("client", clientService.getClient());
-		
 		
 	}
 	

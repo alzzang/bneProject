@@ -13,6 +13,19 @@ function getStorage(sec_id) {
 	}
 }
 
+function updateImage() {
+	$.ajax({
+		type : "POST",
+		url : "/user/defaultFile",
+		data : {
+			id : $('#employee_id').val()
+		},
+		success : function(data) {
+			location.reload(); 
+		},
+	})
+}
+
 function selectSecontClient(value) {
 
 	$
@@ -55,10 +68,28 @@ function selectSecontClient(value) {
 }
 
 $(function() {
-	$('#myModal2').on('hidden.bs.modal', function() {
+$('#myModal1').on('shown.bs.modal',	function() {
+
+		var myDropzone = Dropzone.forElement("#myDropzone");
+					var mockFile = {
+						name : $('#fileName').val(),
+						accepted : true,
+						size : 12345,
+						status : Dropzone.ACCEPTED
+					};
+					myDropzone.options.addedfile.call(myDropzone, mockFile);
+					myDropzone.options.thumbnail.call(myDropzone, mockFile,
+							"/user/download/" + $('#fileName').val() + "/");
+					myDropzone.emit("complete", mockFile);
+					myDropzone.files.push(mockFile);
+			});
+		
+		
+	$('#myModal1,#myModal2').on('hidden.bs.modal', function() {
 		$("#sec_client_id").val('');
 	       $(this).find('form')[0].reset();
 	       $(this).find('.note-editable').empty();
+	       $(this).find('#myDropzone').filter($('.dz-preview').remove());
 	   });
 	$('#myModal4').on('hidden.bs.modal', function() {
 		$("#sec_client_id").val('');
@@ -91,17 +122,22 @@ $(function() {
 		toolbar : []
 	});
 
-	Dropzone.options.myDropzone = {
-
+		Dropzone.options.myDropzone = {
+		paramName : 'NewImages',
 		url : "/user/upload",
 		acceptedFiles : 'image/*',
 		autoDiscover : false,
 		autoProcessQueue : false,
+
 		init : function() {
 			var submitButton = document.querySelector("#submitButton");
 			var myDropzone = this;
 			submitButton.addEventListener("click", function() {
-				myDropzone.processQueue();
+				if (myDropzone.getQueuedFiles().length > 0) {
+					myDropzone.processQueue();
+				} else {
+					updateImage();
+				}
 			});
 			this.on('success', function() {
 				location.reload();

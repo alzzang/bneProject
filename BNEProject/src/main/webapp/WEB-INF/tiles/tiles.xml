@@ -15,7 +15,6 @@
 	</definition>
 	
 	<definition name="main" extends="tilesbase">
-
 		<put-attribute name="body" value="/WEB-INF/views/board.jsp" />
 	</definition>
 	

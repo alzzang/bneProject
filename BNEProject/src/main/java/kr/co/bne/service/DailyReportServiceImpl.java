@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.bne.common.DailyReportListElement;
+import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dao.DailyReportDAO;
 import kr.co.bne.dao.EmployeeDAO;
 import kr.co.bne.dto.CounsellingDetailDTO;
@@ -22,6 +24,56 @@ public class DailyReportServiceImpl implements DailyReportService {
 	private DailyReportDAO dao;
 	@Autowired
 	private EmployeeDAO dao1;
+	
+	
+	@Override
+	public HashMap<String, Object> selectTeamMemberList(String user_id) {
+		int totalUnapprovalNum = dao.getTotalUnapprovalNum_Manager(user_id);
+		
+		List<DailyReportTeamListElement> memberList = dao.selectTeamMemberList(user_id);
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("totalUnapprovalNum", totalUnapprovalNum);
+		result.put("memberList", memberList);
+		
+		return result;
+	}
+	
+	
+	@Override
+	public int getgetTotalUnapprovalNum(String position, String user_id) {
+		if(position.equals("manager")) {
+			return dao.getTotalUnapprovalNum_Manager(user_id);
+		}else {
+			return dao.getTotalUnapprovalNum_Member(user_id);
+		}
+	}
+	
+	
+	@Override
+	public HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum) {
+		HashMap<String, Object> map = new HashMap<String, Object>();		
+		return selectDailyReportList(position, user_id, startIdx, perContentNum, map);
+	}
+	
+	
+	@Override
+	public HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum, HashMap<String, Object> params) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		List<DailyReportListElement> dailyReportList = null;
+		int totalPageNum = 0;
+		
+		
+		dailyReportList = dao.selectDailyReportList(user_id, startIdx, perContentNum, params);
+		totalPageNum = dao.getPagingNum_DailyReportList(user_id, perContentNum, params);
+		
+		
+		result.put("dailyReportList", dailyReportList);
+		result.put("totalPageNum", totalPageNum);
+		
+		return result;
+	}
+	
 	
 	@Override
 	public DailyReportEmployeeDTO searchPreSales(String employee_id) {
