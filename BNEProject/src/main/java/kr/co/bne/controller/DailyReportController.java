@@ -338,7 +338,7 @@ public class DailyReportController {
 	}
 	
 	@RequestMapping("/approval")
-	public void goApproval(@RequestParam("report_id")String daily_report_id,HttpServletRequest req,HttpServletRequest res){
+	public void goApproval(@RequestParam("report_id")String daily_report_id,HttpServletRequest req,HttpServletResponse res){
 		dailyReportService.approvalDailyReport(daily_report_id);
 	}
 	
