@@ -508,37 +508,31 @@ function x_navigation(){
     
     $(".x-navigation li").click(function(event){
        
-/*    	event.stopPropagation();
-          	
-        var li = $(this);
-                
-            if(li.children("ul").length > 0 || li.children(".panel").length > 0 || $(this).hasClass("xn-profile") > 0){
-                if(li.hasClass("active")){
-                    li.removeClass("active");
-                    li.find("li.active").removeClass("active");
-                }else
-                    li.addClass("active");
-                    
-                onresize();
-                
-                if($(this).hasClass("xn-profile") > 0)
-                    return true;
-                else
-                    return false;
-<<<<<<< HEAD
-            }                                     
+//    	event.stopPropagation();
+//          	
+//        var li = $(this);
+//                
+//            if(li.children("ul").length > 0 || li.children(".panel").length > 0 || $(this).hasClass("xn-profile") > 0){
+//                if(li.hasClass("active")){
+//                    li.removeClass("active");
+//                    li.find("li.active").removeClass("active");
+//                }else
+//                    li.addClass("active");
+//                    
+//                onresize();
+//                
+//                if($(this).hasClass("xn-profile") > 0)
+//                    return true;
+//                else
+//                    return false;
+//            }                                     
     });
-    
-=======
-            }    */                                 
-    });    
->>>>>>> branch 'develop' of https://github.com/alzzang/bneProject.git
     /* XN-SEARCH */
     $(".xn-search").on("click",function(){
         $(this).find("input").focus();
     })
     /* END XN-SEARCH */
-    
+
 }
 /* EOF X-NAVIGATION CONTROL FUNCTIONS */
 

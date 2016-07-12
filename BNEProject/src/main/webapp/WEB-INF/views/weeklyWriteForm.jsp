@@ -1,10 +1,34 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
-
+.panel-body input{
+	background-color: transparent;
+	border:0px solid black;
+}
 </style>
+<%-- <table border="1">
+	<tr>
+	<c:forEach items="${dayList}" var="day">
+		<th>${day.key}</th>
+	</c:forEach>
+	</tr>
+	<tr>
+	<c:forEach items="${dayList}" var="day">
+		<td>${day.value}</td>
+	</c:forEach>
+	</tr>
+</table>
+
+<script lang="javascript">
+window.onload = function(){
+	<c:forEach items="${dayList}" var="day">
+		$("th[class='fc-day-header fc-widget-header fc-${day.key}']").text("${day.value}");	
+	</c:forEach>
+};
+</script> --%>
 
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -20,31 +44,35 @@
 	</div>
 	<!-- END CONTENT FRAME TOP -->
 
-	<!-- START CONTENT FRAME LEFT -->
+	<!-- START CONTENT FRAME LEFT --> 
 	<div class="content-frame-left" style="height: 1054px;">
+	
 		<div class="panel-body">
 			<div class="page-title">
 				<h5>개인 정보</h5>
 			</div>
+			부서 ID : <input type="text" name="department_id" value="${user.department_id}" disabled><br>
+			로그인 ID : <input type="text" name="employee_id" value="${user.employee_id}" disabled>
+			
 			<table class="table">
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td>비앤이</td>
+						<td><input type="text" value="${user.department_name}" disabled></td>
 					</tr>
 
 					<tr>
 						<th>이름</th>
-						<td>이동우</td>
+						<td><input type="text" value="${user.employee_name}" disabled></td>
 					</tr>
 
 					<tr>
 						<th>작성일</th>
-						<td>2014.05.02.17:50</td>
+						<td>${currentDate}</td>
 					</tr>
 					<tr>
 						<th>제목</th>
-						<td>제목을 입력해주세요</td>
+						<td><input type="text"  placeholder="제목을 입력해주세요"></td>
 					</tr>
 				</thead>
 			</table>
@@ -55,11 +83,11 @@
 				<thead>
 					<tr>
 						<th>목표</th>
-						<td>100,000,000</td>
+						<td><input type="text" name="salesGoal" value="${salesGoal}" disabled></td>
 					</tr>
 					<tr>
 						<th>매출액</th>
-						<td>100,000,000</td>
+						<td><input type="text" name="sales" value="${monthlySales}" disabled></td>
 					</tr>
 				</thead>
 			</table>

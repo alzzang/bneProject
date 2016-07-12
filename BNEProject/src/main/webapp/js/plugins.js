@@ -614,6 +614,7 @@ $(function() {
                     editable: true,
                     eventSources: {url: "assets/ajax_fullcalendar.php"},
                     droppable: true,
+                    weekends:false,
                     selectable: true,
                     selectHelper: true,
                     select: function(start, end, allDay) {
@@ -653,12 +654,12 @@ $(function() {
                         //console.log(event.id);
 /*                    	var v = event.allDay;
                     	alert(v);*/
-                         if (isElemOverDiv($('div#trash>a'))) {
+                         if (isElemOverDiv($('div#test1>a'))) {
                         	 console.log(event._id);
                         	 calendar.fullCalendar('removeEvents', event._id);
                          }
                          /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
-                         $('div#trash>a').remove();
+                         $('div#test1>a').remove();
                      }
                     
 
@@ -691,7 +692,6 @@ $(function() {
         
         return {
             init: function(){
-            	 $('#calendarWeek').children('.fc-view-container').children().append('<div id="calendarTrash" style="float: right; padding-top: 5px; padding-right: 5px; padding-left: 5px;"><span class="ui-icon ui-icon-trash"></span></div>');
                 calendar();
             }
         }
