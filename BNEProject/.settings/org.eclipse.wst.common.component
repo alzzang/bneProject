@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> branch 'develop' of https://github.com/alzzang/bneProject.git
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
 	<wb-module deploy-name="BNEProject">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
@@ -8,3 +12,9 @@
         <property name="context-root" value="bne"/>
 	</wb-module>
 </project-modules>
+<<<<<<< HEAD
+=======
+=======
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId"/>
+>>>>>>> branch 'develop' of https://github.com/alzzang/bneProject.git
+>>>>>>> branch 'develop' of https://github.com/alzzang/bneProject.git
