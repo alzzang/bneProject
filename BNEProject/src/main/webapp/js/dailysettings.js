@@ -255,6 +255,12 @@ function approvalDaily() {
     		success : function(data) {
     			$('#approvalDiv').remove();
     			alert('승인되었습니다.');
+    			/*event.preventDefault();*/
+    		},
+    		error : function(data)
+    		{
+    			console.log(data);
+    			alert('에러입니');
     		}
     	})
     	
@@ -263,6 +269,7 @@ function approvalDaily() {
     	alert('승인이 취소되었습니다.');
         /*txt = "You pressed Cancel!";*/
     }
+    event.preventDefault();
     /*document.getElementById("demo").innerHTML = txt;*/
 }
 
@@ -273,7 +280,55 @@ function computeGuage(){
 	  $('#result_guage').val(result);
 }
 
+function insertComment(){
+	$.ajax({
+		type : "POST",
+		url : "/dailyReport/writecomment",
+		data : {
+			report_id: $('#report_id').val(),
+			comment : $('#managerComment').val()
+		},
+		success : function(data) {
+			var html='<div class="timeline-body comments">'+'<div class="comment-item">'+' <img src="/user/download/'+$('#manager_file_position').val()+'/">'+                               
+                     '<p class="comment-head">'+' <a href="#">'+$('#manager_name').val()+'</a>'
+                      +'<a href="#" class="pull-right" onclick="deleteComment()">삭제</a><span class="pull-right">&nbsp;|&nbsp;</span>'+
+                      '<a href="#" class="pull-right" onclick="modifyComment('+'\''+$('#managerComment').val()+'\''+')">수정</a></p>'+$('#managerComment').val()+'</div></div>' ;                   
+			$('#commentDiv').html(html);
+		}
 
+	})
+}
+function modifyComment(val){
+	alert(val);
+	var html='<div class="form-group push-up-20"><div class="col-md-12"><div class="input-group">'+
+		'<input class="form-control" placeholder="팀장 의견" id="managerComment" value="'+val+'">'
+		+'<span class="input-group-addon"><a href="#" onclick="insertComment()">'+
+		 '<span	class="fa fa-pencil"></span></a></span></div></div></div>';			
+	$('#commentDiv').html(html);
+		
+
+}
+
+function deleteComment(){
+	$.ajax({
+		type : "POST",
+		url : "/dailyReport/deletecomment",
+		data : {
+			report_id: $('#report_id').val()
+		},
+		success : function(data) {
+			var html='<div class="form-group push-up-20"><div class="col-md-12"><div class="input-group">'+
+				'<input class="form-control" placeholder="팀장 의견" id="managerComment">'
+				+'<span class="input-group-addon"><a href="#" onclick="insertComment()">'+
+				 '<span	class="fa fa-pencil"></span></a></span></div></div></div>';			
+			$('#commentDiv').html(html);
+		}
+
+	})
+}
+function addComma(val){
+	return val.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+}
 function searchSalesGoal(reg_date) {
 
 	$.ajax({

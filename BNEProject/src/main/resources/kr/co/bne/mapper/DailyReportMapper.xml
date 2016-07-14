@@ -184,4 +184,12 @@ and dr.daily_report_id=#{id}
 	<delete id="deleteCounsellingList" parameterType="Integer">
 		delete from counsel_record where counsel_id=#{counsel_id}
 	</delete>
+	
+	<update id="insertComment" parameterType="hashmap">
+		update daily_report set manager_comment=#{comment} where daily_report_id=#{daily_report_id}
+	</update>
+	
+	<update id="deleteComment" parameterType="String">
+		update daily_report set manager_comment='' where daily_report_id=#{daily_report_id}
+	</update>
 </mapper>

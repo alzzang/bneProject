@@ -19,12 +19,12 @@ $(document).ready(function(){
     alert(JSON.stringify(t)); */
 });
 
-$('#drivingDistance').bind('load', function() {
+/* $('#drivingDistance').bind('load', function() {
 	alert('abc');
 	var result=${dailyReport.after_gauge}-${dailyReport.before_gauge};
 	$( "#drivingDistance" ).attr( "value", result );
   });
-  $('#drivingDistance').trigger('load');
+  $('#drivingDistance').trigger('load'); */
 /* function drivingDistance(){
 	
 	alert(result);
@@ -33,7 +33,6 @@ $('#drivingDistance').bind('load', function() {
 /* var result=${dailyReport.after_gauge}-${dailyReport.before_gauge};
 alert(result);
 $( "#drivingDistance" ).attr( "value", result ); */
-alert('${counselList}');
 </script> 
 
 <div class="content-frame">
@@ -64,15 +63,15 @@ alert('${counselList}');
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td>남부 지점</td>
+						<td>${sessionScope.employee.department_name}</td>
 					</tr>
 					<tr>
 						<th>성명</th>
-						<td>이태우</td>
+						<td>${sessionScope.employee.employee_name}</td>
 					</tr>
 					<tr>
 						<th>매출목표</th>
-						<td>100,000,000</td>
+						<td id="goalValue">${sessionScope.employee.sales_goal}</td>
 					</tr>
 				</thead>
 			</table>
@@ -80,6 +79,10 @@ alert('${counselList}');
 
 		</div>
 	</div>
+	
+	<script>
+	$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
+	</script>
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->
@@ -232,6 +235,7 @@ alert('${counselList}');
 
 "${0 eq dailyReport.approval_flag && user.position eq 'manager'}"
 						 -->
+						 <div id="commentDiv">
 						 <c:choose>
 						 <c:when test="${dailyReport.manager_comment eq null && user.position eq 'employee'}">
 						 </c:when>
@@ -240,10 +244,9 @@ alert('${counselList}');
                                  <div class="comment-item">
                                           <img src="/user/download/${dailyReport.manager_file_position}/">
                                              <p class="comment-head">
-                                                  <a href="#">${dailyReport.manager_name}</a> <!-- <span class="text-muted">@bradpitt</span> -->
+                                                  <a href="#">${dailyReport.manager_name}</a>
                                              </p>
                                              ${dailyReport.manager_comment}
-                                               <!--  <small class="text-muted">10h ago</small> -->
                                  </div>                                            
                          </div>
 						 </c:when>
@@ -251,9 +254,9 @@ alert('${counselList}');
 						 <div class="form-group push-up-20">
 							<div class="col-md-12">
 								<div class="input-group">
-									<input class="form-control" placeholder="팀장 의견">
-									<span class="input-group-addon"><span
-										class="fa fa-pencil"></span></span>
+									<input class="form-control" placeholder="팀장 의견" id="managerComment">
+									<span class="input-group-addon"><a href="#" onclick="insertComment()"><span
+										class="fa fa-pencil"></span></a></span>
 								</div>
 							</div>
 						 </div>
@@ -263,7 +266,8 @@ alert('${counselList}');
                                  <div class="comment-item">
                                           <img src="/user/download/${dailyReport.manager_file_position}/">
                                              <p class="comment-head">
-                                                  <a href="#">${dailyReport.manager_name}</a> <!-- <span class="text-muted">@bradpitt</span> -->
+                                                  <a href="#">${dailyReport.manager_name}</a> <a href="#" class="pull-right" onclick="deleteComment()">삭제</a><span class="pull-right">&nbsp;|&nbsp;</span><a href="#" class="pull-right" onclick="modifyComment('${dailyReport.manager_comment}')">수정</a> 
+                                                  <!-- <span class="text-muted">@bradpitt</span> -->
                                              </p>
                                              ${dailyReport.manager_comment}
                                                <!--  <small class="text-muted">10h ago</small> -->
@@ -271,27 +275,8 @@ alert('${counselList}');
                          </div>
                          </c:when>
 						 </c:choose>
-					<%-- 	<%if(true) { %> <!-- 팀원일 때 -->
-						<div class="timeline-body comments">
-                                            <div class="comment-item">
-                                                <img src="/user/download/${dailyReport.manager_file_position}/">
-                                                <p class="comment-head">
-                                                    <a href="#">${dailyReport.manager_name}</a> <!-- <span class="text-muted">@bradpitt</span> -->
-                                                </p>
-                                                <p>Awesome, man, that is awesome...</p>
-                                                <small class="text-muted">10h ago</small>
-                                            </div>                                            
-                                        </div>
-						<%}else if(false) { %> <!-- 팀장일 때 -->
-						<div class="form-group push-up-20">
-							<div class="col-md-12">
-								<div class="input-group">
-									<input class="form-control" placeholder="팀장 의견">
-									<span class="input-group-addon"><span
-										class="fa fa-pencil"></span></span>
-								</div>
-							</div>
-						<%} %> --%>
+						 </div>
+						 
 						</div>
 						
 						
@@ -304,6 +289,8 @@ alert('${counselList}');
 		</form>
 
 		<input type="hidden" value="${dailyReport.daily_report_id }" id="report_id">
+		<input type="hidden" value="${dailyReport.manager_name }" id="manager_name">
+		<input type="hidden" value="${dailyReport.manager_file_position }" id="manager_file_position">
 	</div>
 
 </div>

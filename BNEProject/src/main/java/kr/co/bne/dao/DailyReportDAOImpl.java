@@ -111,11 +111,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		return pageNum;
 	}
 	
-	
 
-
-	
-	
 	@Override
 	public List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException {
 		List<DailyReportTeamListElement> teamList = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMemberList", user_id);
@@ -138,6 +134,17 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		int TotalUnapprovalNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getTotalUnapprovalNum_Member", user_id);
 		
 		return TotalUnapprovalNum;
+	}
+	
+	@Override
+	public void insertComment(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		sqlSession.update("kr.co.bne.mapper.DailyReport.insertComment", map);
+	}
+	@Override
+	public void deleteComment(String daily_report_id) {
+		// TODO Auto-generated method stub
+		sqlSession.update("kr.co.bne.mapper.DailyReport.deleteComment", daily_report_id);
 	}
 
 }

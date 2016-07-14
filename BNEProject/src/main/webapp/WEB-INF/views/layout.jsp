@@ -48,7 +48,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 }
 </style>
 
-
+<script type="text/javascript" src="/js/dailysettings.js"></script>
 </head>
 
 
@@ -159,7 +159,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<script type ="text/javascript" src="/js/weekly.js"></script>
 	<script type="text/javascript" src="/js/usersettings.js"></script>
 
-	<script type="text/javascript" src="/js/dailysettings.js"></script>
+	
 
 
 	<!-- END TEMPLATE -->

@@ -164,4 +164,17 @@ public class DailyReportServiceImpl implements DailyReportService {
 		}
 	}
 
+	@Override
+	public void writeComment(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		dao.insertComment(map);
+	}
+
+
+	@Override
+	public void removeComment(String daily_report_id) {
+		// TODO Auto-generated method stub
+		dao.deleteComment(daily_report_id);
+	}
+
 }

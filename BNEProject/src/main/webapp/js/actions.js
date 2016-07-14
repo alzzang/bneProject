@@ -658,7 +658,7 @@ function x_navigation() {
     
     $(".x-navigation li").click(function(event){
        
-    	event.stopPropagation();
+    	//event.stopPropagation();
           	
         var li = $(this);
                 

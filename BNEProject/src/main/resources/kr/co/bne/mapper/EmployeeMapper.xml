@@ -5,17 +5,14 @@
 <mapper namespace="kr.co.bne.mapper.Employee">
 
 	<select id="selectEmployee" parameterType="String" resultType="Employee">
-
-	<!-- <![CDATA[select e.*, d.department_name from employee e, department 
-		d where d.department_id = e.department_id and e.employee_id=#{value}]]>  -->
-	<![CDATA[select e.*, d.department_name,
+   <![CDATA[select e.*, d.department_name,
         CASE WHEN employee_id in (select manager_id from department) THEN 'manager'
         ELSE 'employee' END position from employee e, department d where e.DEPARTMENT_ID = d.DEPARTMENT_ID
-  		and employee_id = #{value}]]>
-	
+        and employee_id = #{value}]]>
+   </select>
 	
 	<!-- <![CDATA[select * from employee where employee_id=#{value}]]> -->
-	</select>
+	
 
 	<update id="updatePassword" parameterType="HashMap">
 	<![CDATA[update employee set password=#{password} where employee_id=#{id}]]>
@@ -29,7 +26,7 @@
 	</update>
 
 	
-
+ 
 	<select id="selectImage" resultType="Employee">
 	<![CDATA[
 	select employee_name,file_position from employee where employee_id='1'

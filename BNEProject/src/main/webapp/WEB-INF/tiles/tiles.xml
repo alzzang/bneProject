@@ -9,7 +9,6 @@
 	<definition name="dailyReport_Writeform" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Writeform.jsp"/>
 	</definition>
-	
 	<definition name="dailyReportMain" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReportMain.jsp"/>
 	</definition>
