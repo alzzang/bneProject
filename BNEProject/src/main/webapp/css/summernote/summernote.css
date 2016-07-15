@@ -37,6 +37,13 @@
     
 }
 
+.table .note-editor .note-toolbar {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #d5d5d5;
+    display : none;
+    
+}
+
 .note-editor.fullscreen {
     position: fixed;
     top: 0;

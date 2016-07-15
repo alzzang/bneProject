@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
-
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
-
 import kr.co.bne.dto.EmployeeDTO;
-
 import kr.co.bne.service.UserService;
 
 @Controller
@@ -36,18 +30,30 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest request, ModelAndView mv,
+	
+	public void setFileName(String fileName, HttpServletRequest req){
+		HttpSession session = req.getSession();
+		session.setAttribute("fileName", fileName);
+	}
+	
+	@RequestMapping(value = "/defaultFile", method = RequestMethod.POST)
+	public void defaultFile(HttpServletResponse response, HttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
-
-		Map<String, MultipartFile> fileMap = request.getFileMap();
-
+		userService.modifyFilePosition(id);
+		setFileName("default.png",req);
+	}
+	
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req,
+			@RequestParam("id") String id) throws IOException {
+		String fileName = null;
+		Map<String, MultipartFile> fileMap = req.getFileMap();
 		for (MultipartFile multipartFile : fileMap.values()) {
-
-			userService.modifyFilePosition(id, saveFileToLocalDisk(multipartFile, id));
+			fileName=saveFileToLocalDisk(multipartFile, id);
+			userService.modifyFilePosition(id, fileName);
 		}
-
+		setFileName(fileName,req);
+		
 	}
 
 	private String saveFileToLocalDisk(MultipartFile multipartFile, String id)
@@ -55,12 +61,11 @@ public class UserController {
 		String temp[] = multipartFile.getContentType().split("/");
 		String outputFileName = getDestinationLocation() + id + "." + temp[1];
 		FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(outputFileName));
-
 		return id + "." + temp[1];
 	}
 
-	@RequestMapping(value = "/download/{employee_id}", method = { RequestMethod.GET })
-	public void showFile(@PathVariable String employee_id, HttpServletRequest req, HttpServletResponse res)
+	@RequestMapping(value = "/download/{fileName}", method = { RequestMethod.GET })
+	public void showFile(@PathVariable String fileName, HttpServletRequest req, HttpServletResponse res)
 			throws IOException {
 
 		byte[] buffer = new byte[1024];
@@ -68,7 +73,7 @@ public class UserController {
 		FileInputStream inputStream;
 		OutputStream outStream;
 
-		File f = new File("c:/uploaded-files/" + employee_id);
+		File f = new File("c:/uploaded-files/" + fileName);
 
 		inputStream = new FileInputStream(f);
 		outStream = res.getOutputStream();
@@ -97,7 +102,6 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = { RequestMethod.GET })
 	public String login() {
-
 		return "redirect:/user/goLoginForm";
 	}
 
@@ -120,12 +124,12 @@ public class UserController {
 		HttpSession session = req.getSession();
 		EmployeeDTO employeeDTO = new EmployeeDTO();
 		employeeDTO = userService.validCheck(id, rawPassword);
-
 		String newpassword = req.getParameter("newpassword");
 
 		if (newpassword == null) {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
+				session.setAttribute("fileName", employeeDTO.getFile_position());
 				return "redirect:/main";
 			}
 			return "redirect:/user/login";

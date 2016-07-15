@@ -602,20 +602,22 @@ $(function() {
                 var m = date.getMonth();
                 var y = date.getFullYear();
                 var idx = 0;
-
+         	
+                
                 prepare_external_list();
 
                 var calendar = $('#calendarWeek').fullCalendar({
                     header: {
-                        left: 'prev,next today',
+                        left: '',
                         center: 'title',
-                        right: 'month,agendaWeek,agendaDay'
+                        right: ''
                     },
                     editable: true,
                     eventSources: {url: "assets/ajax_fullcalendar.php"},
                     droppable: true,
                     selectable: true,
                     selectHelper: true,
+                    weekends : false,
                     select: function(start, end, allDay) {
                         var title = prompt('Event Title:');
                         if (title) {
@@ -659,10 +661,17 @@ $(function() {
                          }
                          /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
                          $('div#trash>a').remove();
+                     },
+                     
+                     setEditable: function(b){
+                    	 this.editable = b;
                      }
+                    
+                    
                     
 
                 });
+
                 
                 $("#new-event").on("click",function(){
                     var et = $("#new-event-text").val();
@@ -740,7 +749,7 @@ $(function() {
         }
 
         if(action == 'destroy'){
-            $(".mpb").remove();
+           /* $(".mpb").remove();*/
         }                
         
     }

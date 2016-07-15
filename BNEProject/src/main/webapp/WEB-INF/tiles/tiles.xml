@@ -4,7 +4,7 @@
 		<put-attribute name="menu" value="/WEB-INF/views/menu.jsp"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
 		<put-attribute name="body" value="" />
-	</definition>
+	</definition>	
 
 	<definition name="dailyReport_Writeform" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Writeform.jsp"/>
@@ -15,37 +15,48 @@
 	</definition>
 	
 	<definition name="main" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/board.jsp" />
+	</definition>
+	
+	<definition name="main2" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/counsellingForm.jsp" />
 	</definition>
+	
+	
+	
+	
 	
 	<definition name="dailyReportDetail" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReportDetail.jsp"/>
 	</definition>
 	
 	<definition name="login" template="/WEB-INF/views/pages-login.jsp"/>
-		
+	
+	<definition name="edit" template="/WEB-INF/views/SmartEditor2Skin.jsp"/>
+	
+	<definition name="inputarea" template="/WEB-INF/views/smart_editor2_inputarea.jsp"/>
+	
 	<definition name="password" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/password.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/password.jsp"/>
 	</definition>
-
-
-	<definition name="login" template="/WEB-INF/views/pages-login.jsp" />
-
-
-
-
-
+	
+	<definition name="updateDailyReport" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Modifyform.jsp"/>
+	 </definition>	
+	
 	<definition name="WeeklyWriteForm" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/WeeklyWriteForm.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/WeeklyWriteForm.jsp"/>
 	</definition>
 
-
-	<!-- <definition name="main" extends="bodybase"> <put-attribute name="nav" 
-		value="/WEB-INF/views/nav.jsp"/> <put-attribute name="content" value="/WEB-INF/views/content.jsp"/> 
-		</definition> -->
+	<definition name="aaa" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/SmartEditor2.jsp"/>
+	</definition>
+	<!-- <definition name="main" extends="bodybase">
+		<put-attribute name="nav" value="/WEB-INF/views/nav.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/content.jsp"/>
+	</definition> -->
 
 </tiles-definitions>
-
  
 
 

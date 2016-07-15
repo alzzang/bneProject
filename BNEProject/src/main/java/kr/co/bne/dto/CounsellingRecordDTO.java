@@ -1,6 +1,6 @@
 package kr.co.bne.dto;
 
-public class CounsellingRecordDTO {
+public class CounsellingRecordDTO  {
 	private int counsel_id;
 	private int department_id;
 	private int daily_report_id;
@@ -8,6 +8,7 @@ public class CounsellingRecordDTO {
 	private String title;
 	private String content;
 	private int sec_client_id;
+	
 	public CounsellingRecordDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -23,12 +24,8 @@ public class CounsellingRecordDTO {
 		this.content = content;
 		this.sec_client_id = sec_client_id;
 	}
-	public int getCounsel_id() {
-		return counsel_id;
-	}
-	public void setCounsel_id(int counsel_id) {
-		this.counsel_id = counsel_id;
-	}
+	
+
 	public int getDepartment_id() {
 		return department_id;
 	}
@@ -64,6 +61,12 @@ public class CounsellingRecordDTO {
 	}
 	public void setSec_client_id(int sec_client_id) {
 		this.sec_client_id = sec_client_id;
+	}
+	public int getCounsel_id() {
+		return counsel_id;
+	}
+	public void setCounsel_id(int counsel_id) {
+		this.counsel_id = counsel_id;
 	}
 	@Override
 	public String toString() {
@@ -118,6 +121,7 @@ public class CounsellingRecordDTO {
 			return false;
 		return true;
 	}
+	
 	
 	
 	
