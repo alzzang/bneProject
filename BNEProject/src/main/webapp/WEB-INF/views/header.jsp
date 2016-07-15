@@ -23,12 +23,13 @@
                     <!-- MESSAGES -->
                     <li class="xn-icon-button pull-right">
                         <a href="#"><span class="fa fa-comments"></span></a>
-                        <div class="informer informer-danger">4</div>
+                        <div class="informer informer-danger" id="appendtest"></div>
+                        
                         <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging ui-draggable">
                             <div class="panel-heading ui-draggable-handle">
                                 <h3 class="panel-title"><span class="fa fa-comments"></span> Messages</h3>                                
                                 <div class="pull-right">
-                                    <span class="label label-danger">4 new</span>
+                                    <span class="label label-danger" >4 new</span>
                                 </div>
                             </div>
                             <div class="panel-body list-group list-group-contacts scroll mCustomScrollbar _mCS_2 mCS-autoHide mCS_no_scrollbar" style="height: 200px;"><div id="mCSB_2" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" tabindex="0"><div id="mCSB_2_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
