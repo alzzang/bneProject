@@ -40,7 +40,9 @@
 		<put-attribute name="body" value="/WEB-INF/views/password.jsp"/>
 	</definition>
 	
-		
+	<definition name="updateDailyReport" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Modifyform.jsp"/>
+	 </definition>	
 	
 	<definition name="WeeklyWriteForm" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/WeeklyWriteForm.jsp"/>

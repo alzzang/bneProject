@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -523,7 +524,10 @@
 						<!-- END VISITORS BLOCK -->
 
 					</div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
     <head>        
         <!-- META SECTION -->
         <title>Joli Admin - Responsive Bootstrap Admin Template</title>            

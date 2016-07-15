@@ -2,24 +2,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-<style type="text/css">
-.modal .modal-admin{ width: 750px; }
-   
-</style>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- 111 -->
-
 <!-- <script src="/js/dailysettings.js"></script> -->
 <script>
-
-var jsonArray=new Array();
 var removeId=0;
+var jsonArray=new Array();
 
+ $(document).ready(function(){
+	 searchSalesGoal('${dailyReport.reg_date}');
+	 computeGuage();
+	var counsellingArray = jQuery.parseJSON('${counsellingJson}');
+	/*   alert(JSON.stringify(counsellingArray));  */
+ 	$.each( counsellingArray, function( counselRecord, value ) {
+		   var html='<li id="'+value.counsel_id+'"><a href="#" data-toggle="modal" data-target="#myModal2" onclick="tagTest('+'\''+value.counsel_id+'\''+','+'\''+value.title+'\''+','+'\''+value.content+'\''+','+'\''+value.client_id+'\''+','+'\''+value.sec_client_id+'\''+','+'\''+value.address+'\''+','+'\''+value.client_id +'\''+','+'\''+value.representative+'\''+','+'\''+value.counsel_id+'\''+')"><span class="fa fa-tag"></span>'
+		  html+=value.title+'</a><span class="glyphicon glyphicon-remove " onclick="removeTag('+'\''+value.counsel_id+'\''+','+1+')"></span></li>';
+		  $('.list-tags').prepend(html); 
+ 	}); 
+	jsonArray=counsellingArray;
+ 	 var t=JSON.stringify(jsonArray);
+ 	localStorage.setItem("tt", t);
+ 	alert(t);
+});
+ 
+ $(window).load( function(){
+	 var a=${dailyReport.sales};
+	 var b=$('#dailyGoal').val();
+	 changeProgress(a,b);
+	 setUpdateContents('${dailyReport.content}');
+	 //pasteHTML();
+ });
 </script>
-
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -73,7 +85,7 @@ var removeId=0;
 		<div class="row">
 			<div class="col-md-12">
 
-				<form class="form-horizontal" action="/dailyReport/writeform"
+				<form class="form-horizontal" action="/dailyReport/updateform"
 					id="dailyform" method="post">
 					<div class="panel panel-default">
 						<div class="panel-heading ui-draggable-handle">
@@ -91,13 +103,12 @@ var removeId=0;
 									<div class="input-group">
 										<span class="input-group-addon"><span
 											class="fa fa-pencil"></span></span> <input type="text"
-											class="form-control" name="title" required="required">
+											class="form-control" name="title" required="required" value="${dailyReport.title}">
 									</div>
 								</div>
 
 
 							</div>
-
 
 
 							<div class="form-group">
@@ -106,7 +117,7 @@ var removeId=0;
 									<div class="input-group">
 										<span class="input-group-addon"><span
 											class="fa fa-calendar"></span></span> <input type="text" 
-											class="form-control datepicker"  value="" name="reg_date" onchange="searchSalesGoal(this.value)" required="required" id="reg_date">
+											class="form-control datepicker"  value="${dailyReport.reg_date}" name="reg_date" onchange="searchSalesGoal(this.value)"  required="required" id="reg_date">
 									</div>
 								</div>
 							</div>
@@ -120,7 +131,7 @@ var removeId=0;
 											class="fa fa-won"></span></span> <input type="text"
 											class="form-control"
 											id="inputSales" 
-											name="sales"  pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" required="required">
+											name="sales"  pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" required="required" value="${dailyReport.sales}">
 										<span class="progress"> <span
 											class="progress-bar progress-bar-danger" role="progressbar"
 											aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
@@ -146,14 +157,14 @@ var removeId=0;
 								<div class="col-md-2 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">출근 시 계기판</span> <input
-											type="text" class="form-control" value="0" onchange="computeGuage()" name="before_gauge" id="before_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
+											type="text" class="form-control" value="${dailyReport.before_gauge }" onchange="computeGuage()" name="before_gauge" id="before_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
 									</div>
 								</div>
 
 								<div class="col-md-2 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">퇴근 시 계기판</span> <input
-											type="text" value="0" class="form-control" onchange="computeGuage()" name="after_gauge" id="after_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
+											type="text" value="${dailyReport.after_gauge }" class="form-control" onchange="computeGuage()" name="after_gauge" id="after_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
 									</div>
 								</div>
 
@@ -173,48 +184,36 @@ var removeId=0;
 										<span class="input-group-addon" style="cursor: pointer;"><span
 											class="fa fa-plus"></span></span> -->
 										<ul class="list-tags">
+
 											<li><a href="#" data-toggle="modal" data-target="#myModal2" id="modalAdd"><span class="fa fa-plus"></span>추가</a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
-							<!-- 
-							 -->
-						
-							<!-- 
-							 -->
-							<!-- <div class="form-group">
-								<textarea name="content" id="ir1" rows="10" cols="100"
-									style="width: 700px; height: 412px; display: none;"></textarea>
-							</div> -->
-							
 							<jsp:include page="SmartEditor2.jsp"></jsp:include>
 							<%-- <jsp:include page="../../SmartEditor2.jsp"></jsp:include> --%>
-							<div class="panel-footer" >
-								 <button class="btn btn-primary pull-right"
-									id="dailyReportSubmit" onclick="submitContents()">Submit</button> 
+							<div class="panel-footer">
+								<button class="btn btn-primary pull-right"
+									id="dailyReportSubmit" onclick="submitContents()">Submit</button>
 							</div>
 
 						</div>
+						<input type="hidden" name="daily_report_id" value="${dailyReport.daily_report_id }">
 						<input type="hidden" name="department_id" value="${sessionScope.user.department_id}">
 						<input type="hidden" name="employee_id" value="${sessionScope.user.employee_id}">
 						<input type="hidden" id="counsellingJSON" name="counsellingJSON" value="">
-					</div>
 				</form>
 
 			</div>
 		</div>
 
 
-	
+
 	</div>
 
 	<!-- END CONTENT FRAME BODY -->
 
 </div>
-<!-- <script type="text/javascript" src="/../js/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript" src="/../js/inputeditor.js" charset="utf-8"></script> -->
-
 <div id="myModal2"  class="modal fade" role="dialog">
 	<div class="modal-dialog modal-admin">
 
@@ -300,7 +299,7 @@ var removeId=0;
 					</div>
 
 					<div class="panel-footer" id="counselling-footer">
-					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON1()">Submit</button>
+					<!-- <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" >Submit</button> -->
 					</div> 
 				</div>
 				<input type="hidden" value="${sessionScope.user.department_id }" name="department_id">
@@ -321,4 +320,3 @@ var removeId=0;
 	</div>
 	
 </div>
-

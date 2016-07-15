@@ -1,12 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<head>
-<script type="text/javascript" src="/../js/HuskyEZCreator.js" charset="utf-8"></script>
-</head>
-<div class="form-group" >
-	<textarea name="content" id="ir1" rows="10" cols="100" style="width:700px; height:412px; display:none;"></textarea>
-</div>
-<script type="text/javascript">
+/**
+ * 
+ */
 var oEditors = [];
 
 // 추가 글꼴 목록
@@ -63,7 +57,3 @@ function setDefaultFont() {
 function setUpdateContents(content){
 	oEditors.getById["ir1"].exec("UPDATE_CONTENTSS_FIELD", [content]);
 }
-</script>
-
-<!-- </body> -->
-<!-- </html> -->
