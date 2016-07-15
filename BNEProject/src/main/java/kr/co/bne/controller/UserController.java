@@ -129,9 +129,7 @@ public class UserController {
 		if (newpassword == null) {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
-				System.out.println( employeeDTO.getFile_position());
 				session.setAttribute("fileName", employeeDTO.getFile_position());
-				
 				return "redirect:/main";
 			}
 			return "redirect:/user/login";
