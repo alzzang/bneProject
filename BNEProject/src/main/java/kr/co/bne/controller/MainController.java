@@ -19,7 +19,6 @@ public class MainController {
 	
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){
-
 		return "aaa";
 	}
 	@RequestMapping(value="/smarteditor")
