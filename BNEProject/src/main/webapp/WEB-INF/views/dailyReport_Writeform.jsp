@@ -182,18 +182,8 @@ var removeId=0;
 									</div>
 								</div>
 							</div>
-							<!-- 
-							 -->
-						
-							<!-- 
-							 -->
-							<!-- <div class="form-group">
-								<textarea name="content" id="ir1" rows="10" cols="100"
-									style="width: 700px; height: 412px; display: none;"></textarea>
-							</div> -->
-							
+
 							<jsp:include page="SmartEditor2.jsp"></jsp:include>
-							<%-- <jsp:include page="../../SmartEditor2.jsp"></jsp:include> --%>
 							<div class="panel-footer" >
 								 <button class="btn btn-primary pull-right"
 									id="dailyReportSubmit" onclick="submitContents()">Submit</button> 
@@ -217,8 +207,6 @@ var removeId=0;
 
 </div>
 
-<!-- <script type="text/javascript" src="/../js/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript" src="/../js/inputeditor.js" charset="utf-8"></script> -->
 
 <div id="myModal2"  class="modal fade" role="dialog">
 	<div class="modal-dialog modal-admin">

@@ -14,25 +14,10 @@ $(document).ready(function(){
 	var a = ${dailyReport.drsales};
 	var b = ${dailyReport.wpsales}
 	changeProgress(a,b);
-/*     var t=jQuery.parseJSON( '${aa}' );
-    alert(t);
-    alert(JSON.stringify(t)); */
+
 });
 
-/* $('#drivingDistance').bind('load', function() {
-	alert('abc');
-	var result=${dailyReport.after_gauge}-${dailyReport.before_gauge};
-	$( "#drivingDistance" ).attr( "value", result );
-  });
-  $('#drivingDistance').trigger('load'); */
-/* function drivingDistance(){
-	
-	alert(result);
-	return result;
-} */
-/* var result=${dailyReport.after_gauge}-${dailyReport.before_gauge};
-alert(result);
-$( "#drivingDistance" ).attr( "value", result ); */
+
 </script> 
 
 <div class="content-frame">
@@ -287,7 +272,7 @@ $( "#drivingDistance" ).attr( "value", result ); */
 	
 
 		</form>
-
+		
 		<input type="hidden" value="${dailyReport.daily_report_id }" id="report_id">
 		<input type="hidden" value="${dailyReport.manager_name }" id="manager_name">
 		<input type="hidden" value="${dailyReport.manager_file_position }" id="manager_file_position">
@@ -321,74 +306,6 @@ $( "#drivingDistance" ).attr( "value", result ); */
 <div class="page-content-wrap">
 	<div class="row">
 		<div class="col-md-12">
-			<%-- <form action="#" onsubmit="event.preventDefault();" method="POST" class="form-horizontal" id="dailyModalForm">
-				<div class="panel panel-default">
-					<div class="panel-body">										
-						<div class="form-group">
-							<label class="col-md-2 col-xs-12 control-label">제목</label>
-							<div class="col-md-8 col-xs-12">
-								<div class="input-group">
-									<span class="input-group-addon"><span
-										class="fa fa-pencil"></span></span> 
-										<input type="text" class="form-control" name="title" id="modalTitle">
-								</div>
-								<span class="help-block">This is text field</span>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-2 col-xs-12 control-label">Text
-								Field</label>
-							<div class="col-md-8 col-xs-12">
-								<textarea class="form-control summernote" name="content"
-									rows="5" id="modalContent"></textarea>
-
-								<span class="help-block">This is text field</span>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-2 col-xs-12 control-label">고객명</label> <span
-								class="col-md-4 col-xs-12"> <select class="form-control"
-								name="counsel_id" id="counsel_id" required>
-									<option value="" disabled selected hidden="true">선택하세요!</option>
-									<option value="1">동작대리점</option>
-									<option value="2">검암대리점</option>
-							</select> <span class="help-block">Select box </span>
-							</span> 
-							<span class="col-md-2 col-xs-12"> 
-							<input type="text" class="form-control" placeholder="고객코드" readonly id="client_id" name="client_id">
-							</span>
-							 
-							 <span class="col-md-2 col-xs-12"> 
-							 <input type="text" class="form-control" placeholder="대표자" readonly id="representative" name="representative">
-							</span>
-
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-2 col-xs-12 control-label">2차거래선</label>
-							<span class="col-md-5 col-xs-12">
-								<select class="form-control" name="sec_client_id"
-									id="sec_client_id" required>
-								</select> <span class="help-block">Select box </span>
-							</span>
-							<span class="col-md-3 col-xs-12"> <input type="text"
-								class="form-control" placeholder="주소" readonly
-								id="address" name="address">
-							</span>
-						
-						</div>
-					</div>
-
-					<div class="panel-footer">
-					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON1()">Submit</button>
-					</div> 
-				</div>
-				<input type="hidden" value="${sessionScope.user.department_id }" name="department_id">
-				<input type="hidden" value="" id="temp_scId">
-			</form>
-			 --%>
 			
 <div class="panel-body">
 	<p>

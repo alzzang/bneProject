@@ -233,7 +233,7 @@ public class DailyReportController {
 		
 		return "dailyReportMain";
 	}
-	@RequestMapping(value="/update")
+	@RequestMapping(value="/update" ,method = RequestMethod.POST)
 	public ModelAndView goUpdate(@RequestParam("daily_report_id")String id,HttpServletRequest req,HttpServletResponse res){
 		DailyReportDTO dailyreport=dailyReportService.searchDailyReport(id);
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
@@ -283,14 +283,21 @@ public class DailyReportController {
 	}
 	
 	
-	@RequestMapping("/detail")
-	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id) {
+	@RequestMapping(value="/detail", method = RequestMethod.POST)
+	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id,HttpServletRequest req,HttpServletResponse res) {
 		DailyReportDetailDTO dailyReport=dailyReportService.viewReport(id);
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
 		
 		ModelAndView model=new ModelAndView("dailyReportDetail");
 		model.addObject("dailyReport", dailyReport);
 		model.addObject("counselList",counsellingRecord);
+		
+		HttpSession session=req.getSession();
+		EmployeeDTO user=(EmployeeDTO) session.getAttribute("user");
+		if(user.getPosition().equals("manager")){
+			DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(dailyReport.getEmployee_id());
+			session.setAttribute("employee", employee);
+		}
 		
 		return model;
 	}
@@ -377,3 +384,5 @@ public class DailyReportController {
 	}*/
 
 }
+
+

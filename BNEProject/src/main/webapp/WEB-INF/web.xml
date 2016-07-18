@@ -46,4 +46,9 @@
  	 <welcome-file-list>
     	<welcome-file>NewFile.jsp</welcome-file>
   	</welcome-file-list> 
+  	
+  	<error-page>
+    	<error-code>405</error-code>
+    	<location>/WEB-INF/views/405error.jsp</location>
+    </error-page>
 </web-app>

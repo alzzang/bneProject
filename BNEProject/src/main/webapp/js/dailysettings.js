@@ -3,8 +3,42 @@
  */
 function updateDaily(id){
 	event.preventDefault();
-	var url = "update?daily_report_id="+id;    
-	location.href=url;
+	
+	var form = document.createElement("form");     
+	form.setAttribute("method","post");                    
+	form.setAttribute("action","/dailyReport/update");        
+	document.body.appendChild(form);                        
+	 
+	//input
+	var input_id = document.createElement("input");  
+	input_id.setAttribute("type", "hidden");                 
+	input_id.setAttribute("name", "daily_report_id");                        
+	input_id.setAttribute("value", id);                          
+	form.appendChild(input_id);
+	 
+	//폼전송
+	form.submit();  
+	
+	/*var url = "update?daily_report_id="+id;    
+	location.href=url;*/
+}
+
+function detailDaily(id){
+	event.preventDefault();
+	var form = document.createElement("form");     
+	form.setAttribute("method","post");                    
+	form.setAttribute("action","/dailyReport/detail");        
+	document.body.appendChild(form);                        
+	 
+	//input
+	var input_id = document.createElement("input");  
+	input_id.setAttribute("type", "hidden");                 
+	input_id.setAttribute("name", "dailyReportId");                        
+	input_id.setAttribute("value", id);                          
+	form.appendChild(input_id);
+	 
+	//폼전송
+	form.submit();  
 }
 
 function testJSON1(){
@@ -31,7 +65,6 @@ function testJSON1(){
 	   var tagJson=JSON.stringify(o);
 	   addTag(tagJson);
 	    var t=JSON.stringify(jsonArray);
-	    alert(':sss'+t);
 	   localStorage.setItem("tt", t);
 }
 //local 저장소 update
@@ -91,7 +124,6 @@ function testJSON3(val){
 			}
 			
 	});
-	alert(tempIdx);
 	$("#modalContent").val($( "#contentDiv" ).html());
 	  var o = {};
 	   var a = $( "#dailyModalForm" ).serializeArray();
@@ -122,13 +154,11 @@ function testJSON3(val){
 	   
 	   var t=JSON.stringify(jsonArray);
 	   localStorage.setItem("tt", t);
-	   alert('db업데이트후'+t);
 	   console.log(t);
 }
 function addTag(testdata){
 	var obj = jQuery.parseJSON(testdata);
 	console.log(obj);
-	alert(JSON.stringify(testdata));
 //	var cc="obj.title";
 	var appendHtml='<li id="'+obj.remove_Id+'"><a href="#" data-toggle="modal" data-target="#myModal2" onclick="tagTest('+'\''+obj.counsel_id+'\''+','+'\''+obj.title+'\''+','+'\''+obj.content+'\''+','+'\''+obj.counselling_id+'\''+','+'\''+obj.sec_client_id+'\''+','+'\''+obj.address+'\''+','+'\''+obj.client_id +'\''+','+'\''+obj.representative+'\''+','+'\''+obj.remove_Id+'\''+')"><span class="fa fa-tag"></span>'
 	appendHtml+=obj.title+'</a><span class="glyphicon glyphicon-remove " onclick="removeTag('+'\''+obj.remove_Id+'\''+','+0+')"></span></li>';
@@ -190,13 +220,10 @@ function tagDetail(department_name,employee_name,reg_date,title,client_id,client
 }
 function removeTag(seq,val){
 	if(val==0){
-		alert(0);
 		jsonArray = jQuery.grep(jsonArray, function( n ) {
-			alert(n.remove_Id);
 			  return n.remove_Id!=seq;
 		});
 	}else if(val==1){
-		alert(1);
 		console.log(jsonArray);
 		$.each( jsonArray, function( idx, value ) {
 			if(value["counsel_id"]==seq){
@@ -212,7 +239,6 @@ function removeTag(seq,val){
 	$(t).remove();
 	 var removeJson=JSON.stringify(jsonArray);
 	   localStorage.setItem("tt", removeJson);
-	   alert(localStorage.getItem("tt"));
 }
 
 function changeProgress(money,goal){
