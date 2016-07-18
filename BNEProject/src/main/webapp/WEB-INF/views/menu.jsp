@@ -51,10 +51,17 @@
 						<div class="profile-data-title">${sessionScope.user.department_name}</div>
 					</div>
 					<div class="profile-controls">
+
+						<a href="/user/changeProfile" class="profile-control-left">
+						<span class="fa fa-gear"></span></a> 
+						<a href="#"	class="profile-control-right" id="sockettest">
+							<span class="fa fa-envelope"></span></a>
+
 						<a href="/user/changeProfile" class="profile-control-left"> <span
 							class="fa fa-gear"></span></a> <a
 							href="/counselling/readCounsellingRecord/44"
 							class="profile-control-right"> <span class="fa fa-envelope"></span></a>
+
 					</div>
 
 				</div>
@@ -214,6 +221,7 @@
 </div>
 
 <!-- <a href="#" data-toggle="modal" data-target="#myModal">Open Modal</a> -->
+
 <!-- Modal -->
 <div id="myModal1"  class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -255,4 +263,3 @@
 
 	</div>
 </div>
-

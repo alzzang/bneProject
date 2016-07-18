@@ -28,8 +28,7 @@ function updateImage() {
 
 function selectSecontClient(value) {
 
-	$
-			.ajax({
+	$.ajax({
 				type : "POST",
 				url : "/counselling/secondaryClient",
 				data : {
@@ -68,7 +67,45 @@ function selectSecontClient(value) {
 }
 
 $(function() {
+
+
+/*
+ * Morris.Bar({ element: 'morris-bar-example1', horizontal: 'true', data: [ { y:
+ * '일', a: 260 }, { y: '월', a: 2850}, { y: '화', a: 2133 }, { y: '수', a: 2754 }, {
+ * y: '목', a: 2905 }, { y: '금', a: 2163 }, { y: '토', a: 731} ], xkey: 'y',
+ * ykeys: ['a'], labels: ['Series A']
+ * 
+ * });
+ * 
+ * Morris.Bar({ element: 'morris-bar-example2', horizontal: true, data: [ { x:
+ * '전자결제', a: 3 }, { x: '토', a: 2} ], xkey: 'x', ykeys: ['a'], labels: ['Series
+ * A'],
+ * 
+ * resize: true
+ * 
+ * }); Morris.Bar({ element: 'morris-bar-example3', data: [ { y: '일', a: 260 }, {
+ * y: '월', a: 2850}, { y: '화', a: 2133 }, { y: '수', a: 2754 }, { y: '목', a: 2905 }, {
+ * y: '금', a: 2163 }, { y: '토', a: 731} ], xkey: 'y', ykeys: ['a'], labels:
+ * ['Series A']
+ * 
+ * });
+ * 
+ * 
+ * Morris.Donut({ element: 'morris-donut-example', data: [ {label: "Download
+ * Sales", value: 12}, {label: "In-Store Sales", value: 30}, {label: "Mail-Order
+ * Sales", value: 20} ] });
+ */
+	
+	$('#sockettest').on('click',function(){
+	
+		socket.emit('notice',{toId:'2',message:'notice'});
+		
+	});	
+	
+
+
 $('#myModal1').on('shown.bs.modal',	function() {
+
 
 		var myDropzone = Dropzone.forElement("#myDropzone");
 					var mockFile = {
@@ -86,6 +123,16 @@ $('#myModal1').on('shown.bs.modal',	function() {
 		
 		
 	$('#myModal1,#myModal2').on('hidden.bs.modal', function() {
+
+		$(this).find('form')[0].reset();
+		$(this).find('.note-editable').empty();
+		var myDropzone = Dropzone.forElement("#myDropzone");
+		myDropzone.removeAllFiles();
+		// $(this).find('#myDropzone').filter($('.dz-preview').remove());
+	});
+
+	$("#counsel_id").change(function() {
+
 		$("#sec_client_id").val('');
 	       $(this).find('form')[0].reset();
 	       $(this).find('.note-editable').empty();
@@ -97,6 +144,7 @@ $('#myModal1').on('shown.bs.modal',	function() {
 	       $(this).find('.note-editable').empty();
 	   });
 	$("#counselling_id").change(function() {
+
 		$("#sec_client_id").empty();
 		$("#address").val("");
 		$("#temp_scId").val('');
@@ -122,7 +170,9 @@ $('#myModal1').on('shown.bs.modal',	function() {
 		toolbar : []
 	});
 
-		Dropzone.options.myDropzone = {
+		
+	Dropzone.options.myDropzone = {
+
 		paramName : 'NewImages',
 		url : "/user/upload",
 		acceptedFiles : 'image/*',
@@ -136,6 +186,10 @@ $('#myModal1').on('shown.bs.modal',	function() {
 				if (myDropzone.getQueuedFiles().length > 0) {
 					myDropzone.processQueue();
 				} else {
+					if($("#fileName").val()=='default.png'){
+						location.reload();
+					}
+					else
 					updateImage();
 				}
 			});

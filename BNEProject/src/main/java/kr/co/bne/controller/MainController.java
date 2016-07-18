@@ -15,14 +15,13 @@ public class MainController {
 	@RequestMapping("/main")
 	public String goMain() {
 
-		return "main";
+		return "mainboard";
 
 	}
 	
 
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){
-
 		return "aaa";
 	}
 	@RequestMapping(value="/smarteditor")
@@ -34,7 +33,6 @@ public class MainController {
 
 	@RequestMapping("/WeeklyWrite")
 	public String WeeklyWriteForm(){
-		
 		return "WeeklyWriteForm";
 	}
 }

@@ -135,7 +135,6 @@ public class UserController {
 		if (newpassword == null) {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
-				System.out.println( employeeDTO.getFile_position());
 				session.setAttribute("fileName", employeeDTO.getFile_position());
 				
 				DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
