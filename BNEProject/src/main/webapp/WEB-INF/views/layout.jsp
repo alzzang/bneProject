@@ -64,7 +64,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 			<tiles:insertAttribute name="body" />
 		</div>
  		
- 		<script type="text/javascript">
+<!--  		<script type="text/javascript">
 		var socket=io.connect('http://192.168.1.27:3000');
 		socket.emit('getId',{employeeId: '${sessionScope.user.employee_id}' });
 	
@@ -73,7 +73,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 			alert(data);
 			$('#appendtest').append('1');
 		});
-		</script> 
+		</script>  -->
 
 	</div>
 
@@ -156,8 +156,11 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 	<script type="text/javascript" src="/js/dailysettings.js"></script>
 	
-	<!-- <script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
-	<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script> -->
+	
+	<script type="text/javascript" src="/js/demo_dashboard.js"></script>
+	<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
+	<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
+	
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
 
