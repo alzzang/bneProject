@@ -12,6 +12,7 @@ import kr.co.bne.dao.DailyReportDAO;
 import kr.co.bne.dao.EmployeeDAO;
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
+
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -116,6 +117,7 @@ public class DailyReportServiceImpl implements DailyReportService {
 		return dao.selectCounselList(id);
 	}
 
+	
 	@Override
 	public void approvalDailyReport(String daily_report_id) {
 		// TODO Auto-generated method stub
@@ -164,7 +166,6 @@ public class DailyReportServiceImpl implements DailyReportService {
 		}
 	}
 
-
 	@Override
 	public HashMap<String, Integer> selectMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
@@ -175,4 +176,15 @@ public class DailyReportServiceImpl implements DailyReportService {
 		return result;
 	}
 
+/*	@Override
+	public HashMap<String, List<?>> searchDailyChartLine(String id) {
+		// TODO Auto-generated method stub
+		HashMap<String, List<?>> result = new HashMap<String,List<?>>();
+		result.put("List1", dao.selectDailyReportChartLineList(id));
+		result.put("List2", dao.selectDailyReportChartLine2List());
+		
+		
+		return result;
+//		return dao.selectDailyReportChartLineList(id);
+	}*/
 }

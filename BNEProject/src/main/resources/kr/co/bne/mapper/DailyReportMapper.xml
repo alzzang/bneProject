@@ -4,6 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.DailyReport">
 
+
 	<resultMap type="DailyReportListElement" id="DailyReportListElement">
 	<result column="employee_id" property="employee_id"/>
 	<result column="employee_name" property="employee_name"/>
@@ -11,6 +12,17 @@
 	<result column="reg_date" property="reg_date"/>
 	<result column="approval_flag" property="approval_flag"/>
 	<result column="idx" property="idx"/>
+	</resultMap>
+
+
+<resultMap type="DailyReportListElement" id="DailyReportListElement">
+	<result column="employee_id" property="employee_id" />
+	<result column="employee_name" property="employee_name" />
+	<result column="title" property="title" />
+	<result column="reg_date" property="reg_date" />
+	<result column="approval_flag" property="approval_flag" />
+	<result column="idx" property="idx" />
+
 </resultMap>
 
 
@@ -22,6 +34,19 @@
 	<result column="unApproval" property="unApproval"/>
 </resultMap>
 
+
+<resultMap type="DailyReportChartListElement" id="DailyReportChartListElement">
+	<result column="department_id" property="department_id"/>
+	<result column="employee_id" property="employee_id"/>
+	<result column="reg_date" property="reg_date"/>
+	<result column="sales" property="sales"/>
+</resultMap>
+
+
+<resultMap type="DailyReportChart2ListElement" id="DailyReportChart2ListElement">
+	<result column="reg_date" property="reg_date"/>
+	<result column="sales" property="sales"/>
+</resultMap>
 
 
 
@@ -88,8 +113,21 @@
 </select>
 
 
+<select id="selectDailyChartList" parameterType="java.lang.String" resultMap="DailyReportChartListElement"> 
+select department_id,employee_id,to_char(reg_date,'yyyy-mm') as reg_date, sum(sales) as sales
+from daily_report
+where reg_date between add_months(sysdate,-12) and add_months(sysdate,-1) and EMPLOYEE_ID =#{value}
+group by to_char(reg_date,'yyyy-mm'), EMPLOYEE_ID,department_id
+order by 3
+</select>
 
-
+<select id="selectDailyChart2List" resultMap="DailyReportChart2ListElement"> 
+select to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
+from daily_report
+where reg_date between add_months(sysdate,-12) and add_months(sysdate,-1)
+group by to_char(reg_date,'yyyy-mm')
+order by 1
+</select>
 
 <select id="getTotalUnapprovalNum_Manager" parameterType="String" resultType="int">
 	select count(*) from DAILY_REPORT

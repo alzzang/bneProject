@@ -27,6 +27,9 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	display: none;
 }
 </style>
+
+<script src="http://localhost:3000/socket.io/socket.io.js"></script> 
+
 <!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script>  -->
 </head>
 
@@ -46,17 +49,14 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 			<tiles:insertAttribute name="header" />
 			<tiles:insertAttribute name="body" />
 		</div>
- 
- <!-- 		<script type="text/javascript">
-		
- 		var socket=io.connect('http://192.168.1.27:3000');
-	
+ <script type="text/javascript">
+		var socket=io.connect('http://localhost:3000');
 		socket.emit('getId',{employeeId: '${sessionScope.user.employee_id}' });
 		socket.on('newmessage',function(data){
 			alert(data);
 			$('#appendtest').append('1');
 		});
-		</script>  -->
+</script>  
 	
 	</div>
 
