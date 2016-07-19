@@ -4,7 +4,6 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.DailyReport">
 
-
 	<resultMap type="DailyReportListElement" id="DailyReportListElement">
 	<result column="employee_id" property="employee_id"/>
 	<result column="employee_name" property="employee_name"/>
@@ -200,6 +199,12 @@ and dr.daily_report_id=#{id}
 	<select id="selectSumofMonthlyGoal" parameterType="String" resultType="Integer">
 		<![CDATA[
 		select sum(sales) from daily_report where reg_date between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 and employee_id=#{value}
+		]]>
+	</select>
+	
+	<select id="selectTeamMonthlyGoal" parameterType="String" resultType="Integer">
+		<![CDATA[
+		select abc.employee_name,sum(abc.sales) as sales from (select d.department_id, e.employee_id, e.employee_name, d.sales  from daily_report d, employee e where d.employee_id = e.employee_id and d.reg_Date between (SELECT TRUNC (SYSDATE, 'year') FROM dual) and sysdate-1 and d.DEPARTMENT_ID=#{value}) abc group by employee_name
 		]]>
 	</select>
 
