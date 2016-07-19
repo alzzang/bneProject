@@ -127,11 +127,9 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Override
 	public int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException {
 		int TotalUnapprovalNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getTotalUnapprovalNum_Manager", user_id);
-		
 		return TotalUnapprovalNum;
 	}
-	
-	
+		
 	
 	@Override
 	public int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException {
