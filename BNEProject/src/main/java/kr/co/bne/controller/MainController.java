@@ -1,16 +1,14 @@
 package kr.co.bne.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +32,14 @@ public class MainController {
 
 	}
 	
+	@RequestMapping("/sales")
+	public @ResponseBody HashMap<String,Integer> getSales(HttpServletResponse res, @RequestParam("employee_id")String id) {
+		
+		return dailyReportService.selectMonthlyGoal(id);
+	
+	}
+	
+
 
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){

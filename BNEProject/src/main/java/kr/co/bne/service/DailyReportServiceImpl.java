@@ -171,4 +171,15 @@ public class DailyReportServiceImpl implements DailyReportService {
 		}
 	}
 
+
+	@Override
+	public HashMap<String, Integer> selectMonthlyGoal(String id) {
+		// TODO Auto-generated method stub
+		HashMap<String, Integer> result = new HashMap<String, Integer>();
+		result.put("monthlyGoal", dao.selectMonthlyGoal(id));
+		result.put("sumofMonthlyGoal", dao.selectSumofMonthlyGoal(id));
+		
+		return result;
+	}
+
 }
