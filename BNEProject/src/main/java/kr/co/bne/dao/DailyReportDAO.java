@@ -24,7 +24,8 @@ public interface DailyReportDAO {
 	public void insertCounsellingRecord(CounsellingRecordDTO counsellingRecordDTO);
 	public void updateCounsellingRecord(CounsellingRecordDTO counsellingRecordDTO);
 	public void deleteCounsellingRecord(int i);
-	
+	public int selectMonthlyGoal(String id);
+	public int selectSumofMonthlyGoal(String id);
 	
 	List<DailyReportListElement> selectDailyReportList(String user_id, int startIdx, int perContentNum,
 			HashMap<String, Object> params) throws RuntimeException;

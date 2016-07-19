@@ -184,4 +184,27 @@ and dr.daily_report_id=#{id}
 	<delete id="deleteCounsellingList" parameterType="Integer">
 		delete from counsel_record where counsel_id=#{counsel_id}
 	</delete>
+
+<!-- 	<select id="selectMonthlyGoal" parameterType="String" resultType="DailyReport">
+		<![CDATA[
+		select * from daily_report where daily_report_id=#{id}
+		]]>
+	</select> -->
+	
+	<select id="selectMonthlyGoal" parameterType="String" resultType="Integer">
+		<![CDATA[
+		select sales_goal from monthly_goal where year=(SELECT EXTRACT(YEAR FROM sysdate) FROM DUAL) and month= (SELECT EXTRACT(month FROM sysdate) FROM DUAL) and employee_id=#{value}
+		]]>
+	</select>
+	
+	<select id="selectSumofMonthlyGoal" parameterType="String" resultType="Integer">
+		<![CDATA[
+		select sum(sales) from daily_report where reg_date between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 and employee_id=#{value}
+		]]>
+	</select>
+
+
+
+
 </mapper>
+

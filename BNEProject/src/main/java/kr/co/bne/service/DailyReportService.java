@@ -40,4 +40,6 @@ public interface DailyReportService {
 
 	HashMap<String, Object> selectTeamMemberList(String user_id);
 	
+	public HashMap<String,Integer> selectMonthlyGoal(String id);
+	
 }

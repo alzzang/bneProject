@@ -139,5 +139,15 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		
 		return TotalUnapprovalNum;
 	}
+	@Override
+	public int selectMonthlyGoal(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectMonthlyGoal", id);
+	}
+	@Override
+	public int selectSumofMonthlyGoal(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
+	}
 
 }
