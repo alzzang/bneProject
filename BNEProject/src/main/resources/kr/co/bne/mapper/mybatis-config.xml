@@ -25,6 +25,7 @@
 		<typeAlias alias="CounsellingDetail" type="kr.co.bne.dto.CounsellingDetailDTO"/>
 		
 		<typeAlias alias="DailyReportChartListElement" type="kr.co.bne.dto.DailyReportChartDTO"/>
+		<typeAlias alias="DailyReportChart2ListElement" type="kr.co.bne.dto.DailyReportChart2DTO"/>
 		
 	</typeAliases>
 

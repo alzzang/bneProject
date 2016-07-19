@@ -41,6 +41,6 @@ public interface DailyReportService {
 
 	HashMap<String, Object> selectTeamMemberList(String user_id);
 	
-	public List<DailyReportChartDTO> searchDailyChartLine(String employee_id);
+	public HashMap<String, List<?>> searchDailyChartLine(String employee_id);
 	public HashMap<String,Integer> selectMonthlyGoal(String id);
 }

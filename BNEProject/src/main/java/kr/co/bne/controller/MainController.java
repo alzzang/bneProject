@@ -32,12 +32,6 @@ public class MainController {
 
 	}
 	
-	@RequestMapping("/sales")
-	public @ResponseBody HashMap<String,Integer> getSales(HttpServletResponse res, @RequestParam("employee_id")String id) {
-		
-		return dailyReportService.selectMonthlyGoal(id);
-	
-	}
 	
 
 
@@ -56,17 +50,25 @@ public class MainController {
 	public String WeeklyWriteForm(){
 		return "WeeklyWriteForm";
 	}
+
+	
+	@RequestMapping("/sales")
+	public @ResponseBody HashMap<String,Integer> getSales(HttpServletResponse res, @RequestParam("employee_id")String id) {
+		
+		return dailyReportService.selectMonthlyGoal(id);
+		
+	}
 	
 	
 	@RequestMapping(value = "/morrisChartLine", method = { RequestMethod.POST })
-	public @ResponseBody List<DailyReportChartDTO> getDailyReportChart(HttpServletResponse res, @RequestParam("employee_id") String employee_id)
+	public @ResponseBody HashMap<String,List<?>> getDailyReportChart(HttpServletResponse res, @RequestParam("employee_id") String employee_id)
 			throws JSONException, IOException {
-
 		System.out.println("morrisChartLine id : "+employee_id);
-
-		List<DailyReportChartDTO> dailyRepoartChart = dailyReportService.searchDailyChartLine(employee_id);
+/*		List<DailyReportChartDTO> dailyRepoartChart = dailyReportService.searchDailyChartLine(employee_id);
 		System.out.println("!!"+dailyRepoartChart);
-		return dailyRepoartChart;
+		*/
+		
+		return dailyReportService.searchDailyChartLine(employee_id);
 	}
 	
 	

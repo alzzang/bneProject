@@ -49,21 +49,14 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 			<tiles:insertAttribute name="header" />
 			<tiles:insertAttribute name="body" />
 		</div>
- 		<script type="text/javascript">
-		var socket=io.connect('http://localhost:3000');
-		socket.emit('getId',{employeeId: '${sessionScope.user.employee_id}' });
-	
- 
  <script type="text/javascript">
-		
- 		var socket=io.connect('http://192.168.1.27:3000');
-	
+		var socket=io.connect('http://localhost:3000');
 		socket.emit('getId',{employeeId: '${sessionScope.user.employee_id}' });
 		socket.on('newmessage',function(data){
 			alert(data);
 			$('#appendtest').append('1');
 		});
-		</script>  -->
+</script>  
 	
 	</div>
 

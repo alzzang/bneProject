@@ -3,15 +3,15 @@ package kr.co.bne.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import kr.co.bne.common.DailyReportListElement;
+import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
+import kr.co.bne.dto.DailyReportChart2DTO;
 import kr.co.bne.dto.DailyReportChartDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
-
-import kr.co.bne.common.DailyReportListElement;
-import kr.co.bne.common.DailyReportTeamListElement;
 
 public interface DailyReportDAO {
 	public DailyReportEmployeeDTO selectPreSales(String employee_id);
@@ -28,6 +28,7 @@ public interface DailyReportDAO {
 	public int selectMonthlyGoal(String id);
 	public int selectSumofMonthlyGoal(String id);
 	
+	
 	List<DailyReportListElement> selectDailyReportList(String user_id, int startIdx, int perContentNum,
 			HashMap<String, Object> params) throws RuntimeException;
 
@@ -40,4 +41,7 @@ public interface DailyReportDAO {
 
 	int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException;
 	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id);
+	public List<DailyReportChart2DTO> selectDailyReportChartLine2List();
+	
+	
 }

@@ -117,11 +117,6 @@ public class DailyReportServiceImpl implements DailyReportService {
 		return dao.selectCounselList(id);
 	}
 
-	@Override
-	public List<DailyReportChartDTO> searchDailyChartLine(String id) {
-		// TODO Auto-generated method stub
-		return dao.selectDailyReportChartLineList(id);
-	}
 	
 	@Override
 	public void approvalDailyReport(String daily_report_id) {
@@ -171,7 +166,6 @@ public class DailyReportServiceImpl implements DailyReportService {
 		}
 	}
 
-
 	@Override
 	public HashMap<String, Integer> selectMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
@@ -182,4 +176,15 @@ public class DailyReportServiceImpl implements DailyReportService {
 		return result;
 	}
 
+	@Override
+	public HashMap<String, List<?>> searchDailyChartLine(String id) {
+		// TODO Auto-generated method stub
+		HashMap<String, List<?>> result = new HashMap<String,List<?>>();
+		result.put("List1", dao.selectDailyReportChartLineList(id));
+		result.put("List2", dao.selectDailyReportChartLine2List());
+		
+		
+		return result;
+//		return dao.selectDailyReportChartLineList(id);
+	}
 }

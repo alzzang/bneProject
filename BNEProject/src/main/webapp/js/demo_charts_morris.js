@@ -12,8 +12,12 @@ var morrisCharts = function() {
 	alert('morrisCharts ajax Line');
 	
 	var lineArr = new Array();
-	var jsonLoop = new Array();
 	
+	var lineArr2 = new Array();
+	
+	//insert values at chart
+	var jsonLoop = new Array();
+	 
 	$.ajax({
 		type : "POST",
 		url : "/morrisChartLine",
@@ -26,29 +30,36 @@ var morrisCharts = function() {
 		success : function(data) {
 			alert('success');
 			console.log(data);
-			/*var str = JSON.stringify(data);
-			var list = $.parseJSON(str);
-			console.log(str);
-			var len = Object.keys(list).length;
-			console.log(list);
-			var len = Object.keys().length;
-			alert(len);*/
-			for(var i=0;i<data.length;i++){
-				lineArr.push({reg_date:data[i].reg_date,
-							  sales:data[i].sales	
-							});
+			console.log(data.List1);
+			console.log(data.List2);
+			list1=data.List1;
+			list2=data.List2;
+			
+
+			var chartFlag=true;
+			alert(list2.length+' : '+list1.length);
+			alert(list1[0].reg_date+' : '+list1[0].sales)
+			for(var i=0;i<list2.length;i++){
+				
+				for(var j=0;j<list1.length;j++){
+					if(list2[i].reg_date===list1[j].reg_date){
+						alert(list1[j].reg_date+'! ! !'+list2[i].reg_date+' list1:: '+ list1[j].sales+'list2:: '+list2[i].sales);
+						
+						
+						jsonLoop.push({y: list2[i].reg_date, a: list1[j].sales, b: list2[i].sales});
+						chartFlag=false;
+					}
+				}				
+				
+				if(chartFlag){
+					
+					alert('flag true : '+list1[i].reg_date+'! ! !'+list2[i].reg_date+' ! '+ list1[i].sales+'list2 : '+list2[i].sales);
+					jsonLoop.push({y: list2[i].reg_date, a: 0, b: list2[i].sales});
+					
+				}
+				chartFlag=true;
 			}
 			
-			for(var i=0;i<data.length;i++){
-				jsonLoop.push({y: lineArr[i].reg_date, a: lineArr[i].sales, b: 90});
-			}
-			/*jsonLoop.push({y: '2001', a: 11, b: 90});
-			jsonLoop.push({y: '2002', a: 21, b: 90});
-			jsonLoop.push({y: '2003', a: 31, b: 90});*/
-			
-			for(var i=0;i<3;i++){
-				alert(lineArr[i].sales);
-			}
 			
 			Morris.Line({
 		    	
