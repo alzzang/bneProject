@@ -4,7 +4,6 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.DailyReport">
 
-
 	<resultMap type="DailyReportListElement" id="DailyReportListElement">
 	<result column="employee_id" property="employee_id"/>
 	<result column="employee_name" property="employee_name"/>
@@ -12,19 +11,7 @@
 	<result column="reg_date" property="reg_date"/>
 	<result column="approval_flag" property="approval_flag"/>
 	<result column="idx" property="idx"/>
-	</resultMap>
-
-
-<resultMap type="DailyReportListElement" id="DailyReportListElement">
-	<result column="employee_id" property="employee_id" />
-	<result column="employee_name" property="employee_name" />
-	<result column="title" property="title" />
-	<result column="reg_date" property="reg_date" />
-	<result column="approval_flag" property="approval_flag" />
-	<result column="idx" property="idx" />
-
 </resultMap>
-
 
 
 <resultMap type="DailyReportTeamListElement" id="DailyReportTeamListElement">
@@ -240,9 +227,9 @@ and dr.daily_report_id=#{id}
 		]]>
 	</select>
 	
-	<select id="selectTeamMonthlyGoal" parameterType="String" resultType="Integer">
+	<select id="selectTeamMonthlyGoal" parameterType="Integer" resultType="DailyReportEmployee">
 		<![CDATA[
-		select abc.employee_name,sum(abc.sales) as sales from (select d.department_id, e.employee_id, e.employee_name, d.sales  from daily_report d, employee e where d.employee_id = e.employee_id and d.reg_Date between (SELECT TRUNC (SYSDATE, 'year') FROM dual) and sysdate-1 and d.DEPARTMENT_ID=#{value}) abc group by employee_name
+		select abc.employee_name,sum(abc.sales) as sales_goal from (select d.department_id, e.employee_id, e.employee_name, d.sales  from daily_report d, employee e where d.employee_id = e.employee_id and d.reg_Date between (SELECT TRUNC (SYSDATE, 'year') FROM dual) and sysdate-1 and d.DEPARTMENT_ID=#{value}) abc group by employee_name
 		]]>
 	</select>
 

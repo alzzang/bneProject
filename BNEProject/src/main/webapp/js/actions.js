@@ -505,8 +505,6 @@ function x_navigation(){
         
     });
     
-  
-    
     $(".x-navigation li").click(function(event){
         event.stopPropagation();
         
@@ -528,15 +526,17 @@ function x_navigation(){
             }                                     
     });
     
-	$(".x-navigation .profile-image").click(function(){
-		$("#myModal1").modal('show');
-	});
-    
     /* XN-SEARCH */
     $(".xn-search").on("click",function(){
         $(this).find("input").focus();
     })
     /* END XN-SEARCH */
+
+    $(".x-navigation .profile-image").click(function(){
+		$("#myModal1").modal('show');
+	});
+    
+    
     
 }
 /* EOF X-NAVIGATION CONTROL FUNCTIONS */

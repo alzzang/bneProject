@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
-
+import kr.co.bne.dto.DailyReportChart2DTO;
+import kr.co.bne.dto.DailyReportChartDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -149,7 +150,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
 	}
 
-/*	@Override
+	@Override
 	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id){
 		System.out.println("DAO chart id : "+id);
 		List<DailyReportChartDTO> dailyRepoartChartList = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChartList",id);
@@ -162,6 +163,11 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		List<DailyReportChart2DTO> dailyRepoartChart2List = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChart2List");
 		System.out.println("list2 "+dailyRepoartChart2List);
 		return dailyRepoartChart2List;
-	}*/
+	}
+	@Override
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(int departmentId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMonthlyGoal", departmentId);
+	}
 	
 }

@@ -40,7 +40,7 @@ public interface DailyReportService {
 	int getgetTotalUnapprovalNum(String position, String user_id);
 
 	HashMap<String, Object> selectTeamMemberList(String user_id);
-	
-//	public HashMap<String, List<?>> searchDailyChartLine(String employee_id);
+	public HashMap<String, List<?>> searchDailyChartLine(String employee_id);
 	public HashMap<String,Integer> selectMonthlyGoal(String id);
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(int departmentId);
 }

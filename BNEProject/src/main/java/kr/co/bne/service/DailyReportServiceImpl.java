@@ -176,15 +176,24 @@ public class DailyReportServiceImpl implements DailyReportService {
 		return result;
 	}
 
-/*	@Override
-	public HashMap<String, List<?>> searchDailyChartLine(String id) {
+
+	@Override
+	public HashMap<String, List<?>> searchDailyChartLine(String employee_id) {
 		// TODO Auto-generated method stub
 		HashMap<String, List<?>> result = new HashMap<String,List<?>>();
-		result.put("List1", dao.selectDailyReportChartLineList(id));
+		result.put("List1", dao.selectDailyReportChartLineList(employee_id));
 		result.put("List2", dao.selectDailyReportChartLine2List());
-		
-		
 		return result;
-//		return dao.selectDailyReportChartLineList(id);
-	}*/
+	}
+
+
+	@Override
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(int departmentId) {
+		// TODO Auto-generated method stub
+		return dao.selectTeamMonthlyGoal(departmentId);
+	}
+
+
+
+	
 }
