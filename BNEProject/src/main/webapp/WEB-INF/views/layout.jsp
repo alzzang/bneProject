@@ -36,7 +36,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 }
 </style>
 
-<script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script> 
+<script src="http://localhost:3000/socket.io/socket.io.js"></script> 
 
 </head>
 
@@ -65,7 +65,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 		</div>
  		
  		<script type="text/javascript">
-		var socket=io.connect('http://192.168.1.27:3000');
+		var socket=io.connect('http://localhost:3000');
 		socket.emit('getId',{employeeId: '${sessionScope.user.employee_id}' });
 	
 		

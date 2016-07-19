@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
+import kr.co.bne.dto.DailyReportChartDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -139,5 +140,14 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		
 		return TotalUnapprovalNum;
 	}
+
+	@Override
+	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id){
+		System.out.println("DAO chart id : "+id);
+		List<DailyReportChartDTO> dailyRepoartChartList = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChartList",id);
+		System.out.println("list"+dailyRepoartChartList);
+		return dailyRepoartChartList;
+	}
+	
 
 }

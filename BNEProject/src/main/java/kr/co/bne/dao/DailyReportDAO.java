@@ -5,6 +5,7 @@ import java.util.List;
 
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
+import kr.co.bne.dto.DailyReportChartDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -37,4 +38,5 @@ public interface DailyReportDAO {
 	int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException;
 
 	int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException;
+	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id);
 }
