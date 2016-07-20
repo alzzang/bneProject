@@ -8,6 +8,8 @@ public class WeeklyReportDTO {
 	private String reg_date;
 	private int saleGoal;
 	private int sales;
+	
+	
 	public WeeklyReportDTO() {
 		super();
 		// TODO Auto-generated constructor stub
