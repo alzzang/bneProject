@@ -2,17 +2,19 @@ package kr.co.bne.dto;
 
 public class WeeklyReportDTO {
 	private int weekly_report_id;
-	private int employee_id;
+	private String employee_id;
 	private int department_id;
 	private String title;
 	private String reg_date;
 	private int saleGoal;
 	private int sales;
+	
+	
 	public WeeklyReportDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public WeeklyReportDTO(int weekly_report_id, int employee_id, int department_id, String title, String reg_date,
+	public WeeklyReportDTO(int weekly_report_id, String employee_id, int department_id, String title, String reg_date,
 			int saleGoal, int sales) {
 		super();
 		this.weekly_report_id = weekly_report_id;
@@ -35,10 +37,10 @@ public class WeeklyReportDTO {
 	public void setWeekly_report_id(int weekly_report_id) {
 		this.weekly_report_id = weekly_report_id;
 	}
-	public int getEmployee_id() {
+	public String getEmployee_id() {
 		return employee_id;
 	}
-	public void setEmployee_id(int employee_id) {
+	public void setEmployee_id(String employee_id) {
 		this.employee_id = employee_id;
 	}
 	public int getDepartment_id() {
@@ -71,19 +73,7 @@ public class WeeklyReportDTO {
 	public void setSales(int sales) {
 		this.sales = sales;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + department_id;
-		result = prime * result + employee_id;
-		result = prime * result + ((reg_date == null) ? 0 : reg_date.hashCode());
-		result = prime * result + saleGoal;
-		result = prime * result + sales;
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + weekly_report_id;
-		return result;
-	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
