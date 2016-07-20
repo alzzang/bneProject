@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,13 +23,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dto.ClientDTO;
 import kr.co.bne.dto.CounsellingDetailDTO;
-
-import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dto.CounsellingRecordDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
@@ -271,29 +268,14 @@ public class DailyReportController {
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
 		JsonParser parser=new JsonParser();
 		System.out.println(req.getParameter("counsellingJSON"));
-		JsonArray json=null;
+		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
 		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
-		try {
-			json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
-			for(int i=0;i<json.size();i++){
-				CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
-				list.add(dto);
-				System.out.println(dto);
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}finally {
-			dailyReportService.writeDailyReport(dailyReportDTO,list);
-		}
-		
-		
-		
-		/*for(int i=0;i<json.size();i++){
+		for(int i=0;i<json.size();i++){
 			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
 			list.add(dto);
 			System.out.println(dto);
-		}*/
-		//dailyReportService.writeDailyReport(dailyReportDTO,list);
+		}
+		dailyReportService.writeDailyReport(dailyReportDTO,list);
 		
 		return model;
 	}
