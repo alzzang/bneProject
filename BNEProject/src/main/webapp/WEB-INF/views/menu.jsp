@@ -25,7 +25,7 @@
 
 
 
-			<li class="xn-profile active">
+			<li class="xn-profile active" id="dropdd">
 				<%-- <a href="#" class="profile-mini"	>
 			
 			<img src="/user/download/${sessionScope.user.file_position}/"></a> --%>
@@ -57,8 +57,7 @@
 						<a href="#"	class="profile-control-right" id="sockettest">
 							<span class="fa fa-envelope"></span></a>
 
-						<a href="/user/changeProfile" class="profile-control-left"> <span
-							class="fa fa-gear"></span></a> <a
+						 <a
 							href="/counselling/readCounsellingRecord/44"
 							class="profile-control-right"> <span class="fa fa-envelope"></span></a>
 
@@ -77,7 +76,7 @@
 			<li class="xn-openable"><a href="#"><span
 					class="fa fa-file-text-o"></span> <span class="xn-text">일일 업무 보고</span></a>
 				<ul>
-					<li><a href="layout-boxed.html">메인</a></li>		
+					<li><a onclick="">메인</a></li>		
 					
 					<!-- 사원 목록 -->			
 					<li><a href="layout-nav-toggled.html">이동우</a><div class="informer informer-danger">4</div></li>
@@ -85,7 +84,7 @@
 					<!--  -->				
 				</ul></li>
 
-			<li class=""><a href="index.html"><span
+			<li class=""><a href="/dailyReport/write"><span
 					class="fa fa-desktop"></span> <span class="xn-text">일일 업무 보고</span></a>
 			</li>
 

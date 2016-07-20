@@ -49,6 +49,8 @@ function submitContents(elClickedObj) {
 	//alert('여기는 submitContents'+localStorage.getItem("tt"));
 	var jsonValue=localStorage.getItem("tt");
 	$('#counsellingJSON').val(jsonValue);
+	localStorage.removeItem("tt");
+	alert('jsp');
 	try {
 		elClickedObj.form.submit();
 	} catch(e) {}

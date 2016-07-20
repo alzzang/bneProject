@@ -270,14 +270,30 @@ public class DailyReportController {
 	public ModelAndView goWrite(@ModelAttribute DailyReportDTO dailyReportDTO  ,HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
 		JsonParser parser=new JsonParser();
-		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
+		System.out.println(req.getParameter("counsellingJSON"));
+		JsonArray json=null;
 		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
-		for(int i=0;i<json.size();i++){
+		try {
+			json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
+			for(int i=0;i<json.size();i++){
+				CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
+				list.add(dto);
+				System.out.println(dto);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			dailyReportService.writeDailyReport(dailyReportDTO,list);
+		}
+		
+		
+		
+		/*for(int i=0;i<json.size();i++){
 			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
 			list.add(dto);
 			System.out.println(dto);
-		}
-		dailyReportService.writeDailyReport(dailyReportDTO,list);
+		}*/
+		//dailyReportService.writeDailyReport(dailyReportDTO,list);
 		
 		return model;
 	}

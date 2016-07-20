@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.bne.mapper.Notice">
+<select id="selectUnconfirmedNotices" parameterType="hashmap" resultType="Notice">
+<![CDATA[
+select unconfirmed.*
+from
+(select ROW_NUMBER() OVER (ORDER BY reg_date desc, nt.importance_level) idx,nt.IMPORTANCE_LEVEL,n.NOTICE_TYPE,n.NOTICE_ID,n.REG_DATE,
+TRUNC(MONTHS_BETWEEN(SYSDATE,n.reg_date)/12) || 'year ' || 
+TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date) - 
+TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date)/12) * 12) || 'month ' ||
+TRUNC((MONTHS_BETWEEN(SYSDATE,n.reg_date) - 
+TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date))) * 30.5) || 'day ' || trunc(mod((sysdate-n.REG_DATE),1)*24) ||'h '||
+trunc(mod((sysdate-n.REG_DATE)*24,1)*60) || 'min ' ||trunc(round(mod((sysdate-n.REG_DATE)*24*60,1)*60)) || 'sec ' passtime,
+e.EMPLOYEE_NAME,case when notice_type='DAILY_POST' then e1.employee_name || '님이 일일업무 보고서를 작성하였습니다' 
+when notice_type='WEEKLY_POST' then e1.employee_name || '님이 주간업무 보고서를 작성하였습니다.' 
+when notice_type='DAILY_CORRECT' then e1.employee_name || '님이 일일업무 보고서를 수정하였습니다.'
+when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무 보고서를 수정하였습니다.'
+END as content
+from notice n,notice_type nt, employee e, employee e1
+where e.employee_id=n.object and e1.employee_id=n.subject and
+n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=0) unconfirmed
+where unconfirmed.idx BETWEEN #{start} and #{end}
+]]>
+</select>
+
+<select id="selectconfirmedNotices" parameterType="hashmap" resultType="Notice">
+<![CDATA[
+select confirmed.*
+from
+(select ROW_NUMBER() OVER (ORDER BY reg_date desc, nt.importance_level) idx,nt.IMPORTANCE_LEVEL,n.NOTICE_TYPE,n.NOTICE_ID,n.REG_DATE,
+TRUNC(MONTHS_BETWEEN(SYSDATE,n.reg_date)/12) || 'year ' || 
+TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date) - 
+TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date)/12) * 12) || 'month ' ||
+TRUNC((MONTHS_BETWEEN(SYSDATE,n.reg_date) - 
+TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date))) * 30.5) || 'day ' || trunc(mod((sysdate-n.REG_DATE),1)*24) ||'h '||
+trunc(mod((sysdate-n.REG_DATE)*24,1)*60) || 'min ' ||trunc(round(mod((sysdate-n.REG_DATE)*24*60,1)*60)) || 'sec ' passtime,
+e.EMPLOYEE_NAME,case when notice_type='DAILY_POST' then e1.employee_name || '님이 일일업무 보고서를 작성하였습니다' 
+when notice_type='WEEKLY_POST' then e1.employee_name || '님이 주간업무 보고서를 작성하였습니다.' 
+when notice_type='DAILY_CORRECT' then e1.employee_name || '님이 일일업무 보고서를 수정하였습니다.'
+when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무 보고서를 수정하였습니다.'
+END as content
+from notice n,notice_type nt, employee e, employee e1
+where e.employee_id=n.object and e1.employee_id=n.subject and
+n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=1) confirmed
+where confirmed.idx BETWEEN #{start} and #{end}
+]]>
+</select>
+</mapper>

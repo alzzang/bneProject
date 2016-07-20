@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="/js/dailysettings.js"></script>
+
  <script>
 /* $( window ).load(function innerContent(){
 	var content='${dailyReport.content}';
@@ -14,7 +15,6 @@ $(document).ready(function(){
 	var a = ${dailyReport.drsales};
 	var b = ${dailyReport.wpsales}
 	changeProgress(a,b);
-
 });
 
 

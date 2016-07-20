@@ -36,12 +36,8 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 }
 </style>
 
-<<<<<<< HEAD
 <script type="text/javascript" src="/js/dailysettings.js"></script>
-=======
-<script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script> 
-
->>>>>>> refs/remotes/origin/Jiyeon
+<!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script> --> 
 </head>
 
 
@@ -148,6 +144,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 		<script type="text/javascript" src="/js/plugins/dropzone/dropzone.min.js"></script>
 		
 	<script type="text/javascript" src="/js/plugins/summernote/summernote.js"></script>
+	<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-select.js"></script>
 	<!-- END THIS PAGE PLUGINS-->
 
 	<!-- START TEMPLATE -->
@@ -161,9 +158,9 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<script type="text/javascript" src="/js/dailysettings.js"></script>
 	
 	
-	<script type="text/javascript" src="/js/demo_dashboard.js"></script>
-	<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
-	<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
+	<!-- <script type="text/javascript" src="/js/demo_dashboard.js"></script>
+	<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script> -->
+	<!-- <script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script> -->
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
 

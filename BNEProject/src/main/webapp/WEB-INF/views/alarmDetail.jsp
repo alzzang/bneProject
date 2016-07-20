@@ -1,8 +1,165 @@
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- <style>
+ #log{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100px;
+	height:50px;
+	background-color:rgba(0,0,0,0.7);
+	color:white;
+	text-align:center;
+	line-height:50px;
+}
+</style> -->
+<script>
+var tasksIdx=2;
+var tasksCompleteIdx=2;
+var timer = true;
+var timer1 = true;
+$(window).load(function(){
+	
+	var $tasks=$("#tasks");
+	var $tasksComplete=$("#tasks_completed");
+	
+	$tasks.scroll(function(){
+		if($("#tasks").prop("scrollHeight")-$("#tasks").scrollTop()==640){
+			 if (timer) {
+				unconfirmedData(); // 실행
+			} 
+			//alert('aa');
+			//sendData();
+			tasksIdx++;
+		};
+	});
+	$tasksComplete.scroll(function(){
+		if($("#tasks_completed").prop("scrollHeight")-$("#tasks_completed").scrollTop()==640){
+			if (timer1) {
+				confirmedData(); // 실행
+			} 
+			//alert('bb');
+			tasksCompleteIdx++;
+		};
+	});
 
+});
+function unconfirmedData(){
+		timer = false;
 
-<div class="content-frame">     
+		$.ajax({
+					type : "POST",
+					url : '/alarm/unconfirmed', // url에
+					// 주소 넣기
+					data : {
+						"start" : tasksIdx,
+					},
+					dataType : 'json',
+					error : function() {
+						alert("건들지마 멍청아!!");
+					},
+					success : function(data) {
+
+						var str = JSON.stringify(data);
+						var list = $.parseJSON(str);
+						console.log(list);
+						var len = Object.keys(list).length
+						if(len>0){
+							for(var i=0;i<len;i++){
+								var html="";
+								if(list[i].notice_type=="DAILY_POST"){
+									html='<div class="task-item task-primary">';
+								}else if(list[i].notice_type=="WEEKLY_POST"){
+									html='<div class="task-item task-success">';
+								}else if(list[i].notice_type=="DAILY_CORRECT"){
+									html='<div class="task-item task-warning">';
+								}else if(list[i].notice_type=="WEEKLY_CORRECT"){
+									html='<div class="task-item task-danger">';
+								}
+								html+='<div class="task-text ui-sortable-handle">'+list[i].content+'</div>';
+								html+='<div class="task-footer">'+'<div class="pull-left"><span class="fa fa-clock-o"></span>'+list[i].passtime+'</div>';
+								html+='</div></div>';
+								$('#tasks').append(html);
+								
+								setTimeout(function() {
+									timer = true;
+								}, 500)
+							}
+						}
+						//var ip = $('#ip').val();
+						//var kind = $('#kind').val();
+					}
+		});
+}
+function confirmedData(){
+	timer1 = false;
+
+	$.ajax({
+				type : "POST",
+				url : '/alarm/confirmed', // url에
+				// 주소 넣기
+				data : {
+					"start" : tasksCompleteIdx,
+				},
+				dataType : 'json',
+				error : function() {
+					alert("건들지마 멍청아!!");
+				},
+				success : function(data) {
+
+					var str = JSON.stringify(data);
+					var list = $.parseJSON(str);
+					console.log(list);
+					var len = Object.keys(list).length
+					if(len>0){
+						for(var i=0;i<len;i++){
+							var html="";
+							if(list[i].notice_type=="DAILY_POST"){
+								html='<div class="task-item task-primary task-complete">';
+							}else if(list[i].notice_type=="WEEKLY_POST"){
+								html='<div class="task-item task-success task-complete">';
+							}else if(list[i].notice_type=="DAILY_CORRECT"){
+								html='<div class="task-item task-warning task-complete">';
+							}else if(list[i].notice_type=="WEEKLY_CORRECT"){
+								html='<div class="task-item task-danger task-complete">';
+							}
+							html+='<div class="task-text ui-sortable-handle">'+list[i].content+'</div>';
+							html+='<div class="task-footer">'+'<div class="pull-left"><span class="fa fa-clock-o"></span>'+list[i].passtime+'</div>';
+							html+='</div></div>';
+							$('#tasks_completed').append(html);
+							
+							setTimeout(function() {
+								timer1 = true;
+							}, 500)
+						}
+					}
+					//var ip = $('#ip').val();
+					//var kind = $('#kind').val();
+				}
+	});
+}
+function testAdd(){
+	var html='<div class="task-item task-success">';                                    
+    html+='<div class="task-text ui-sortable-handle">Suspendisse a tempor eros. Curabitur fringilla maximus lorem, eget congue lacus ultrices eu. Nunc et molestie elit. Curabitur consectetur mollis ipsum, id hendrerit nunc molestie id.</div>';
+    html+='<div class="task-footer"><div class="pull-left"><span class="fa fa-clock-o"></span> 1h 45min</div>';
+    html+='<div class="pull-right"><a href="#"><span class="fa fa-chain"></span></a> <a href="#"><span class="fa fa-comments"></span></a></div></div></div>';
+	$('#tasks_completed').append(html);
+}
+</script> 
+<!-- <style>
+.pre-scrollable, .myDiv1{
+    height: 90px;
+    width: 300px;
+    border: 1px solid;
+    background-color: lavender;
+    overflow: scroll;
+}
+</style> -->
+<div class="content-frame">  
+<button id="btn1" onclick="testAdd()">aaa</button>   
                     <!-- START CONTENT FRAME TOP -->
                     <div class="content-frame-top">                        
                         <div class="page-title">                    
@@ -18,7 +175,7 @@
                                 <option>Home</option>
                                 <option>Friends</option>
                                 <option>Closed</option>
-                            </select><div class="btn-group bootstrap-select form-control select"><button type="button" class="btn dropdown-toggle selectpicker btn-default" data-toggle="dropdown" title="All"><span class="filter-option pull-left">All</span>&nbsp;<span class="caret"></span></button><div class="dropdown-menu open"><ul class="dropdown-menu inner selectpicker" role="menu"><li rel="0" class="selected"><a tabindex="0" class="" style=""><span class="text">All</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="1"><a tabindex="0" class="" style=""><span class="text">Work</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="2"><a tabindex="0" class="" style=""><span class="text">Home</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="3"><a tabindex="0" class="" style=""><span class="text">Friends</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="4"><a tabindex="0" class="" style=""><span class="text">Closed</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li></ul></div></div>
+                            </select><!-- <div class="btn-group bootstrap-select form-control select"><button type="button" class="btn dropdown-toggle selectpicker btn-default" data-toggle="dropdown" title="All"><span class="filter-option pull-left">All</span>&nbsp;<span class="caret"></span></button><div class="dropdown-menu open"><ul class="dropdown-menu inner selectpicker" role="menu"><li rel="0" class="selected"><a tabindex="0" class="" style=""><span class="text">All</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="1"><a tabindex="0" class="" style=""><span class="text">Work</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="2"><a tabindex="0" class="" style=""><span class="text">Home</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="3"><a tabindex="0" class="" style=""><span class="text">Friends</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="4"><a tabindex="0" class="" style=""><span class="text">Closed</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li></ul></div></div> -->
                         </div>
                         
                     </div>                    
@@ -27,11 +184,11 @@
                         <div class="form-group">
                             <h4>Task groups:</h4>
                             <div class="list-group border-bottom">
-                                <a href="#" class="list-group-item"><span class="fa fa-circle text-primary"></span> 승인(Project #1)</a>
-                                <a href="#" class="list-group-item"><span class="fa fa-circle text-success"></span> Personal</a>
-                                <a href="#" class="list-group-item"><span class="fa fa-circle text-warning"></span> Project #2</a>
-                                <a href="#" class="list-group-item"><span class="fa fa-circle text-danger"></span> Meetings</a>
-                                <a href="#" class="list-group-item"><span class="fa fa-circle text-info"></span> Work</a>
+                                <a href="#" class="list-group-item"><span class="fa fa-circle text-primary"></span> 등록</a>
+                                <a href="#" class="list-group-item"><span class="fa fa-circle text-success"></span> 커멘트</a>
+                                <a href="#" class="list-group-item"><span class="fa fa-circle text-warning"></span> 승인</a>
+                                <a href="#" class="list-group-item"><span class="fa fa-circle text-danger"></span> 수정</a>
+                                <!-- <a href="#" class="list-group-item"><span class="fa fa-circle text-info"></span> Work</a> -->
                             </div>
                         </div>
                         
@@ -41,92 +198,82 @@
                     <!-- START CONTENT FRAME BODY -->
                     <div class="content-frame-body" style="height: 897px;">
                                                 
-                        <div class="row push-up-10">
-                            <div class="col-md-4">
+                        <div class="row push-up-10" >
+                        	<div>
+                            <div class="col-md-6">
                                 
-                                <h3>To-do List</h3>
-                                
-                                <div class="tasks ui-sortable" id="tasks">
-
-                                    <div class="task-item task-primary">                                    
-                                        <div class="task-text ui-sortable-handle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris rutrum velit vel erat fermentum, a dignissim dolor malesuada.</div>
-                                        <div class="task-footer">
-                                            <div class="pull-left"><span class="fa fa-clock-o"></span> 1h 30min</div>                                    
-                                        </div>                                    
-                                    </div>
-
-                                    <div class="task-item task-success">                                    
-                                        <div class="task-text ui-sortable-handle">Suspendisse a tempor eros. Curabitur fringilla maximus lorem, eget congue lacus ultrices eu. Nunc et molestie elit. Curabitur consectetur mollis ipsum, id hendrerit nunc molestie id.</div>
-                                        <div class="task-footer">
-                                            <div class="pull-left"><span class="fa fa-clock-o"></span> 1h 45min</div>
-                                            <div class="pull-right"><a href="#"><span class="fa fa-chain"></span></a> <a href="#"><span class="fa fa-comments"></span></a></div>
-                                        </div>                                    
-                                    </div>
-
-                                    <div class="task-item task-warning">                                    
-                                        <div class="task-text ui-sortable-handle">Donec lacus lacus, iaculis nec pharetra id, congue ut tortor. Donec tincidunt luctus metus eget rhoncus.</div>
-                                        <div class="task-footer">
-                                            <div class="pull-left"><span class="fa fa-clock-o"></span> 1day ago</div>
-                                        </div>                                    
-                                    </div>
-
-                                    <div class="task-item task-danger">                                    
-                                        <div class="task-text ui-sortable-handle">Pellentesque faucibus molestie lectus non efficitur. Vestibulum mattis dignissim diam, eget dapibus urna rutrum vitae.</div>
-                                        <div class="task-footer">
-                                            <div class="pull-left"><span class="fa fa-clock-o"></span> 2days ago</div>
-                                            <div class="pull-right"><a href="#"><span class="fa fa-chain"></span></a> <a href="#"><span class="fa fa-comments"></span></a></div>
-                                        </div>                                    
-                                    </div>
-
-                                    <div class="task-item task-info">                                    
-                                        <div class="task-text ui-sortable-handle">Quisque quis ipsum quis magna bibendum laoreet.</div>
-                                        <div class="task-footer">
-                                            <div class="pull-left"><span class="fa fa-clock-o"></span> 3days ago</div>
-                                            <div class="pull-right"><a href="#"><span class="fa fa-chain"></span></a> <a href="#"><span class="fa fa-comments"></span></a></div>
-                                        </div>                                    
-                                    </div>
-                                    
+                                <h3>UnConfirmed List</h3>
+                                <div id="log">
+                            
+                                <div class="tasks ui-sortable pre-scrollable" id="tasks">
+									<c:forEach items="${unList}" var="ulist">
+										<c:if test="${ulist.notice_type eq 'DAILY_POST'}">
+											<div class="task-item task-primary" onclick="alert('aa')">
+										</c:if>
+										<c:if test="${ulist.notice_type eq 'WEEKLY_POST'}">
+											<div class="task-item task-success" onclick="alert('aa')">
+										</c:if>
+										<c:if test="${ulist.notice_type eq 'DAILY_CORRECT'}">
+											<div class="task-item task-warning" onclick="alert('aa')">
+										</c:if>
+										<c:if test="${ulist.notice_type eq 'WEEKLY_CORRECT'}">
+											<div class="task-item task-danger" onclick="alert('aa')">
+										</c:if>
+										                      
+                                        	<div class="task-text ui-sortable-handle">${ulist.content}</div>
+                                        	<div class="task-footer">
+                                            	<div class="pull-left"><span class="fa fa-clock-o"></span>${ulist.passtime}</div>                                    
+                                        	</div>                                    
+                                    	</div>
+									</c:forEach>
+									<!-- <img src="/img/ajax-loading.gif" width="390px;"> -->
+									</div> 
+                                   
                                 </div>                            
 
                             </div>
-                            <div class="col-md-4">
-                                <h3>In Progress</h3>
-                                <div class="tasks ui-sortable" id="tasks_progreess">
-
-                                    <div class="task-item task-warning">
-                                        <div class="task-text ui-sortable-handle">In mauris nunc, blandit a turpis in, vehicula viverra metus. Quisque dictum purus lorem, in rhoncus justo dapibus eget. Aenean pretium non mauris et porttitor.</div>
-                                        <div class="task-footer">
-                                            <div class="pull-left"><span class="fa fa-clock-o"></span> 2h 55min</div>
-                                            <div class="pull-right"><span class="fa fa-pause"></span> 4:51</div>
-                                        </div>                                    
-                                    </div>                            
-                                    
-                                    <div class="task-drop push-down-10">
-                                        <span class="fa fa-cloud"></span>
-                                        Drag your task here to start it tracking time
-                                    </div>
-                                    
-                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <h3>Completed</h3>
-                                <div class="tasks ui-sortable" id="tasks_completed">
-                                    <div class="task-item task-danger task-complete">                                    
+
+
+
+                            <div class="col-md-6">
+                                <h3>Confirmed List</h3>
+                                <div class="tasks ui-sortable pre-scrollable" id="tasks_completed">
+                                    
+                                    <c:forEach items="${cnList}" var="clist">
+										<c:if test="${clist.notice_type eq 'DAILY_POST'}">
+											<div class="task-item task-primary task-complete">
+										</c:if>
+										<c:if test="${clist.notice_type eq 'WEEKLY_POST'}">
+											<div class="task-item task-success task-complete">
+										</c:if>
+										<c:if test="${clist.notice_type eq 'DAILY_CORRECT'}">
+											<div class="task-item task-warning task-complete">
+										</c:if>
+										<c:if test="${clist.notice_type eq 'WEEKLY_CORRECT'}">
+											<div class="task-item task-danger task-complete">
+										</c:if>
+										                    
+                                        	<div class="task-text ui-sortable-handle">${clist.content}</div>
+                                        	<div class="task-footer">
+                                            	<div class="pull-left"><span class="fa fa-clock-o"></span>${clist.passtime}</div>                                    
+                                        	</div>                                    
+                                    	</div>
+									</c:forEach>
+                                    <!-- <div class="task-item task-danger task-complete">                                    
                                         <div class="task-text ui-sortable-handle">Donec maximus sodales feugiat.</div>
                                         <div class="task-footer">
                                             <div class="pull-left"><span class="fa fa-clock-o"></span> 15min</div>                                    
                                         </div>                                    
                                     </div>
+                                    
                                     <div class="task-item task-info task-complete">                                    
                                         <div class="task-text ui-sortable-handle">Aliquam eget est a dui tincidunt commodo in nec ante.</div>
                                         <div class="task-footer">
                                             <div class="pull-left"><span class="fa fa-clock-o"></span> 35min</div>                                    
                                         </div>                                    
                                     </div>
-                                    <div class="task-drop">
-                                        <span class="fa fa-cloud"></span>
-                                        Drag your task here to finish it
-                                    </div>                                    
+                                     -->                                   
                                 </div>
                             </div>
                         </div>                        
