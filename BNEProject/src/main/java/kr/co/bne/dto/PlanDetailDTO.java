@@ -1,0 +1,88 @@
+package kr.co.bne.dto;
+
+public class PlanDetailDTO {
+	int weekly_plan_id;
+	int plan_detail_id;
+	String content;
+	String start_time;
+	String end_time;
+	public int getWeekly_plan_id() {
+		return weekly_plan_id;
+	}
+	public void setWeekly_plan_id(int weekly_plan_id) {
+		this.weekly_plan_id = weekly_plan_id;
+	}
+	public int getPlan_detail_id() {
+		return plan_detail_id;
+	}
+	public void setPlan_detail_id(int plan_detail_id) {
+		this.plan_detail_id = plan_detail_id;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getStart_time() {
+		return start_time;
+	}
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+	public String getEnd_time() {
+		return end_time;
+	}
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
+	}
+	@Override
+	public String toString() {
+		return "PlanDetailDTO [weekly_plan_id=" + weekly_plan_id + ", plan_detail_id=" + plan_detail_id + ", content="
+				+ content + ", start_time=" + start_time + ", end_time=" + end_time + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((content == null) ? 0 : content.hashCode());
+		result = prime * result + ((end_time == null) ? 0 : end_time.hashCode());
+		result = prime * result + plan_detail_id;
+		result = prime * result + ((start_time == null) ? 0 : start_time.hashCode());
+		result = prime * result + weekly_plan_id;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PlanDetailDTO other = (PlanDetailDTO) obj;
+		if (content == null) {
+			if (other.content != null)
+				return false;
+		} else if (!content.equals(other.content))
+			return false;
+		if (end_time == null) {
+			if (other.end_time != null)
+				return false;
+		} else if (!end_time.equals(other.end_time))
+			return false;
+		if (plan_detail_id != other.plan_detail_id)
+			return false;
+		if (start_time == null) {
+			if (other.start_time != null)
+				return false;
+		} else if (!start_time.equals(other.start_time))
+			return false;
+		if (weekly_plan_id != other.weekly_plan_id)
+			return false;
+		return true;
+	}
+	
+	
+	
+}

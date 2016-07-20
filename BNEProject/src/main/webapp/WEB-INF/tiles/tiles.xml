@@ -42,9 +42,13 @@
 		<put-attribute name="body" value="/WEB-INF/views/password.jsp"/>
 	</definition>
 	
-	<definition name="weeklyWriteForm" extends="tilesbase">
+	<definition name="weeklyWrite" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/weeklyWriteForm.jsp"/>
 	</definition>
+		<definition name="weeklyDetail" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/weeklyDetail.jsp"/>
+	</definition>
+	
 	<definition name="login" template="/WEB-INF/views/pages-login.jsp" />
 
 	<definition name="aaa" extends="tilesbase">

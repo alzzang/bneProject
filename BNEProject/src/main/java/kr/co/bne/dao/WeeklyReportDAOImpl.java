@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.bne.dto.WeeklyReportDTO;
+
 @Repository
 public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 	
@@ -33,4 +35,12 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 		return result;
 	}
 
+	@Override
+	public List<Integer> selectAllWeeklyReport(String employee_id) {
+		List<Integer> result = sqlSession.selectList(namespace + "selectAllReportId", employee_id);
+		return null;
+	}
+	
+
+	
 }
