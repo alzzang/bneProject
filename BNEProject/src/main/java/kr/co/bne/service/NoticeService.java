@@ -3,12 +3,12 @@ package kr.co.bne.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.co.bne.dto.NoticeDTO;
+import kr.co.bne.common.NoticeDetail;
 
 public interface NoticeService {
 
-	List<NoticeDTO> searchUnconfirmedNotice(Map<String, String> map);
+	List<NoticeDetail> searchUnconfirmedNotice(Map<String, String> map);
 
-	List<NoticeDTO> searchconfirmedNotice(Map<String, String> map);
+	List<NoticeDetail> searchconfirmedNotice(Map<String, String> map);
 
 }

@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.co.bne.dto.NoticeDTO;
+import kr.co.bne.common.NoticeDetail;
 
 @Repository
 public class NoticeDAOImpl implements NoticeDAO {
@@ -16,13 +16,13 @@ public class NoticeDAOImpl implements NoticeDAO {
 	SqlSession sqlSession;
 	
 	@Override
-	public List<NoticeDTO> selectUnconfirmedNotice(Map<String, String> map) {
+	public List<NoticeDetail> selectUnconfirmedNotice(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.bne.mapper.Notice.selectUnconfirmedNotices", map);
 	}
 
 	@Override
-	public List<NoticeDTO> selectconfirmedNotice(Map<String, String> map) {
+	public List<NoticeDetail> selectconfirmedNotice(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.bne.mapper.Notice.selectconfirmedNotices", map);
 	}

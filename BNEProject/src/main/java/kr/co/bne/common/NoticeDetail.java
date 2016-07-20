@@ -1,6 +1,6 @@
-package kr.co.bne.dto;
+package kr.co.bne.common;
 
-public class NoticeDTO {
+public class NoticeDetail {
 	private int importance_level;
 	private String notice_type;
 	private int notice_id;
