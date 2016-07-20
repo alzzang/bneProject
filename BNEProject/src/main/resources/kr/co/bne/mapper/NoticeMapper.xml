@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.bne.mapper.Notice">
+	
+	<parameterMap id="procMap" type="HashMap">
+		<parameter property="notice_type" mode="IN" jdbcType="VARCHAR" javaType="String" />
+		<parameter property="result" mode="OUT" jdbcType="INTEGER" javaType="int" />
+		<parameter property="subject_id" mode="IN" jdbcType="VARCHAR" javaType="String" />
+		<parameter property="object_id" mode="IN" jdbcType="VARCHAR" javaType="String" />
+	</parameterMap>
+	
+	
+	<resultMap type="Notice" id="Notice">
+		<result column="notice_type" property="notice_type"/>
+		<result column="notice_id" property="notice_id"/>
+		<result column="subject" property="subject"/>
+		<result column="object" property="object"/>
+		<result column="reg_date" property="reg_date"/>
+		<result column="read_flag" property="read_flag"/>
+	</resultMap>
+
+
+	<insert id="create_notice" parameterMap="procMap" statementType="CALLABLE">
+		{ call CREATE_NOTICE (?,?,?,?) }
+	</insert>
+	
+	
+	
+	<select id="selectNoticeList" parameterType="hashmap" resultMap="Notice">
+		select notice_type, notice_id, subject, object, reg_date, read_flag
+		from (select ROW_NUMBER() OVER (ORDER BY importance_level asc, reg_date desc) idx, notice_type, notice_id, subject, object, importance_level, to_char(reg_date, 'yyyy-mm-dd hh:mm:ss') reg_date, read_flag
+		      from (select n.notice_type, n.notice_id, n.subject, t.IMPORTANCE_LEVEL, n.object, n.reg_date, n.read_flag 
+		            from notice n, notice_type t 
+		            where n.notice_type = t.notice_type_id)
+		      where object = #{user_id} and read_flag = 0) a
+		where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
+	</select>
+	
+	
+	<update id="updateOneReadFlag" parameterType="int">
+		UPDATE notice SET read_flag = 1 WHERE notice_id = #{value}
+	</update>
+	
+	
+	<update id="updateAllReadFlag">
+		UPDATE notice SET read_flag = 1
+	</update>
+
+</mapper>
