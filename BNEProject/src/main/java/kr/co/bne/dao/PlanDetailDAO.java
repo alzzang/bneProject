@@ -1,5 +1,7 @@
 package kr.co.bne.dao;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.bne.dto.PlanDetailDTO;
@@ -7,4 +9,5 @@ import kr.co.bne.dto.PlanDetailDTO;
 public interface PlanDetailDAO {
 	@Transactional
 	public int insertPlanDetail(PlanDetailDTO planDetailDTO) throws Exception;
+	public List<PlanDetailDTO> selectPlanDetailList(int weekly_report_id) throws Exception;
 }

@@ -9,11 +9,10 @@
         <result javaType="java.lang.String" column="REPORT_PLAN_DAYS" property="REPORT_PLAN_DAYS"/>	
 	</resultMap>
 
-<!-- 새로 작성 시 지난 주 까지의 매출액 -->
-	
+	<!-- 새로 작성 시 지난 주 까지의 매출액 -->
 	<select id="selectAllReportId" parameterType ="String" resultType = "Integer">
 	<![CDATA[
-		SELECT WEEKLY_REPORT_ID FROM WEEKLY_REPORT WHERE EMPLOYEE_ID = #{value}
+		SELECT WEEKLY_REPORT_ID FROM WEEKLY_REPORT WHERE EMPLOYEE_ID = #{value} ORDER BY REG_DATE
 	]]>
 	 
 	</select>
@@ -72,4 +71,11 @@
 			WHERE     RK <= 5  
 		]]>
 	</select> -->
+	
+	
+	<select id="selectWeeklyReport" parameterType="Integer" resultType="WeeklyReport">
+		SELECT	*
+		FROM	WEEKLY_REPORT
+		WHERE	WEEKLY_REPORT_ID = #{value}
+	</select>
 </mapper>

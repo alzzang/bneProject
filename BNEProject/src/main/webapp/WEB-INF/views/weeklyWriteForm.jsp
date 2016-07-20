@@ -36,9 +36,6 @@ window.onload = function(){
 	
 	$('bbbb').on('click',function(){
 		var s = $(".salesInput");
-		
-		
-				
 	});
 	
 };

@@ -24,6 +24,7 @@ import com.google.gson.JsonParser;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.PlanDetailDTO;
 import kr.co.bne.dto.WeeklyReportDTO;
+import kr.co.bne.dto.WeeklyReportDetailDTO;
 import kr.co.bne.service.WeeklyReportService;
 
 @Controller
@@ -61,11 +62,21 @@ public class WeeklyController {
 	}
 	
 	@RequestMapping("/detail")
-	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request){
+	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request) throws Exception {
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
 		EmployeeDTO eDTO = (EmployeeDTO)request.getSession().getAttribute("user");
 		List<Integer> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
-			
+		int lastWeeklyReportId = reportId_list.get(reportId_list.size()-1);
+		WeeklyReportDetailDTO weeklyReportDetail = weeklyReportService.selectWeeklyReportDetail(lastWeeklyReportId);	
+		
+		System.out.print("ID 목록 : ");
+		for (Integer integer : reportId_list) {
+			System.out.print(integer + " ");
+		}
+		System.out.println();
+		System.out.println("주간계획 : " + weeklyReportDetail.toString());
+		
+		mv.addObject("weeklyReportDetail", weeklyReportDetail);
 		mv.addObject("reportIdList", reportId_list);
 		return mv;
 	}
@@ -91,7 +102,7 @@ public class WeeklyController {
 	        list.add(dto);
 	        
 	        //임시 테스트값 삽입
-	        dto.setWeekly_plan_id(1);
+	        dto.setWeekly_report_id(1);
 	        
 	        
 	        System.out.println(dto);
