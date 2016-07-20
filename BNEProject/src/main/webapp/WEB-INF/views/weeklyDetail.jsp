@@ -139,10 +139,15 @@
 	    		type:"POST",
 	    		url : "/weeklyReport/getPlan",
 	    		data:{
+	    			ReportId : 10
 	    		},
 	    		success :function(data){
-	    			
-	    		}
+/* 	    			alert("성공~");
+ */	    			data;
+	    		},
+				error : function(){
+/* 					alert("실패~"); */
+				}
 	    	})
 	    	
 	    })

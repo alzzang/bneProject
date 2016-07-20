@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestScope;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -23,7 +23,9 @@ import com.google.gson.JsonParser;
 
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.PlanDetailDTO;
+import kr.co.bne.dto.WeeklyPlanDTO;
 import kr.co.bne.dto.WeeklyReportDTO;
+import kr.co.bne.dto.WeeklyReportDetailDTO;
 import kr.co.bne.service.WeeklyReportService;
 
 @Controller
@@ -105,4 +107,21 @@ public class WeeklyController {
 		//System.out.println(json.get(0).);
 		return "redirect:/weeklyReport/writeForm";
 	}
+	@RequestMapping("/getPlan")
+	public @ResponseBody WeeklyReportDetailDTO getPlan(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam("ReportId")int reportId ){
+		WeeklyReportDetailDTO reportDetail = new WeeklyReportDetailDTO();
+/*		WeeklyReportDTO report = new WeeklyReportDTO();
+		report.setTitle("helloWorld");
+		report.setDepartment_id(1);
+		report.setEmployee_id("1");
+		report.setSaleGoal(100000);
+		report.setSales(10000);
+		report.setWeekly_report_id(10);
+		
+		reportDetail.setWeeklyReportDTO(report);*/
+		return reportDetail;
+		
+	}
+	
+	
 }
