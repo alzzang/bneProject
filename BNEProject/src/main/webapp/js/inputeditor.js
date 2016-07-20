@@ -42,6 +42,7 @@ function submitContents(elClickedObj) {
 	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
 	//alert('여기는 submitContents'+localStorage.getItem("tt"));
 	var jsonValue=localStorage.getItem("tt");
+	alert(jsonValue);
 	$('#counsellingJSON').val(jsonValue);
 	try {
 		elClickedObj.form.submit();
