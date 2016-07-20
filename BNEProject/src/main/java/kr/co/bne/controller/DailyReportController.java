@@ -2,6 +2,7 @@ package kr.co.bne.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -217,6 +218,10 @@ public class DailyReportController {
 		model.addAttribute("serviceParamsStr", serviceParamsStr);
 		model.addAttribute("currentPage", page);		
 		model.addAttribute("url", "/dailyReport/main/employee/" + employee_id);
+		
+		//ArrayList<String> aa = new ArrayList<String>();
+		
+		
 		
 		return "dailyReportMain";
 	}

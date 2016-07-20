@@ -618,7 +618,24 @@ $(function() {
                     selectable: true,
                     selectHelper: true,
                     weekends : false,
-                    select: function(start, end, allDay) {
+                    allDaySlot: false,
+//                    eventAfterRender: function( event, element, view ) {
+//                    	var tbodyTag
+//                    		= 	'<tr>' + 
+//                    				'<td><input type = "text" value="으하하하"></td>' +
+//                    				'<td><input type = "text" value="으하하하"></td>' +
+//                    				'<td><input type = "text" value="으하하하"></td>' +
+//                    				'<td><input type = "text" value="으하하하"></td>' +
+//                    				'<td><input type = "text" value="으하하하"></td>' +
+//                    				'<td><input type = "text" value="으하하하"></td>' +
+//                    			'</tr>';
+//                    	
+//                    	var s = $('#weeklyTable>tbody');
+//                    	
+//                    	s.html(tbodyTag);
+//                    	
+//                    },
+                    			select: function(start, end, allDay) {
                         var title = prompt('Event Title:');
                         if (title) {
                             calendar.fullCalendar('renderEvent',
@@ -626,7 +643,7 @@ $(function() {
                                 title: title,
                                 start: start,
                                 end: end,
-                                allDay: allDay
+                                allDay: false
                             },
                             true
                             );

@@ -47,14 +47,6 @@
 	</definition>
 	<definition name="login" template="/WEB-INF/views/pages-login.jsp" />
 
-
-
-
-
-	<definition name="weeklyWriteForm" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/weeklyWriteForm.jsp" />
-	</definition>
-
 	<definition name="aaa" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/SmartEditor2.jsp"/>
 	</definition>

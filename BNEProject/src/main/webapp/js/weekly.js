@@ -151,23 +151,39 @@ $(function(){
 //				"\n내용 : " + content); 
 	}
 	
+
+	
 	$('#aaaa').on('click',function(){
 		//insertDB();
 		//$('#calendarWeek').fullCalendar('next');
 /*		var s = $('#calendarWeek').fullCalendar('clientEvents');
 		alert(s[0]);*/
 		//editable 속성 false;
-		$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
+/*		var aa = $('#calendarWeek').fullCalendar('clientEvents');
+		
+		alert(aa[0].start);*/
 		
 		
+		var s = [];
+		var plan=[];
 		
+		s['title']="title";
+		s['name']="배진우";
+		plan.push(s);
+		s['title']="title2";
+		s['name']="배진우2";
+		plan.push(s);
+		s['title']="title3";
+		s['name']="배진우3";
+		plan.push(s);
 		
+		var jPlan = JSON.stringify(plan);
 	})
-	    $('#calendarWeek').fullCalendar('renderEvent',{
+/*	    $('#calendarWeek').fullCalendar('renderEvent',{
 	    "title":"dd",
 		    "allDay":"",
 		    "id":"15",
 		    "start":"2016-07-11 09:30:00",
 		    "end":"2016-07-11 17:30:00"
-    },true);
+    },true);*/
 })

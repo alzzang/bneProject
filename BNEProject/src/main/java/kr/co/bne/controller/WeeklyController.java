@@ -50,11 +50,8 @@ public class WeeklyController {
 	@RequestMapping("/weeklywriteimpl")
 	public String WeeklyWriteImpl(Model model, HttpServletRequest request) throws Exception{
 		
-		
 		WeeklyReportDTO dto = new WeeklyReportDTO();
 
-		
-		
 		return "main";
 	}
 }

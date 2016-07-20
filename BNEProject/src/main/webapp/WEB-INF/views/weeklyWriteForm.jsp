@@ -1,6 +1,4 @@
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
@@ -8,7 +6,43 @@
 	background-color: transparent;
 	border:0px solid black;
 }
+
+.salesInput {
+	width:100%;
+	background-color: transparent;
+	border:0px solid black;
+	text-align: center;
+}
 </style>
+<script type="text/javascript">
+window.onload = function(){
+	var tbodyTag
+	= 	'<tr>' + 
+			'<td class="fc-axis">매출</td>' +
+			'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
+		'</tr>';
+		
+	$('#weeklyTableHeader>tbody').html(tbodyTag);
+	
+	var s = $('#weeklyTableHeader>thead>tr>th');
+	for(var i=1; i<6; i++){
+		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i].dataset.date);
+	}
+	
+	$('bbbb').on('click',function(){
+		var s = $(".salesInput");
+		
+		
+				
+	});
+	
+};
+</script>
+
 <%-- <table border="1">
 	<tr>
 	<c:forEach items="${dayList}" var="day">
@@ -109,6 +143,7 @@ window.onload = function(){
 			</div>
 		</div>
 	<button id='aaaa'> aa</button>
+	<button id='bbbb'> bb</button>
 	</div>
 	<!-- END CONTENT FRAME BODY -->
 
