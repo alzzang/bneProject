@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import kr.co.bne.dto.DailyReportEmployeeDTO;
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.service.DailyReportService;
 import kr.co.bne.service.UserService;
 
 @Controller
@@ -30,6 +33,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	private DailyReportService dailyReportService;
 	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
@@ -130,6 +136,10 @@ public class UserController {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
 				session.setAttribute("fileName", employeeDTO.getFile_position());
+				
+				DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
+				session.setAttribute("employee", employee);
+				
 				return "redirect:/main";
 			}
 			return "redirect:/user/login";

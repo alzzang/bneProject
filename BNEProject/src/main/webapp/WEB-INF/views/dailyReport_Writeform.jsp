@@ -48,22 +48,26 @@ var removeId=0;
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td>${employee.department_name}</td>
+						<td>${sessionScope.employee.department_name}</td>
 					</tr>
 					<tr>
 						<th>성명</th>
-						<td>${employee.employee_name}</td>
+						<td>${sessionScope.employee.employee_name}</td>
 					</tr>
 					<tr>
 						<th>매출목표</th>
-						<td>${employee.sales_goal}</td>
+						<td id="goalValue">${sessionScope.employee.sales_goal}</td>
 					</tr>
 				</thead>
 			</table>
 
-
 		</div>
 	</div>
+	
+	<script>
+	$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
+	</script>
+	
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->
@@ -178,18 +182,8 @@ var removeId=0;
 									</div>
 								</div>
 							</div>
-							<!-- 
-							 -->
-						
-							<!-- 
-							 -->
-							<!-- <div class="form-group">
-								<textarea name="content" id="ir1" rows="10" cols="100"
-									style="width: 700px; height: 412px; display: none;"></textarea>
-							</div> -->
-							
+
 							<jsp:include page="SmartEditor2.jsp"></jsp:include>
-							<%-- <jsp:include page="../../SmartEditor2.jsp"></jsp:include> --%>
 							<div class="panel-footer" >
 								 <button class="btn btn-primary pull-right"
 									id="dailyReportSubmit" onclick="submitContents()">Submit</button> 
@@ -212,8 +206,7 @@ var removeId=0;
 	<!-- END CONTENT FRAME BODY -->
 
 </div>
-<!-- <script type="text/javascript" src="/../js/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript" src="/../js/inputeditor.js" charset="utf-8"></script> -->
+
 
 <div id="myModal2"  class="modal fade" role="dialog">
 	<div class="modal-dialog modal-admin">
@@ -270,8 +263,9 @@ var removeId=0;
 								class="col-md-4 col-xs-12"> <select class="form-control"
 								name="counselling_id" id="counselling_id" required>
 									<option value="" disabled selected hidden="true">선택하세요!</option>
-									<option value="1">동작대리점</option>
-									<option value="2">검암대리점</option>
+									<c:forEach var="client" items="${clients}" >
+										<option value="${client.client_id }">${client.client_name}</option>
+									</c:forEach>
 							</select> <span class="help-block">Select box </span>
 							</span> 
 							<span class="col-md-2 col-xs-12"> 
