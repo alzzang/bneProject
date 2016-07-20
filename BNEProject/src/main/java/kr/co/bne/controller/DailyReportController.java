@@ -267,6 +267,7 @@ public class DailyReportController {
 	public ModelAndView goWrite(@ModelAttribute DailyReportDTO dailyReportDTO  ,HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
 		JsonParser parser=new JsonParser();
+		System.out.println(req.getParameter("counsellingJSON"));
 		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
 		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
 		for(int i=0;i<json.size();i++){
