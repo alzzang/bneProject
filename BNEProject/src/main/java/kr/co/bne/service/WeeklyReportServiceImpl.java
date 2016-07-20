@@ -68,7 +68,7 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 	@Override
 	public List<Integer> selectAllReportId(String employee_id) {
 		
-		List<Integer> result = weeklyReportDAO.selectAllWeeklyReport(employee_id);
+		List<Integer> result = weeklyReportDAO.selectAllWeeklyReportId(employee_id);
 		return result;
 	}
 	

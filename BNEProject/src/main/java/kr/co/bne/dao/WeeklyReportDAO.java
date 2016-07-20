@@ -7,5 +7,5 @@ public interface WeeklyReportDAO {
 	public int selectThisMonthlySales(String employee_id) throws Exception;
 	public int selectSalesGoal(String employee_id) throws Exception;
 	public List<Map<String, String>> selectDayList(String employee_id) throws Exception;
-	public List<Integer> selectAllWeeklyReport(String employee_id);
+	public List<Integer> selectAllWeeklyReportId(String employee_id);
 }

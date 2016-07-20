@@ -64,9 +64,9 @@ public class WeeklyController {
 	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request){
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
 		EmployeeDTO eDTO = (EmployeeDTO)request.getSession().getAttribute("user");
-		List<Integer> employeeId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
+		List<Integer> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
 			
-		mv.addObject("employeeIdList", employeeId_list);
+		mv.addObject("reportIdList", reportId_list);
 		return mv;
 	}
 	

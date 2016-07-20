@@ -6,10 +6,12 @@
 
 <%-- <c:set var="employeeIdList" scope = "request" value= "${reqeustScope.employeeIdList}" ></c:set> --%>
 <%
-	List<Integer> reportList = (List<Integer>)request.getAttribute("employeeIdList");
-	int reportSize = reportList.size(); 
-	int curIdx = reportList.size()-1;
+/* 	List<Integer> reportIdList = (List<Integer>)request.getAttribute("reportIdList");
+	int reportSize = reportIdList.size(); 
+	int curIdx = reportIdList.size()-1; */
 %>
+
+
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
