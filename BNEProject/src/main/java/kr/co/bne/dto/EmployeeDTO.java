@@ -8,6 +8,7 @@ public class EmployeeDTO {
 	private String position;
 	private String file_position;
 	private int department_id;
+	private int sales_goal;
 	public String getEmployee_id() {
 		return employee_id;
 	}
@@ -50,11 +51,18 @@ public class EmployeeDTO {
 	public void setDepartment_id(int department_id) {
 		this.department_id = department_id;
 	}
+	
+	public int getSales_goal() {
+		return sales_goal;
+	}
+	public void setSales_goal(int sales_goal) {
+		this.sales_goal = sales_goal;
+	}
 	@Override
 	public String toString() {
 		return "EmployeeDTO [employee_id=" + employee_id + ", employee_name=" + employee_name + ", password=" + password
 				+ ", department_name=" + department_name + ", position=" + position + ", file_position=" + file_position
-				+ ", department_id=" + department_id + "]";
+				+ ", department_id=" + department_id + ", sales_goal=" + sales_goal + "]";
 	}
 	
 }

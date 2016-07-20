@@ -9,8 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
-import kr.co.bne.dto.DailyReportChart2DTO;
-import kr.co.bne.dto.DailyReportChartDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -113,11 +111,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		return pageNum;
 	}
 	
-	
 
-
-	
-	
 	@Override
 	public List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException {
 		List<DailyReportTeamListElement> teamList = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMemberList", user_id);
@@ -129,9 +123,11 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Override
 	public int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException {
 		int TotalUnapprovalNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getTotalUnapprovalNum_Manager", user_id);
+		
 		return TotalUnapprovalNum;
 	}
-		
+	
+	
 	
 	@Override
 	public int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException {
@@ -139,35 +135,16 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		
 		return TotalUnapprovalNum;
 	}
+	
 	@Override
-	public int selectMonthlyGoal(String id) {
+	public void insertComment(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectMonthlyGoal", id);
+		sqlSession.update("kr.co.bne.mapper.DailyReport.insertComment", map);
 	}
 	@Override
-	public int selectSumofMonthlyGoal(String id) {
+	public void deleteComment(String daily_report_id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
+		sqlSession.update("kr.co.bne.mapper.DailyReport.deleteComment", daily_report_id);
 	}
 
-	@Override
-	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id){
-		System.out.println("DAO chart id : "+id);
-		List<DailyReportChartDTO> dailyRepoartChartList = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChartList",id);
-		System.out.println("list"+dailyRepoartChartList);
-		return dailyRepoartChartList;
-	}
-	
-	@Override
-	public List<DailyReportChart2DTO> selectDailyReportChartLine2List(){
-		List<DailyReportChart2DTO> dailyRepoartChart2List = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChart2List");
-		System.out.println("list2 "+dailyRepoartChart2List);
-		return dailyRepoartChart2List;
-	}
-	@Override
-	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(int departmentId) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMonthlyGoal", departmentId);
-	}
-	
 }
