@@ -16,7 +16,7 @@ public class WeeklyTestThree extends TestCase {
 	public void test() {
 		try {
 			WeeklyReportService service = new WeeklyReportServiceImpl();
-			System.out.println(service.getSalesGoal("1"));
+			//System.out.println(service.getSalesGoal("1"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

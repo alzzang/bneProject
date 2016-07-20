@@ -27,6 +27,7 @@ function updateImage() {
 }
 
 function selectSecontClient(value) {
+	
 		$.ajax({
 				type : "POST",
 				url : "/counselling/secondaryClient",

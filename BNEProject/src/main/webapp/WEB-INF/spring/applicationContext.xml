@@ -26,7 +26,7 @@
  	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
-			<value>file:src/main/webapp/WEB-INF/spring/applicationContext.properties</value>
+			<value>/WEB-INF/spring/applicationContext.properties</value>
 		</property>
 	</bean>
 	<bean id = "multipartResolver" 

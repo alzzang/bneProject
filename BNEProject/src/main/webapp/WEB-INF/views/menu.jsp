@@ -64,8 +64,15 @@
 			<li class="xn-title">Navigation</li>
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">Home</span></a></li>
-			<li class=""><a href="weeklywrite"><span
-					class="fa fa-desktop"></span> <span class="xn-text">주간 계획</span></a></li>
+			<li class="xn-openable"><a href="#"><!-- weeklyReport/write --><span
+					class="fa fa-file-text-o"></span> <span class="xn-text">주간 계획</span></a>
+				<ul>
+					<li><a id="weeklyDetail" href="/weeklyReport/detail">주간계획</a></li>			
+					<li><a href="/weeklyReport/writeForm">주간계획작성</a></li>	
+				</ul>
+				
+				</li>
+			
 			<li class="xn-openable"><a href="#"><span
 					class="fa fa-file-text-o"></span> <span class="xn-text">일일 업무 보고</span></a>
 				<ul>

@@ -1,3 +1,4 @@
+
 $(function(){
 	
 
@@ -151,23 +152,65 @@ $(function(){
 //				"\n내용 : " + content); 
 	}
 	
+	
+	
 	$('#aaaa').on('click',function(){
 		//insertDB();
 		//$('#calendarWeek').fullCalendar('next');
 /*		var s = $('#calendarWeek').fullCalendar('clientEvents');
 		alert(s[0]);*/
 		//editable 속성 false;
-		$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
+		//$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
 		
 		
+		var s = $('#calendarWeek').fullCalendar('clientEvents');
+		var allPlan = [];
+		for(var i = 0; i<s.length; i++){
+			var plan;
+			
+			var title = s[i].title;
+			var startTime = s[i].start._i;
+			var endTime = s[i].end._i;
+			plan={
+					content:title,
+					start_time:startTime,
+					end_time:endTime
+			}
+			
+			allPlan.push(plan);
+		}
+
+		var jPlan = JSON.stringify(allPlan);
 		
+		$('.fc-row .fc-widget-header');
+		
+		$.ajax({
+			type : "POST",
+			url : "/weeklyReport/write",
+			data : {
+				weeklyPlan : jPlan
+			},
+
+			success : function(){
+				//alert("성공~");
+			},
+			error : function(){
+				//alert("실패~");
+			}
+		})
+		
+        //$('div#trash>a').remove();
+/*    	$.ajax({
+    		type : "POST",
+    		url : "/weeklyReport/weeklyView",
+    		data : {
+    			report_id: $('#report_id').val()
+    		},
+    		success : function(data) {
+//    			$('#approvalDiv').remove();
+    			alert('ㅇㅋ.');
+    		}
+    	})*/
 		
 	})
-	    $('#calendarWeek').fullCalendar('renderEvent',{
-	    "title":"dd",
-		    "allDay":"",
-		    "id":"15",
-		    "start":"2016-07-11 09:30:00",
-		    "end":"2016-07-11 17:30:00"
-    },true);
 })

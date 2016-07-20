@@ -1,4 +1,3 @@
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -108,7 +107,7 @@ window.onload = function(){
 				</div>
 			</div>
 		</div>
-	<button id='aaaa'> aa</button>
+	<button id='aaaa' > aa</button>
 	</div>
 	<!-- END CONTENT FRAME BODY -->
 

@@ -593,7 +593,6 @@ $(function() {
                                     revertDuration: 0
                             });
                     });                    
-                    
                 }
                 
              
@@ -607,6 +606,14 @@ $(function() {
                 prepare_external_list();
 
                 var calendar = $('#calendarWeek').fullCalendar({
+                	defaultView:'agendaWeek',
+                	nextDayThreshold :{
+                		start : "06:00:00",
+                		end : "-18:00:00"
+                	},
+                	eventLimit:true,
+                    minTime : "09:00:00",
+                    maxTime : "18:00:00",
                     header: {
                         left: '',
                         center: 'title',
@@ -618,18 +625,25 @@ $(function() {
                     selectable: true,
                     selectHelper: true,
                     weekends : false,
+                    allDaySlot: false,
+                    contentHeight : 378,
+                    businessHours:true,
                     select: function(start, end, allDay) {
                         var title = prompt('Event Title:');
-                        if (title) {
-                            calendar.fullCalendar('renderEvent',
-                            {
-                                title: title,
-                                start: start,
-                                end: end,
-                                allDay: allDay
-                            },
-                            true
-                            );
+                        if(!end.isAfter(start,'day')){
+                        	
+                            if (title) {
+                                calendar.fullCalendar('renderEvent',
+                                {
+                                    title: title,
+                                    start: start,
+                                    end: end,
+                                    allDay: ''
+                                },
+                                true
+                                );
+                        }
+ 
                         }
                         calendar.fullCalendar('unselect');
                     },
@@ -659,8 +673,13 @@ $(function() {
                             console.log(event._id);
                             calendar.fullCalendar('removeEvents', event._id);
                          }
+                         else{
+                        	 if($('div#trash>a'))
+                        		 console.log("AAAAA");
+                         }
                          /*calendar.fullCalendar('destroyEl',$('div#test1>a'));*/
                          $('div#trash>a').remove();
+                         
                      }
                 });
 
