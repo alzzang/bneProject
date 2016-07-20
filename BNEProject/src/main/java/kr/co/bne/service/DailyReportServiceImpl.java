@@ -41,7 +41,7 @@ public class DailyReportServiceImpl implements DailyReportService {
 	
 	
 	@Override
-	public int getgetTotalUnapprovalNum(String position, String user_id) {
+	public int getTotalUnapprovalNum(String position, String user_id) {
 		if(position.equals("manager")) {
 			return dao.getTotalUnapprovalNum_Manager(user_id);
 		}else {

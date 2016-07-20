@@ -36,8 +36,7 @@ public interface DailyReportService {
 
 	HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum);
 
-	int getgetTotalUnapprovalNum(String position, String user_id);
-
 	HashMap<String, Object> selectTeamMemberList(String user_id);
+	int getTotalUnapprovalNum(String position, String user_id);
 	
 }
