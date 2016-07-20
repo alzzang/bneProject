@@ -100,6 +100,8 @@
 
 <script>
 	window.onload = function(){
+		var reportDetail = {};
+		reportDetail["weeklyReport_id"] = ${weeklyReportDetail.weeklyReportDTO.getWeekly_report_id() };
 		$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
 		$('#calendarWeek').fullCalendar('getView').calendar.options.selectable = false;
 		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
