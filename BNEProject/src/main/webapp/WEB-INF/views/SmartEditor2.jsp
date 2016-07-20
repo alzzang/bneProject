@@ -50,6 +50,8 @@ function submitContents(elClickedObj) {
 	var jsonValue=localStorage.getItem("tt");
 	alert(jsonValue);
 	$('#counsellingJSON').val(jsonValue);
+	localStorage.removeItem("tt");
+	alert('jsp');
 	try {
 		elClickedObj.form.submit();
 	} catch(e) {}

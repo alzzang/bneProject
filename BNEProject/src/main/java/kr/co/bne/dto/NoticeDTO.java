@@ -49,5 +49,5 @@ public class NoticeDTO {
 	public void setRead_flag(String read_flag) {
 		this.read_flag = read_flag;
 	}
-
+	
 }

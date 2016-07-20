@@ -420,6 +420,7 @@ function panel_remove(panel,action,callback){
 /* EOF PANEL FUNCTIONS */
 
 /* X-NAVIGATION CONTROL FUNCTIONS */
+<<<<<<< HEAD
 function x_navigation_onresize(){    
     
     var inner_port = window.innerWidth || $(document).width();
@@ -433,6 +434,123 @@ function x_navigation_onresize(){
         $(".x-navigation-horizontal").each(function(){            
             if(!$(this).hasClass("x-navigation-panel")){                
                 $(".x-navigation-horizontal").addClass("x-navigation-h-holder").removeClass("x-navigation-horizontal");
+=======
+function x_navigation_onresize() {
+
+   var inner_port = window.innerWidth || $(document).width();
+
+   if (inner_port < 1025) {
+      $(".page-sidebar .x-navigation").removeClass("x-navigation-minimized");
+      $(".page-container").removeClass("page-container-wide");
+      $(".page-sidebar .x-navigation li.active").removeClass("active");
+
+      $(".x-navigation-horizontal").each(
+            function() {
+               if (!$(this).hasClass("x-navigation-panel")) {
+                  $(".x-navigation-horizontal").addClass(
+                        "x-navigation-h-holder").removeClass(
+                        "x-navigation-horizontal");
+               }
+            });
+
+   } else {
+      if ($(".page-navigation-toggled").length > 0) {
+         x_navigation_minimize("close");
+      }
+
+      $(".x-navigation-h-holder").addClass("x-navigation-horizontal")
+            .removeClass("x-navigation-h-holder");
+   }
+}
+
+function x_navigation_minimize(action) {
+
+   if (action == 'open') {
+      $(".page-container").removeClass("page-container-wide");
+      $(".page-sidebar .x-navigation").removeClass("x-navigation-minimized");
+      $(".x-navigation-minimize").find(".fa").removeClass("fa-indent")
+            .addClass("fa-dedent");
+      $(".page-sidebar.scroll").mCustomScrollbar("update");
+   }
+
+   if (action == 'close') {
+      $(".page-container").addClass("page-container-wide");
+      $(".page-sidebar .x-navigation").addClass("x-navigation-minimized");
+      $(".x-navigation-minimize").find(".fa").removeClass("fa-dedent")
+            .addClass("fa-indent");
+      $(".page-sidebar.scroll").mCustomScrollbar("disable", true);
+   }
+
+   $(".x-navigation li.active").removeClass("active");
+
+}
+
+function x_navigation() {
+
+   $(".x-navigation-control").click(function() {
+      $(this).parents(".x-navigation").toggleClass("x-navigation-open");
+
+      onresize();
+
+      return false;
+   });
+
+   if ($(".page-navigation-toggled").length > 0) {
+      x_navigation_minimize("close");
+   }
+
+   $(".x-navigation-minimize")
+         .click(
+               function() {
+
+                  if ($(".page-sidebar .x-navigation").hasClass(
+                        "x-navigation-minimized")) {
+                     $(".page-container").removeClass(
+                           "page-navigation-toggled");
+                     x_navigation_minimize("open");
+                  } else {
+                     $(".page-container").addClass(
+                           "page-navigation-toggled");
+                     x_navigation_minimize("close");
+                  }
+
+                  onresize();
+
+                  return false;
+               });
+
+   $(".x-navigation  li > a").click(function() {
+
+      var li = $(this).parent('li');
+      var ul = li.parent("ul");
+      ul.find(" > li").not(li).removeClass("active");
+
+   });
+
+   $(".x-navigation li").click(
+         function(event) {
+
+            //event.stopPropagation();
+
+            var li = $(this);
+
+            if (li.children("ul").length > 0
+                  || li.children(".panel").length > 0
+                  || $(this).hasClass("xn-profile") > 0) {
+               if (li.hasClass("active")) {
+                  li.removeClass("active");
+                  li.find("li.active").removeClass("active");
+
+               } else {
+                  li.addClass("active");
+               }
+               onresize();
+
+               if ($(this).hasClass("xn-profile") > 0)
+                  return true;
+               else
+                  return false;
+>>>>>>> refs/remotes/origin/dailyReport
             }
         });
         
@@ -477,6 +595,7 @@ function x_navigation(){
         return false;
     });
 
+  
     if($(".page-navigation-toggled").length > 0){
         x_navigation_minimize("close");
     }    
@@ -496,6 +615,7 @@ function x_navigation(){
         return false;        
     });
        
+<<<<<<< HEAD
     $(".x-navigation  li > a").click(function(){
         
         var li = $(this).parent('li');        
@@ -504,7 +624,10 @@ function x_navigation(){
         ul.find(" > li").not(li).removeClass("active");    
         
     });
+=======
+>>>>>>> refs/remotes/origin/dailyReport
     
+<<<<<<< HEAD
     $(".x-navigation li").click(function(event){
 
        
@@ -529,6 +652,8 @@ function x_navigation(){
             }                                     
     });
     
+=======
+>>>>>>> refs/remotes/origin/dailyReport
     /* XN-SEARCH */
     $(".xn-search").on("click",function(){
         $(this).find("input").focus();

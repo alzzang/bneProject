@@ -12,32 +12,31 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
-import kr.co.bne.common.NoticeDetail;
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.dto.NoticeDTO;
 import kr.co.bne.service.NoticeService;
 
 @Controller
 @RequestMapping("/alarm")
-public class NoticeController {
+public class AlarmController {
 
 	@Autowired
-	private NoticeService noticeService;
-	
-	
-	
+	NoticeService noticeService;
+		
 	@RequestMapping("/detail")
 	public ModelAndView main(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session=req.getSession();
 		EmployeeDTO employee=(EmployeeDTO) session.getAttribute("user");
 		String position=employee.getPosition();
-		List<NoticeDetail> unList=null;
-		List<NoticeDetail> cnList=null;
+		List<NoticeDTO> unList=null;
+		List<NoticeDTO> cnList=null;
 		Map<String, String> map=new HashMap<String, String>();
 		map.put("employee_id", employee.getEmployee_id());
 		map.put("start", "1");
@@ -86,7 +85,7 @@ public class NoticeController {
 		HttpSession session=req.getSession();
 		EmployeeDTO employee=(EmployeeDTO) session.getAttribute("user");
 		String position=employee.getPosition();
-		List<NoticeDetail> unList=null;
+		List<NoticeDTO> unList=null;
 		Map<String, String> map=new HashMap<String, String>();
 		map.put("employee_id", employee.getEmployee_id());
 		Integer start=Integer.parseInt(req.getParameter("start"));
@@ -127,7 +126,7 @@ public class NoticeController {
 		HttpSession session=req.getSession();
 		EmployeeDTO employee=(EmployeeDTO) session.getAttribute("user");
 		String position=employee.getPosition();
-		List<NoticeDetail> unList=null;
+		List<NoticeDTO> unList=null;
 		Map<String, String> map=new HashMap<String, String>();
 		map.put("employee_id", employee.getEmployee_id());
 		Integer start=Integer.parseInt(req.getParameter("start"));
@@ -161,5 +160,4 @@ public class NoticeController {
 		pw.flush();
 		pw.close();
 	}
-	
 }

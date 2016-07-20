@@ -2,6 +2,7 @@ package kr.co.bne.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,20 @@ public class NoticeDAOImpl implements NoticeDAO {
 		List<NoticeDTO> list = sqlSession.selectList("kr.co.bne.mapper.Notice.selectNoticeList", map);
 		
 		return list;
+	}
+	
+	
+	
+	@Override
+	public List<kr.co.bne.common.NoticeDetail> selectUnconfirmedNotice(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.Notice.selectUnconfirmedNotices", map);
+	}
+
+	@Override
+	public List<kr.co.bne.common.NoticeDetail> selectconfirmedNotice(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.Notice.selectconfirmedNotices", map);
 	}
 	
 }
