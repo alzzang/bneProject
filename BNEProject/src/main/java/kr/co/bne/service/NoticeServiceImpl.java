@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.bne.common.type.NoticeType;
+import kr.co.bne.common.NoticeDetail;
 import kr.co.bne.dao.NoticeDAO;
 import kr.co.bne.dto.NoticeDTO;
 
@@ -23,12 +24,6 @@ public class NoticeServiceImpl implements NoticeService {
 		return result;
 	}
 	
-	@Override
-	public boolean insertNotice(NoticeType notice_type, String subject_id, String object_id) throws Exception {
-		boolean result = noticeDAO.insertNotice(notice_type, subject_id, object_id);
-		return result;
-	}
-	
 	
 	@Override
 	public List<NoticeDTO> selectNoticeList(String user_id, int startIdx, int perContentNum) throws Exception {
@@ -38,13 +33,13 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	
 	@Override
-	public List<NoticeDTO> searchUnconfirmedNotice(Map<String, String> map) {
+	public List<NoticeDetail> searchUnconfirmedNotice(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return noticeDAO.selectUnconfirmedNotice(map);
 	}
 
 	@Override
-	public List<NoticeDTO> searchconfirmedNotice(Map<String, String> map) {
+	public List<NoticeDetail> searchconfirmedNotice(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return noticeDAO.selectconfirmedNotice(map);
 	}

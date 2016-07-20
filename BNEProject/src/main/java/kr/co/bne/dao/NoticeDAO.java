@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.co.bne.common.type.NoticeType;
 import kr.co.bne.dto.NoticeDTO;
+import kr.co.bne.common.NoticeDetail;
 
 public interface NoticeDAO {
 	
@@ -14,9 +15,9 @@ public interface NoticeDAO {
 
 	List<NoticeDTO> selectNoticeList(String user_id, int perContentNum, int startIdx);
 	
-	List<kr.co.bne.common.NoticeDetail> selectUnconfirmedNotice(Map<String, String> map);
+	List<NoticeDetail> selectUnconfirmedNotice(Map<String, String> map);
 
-	List<kr.co.bne.common.NoticeDetail> selectconfirmedNotice(Map<String, String> map);
+	List<NoticeDetail> selectconfirmedNotice(Map<String, String> map);
 	
 
 }
