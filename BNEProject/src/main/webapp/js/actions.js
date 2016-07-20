@@ -506,14 +506,11 @@ function x_navigation(){
     });
     
     $(".x-navigation li").click(function(event){
-<<<<<<< HEAD
-        event.stopPropagation();
-        
-=======
+
+       
        
     	//event.stopPropagation();
-          	
->>>>>>> refs/remotes/origin/dailyReport
+
         var li = $(this);
                 
             if(li.children("ul").length > 0 || li.children(".panel").length > 0 || $(this).hasClass("xn-profile") > 0){

@@ -28,17 +28,11 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 }
 </style>
 
-<<<<<<< HEAD
 <!-- <script src="http://localhost:3000/socket.io/socket.io.js"></script>  -->
 <!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script>  -->
-=======
-<<<<<<< HEAD
-<script type="text/javascript" src="/js/dailysettings.js"></script>
-=======
-<script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script> 
 
->>>>>>> refs/remotes/origin/Jiyeon
->>>>>>> refs/remotes/origin/dailyReport
+<script type="text/javascript" src="/js/dailysettings.js"></script>
+
 </head>
 
 <body>
@@ -134,13 +128,10 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<script type="text/javascript" src="/js/dailysettings.js"></script>
 	<!-- <script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script> -->
 	
-	
-<<<<<<< HEAD
-=======
-	<script type="text/javascript" src="/js/demo_dashboard.js"></script>
+
+	<!-- <script type="text/javascript" src="/js/demo_dashboard.js"></script>
 	<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
-	<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
->>>>>>> refs/remotes/origin/dailyReport
+	<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script> -->
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
 
