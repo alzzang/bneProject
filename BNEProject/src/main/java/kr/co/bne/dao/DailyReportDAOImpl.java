@@ -28,6 +28,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	}
 	@Override
 	public int insertDailyReport(DailyReportDTO dailyReportDTO) {
+		System.out.println("dailyreport insert 했지롱");		
 		// TODO Auto-generated method stub
 		return sqlSession.insert("kr.co.bne.mapper.DailyReport.insertDailyReport", dailyReportDTO);
 		

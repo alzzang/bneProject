@@ -22,6 +22,7 @@ import kr.co.bne.common.NoticeDetail;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.NoticeService;
 
+
 @Controller
 @RequestMapping("/alarm")
 public class NoticeController {

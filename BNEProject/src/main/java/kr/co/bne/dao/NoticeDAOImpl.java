@@ -22,15 +22,22 @@ public class NoticeDAOImpl implements NoticeDAO {
 	
 	
 	@Override
-	public boolean insertNotice(NoticeType notice_type, String subject_id) throws Exception {
-		return insertNotice(notice_type, subject_id, null);
+	public boolean insertNotice(NoticeType notice_type, int link) throws Exception {
+		return insertNotice(notice_type, link, null, null);
 	}
 	
 	
 	@Override
-	public boolean insertNotice(NoticeType notice_type, String subject_id, String object_id) throws Exception {
+	public boolean insertNotice(NoticeType notice_type, int link, String subject_id) throws Exception {
+		return insertNotice(notice_type, link, subject_id, null);
+	}
+	
+	
+	@Override
+	public boolean insertNotice(NoticeType notice_type, int link, String subject_id, String object_id) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("notice_type", notice_type);
+		map.put("link", link);
+		map.put("notice_type", notice_type.toString());
 		map.put("subject_id", subject_id);
 		map.put("object_id", object_id);
 		

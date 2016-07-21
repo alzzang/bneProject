@@ -6,6 +6,7 @@
 	
 	<parameterMap id="procMap" type="HashMap">
 		<parameter property="notice_type" mode="IN" jdbcType="VARCHAR" javaType="String" />
+		<parameter property="link" mode="IN" jdbcType="INTEGER" javaType="int" />
 		<parameter property="result" mode="OUT" jdbcType="INTEGER" javaType="int" />
 		<parameter property="subject_id" mode="IN" jdbcType="VARCHAR" javaType="String" />
 		<parameter property="object_id" mode="IN" jdbcType="VARCHAR" javaType="String" />
@@ -23,7 +24,7 @@
 
 
 	<insert id="create_notice" parameterMap="procMap" statementType="CALLABLE">
-		{ call CREATE_NOTICE (?,?,?,?) }
+		{ call CREATE_NOTICE (?,?,?,?,?) }
 	</insert>
 	
 	

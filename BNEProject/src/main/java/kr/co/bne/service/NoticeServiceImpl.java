@@ -19,8 +19,8 @@ public class NoticeServiceImpl implements NoticeService {
 	NoticeDAO noticeDAO;
 	
 	@Override
-	public boolean insertNotice(NoticeType notice_type, String subject_id) throws Exception {
-		boolean result = noticeDAO.insertNotice(notice_type, subject_id);
+	public boolean insertNotice(NoticeType notice_type, int link, String subject_id) throws Exception {
+		boolean result = noticeDAO.insertNotice(notice_type, link, subject_id);
 		return result;
 	}
 	
