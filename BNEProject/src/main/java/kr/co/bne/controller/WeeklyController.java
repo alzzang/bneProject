@@ -26,6 +26,7 @@ import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.PlanDetailDTO;
 import kr.co.bne.dto.WeeklyReportDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
+import kr.co.bne.service.UserService;
 import kr.co.bne.service.WeeklyReportService;
 
 @Controller
@@ -34,6 +35,25 @@ public class WeeklyController {
 	
 	@Autowired
 	WeeklyReportService weeklyReportService;
+	@Autowired
+	UserService userService;
+	
+	private JsonObject parseWeeklyReportDetailDTO(WeeklyReportDetailDTO result){
+		JsonObject weeklyReportDetail = new JsonObject();
+		Gson gson = new Gson();
+		JsonParser parser = new JsonParser();
+		
+		JsonObject weeklyReportDTO = parser.parse(gson.toJson(result.getWeeklyReportDTO())).getAsJsonObject();
+		JsonArray weeklyPlanDTOList = parser.parse(gson.toJson(result.getWeeklyPlanDTOList())).getAsJsonArray();
+		JsonArray planDetailDTOList = parser.parse(gson.toJson(result.getPlanDetailDTOList())).getAsJsonArray();
+		
+		weeklyReportDetail.add("weeklyReportDTO", weeklyReportDTO);
+		weeklyReportDetail.add("weeklyPlanDTOList", weeklyPlanDTOList);
+		weeklyReportDetail.add("planDetailDTOList", planDetailDTOList);
+		
+		return weeklyReportDetail;
+	}
+	
 	
 	@RequestMapping("/writeForm")
 	public String WeeklyWriteForm(Model model, HttpSession session) throws Exception{
@@ -65,37 +85,36 @@ public class WeeklyController {
 	@RequestMapping("/detail")
 	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request) throws Exception {
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
-		EmployeeDTO eDTO = (EmployeeDTO)request.getSession().getAttribute("user");
+		EmployeeDTO loginEmployeeDTO = (EmployeeDTO)request.getSession().getAttribute("user");
 
-		if(eDTO == null) {
+		if(loginEmployeeDTO == null) {
 			mv.setViewName("main");
 			return mv;
 		}
 		
-		List<String> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
+		List<String> reportId_list = weeklyReportService.selectAllReportId(loginEmployeeDTO.getEmployee_id());
 		
-		System.out.println("리스트가비어있니? : " + reportId_list.isEmpty());
+//		System.out.println("리스트가비어있니? : " + reportId_list.isEmpty());
 		String lastWeeklyReportId = reportId_list.get(reportId_list.size()-1);
-		System.out.println("그럼 마지막인덱스가 뭐니?? : " + lastWeeklyReportId);
+//		System.out.println("그럼 마지막인덱스가 뭐니?? : " + lastWeeklyReportId);
 		WeeklyReportDetailDTO result = weeklyReportService.selectWeeklyReportDetail(lastWeeklyReportId);	
 		
-		JsonObject weeklyReportDetail = new JsonObject();
-		Gson gson = new Gson();
+		JsonObject weeklyReportDetail = parseWeeklyReportDetailDTO(result);
 		
+		String employee_id = result.getWeeklyReportDTO().getEmployee_id();
 		
-//		weeklyReportDetail.put("weeklyReportName", gson.toJson(result.getWeeklyReportName()));
-//		weeklyReportDetail.put("weeklyPlanDTOList", gson.toJson(result.getWeeklyPlanDTOList()));
-//		weeklyReportDetail.put("planDetailDTOList", gson.toJson(result.getPlanDetailDTOList()));
+		EmployeeDTO employeeDTO = userService.selectEmployee(employee_id);
 		
-		
-//		String weeklyReportName = gson.toJson(result.getWeeklyReportName());
-//		JsonObject el = (new JsonParser()).parse(weeklyReportName).getAsJsonObject();
-		
+		String department_name = employeeDTO.getDepartment_name();
+		String employee_name = employeeDTO.getEmployee_name();
 		
 		System.out.println("주간계획 : " + weeklyReportDetail.toString());
 		
 		mv.addObject("weeklyReportDetail", weeklyReportDetail.toString());
+		mv.addObject("department_name", department_name);
+		mv.addObject("employee_name", employee_name);
 		mv.addObject("reportIdList", reportId_list);
+		
 		return mv;
 	}
 	

@@ -5,18 +5,17 @@ public class WeeklyPlanDTO {
 	private String weekly_report_id;
 	private String content;
 	private int sales;
-	private String plan_date;
+	private String reg_date;
 	public WeeklyPlanDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public WeeklyPlanDTO(int weekly_plan_id, String weekly_report_id, String content, int sales, String plan_date) {
+	public WeeklyPlanDTO(int weekly_plan_id, String weekly_report_id, String content, int sales, String reg_date) {
 		super();
 		this.weekly_plan_id = weekly_plan_id;
 		this.weekly_report_id = weekly_report_id;
 		this.content = content;
 		this.sales = sales;
-		this.plan_date = plan_date;
+		this.reg_date = reg_date;
 	}
 	public int getWeekly_plan_id() {
 		return weekly_plan_id;
@@ -42,18 +41,23 @@ public class WeeklyPlanDTO {
 	public void setSales(int sales) {
 		this.sales = sales;
 	}
-	public String getPlan_date() {
-		return plan_date;
+	public String getReg_date() {
+		return reg_date;
 	}
-	public void setPlan_date(String plan_date) {
-		this.plan_date = plan_date;
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}
+	@Override
+	public String toString() {
+		return "WeeklyPlanDTO [weekly_plan_id=" + weekly_plan_id + ", weekly_report_id=" + weekly_report_id
+				+ ", content=" + content + ", sales=" + sales + ", reg_date=" + reg_date + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
-		result = prime * result + ((plan_date == null) ? 0 : plan_date.hashCode());
+		result = prime * result + ((reg_date == null) ? 0 : reg_date.hashCode());
 		result = prime * result + sales;
 		result = prime * result + weekly_plan_id;
 		result = prime * result + ((weekly_report_id == null) ? 0 : weekly_report_id.hashCode());
@@ -73,10 +77,10 @@ public class WeeklyPlanDTO {
 				return false;
 		} else if (!content.equals(other.content))
 			return false;
-		if (plan_date == null) {
-			if (other.plan_date != null)
+		if (reg_date == null) {
+			if (other.reg_date != null)
 				return false;
-		} else if (!plan_date.equals(other.plan_date))
+		} else if (!reg_date.equals(other.reg_date))
 			return false;
 		if (sales != other.sales)
 			return false;
@@ -89,12 +93,6 @@ public class WeeklyPlanDTO {
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "WeeklyPlanDTO [weekly_plan_id=" + weekly_plan_id + ", weekly_report_id=" + weekly_report_id
-				+ ", content=" + content + ", sales=" + sales + ", plan_date=" + plan_date + "]";
-	}
-	
 	
 	
 }

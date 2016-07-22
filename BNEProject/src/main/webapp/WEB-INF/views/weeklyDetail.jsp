@@ -5,7 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -27,7 +26,7 @@
 			<div class="page-title">
 				<h5>개인 정보</h5>
 			</div>
-			주간계획 ID : <span id="weekly_reportI_d"></span><br>
+			주간계획 ID : <span id="weekly_report_id"></span><br>
 			
 			<table class="table">
 				<thead>
@@ -94,16 +93,39 @@
 
 </div>
 <script>
-	var inputReportData = function(weeklyDetail){
-		var s =JSON.parse(weeklyDetail.weeklyReportName);
-		alert(s);
-	};
+	var inputReportData = function(reportData){
+		var weeklyReportDTO = reportData.weeklyReportDTO;
+		var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
+		var planDetailDTOList = reportData.planDetailDTOList;
+		
+		
+		$('#weekly_report_id').html(weeklyReportDTO.weekly_report_id);
+		$('#title').html(weeklyReportDTO.title);
+		$('#reg_date').html(weeklyReportDTO.reg_date);
+		$('#employee_name').html('${employee_name}');
+		$('#department_name').html('${department_name}');
+		$('#saleGoal').html(weeklyReportDTO.saleGoal);
+		$('#sales').html(weeklyReportDTO.sales);
+		
+		for(var i=0; i<planDetailDTOList.length; i++){
+			$('#calendarWeek').fullCalendar('renderEvent',{
+			   		"title":planDetailDTOList[i].content,
+				    "allDay":"",
+				    //"id":"15",
+				    "start":planDetailDTOList[i].start_time,
+				    "end":planDetailDTOList[i].end_time
+		    },true);
+		}
+
+		for(var i=0; i<4; i++){
+			$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i].dataset.date);
+		}
+		
+	}
+
+
 
 	window.onload = function(){
-		
-		var weeklyDetail = JSON.parse('${weeklyReportDetail}');
-		inputReportData(weeklyDetail);
-		
 		
 		var reportDetail = {};
 		$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
@@ -113,30 +135,22 @@
 		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>';
 		$('.fc-center').prepend(o);
 		
-	/* 	$('#calendarWeek').fullCalendar('renderEvent',{
-		    "title":"dd~",
-			    "allDay":"",
-			    //"id":"15",
-			    "start":"2016-07-18 09:30:00",
-			    "end":"2016-07-18 17:30:00"
-	    },true);
-	    
-	    $('#calendarWeek').fullCalendar('renderEvent',{
-		    "title":"공부~",
-			    "allDay":"",
-			    //"id":"15",
-			    "start":"2016-07-20 13:30:00",
-			    "end":"2016-07-20 17:30:00"
-	    },true);
-	    
-	    $('#calendarWeek').fullCalendar('renderEvent',{
-		    "title":"프로젝트~",
-			    "allDay":"",
-			    //"id":"15",
-			    "start":"2016-07-22 09:30:00",
-			    "end":"2016-07-22 17:30:00"
-	    },true); */
-	
+		var tbodyTag
+		= 	'<tr>' + 
+				'<td class="fc-axis">매출</td>' +
+				'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
+				'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
+				'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
+				'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
+				'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
+			'</tr>';
+			
+		$('#weeklyTableHeader>tbody').html(tbodyTag);
+		
+		var s = $('#weeklyTableHeader>thead>tr>th');
+		for(var i=1; i<6; i++){
+			$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i].dataset.date);
+		}
 	
 	    $('.fc-next-button').on('click',function(){
 	    	$('#calendarWeek').fullCalendar('removeEvents');
@@ -162,6 +176,10 @@
 	   		$('#calendarWeek').fullCalendar('removeEvents');
 	    	$('#calendarWeek').fullCalendar('prev');
 	    });
+
+		var reportData = JSON.parse('${weeklyReportDetail}');
+		inputReportData(reportData);
+
 	}
 
 </script>
