@@ -1,6 +1,24 @@
 
 $(function(){
 	
+	var salesCell
+	= 	'<tr>' + 
+			'<td class="fc-axis">매출</td>' +
+			'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
+		'</tr>';
+		
+	$('#weeklyTableHeader>tbody').html(salesCell);
+	
+	var s = $('#weeklyTableHeader>thead>tr>th');
+	
+	for(var i=2; i<7; i++){
+		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
+	}
+/*
 
 	Map = function() {
 		this.map = new Object();
@@ -58,7 +76,7 @@ $(function(){
 	
 	
 	var insertDB = function(){
-		/* $("div.fc-event-container>a"). */
+		 $("div.fc-event-container>a"). 
 		var s =	$(".fc-event-container>a");
 		var arr = [];
 		for(var i = 0; i<s.length; i++){
@@ -153,7 +171,7 @@ $(function(){
 	}
 	
 	
-	
+*/	
 	
 	
 	

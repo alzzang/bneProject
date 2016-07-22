@@ -7,5 +7,5 @@ public interface UserService {
 	public void modifyPassword(String id, String rawPassword);
 	public void modifyFilePosition(String id, String filePosition);
 	public void modifyFilePosition(String id);
-	public EmployeeDTO selectEmployee(String id);
+	public EmployeeDTO selectEmployee(String employee_id);
 }

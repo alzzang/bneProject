@@ -30,8 +30,8 @@ window.onload = function(){
 	$('#weeklyTableHeader>tbody').html(tbodyTag);
 	
 	var s = $('#weeklyTableHeader>thead>tr>th');
-	for(var i=1; i<6; i++){
-		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i].dataset.date);
+	for(var i=2; i<7; i++){
+		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
 	}
 	
 	$('bbbb').on('click',function(){

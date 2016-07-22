@@ -4,6 +4,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style>
+.panel-body input{
+	background-color: transparent;
+	border:0px solid black;
+}
 
 <%-- <c:set var="employeeIdList" scope = "request" value= "${reqeustScope.employeeIdList}" ></c:set> --%>
 <%
@@ -12,6 +17,13 @@
 	int curIdx = reportIdList.size()-1; */
 %>
 
+.salesInput {
+	width:100%;
+	background-color: transparent;
+	border:0px solid black;
+	text-align: center;
+}
+</style>
 
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -36,26 +48,27 @@
 			</div>
 			부서 ID : <input type="text" name="department_id" value="${user.department_id}" disabled><br>
 			로그인 ID : <input type="text" name="employee_id" value="${user.employee_id}" disabled>
+			주간계획 ID : <span id="weekly_report_id"></span><br>
 			
 			<table class="table">
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td><input type="text" value="${user.department_name}" disabled></td>
+						<td><span id="department_name"></span></td>
 					</tr>
 
 					<tr>
 						<th>이름</th>
-						<td><input type="text" value="${user.employee_name}" disabled></td>
+						<td><span id="employee_name"></span></td>
 					</tr>
 
 					<tr>
 						<th>작성일</th>
-						<td>${currentDate}</td>
+						<td><span id="reg_date"></span></td>
 					</tr>
 					<tr>
 						<th>제목</th>
-						<td><input type="text"   placeholder="제목을 입력해주세요" readonly></td>
+						<td><span id="title"></span></td>
 					</tr>
 				</thead>
 			</table>
@@ -66,15 +79,15 @@
 				<thead>
 					<tr>
 						<th>목표</th>
-						<td><input type="text" name="salesGoal" value="${salesGoal}" disabled></td>
+						<td><span id="sales_goal"></span></td>
 					</tr>
 					<tr>
 						<th>매출액</th>
-						<td><input type="text" name="sales" value="${monthlySales}" disabled></td>
+						<td><span id="sales"></span></td>
 					</tr>
 					<tr>
 						<th>달성률</th>
-						<td></td>
+						<td><span id="achievement_rate"></span></td>
 					</tr>
 				</thead>
 			</table>
@@ -102,6 +115,40 @@
 </div>
 
 <script>
+
+	var inputReportData = function(reportData){
+		var weeklyReportDTO = reportData.weeklyReportDTO;
+		var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
+		var planDetailDTOList = reportData.planDetailDTOList;
+		
+		$('#weekly_report_id').html(weeklyReportDTO.weekly_report_id);
+		$('#title').html(weeklyReportDTO.title);
+		$('#reg_date').html(weeklyReportDTO.reg_date);
+		$('#employee_name').html('${employee_name}');
+		$('#department_name').html('${department_name}');
+		$('#sales_goal').html(weeklyReportDTO.sales_goal);
+		$('#sales').html(weeklyReportDTO.sales);
+		var achievement_rate = Number(weeklyReportDTO.sales) / Number(weeklyReportDTO.sales_goal) * 100;
+		
+		$('#achievement_rate').html(achievement_rate + '%');
+		
+		
+		for(var i=0; i<planDetailDTOList.length; i++){
+			$('#calendarWeek').fullCalendar('renderEvent',{
+			   		"title":planDetailDTOList[i].content,
+				    "allDay":"",
+				    "start":planDetailDTOList[i].start_time,
+				    "end":planDetailDTOList[i].end_time
+		    },true);
+		}
+
+		for(var i=0; i<weeklyPlanDTOList.length; i++){
+			$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
+		}
+		
+	}
+
+
 	window.onload = function(){
 		var weeklyDetail = JSON.parse('${weeklyReportDetail}');
 		inputReportData(weeklyDetail);
@@ -115,30 +162,7 @@
 		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>'
 		$('.fc-center').prepend(o);
 		
-		$('#calendarWeek').fullCalendar('renderEvent',{
-		    "title":"dd~",
-			    "allDay":"",
-			    //"id":"15",
-			    "start":"2016-07-18 09:30:00",
-			    "end":"2016-07-18 17:30:00"
-	    },true);
-	    
-	    $('#calendarWeek').fullCalendar('renderEvent',{
-		    "title":"공부~",
-			    "allDay":"",
-			    //"id":"15",
-			    "start":"2016-07-20 13:30:00",
-			    "end":"2016-07-20 17:30:00"
-	    },true);
-	    
-	    $('#calendarWeek').fullCalendar('renderEvent',{
-		    "title":"프로젝트~",
-			    "allDay":"",
-			    //"id":"15",
-			    "start":"2016-07-22 09:30:00",
-			    "end":"2016-07-22 17:30:00"
-	    },true);
-	    
+		
 	    $('.fc-next-button').on('click',function(){
 	    	$('#calendarWeek').fullCalendar('removeEvents');
 	    	$('#calendarWeek').fullCalendar('next');
@@ -180,5 +204,10 @@
 	   		}
 
 	   	};
+
+	   	
+		var reportData = JSON.parse('${weeklyReportDetail}');
+		inputReportData(reportData);
+
 	}
 </script>

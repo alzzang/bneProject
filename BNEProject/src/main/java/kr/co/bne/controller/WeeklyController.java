@@ -27,7 +27,6 @@ import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.PlanDetailDTO;
 import kr.co.bne.dto.WeeklyReportDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
-import kr.co.bne.dto.WeeklyReportName;
 import kr.co.bne.service.UserService;
 import kr.co.bne.service.WeeklyReportService;
 
@@ -39,6 +38,22 @@ public class WeeklyController {
 	WeeklyReportService weeklyReportService;
 	@Autowired
 	UserService userService;
+	
+	private JsonObject parseWeeklyReportDetailDTO(WeeklyReportDetailDTO result){
+		JsonObject weeklyReportDetail = new JsonObject();
+		Gson gson = new Gson();
+		JsonParser parser = new JsonParser();
+		
+		JsonObject weeklyReportDTO = parser.parse(gson.toJson(result.getWeeklyReportDTO())).getAsJsonObject();
+		JsonArray weeklyPlanDTOList = parser.parse(gson.toJson(result.getWeeklyPlanDTOList())).getAsJsonArray();
+		JsonArray planDetailDTOList = parser.parse(gson.toJson(result.getPlanDetailDTOList())).getAsJsonArray();
+		
+		weeklyReportDetail.add("weeklyReportDTO", weeklyReportDTO);
+		weeklyReportDetail.add("weeklyPlanDTOList", weeklyPlanDTOList);
+		weeklyReportDetail.add("planDetailDTOList", planDetailDTOList);
+		
+		return weeklyReportDetail;
+	}
 	
 	@RequestMapping("/writeForm")
 	public String WeeklyWriteForm(Model model, HttpSession session) throws Exception{
@@ -81,9 +96,21 @@ public class WeeklyController {
 		String lastWeeklyReportId = reportId_list.get(reportId_list.size()-1);
 		WeeklyReportDetailDTO weeklyReportDetail = weeklyReportService.selectWeeklyReportDetail(lastWeeklyReportId);	
 		
+
+		JsonObject weeklyReportDetail = parseWeeklyReportDetailDTO(result);
+		
+		String employee_id = result.getWeeklyReportDTO().getEmployee_id();
+		
+		EmployeeDTO employeeDTO = userService.selectEmployee(employee_id);
+		
+		String department_name = employeeDTO.getDepartment_name();
+		String employee_name = employeeDTO.getEmployee_name();
+		
 		System.out.println("주간계획 : " + weeklyReportDetail.toString());
 		
 		mv.addObject("weeklyReportDetail", weeklyReportDetail);
+		mv.addObject("department_name", department_name);
+		mv.addObject("employee_name", employee_name);
 		mv.addObject("reportIdList", reportId_list);
 		return mv;
 	}

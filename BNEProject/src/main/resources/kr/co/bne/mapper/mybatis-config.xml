@@ -15,7 +15,6 @@
 		<typeAlias alias="SecondaryClient" type="kr.co.bne.dto.SecondaryClientDTO"/>
 		<typeAlias alias="WeeklyPlan" type="kr.co.bne.dto.WeeklyPlanDTO"/>
 		<typeAlias alias="WeeklyReport" type="kr.co.bne.dto.WeeklyReportDTO"/>
-		<typeAlias alias="WeeklyReportName" type="kr.co.bne.dto.WeeklyReportName"/>
 
 		<typeAlias alias="PlanDetail" type="kr.co.bne.dto.PlanDetailDTO"/>
 		
