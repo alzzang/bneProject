@@ -1,15 +1,17 @@
 package kr.co.bne.dto;
 
 public class WeeklyReportDTO {
-	private int weekly_report_id;
+	private String weekly_report_id;
 	private String employee_id;
 	private String title;
 	private String reg_date;
 	private int saleGoal;
 	private int sales;
-	
-	
-	public WeeklyReportDTO(int weekly_report_id, String employee_id, String title, String reg_date, int saleGoal,
+	public WeeklyReportDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public WeeklyReportDTO(String weekly_report_id, String employee_id, String title, String reg_date, int saleGoal,
 			int sales) {
 		super();
 		this.weekly_report_id = weekly_report_id;
@@ -19,14 +21,10 @@ public class WeeklyReportDTO {
 		this.saleGoal = saleGoal;
 		this.sales = sales;
 	}
-	public WeeklyReportDTO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public int getWeekly_report_id() {
+	public String getWeekly_report_id() {
 		return weekly_report_id;
 	}
-	public void setWeekly_report_id(int weekly_report_id) {
+	public void setWeekly_report_id(String weekly_report_id) {
 		this.weekly_report_id = weekly_report_id;
 	}
 	public String getEmployee_id() {
@@ -73,7 +71,7 @@ public class WeeklyReportDTO {
 		result = prime * result + saleGoal;
 		result = prime * result + sales;
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + weekly_report_id;
+		result = prime * result + ((weekly_report_id == null) ? 0 : weekly_report_id.hashCode());
 		return result;
 	}
 	@Override
@@ -104,7 +102,10 @@ public class WeeklyReportDTO {
 				return false;
 		} else if (!title.equals(other.title))
 			return false;
-		if (weekly_report_id != other.weekly_report_id)
+		if (weekly_report_id == null) {
+			if (other.weekly_report_id != null)
+				return false;
+		} else if (!weekly_report_id.equals(other.weekly_report_id))
 			return false;
 		return true;
 	}

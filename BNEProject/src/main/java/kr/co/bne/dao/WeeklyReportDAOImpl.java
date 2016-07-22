@@ -36,13 +36,13 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 	}
 
 	@Override
-	public List<Integer> selectAllWeeklyReportId(String employee_id) throws Exception {
-		List<Integer> result = sqlSession.selectList(namespace + "selectAllReportId", employee_id);
+	public List<String> selectAllWeeklyReportId(String employee_id) throws Exception {
+		List<String> result = sqlSession.selectList(namespace + "selectAllReportId", employee_id);
 		return result;
 	}
 
 	@Override
-	public WeeklyReportName selectWeeklyReport(int weekly_report_id) throws Exception {
+	public WeeklyReportName selectWeeklyReport(String weekly_report_id) throws Exception {
 		WeeklyReportName result = sqlSession.selectOne(namespace + "selectWeeklyReport", weekly_report_id);
 		return result;
 	}

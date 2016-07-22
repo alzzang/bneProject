@@ -72,8 +72,11 @@ public class WeeklyController {
 			return mv;
 		}
 		
-		List<Integer> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
-		int lastWeeklyReportId = reportId_list.get(reportId_list.size()-1);
+		List<String> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
+		
+		System.out.println("리스트가비어있니? : " + reportId_list.isEmpty());
+		String lastWeeklyReportId = reportId_list.get(reportId_list.size()-1);
+		System.out.println("그럼 마지막인덱스가 뭐니?? : " + lastWeeklyReportId);
 		WeeklyReportDetailDTO result = weeklyReportService.selectWeeklyReportDetail(lastWeeklyReportId);	
 		
 		JsonObject weeklyReportDetail = new JsonObject();
@@ -89,13 +92,7 @@ public class WeeklyController {
 //		JsonObject el = (new JsonParser()).parse(weeklyReportName).getAsJsonObject();
 		
 		
-		System.out.print("ID 목록 : ");
-		for (Integer integer : reportId_list) {
-			System.out.print(integer + " ");
-		}
-		System.out.println();
 		System.out.println("주간계획 : " + weeklyReportDetail.toString());
-		
 		
 		mv.addObject("weeklyReportDetail", weeklyReportDetail.toString());
 		mv.addObject("reportIdList", reportId_list);
@@ -121,7 +118,7 @@ public class WeeklyController {
 	        list.add(dto);
 	        
 	        //임시 테스트값 삽입
-	        dto.setWeekly_report_id(4);
+	        //dto.setWeekly_report_id(4);
 	        
 	        
 	        System.out.println(dto);

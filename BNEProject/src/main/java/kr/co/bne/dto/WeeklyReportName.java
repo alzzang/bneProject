@@ -1,7 +1,7 @@
 package kr.co.bne.dto;
 
 public class WeeklyReportName {
-	private int weekly_report_id;
+	private String weekly_report_id;
 	private String title;
 	private String reg_date;
 	private int saleGoal;
@@ -10,9 +10,8 @@ public class WeeklyReportName {
 	private String department_name;
 	public WeeklyReportName() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public WeeklyReportName(int weekly_report_id, String title, String reg_date, int saleGoal, int sales,
+	public WeeklyReportName(String weekly_report_id, String title, String reg_date, int saleGoal, int sales,
 			String employee_name, String department_name) {
 		super();
 		this.weekly_report_id = weekly_report_id;
@@ -23,10 +22,10 @@ public class WeeklyReportName {
 		this.employee_name = employee_name;
 		this.department_name = department_name;
 	}
-	public int getWeekly_report_id() {
+	public String getWeekly_report_id() {
 		return weekly_report_id;
 	}
-	public void setWeekly_report_id(int weekly_report_id) {
+	public void setWeekly_report_id(String weekly_report_id) {
 		this.weekly_report_id = weekly_report_id;
 	}
 	public String getTitle() {
@@ -71,7 +70,6 @@ public class WeeklyReportName {
 				+ ", saleGoal=" + saleGoal + ", sales=" + sales + ", employee_name=" + employee_name
 				+ ", department_name=" + department_name + "]";
 	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -82,7 +80,7 @@ public class WeeklyReportName {
 		result = prime * result + saleGoal;
 		result = prime * result + sales;
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + weekly_report_id;
+		result = prime * result + ((weekly_report_id == null) ? 0 : weekly_report_id.hashCode());
 		return result;
 	}
 	@Override
@@ -118,11 +116,11 @@ public class WeeklyReportName {
 				return false;
 		} else if (!title.equals(other.title))
 			return false;
-		if (weekly_report_id != other.weekly_report_id)
+		if (weekly_report_id == null) {
+			if (other.weekly_report_id != null)
+				return false;
+		} else if (!weekly_report_id.equals(other.weekly_report_id))
 			return false;
 		return true;
 	}
-	
-	
-	
 }

@@ -69,13 +69,13 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 	}
 	
 	@Override
-	public List<Integer> selectAllReportId(String employee_id) throws Exception{
-		List<Integer> result = weeklyReportDAO.selectAllWeeklyReportId(employee_id);
+	public List<String> selectAllReportId(String employee_id) throws Exception{
+		List<String> result = weeklyReportDAO.selectAllWeeklyReportId(employee_id);
 		return result;
 	}
 	
 	@Override
-	public WeeklyReportDetailDTO selectWeeklyReportDetail(int weekly_report_id) throws Exception {
+	public WeeklyReportDetailDTO selectWeeklyReportDetail(String weekly_report_id) throws Exception {
 		WeeklyReportName weeklyReportDeptName = weeklyReportDAO.selectWeeklyReport(weekly_report_id);
 		List<WeeklyPlanDTO> weeklyPlanDTOList = weeklyPlanDAO.selectWeeklyPlanList(weekly_report_id);
 		List<PlanDetailDTO> planDetailDTOList = planDetailDAO.selectPlanDetailList(weekly_report_id);
