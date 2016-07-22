@@ -19,11 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.PlanDetailDTO;
-import kr.co.bne.dto.WeeklyPlanDTO;
 import kr.co.bne.dto.WeeklyReportDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
 import kr.co.bne.service.WeeklyReportService;
@@ -66,9 +66,28 @@ public class WeeklyController {
 	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request) throws Exception {
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
 		EmployeeDTO eDTO = (EmployeeDTO)request.getSession().getAttribute("user");
+
+		if(eDTO == null) {
+			mv.setViewName("main");
+			return mv;
+		}
+		
 		List<Integer> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
 		int lastWeeklyReportId = reportId_list.get(reportId_list.size()-1);
-		WeeklyReportDetailDTO weeklyReportDetail = weeklyReportService.selectWeeklyReportDetail(lastWeeklyReportId);	
+		WeeklyReportDetailDTO result = weeklyReportService.selectWeeklyReportDetail(lastWeeklyReportId);	
+		
+		JsonObject weeklyReportDetail = new JsonObject();
+		Gson gson = new Gson();
+		
+		
+//		weeklyReportDetail.put("weeklyReportName", gson.toJson(result.getWeeklyReportName()));
+//		weeklyReportDetail.put("weeklyPlanDTOList", gson.toJson(result.getWeeklyPlanDTOList()));
+//		weeklyReportDetail.put("planDetailDTOList", gson.toJson(result.getPlanDetailDTOList()));
+		
+		
+//		String weeklyReportName = gson.toJson(result.getWeeklyReportName());
+//		JsonObject el = (new JsonParser()).parse(weeklyReportName).getAsJsonObject();
+		
 		
 		System.out.print("ID 목록 : ");
 		for (Integer integer : reportId_list) {
@@ -77,20 +96,19 @@ public class WeeklyController {
 		System.out.println();
 		System.out.println("주간계획 : " + weeklyReportDetail.toString());
 		
-		mv.addObject("weeklyReportDetail", weeklyReportDetail);
+		
+		mv.addObject("weeklyReportDetail", weeklyReportDetail.toString());
 		mv.addObject("reportIdList", reportId_list);
 		return mv;
 	}
 	
 	@RequestMapping("/weeklywriteimpl")
 	public String WeeklyWriteImpl(Model model, HttpServletRequest request) throws Exception{
-		
 		WeeklyReportDTO dto = new WeeklyReportDTO();
-
 		return "main";
 	}
 	@RequestMapping("/write")
-	public String WeeklyWrite(Model model,HttpServletResponse response, @RequestParam("weeklyPlan")String weeklyPlan ) throws Exception{
+	public String WeeklyWrite(Model model,HttpServletResponse response, @RequestParam("weeklyPlan") String weeklyPlan ) throws Exception{
 		JsonParser parser= new JsonParser();
 		JsonArray json=(JsonArray)parser.parse(weeklyPlan);
 /*		System.out.println(weeklyPlan);
@@ -103,7 +121,7 @@ public class WeeklyController {
 	        list.add(dto);
 	        
 	        //임시 테스트값 삽입
-	        dto.setWeekly_report_id(1);
+	        dto.setWeekly_report_id(4);
 	        
 	        
 	        System.out.println(dto);

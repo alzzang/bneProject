@@ -3,26 +3,24 @@ package kr.co.bne.dto;
 import java.util.List;
 
 public class WeeklyReportDetailDTO {
-
-	private WeeklyReportDTO weeklyReportDTO;
+	private WeeklyReportName weeklyReportName;
 	private List<WeeklyPlanDTO> weeklyPlanDTOList;
 	private List<PlanDetailDTO> planDetailDTOList;
-	
 	public WeeklyReportDetailDTO() {
 		super();
 	}
-	public WeeklyReportDetailDTO(WeeklyReportDTO weeklyReportDTO, List<WeeklyPlanDTO> weeklyPlanDTOList,
+	public WeeklyReportDetailDTO(WeeklyReportName weeklyReportName, List<WeeklyPlanDTO> weeklyPlanDTOList,
 			List<PlanDetailDTO> planDetailDTOList) {
 		super();
-		this.weeklyReportDTO = weeklyReportDTO;
+		this.weeklyReportName = weeklyReportName;
 		this.weeklyPlanDTOList = weeklyPlanDTOList;
 		this.planDetailDTOList = planDetailDTOList;
 	}
-	public WeeklyReportDTO getWeeklyReportDTO() {
-		return weeklyReportDTO;
+	public WeeklyReportName getWeeklyReportName() {
+		return weeklyReportName;
 	}
-	public void setWeeklyReportDTO(WeeklyReportDTO weeklyReportDTO) {
-		this.weeklyReportDTO = weeklyReportDTO;
+	public void setWeeklyReportName(WeeklyReportName weeklyReportName) {
+		this.weeklyReportName = weeklyReportName;
 	}
 	public List<WeeklyPlanDTO> getWeeklyPlanDTOList() {
 		return weeklyPlanDTOList;
@@ -36,11 +34,10 @@ public class WeeklyReportDetailDTO {
 	public void setPlanDetailDTOList(List<PlanDetailDTO> planDetailDTOList) {
 		this.planDetailDTOList = planDetailDTOList;
 	}
-
 	@Override
 	public String toString() {
-		return "WeeklyReportDetailDTO [weeklyReportDTO=" + weeklyReportDTO + ", weeklyPlanDTOList=" + weeklyPlanDTOList
-				+ ", planDetailDTOList=" + planDetailDTOList + "]";
+		return "WeeklyReportDetailDTO [weeklyReportName=" + weeklyReportName + ", weeklyPlanDTOList="
+				+ weeklyPlanDTOList + ", planDetailDTOList=" + planDetailDTOList + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -48,7 +45,7 @@ public class WeeklyReportDetailDTO {
 		int result = 1;
 		result = prime * result + ((planDetailDTOList == null) ? 0 : planDetailDTOList.hashCode());
 		result = prime * result + ((weeklyPlanDTOList == null) ? 0 : weeklyPlanDTOList.hashCode());
-		result = prime * result + ((weeklyReportDTO == null) ? 0 : weeklyReportDTO.hashCode());
+		result = prime * result + ((weeklyReportName == null) ? 0 : weeklyReportName.hashCode());
 		return result;
 	}
 	@Override
@@ -70,11 +67,14 @@ public class WeeklyReportDetailDTO {
 				return false;
 		} else if (!weeklyPlanDTOList.equals(other.weeklyPlanDTOList))
 			return false;
-		if (weeklyReportDTO == null) {
-			if (other.weeklyReportDTO != null)
+		if (weeklyReportName == null) {
+			if (other.weeklyReportName != null)
 				return false;
-		} else if (!weeklyReportDTO.equals(other.weeklyReportDTO))
+		} else if (!weeklyReportName.equals(other.weeklyReportName))
 			return false;
 		return true;
 	}
+
+	
+	
 }

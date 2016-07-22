@@ -1,15 +1,9 @@
+<%@page import="kr.co.bne.dto.WeeklyReportDetailDTO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<%-- <c:set var="employeeIdList" scope = "request" value= "${reqeustScope.employeeIdList}" ></c:set> --%>
-<%
-/* 	List<Integer> reportIdList = (List<Integer>)request.getAttribute("reportIdList");
-	int reportSize = reportIdList.size(); 
-	int curIdx = reportIdList.size()-1; */
-%>
 
 
 <div class="content-frame">
@@ -33,28 +27,27 @@
 			<div class="page-title">
 				<h5>개인 정보</h5>
 			</div>
-			부서 ID : <input type="text" name="department_id" value="${user.department_id}" disabled><br>
-			로그인 ID : <input type="text" name="employee_id" value="${user.employee_id}" disabled>
+			주간계획 ID : <span id="weekly_reportI_d"></span><br>
 			
 			<table class="table">
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td><input type="text" value="${user.department_name}" disabled></td>
+						<td><span id="department_name"></span></td>
 					</tr>
 
 					<tr>
 						<th>이름</th>
-						<td><input type="text" value="${user.employee_name}" disabled></td>
+						<td><span id="employee_name"></span></td>
 					</tr>
 
 					<tr>
 						<th>작성일</th>
-						<td>${currentDate}</td>
+						<td><span id="reg_date"></span></td>
 					</tr>
 					<tr>
 						<th>제목</th>
-						<td><input type="text"   placeholder="제목을 입력해주세요" readonly></td>
+						<td><span id="title"></span></td>
 					</tr>
 				</thead>
 			</table>
@@ -65,18 +58,21 @@
 				<thead>
 					<tr>
 						<th>목표</th>
-						<td><input type="text" name="salesGoal" value="${salesGoal}" disabled></td>
+						<td><span id="sales_goal"></span></td>
 					</tr>
 					<tr>
 						<th>매출액</th>
-						<td><input type="text" name="sales" value="${monthlySales}" disabled></td>
+						<td><span id="sales"></span></td>
+					</tr>
+					<tr>
+						<th>달성률</th>
+						<td></td>
 					</tr>
 				</thead>
 			</table>
 
 		</div>
 		
-		<input type = "hidden" name="nowIdx" value=${employeeIdList}/>
 	</div>
 	<!-- END CONTENT FRAME LEFT -->
 
@@ -97,19 +93,27 @@
 	<!-- END CONTENT FRAME BODY -->
 
 </div>
-
 <script>
+	var inputReportData = function(weeklyDetail){
+		var s =JSON.parse(weeklyDetail.weeklyReportName);
+		alert(s);
+	};
+
 	window.onload = function(){
+		
+		var weeklyDetail = JSON.parse('${weeklyReportDetail}');
+		inputReportData(weeklyDetail);
+		
+		
 		var reportDetail = {};
-		reportDetail["weeklyReport_id"] = ${weeklyReportDetail.weeklyReportDTO.getWeekly_report_id() };
 		$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
 		$('#calendarWeek').fullCalendar('getView').calendar.options.selectable = false;
 		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
 		$('.fc-center').append(o);
-		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>'
+		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>';
 		$('.fc-center').prepend(o);
 		
-		$('#calendarWeek').fullCalendar('renderEvent',{
+	/* 	$('#calendarWeek').fullCalendar('renderEvent',{
 		    "title":"dd~",
 			    "allDay":"",
 			    //"id":"15",
@@ -131,8 +135,9 @@
 			    //"id":"15",
 			    "start":"2016-07-22 09:30:00",
 			    "end":"2016-07-22 17:30:00"
-	    },true);
-	    
+	    },true); */
+	
+	
 	    $('.fc-next-button').on('click',function(){
 	    	$('#calendarWeek').fullCalendar('removeEvents');
 	    	$('#calendarWeek').fullCalendar('next');
@@ -152,10 +157,11 @@
 				}
 	    	})
 	    	
-	    })
+	    });
 	   	$('.fc-prev-button').on('click',function(){
 	   		$('#calendarWeek').fullCalendar('removeEvents');
 	    	$('#calendarWeek').fullCalendar('prev');
-	    })
+	    });
 	}
+
 </script>

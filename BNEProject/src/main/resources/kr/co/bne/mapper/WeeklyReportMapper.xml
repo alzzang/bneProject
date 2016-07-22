@@ -73,9 +73,11 @@
 	</select> -->
 	
 	
-	<select id="selectWeeklyReport" parameterType="Integer" resultType="WeeklyReport">
-		SELECT	*
-		FROM	WEEKLY_REPORT
-		WHERE	WEEKLY_REPORT_ID = #{value}
+	<select id="selectWeeklyReport" parameterType="Integer" resultType="WeeklyReportName">
+		SELECT WEEKLY_REPORT_ID, E.EMPLOYEE_NAME, DEPARTMENT_NAME, TITLE, REG_DATE, SALES, SALES_GOAL
+		FROM	WEEKLY_REPORT WR, DEPARTMENT D, EMPLOYEE E
+		WHERE	WR.EMPLOYEE_ID = E.EMPLOYEE_ID AND
+		            E.DEPARTMENT_ID = D.DEPARTMENT_ID AND
+		            WR.WEEKLY_REPORT_ID = ${value}
 	</select>
 </mapper>

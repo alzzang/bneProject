@@ -14,6 +14,7 @@ import kr.co.bne.dto.PlanDetailDTO;
 import kr.co.bne.dto.WeeklyPlanDTO;
 import kr.co.bne.dto.WeeklyReportDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
+import kr.co.bne.dto.WeeklyReportName;
 
 @Service
 public class WeeklyReportServiceImpl implements WeeklyReportService{
@@ -75,11 +76,11 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 	
 	@Override
 	public WeeklyReportDetailDTO selectWeeklyReportDetail(int weekly_report_id) throws Exception {
-		WeeklyReportDTO weeklyReportDTO = weeklyReportDAO.selectWeeklyReport(weekly_report_id);
+		WeeklyReportName weeklyReportDeptName = weeklyReportDAO.selectWeeklyReport(weekly_report_id);
 		List<WeeklyPlanDTO> weeklyPlanDTOList = weeklyPlanDAO.selectWeeklyPlanList(weekly_report_id);
 		List<PlanDetailDTO> planDetailDTOList = planDetailDAO.selectPlanDetailList(weekly_report_id);
 		
-		WeeklyReportDetailDTO result = new WeeklyReportDetailDTO(weeklyReportDTO, weeklyPlanDTOList, planDetailDTOList);
+		WeeklyReportDetailDTO result = new WeeklyReportDetailDTO(weeklyReportDeptName, weeklyPlanDTOList, planDetailDTOList);
 		
 		return result;
 	}

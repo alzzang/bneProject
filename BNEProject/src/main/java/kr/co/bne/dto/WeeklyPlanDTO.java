@@ -6,6 +6,7 @@ public class WeeklyPlanDTO {
 	private String content;
 	private int sales;
 	private String plan_date;
+	
 	public WeeklyPlanDTO() {
 		super();
 		// TODO Auto-generated constructor stub

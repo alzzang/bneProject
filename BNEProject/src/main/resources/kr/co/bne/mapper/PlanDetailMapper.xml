@@ -11,7 +11,7 @@
 	
 	<!-- 주간 계획 주에서 해당되는 계획 세부 일정 -->
 	<select id="selectPlanDetailList" parameterType="Integer" resultType="PlanDetail">
-			SELECT  *
+			SELECT  PLAN_DETAIL_ID, WEEKLY_REPORT_ID, CONTENT, TO_CHAR(START_TIME,'RRRR-MM-DD HH24:MI:SS') AS START_TIME, TO_CHAR(END_TIME,'RRRR-MM-DD HH24:MI:SS') AS END_TIME
 			FROM    PLAN_DETAIL
 			WHERE  WEEKLY_REPORT_ID = #{value}
 	</select>
