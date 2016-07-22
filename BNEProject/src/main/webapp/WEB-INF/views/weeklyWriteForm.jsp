@@ -168,11 +168,19 @@ $('#aaaa').on('click',function(){
 	
 	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
 	var report_title = $('#weeklyReportId')[0].value;
-	var employee_name = ${user.employee_name};
-	var department_name = ${user.department_name};
-	var salesGoal = ${salesGoal};
-	var montlySales = ${monthlySales};
+	var employee_name = "${user.employee_name}";
+	var department_name = "${user.department_name}";
+	var salesGoal = 0;/* ${salesGoal}; */
+	var montlySales = 0;/* ${monthlySales}; */
 	
+	var weeklyReport = {
+			weekly_report_id : report_id,
+			title : report_title,
+			saleGoal : salesGoal,
+			sales : montlySales,
+			employee_name : employee_name,
+			department_name : department_name
+	}
 	
 	var s = $('#calendarWeek').fullCalendar('clientEvents');
 	var allPlan = [];
@@ -192,14 +200,14 @@ $('#aaaa').on('click',function(){
 	}
 
 	var jPlan = JSON.stringify(allPlan);
-	
+	var jPlan2 = JSON.stringify(weeklyReport);
 	$('.fc-row .fc-widget-header');
 	
 	$.ajax({
 		type : "POST",
 		url : "/weeklyReport/write",
 		data : {
-			reportId : report_id,
+			report : jPlan2,
 			weeklyPlan : jPlan
 		},
 
@@ -207,7 +215,7 @@ $('#aaaa').on('click',function(){
 			//alert("성공~");
 		},
 		error : function(){
-			//alert("실패~");
+			alert("실패~");
 		}
 	})
 	

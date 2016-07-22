@@ -12,7 +12,6 @@ import kr.co.bne.dao.WeeklyPlanDAO;
 import kr.co.bne.dao.WeeklyReportDAO;
 import kr.co.bne.dto.PlanDetailDTO;
 import kr.co.bne.dto.WeeklyPlanDTO;
-import kr.co.bne.dto.WeeklyReportDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
 import kr.co.bne.dto.WeeklyReportName;
 
@@ -27,7 +26,7 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 	PlanDetailDAO planDetailDAO;
 
 	@Override
-	public int writeWeeklyReport(WeeklyReportDTO wrDTO, List<WeeklyPlanDTO> wpDTOList, List<PlanDetailDTO> pdDTOList) throws Exception  {
+	public int writeWeeklyReport(WeeklyReportName wrDTO, List<WeeklyPlanDTO> wpDTOList, List<PlanDetailDTO> pdDTOList) throws Exception  {
 		int result = 0;
 		int planDetailResult = 0;
 		// 1. WeeklyReportDAO insert

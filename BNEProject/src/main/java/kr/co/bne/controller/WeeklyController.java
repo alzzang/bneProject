@@ -27,6 +27,7 @@ import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.PlanDetailDTO;
 import kr.co.bne.dto.WeeklyReportDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
+import kr.co.bne.dto.WeeklyReportName;
 import kr.co.bne.service.UserService;
 import kr.co.bne.service.WeeklyReportService;
 
@@ -76,8 +77,8 @@ public class WeeklyController {
 			mv.setViewName("main");
 			return mv;
 		}
-		List<Integer> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
-		int lastWeeklyReportId = reportId_list.get(reportId_list.size()-1);
+		List<String> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
+		String lastWeeklyReportId = reportId_list.get(reportId_list.size()-1);
 		WeeklyReportDetailDTO weeklyReportDetail = weeklyReportService.selectWeeklyReportDetail(lastWeeklyReportId);	
 		
 		System.out.println("주간계획 : " + weeklyReportDetail.toString());
@@ -95,12 +96,17 @@ public class WeeklyController {
 		return "main";
 	}
 	@RequestMapping("/write")
-	public String WeeklyWrite(Model model,HttpServletResponse response, @RequestParam("weeklyPlan")String weeklyPlan, @RequestParam("reportId")String reportId ) throws Exception{
+	public String WeeklyWrite(Model model,HttpServletResponse response, @RequestParam("report")String weeklyReport,@RequestParam("weeklyPlan")String weeklyPlan  ) throws Exception{
 		JsonParser parser= new JsonParser();
 		JsonArray json=(JsonArray)parser.parse(weeklyPlan);
+		JsonObject jsonWeeklyReport = (JsonObject)parser.parse(weeklyReport);
 /*		System.out.println(weeklyPlan);
 		System.out.println(json);*/
 		List<PlanDetailDTO> list = new ArrayList();
+		WeeklyReportName WeeklyReportNameDto;
+		WeeklyReportNameDto = (new Gson()).fromJson(jsonWeeklyReport, WeeklyReportName.class);
+		
+		
 		
 		for(int i=0;i<json.size();i++){
 			PlanDetailDTO dto;
@@ -108,21 +114,21 @@ public class WeeklyController {
 	        list.add(dto);
 	        
 	        //임시 테스트값 삽입
-	        dto.setWeekly_report_id(1);
+	        dto.setWeekly_report_id("1");
 	        
 	        
 	        System.out.println(dto);
 	      }
 		
 		// 작성 부분		
-		int result = weeklyReportService.writeWeeklyReport(null, null, list);
+		int result = weeklyReportService.writeWeeklyReport(WeeklyReportNameDto, null, list);
 		
 		
 		//System.out.println(json.get(0).);
 		return "redirect:/weeklyReport/writeForm";
 	}
 	@RequestMapping("/getPlan")
-	public @ResponseBody WeeklyReportDetailDTO getPlan(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam("ReportId")int reportId )  throws Exception{
+	public @ResponseBody WeeklyReportDetailDTO getPlan(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam("ReportId")String reportId )  throws Exception{
 		System.out.println(reportId);
 		WeeklyReportDetailDTO weeklyReportDetail;
 		weeklyReportDetail = weeklyReportService.selectWeeklyReportDetail(reportId);
