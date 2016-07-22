@@ -628,6 +628,7 @@ $(function() {
                     allDaySlot: false,
                     contentHeight : 378,
                     businessHours:true,
+                    weekNumbers:true,
                     select: function(start, end, allDay) {
                         var title = prompt('Event Title:');
                         if(!end.isAfter(start,'day')){

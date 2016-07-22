@@ -67,7 +67,7 @@
 			<li class="xn-openable"><a href="#"><!-- weeklyReport/write --><span
 					class="fa fa-file-text-o"></span> <span class="xn-text">주간 계획</span></a>
 				<ul>
-					<li><a id="weeklyDetail" href="/weeklyReport/detail">주간계획</a></li>			
+					<li><a id="weeklyDetail" href="/weeklyReport/detail/${user.getEmployee_id() }">주간계획</a></li>			
 					<li><a href="/weeklyReport/writeForm">주간계획작성</a></li>	
 				</ul>
 				

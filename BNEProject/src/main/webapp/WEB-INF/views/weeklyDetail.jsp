@@ -100,8 +100,10 @@
 
 <script>
 	window.onload = function(){
-		var reportDetail = {};
-		reportDetail["weeklyReport_id"] = ${weeklyReportDetail.weeklyReportDTO.getWeekly_report_id() };
+		var reportIdList = ${reportIdList};
+		var curIdx = reportIdList.length-1;
+		/* var reportDetail = ${weeklyReportDetail};
+		reportDetail["weeklyReport_id"] = ${weeklyReportDetail.weeklyReportDTO.getWeekly_report_id() }; */
 		$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
 		$('#calendarWeek').fullCalendar('getView').calendar.options.selectable = false;
 		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
@@ -136,26 +138,43 @@
 	    $('.fc-next-button').on('click',function(){
 	    	$('#calendarWeek').fullCalendar('removeEvents');
 	    	$('#calendarWeek').fullCalendar('next');
-	    	
-	    	$.ajax({
-	    		type:"POST",
-	    		url : "/weeklyReport/getPlan",
-	    		data:{
-	    			ReportId : 10
-	    		},
-	    		success :function(data){
-/* 	    			alert("성공~");
- */	    			data;
-	    		},
-				error : function(){
-/* 					alert("실패~"); */
-				}
-	    	})
-	    	
-	    })
+	    	curIdx++;
+	    	if(reportIdList.length-1>=curIdx){
+		    	$.ajax({
+		    		type:"POST",
+		    		url : "/weeklyReport/getPlan",
+		    		data:{
+		    			ReportId : reportIdList[curIdx]
+		    		},
+		    		success :function(data){
+		    			alert("성공");
+		    			addSegment(data.planDetailDTOList);
+		    		},
+					error : function(){
+						alert("실패");
+					}
+		    	})
+	    	}
+	    });
 	   	$('.fc-prev-button').on('click',function(){
 	   		$('#calendarWeek').fullCalendar('removeEvents');
 	    	$('#calendarWeek').fullCalendar('prev');
-	    })
+	    	curIdx--;
+	    	if(0<=curIdx){
+	    		
+	    	}
+	    });
+	   	var addSegment = function(planDetailList){
+	   		for(var i= 0; i<planDetailList.length; i++){
+			    $('#calendarWeek').fullCalendar('renderEvent',{
+				    "title":planDetailList[i].content,
+					    "allDay":"",
+					    //"id":"15",
+					    "start":planDetailList[i].start_time,
+					    "end":planDetailList[i].end_time
+			    },true);
+	   		}
+
+	   	};
 	}
 </script>

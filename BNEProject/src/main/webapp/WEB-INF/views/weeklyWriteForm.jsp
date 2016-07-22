@@ -104,7 +104,7 @@ window.onload = function(){
 					</tr>
 					<tr>
 						<th>제목</th>
-						<td><input type="text"  placeholder="제목을 입력해주세요"></td>
+						<td><input type="text" id= "weeklyReportId" placeholder="제목을 입력해주세요"></td>
 					</tr>
 				</thead>
 			</table>
@@ -146,3 +146,85 @@ window.onload = function(){
 	<!-- END CONTENT FRAME BODY -->
 
 </div>
+
+
+<script>
+window.onload = function(){
+	
+
+$('#aaaa').on('click',function(){
+	//insertDB();
+	//$('#calendarWeek').fullCalendar('next');
+/*		var s = $('#calendarWeek').fullCalendar('clientEvents');
+	alert(s[0]);*/
+	//editable 속성 false;
+	//$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
+	
+	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+	
+	var date = $('#calendarWeek').fullCalendar('getDate');
+	var year = date._d.getFullYear();
+	
+	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
+	var report_title = $('#weeklyReportId')[0].value;
+	var employee_name = ${user.employee_name};
+	var department_name = ${user.department_name};
+	var salesGoal = ${salesGoal};
+	var montlySales = ${monthlySales};
+	
+	
+	var s = $('#calendarWeek').fullCalendar('clientEvents');
+	var allPlan = [];
+	for(var i = 0; i<s.length; i++){
+		var plan;
+		
+		var title = s[i].title;
+		var startTime = s[i].start._i;
+		var endTime = s[i].end._i;
+		plan={
+				content:title,
+				start_time:startTime,
+				end_time:endTime
+		}
+		
+		allPlan.push(plan);
+	}
+
+	var jPlan = JSON.stringify(allPlan);
+	
+	$('.fc-row .fc-widget-header');
+	
+	$.ajax({
+		type : "POST",
+		url : "/weeklyReport/write",
+		data : {
+			reportId : report_id,
+			weeklyPlan : jPlan
+		},
+
+		success : function(){
+			//alert("성공~");
+		},
+		error : function(){
+			//alert("실패~");
+		}
+	})
+	
+    //$('div#trash>a').remove();
+/*    	$.ajax({
+		type : "POST",
+		url : "/weeklyReport/weeklyView",
+		data : {
+			report_id: $('#report_id').val()
+		},
+		success : function(data) {
+//			$('#approvalDiv').remove();
+			alert('ㅇㅋ.');
+		}
+	})*/
+	
+});
+}
+
+</script>
