@@ -4,6 +4,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style>
+.panel-body input{
+	background-color: transparent;
+	border:0px solid black;
+}
+
+.salesInput {
+	width:100%;
+	background-color: transparent;
+	border:0px solid black;
+	text-align: center;
+}
+</style>
 
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -65,7 +78,7 @@
 					</tr>
 					<tr>
 						<th>달성률</th>
-						<td></td>
+						<td><span id="achievement_rate"></span></td>
 					</tr>
 				</thead>
 			</table>
@@ -98,14 +111,17 @@
 		var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
 		var planDetailDTOList = reportData.planDetailDTOList;
 		
-		
 		$('#weekly_report_id').html(weeklyReportDTO.weekly_report_id);
 		$('#title').html(weeklyReportDTO.title);
 		$('#reg_date').html(weeklyReportDTO.reg_date);
 		$('#employee_name').html('${employee_name}');
 		$('#department_name').html('${department_name}');
-		$('#saleGoal').html(weeklyReportDTO.saleGoal);
+		$('#sales_goal').html(weeklyReportDTO.sales_goal);
 		$('#sales').html(weeklyReportDTO.sales);
+		var achievement_rate = Number(weeklyReportDTO.sales) / Number(weeklyReportDTO.sales_goal) * 100;
+		
+		$('#achievement_rate').html(achievement_rate + '%');
+		
 		
 		for(var i=0; i<planDetailDTOList.length; i++){
 			$('#calendarWeek').fullCalendar('renderEvent',{
@@ -117,12 +133,11 @@
 		    },true);
 		}
 
-		for(var i=0; i<4; i++){
-			$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i].dataset.date);
+		for(var i=0; i<weeklyPlanDTOList.length; i++){
+			$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
 		}
 		
 	}
-
 
 
 	window.onload = function(){
@@ -148,8 +163,8 @@
 		$('#weeklyTableHeader>tbody').html(tbodyTag);
 		
 		var s = $('#weeklyTableHeader>thead>tr>th');
-		for(var i=1; i<6; i++){
-			$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i].dataset.date);
+		for(var i=2; i<7; i++){
+			$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
 		}
 	
 	    $('.fc-next-button').on('click',function(){
@@ -177,6 +192,7 @@
 	    	$('#calendarWeek').fullCalendar('prev');
 	    });
 
+	   	
 		var reportData = JSON.parse('${weeklyReportDetail}');
 		inputReportData(reportData);
 

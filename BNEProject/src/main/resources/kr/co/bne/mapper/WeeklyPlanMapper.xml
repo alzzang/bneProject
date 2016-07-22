@@ -5,8 +5,9 @@
 <mapper namespace="kr.co.bne.mapper.WeeklyPlan">
 	<!-- 해당 주의 월~금 매출액 -->
 	<select id="selectWeeklyPlanList" parameterType="String" resultType="WeeklyPlan">
-		SELECT *
+		SELECT 	WEEKLY_PLAN_ID, WEEKLY_REPORT_ID, SALES, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
 		FROM   WEEKLY_PLAN
 		WHERE WEEKLY_REPORT_ID = #{value}
+		ORDER BY REG_DATE
 	</select>
 </mapper>
