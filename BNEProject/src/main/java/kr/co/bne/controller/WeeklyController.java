@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import kr.co.bne.dto.EmployeeDTO;
@@ -70,15 +71,15 @@ public class WeeklyController {
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
 		/*EmployeeDTO eDTO = (EmployeeDTO)request.getSession().getAttribute("user");*/
 		EmployeeDTO eDTO = userService.selectEmployee(employeeId);
+		
+		if(eDTO == null) {
+			mv.setViewName("main");
+			return mv;
+		}
 		List<Integer> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
 		int lastWeeklyReportId = reportId_list.get(reportId_list.size()-1);
 		WeeklyReportDetailDTO weeklyReportDetail = weeklyReportService.selectWeeklyReportDetail(lastWeeklyReportId);	
 		
-		System.out.print("ID 목록 : ");
-		for (Integer integer : reportId_list) {
-			System.out.print(integer + " ");
-		}
-		System.out.println();
 		System.out.println("주간계획 : " + weeklyReportDetail.toString());
 		
 		mv.addObject("weeklyReportDetail", weeklyReportDetail);

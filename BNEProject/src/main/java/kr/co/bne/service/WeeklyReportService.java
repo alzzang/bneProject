@@ -16,8 +16,8 @@ public interface WeeklyReportService {
 	public int writeWeeklyReport(WeeklyReportDTO wrDTO, List<WeeklyPlanDTO> wpDTOList, List<PlanDetailDTO> pdDTOList) throws Exception ;
 	
 	//음뭘까??
-	public List<Integer> selectAllReportId(String employee_id) throws Exception;
-	public WeeklyReportDetailDTO selectWeeklyReportDetail(int weekly_report_id) throws Exception;
+	public List<String> selectAllReportId(String employee_id) throws Exception;
+	public WeeklyReportDetailDTO selectWeeklyReportDetail(String weekly_report_id) throws Exception;
 	
 	// 날짜 자동으로 불러오는건데 일단 안씀
 	public HashMap<String, String> getDayList(String employee_id) throws Exception;

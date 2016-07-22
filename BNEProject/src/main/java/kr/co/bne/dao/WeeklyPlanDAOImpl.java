@@ -16,7 +16,7 @@ public class WeeklyPlanDAOImpl implements WeeklyPlanDAO {
 	private String namespace = "kr.co.bne.mapper.WeeklyPlan" + ".";
 	
 	@Override
-	public List<WeeklyPlanDTO> selectWeeklyPlanList(int weekly_report_id) throws Exception {
+	public List<WeeklyPlanDTO> selectWeeklyPlanList(String weekly_report_id) throws Exception {
 		List<WeeklyPlanDTO> resultList = sqlSession.selectList(namespace + "selectWeeklyPlanList", weekly_report_id);
 		return resultList;
 	}

@@ -615,7 +615,7 @@ $(function() {
                     minTime : "09:00:00",
                     maxTime : "18:00:00",
                     header: {
-                        left: '',
+                        left: 'prev, next',
                         center: 'title',
                         right: ''
                     },
@@ -626,6 +626,7 @@ $(function() {
                     selectHelper: true,
                     weekends : false,
                     allDaySlot: false,
+                    weekNumbers: true,
                     contentHeight : 378,
                     businessHours:true,
                     weekNumbers:true,

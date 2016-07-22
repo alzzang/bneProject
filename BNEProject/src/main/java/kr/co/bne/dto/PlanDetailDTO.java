@@ -1,21 +1,34 @@
 package kr.co.bne.dto;
 
 public class PlanDetailDTO {
-	int plan_detail_id;
-	int weekly_report_id;
-	String content;
-	String start_time;
-	String end_time;
+	private int plan_detail_id;
+	private String weekly_report_id;
+	private String content;
+	private String start_time;
+	private String end_time;
+	public PlanDetailDTO(int plan_detail_id, String weekly_report_id, String content, String start_time,
+			String end_time) {
+		super();
+		this.plan_detail_id = plan_detail_id;
+		this.weekly_report_id = weekly_report_id;
+		this.content = content;
+		this.start_time = start_time;
+		this.end_time = end_time;
+	}
+	public PlanDetailDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public int getPlan_detail_id() {
 		return plan_detail_id;
 	}
 	public void setPlan_detail_id(int plan_detail_id) {
 		this.plan_detail_id = plan_detail_id;
 	}
-	public int getWeekly_report_id() {
+	public String getWeekly_report_id() {
 		return weekly_report_id;
 	}
-	public void setWeekly_report_id(int weekly_report_id) {
+	public void setWeekly_report_id(String weekly_report_id) {
 		this.weekly_report_id = weekly_report_id;
 	}
 	public String getContent() {
@@ -49,7 +62,7 @@ public class PlanDetailDTO {
 		result = prime * result + ((end_time == null) ? 0 : end_time.hashCode());
 		result = prime * result + plan_detail_id;
 		result = prime * result + ((start_time == null) ? 0 : start_time.hashCode());
-		result = prime * result + weekly_report_id;
+		result = prime * result + ((weekly_report_id == null) ? 0 : weekly_report_id.hashCode());
 		return result;
 	}
 	@Override
@@ -78,9 +91,14 @@ public class PlanDetailDTO {
 				return false;
 		} else if (!start_time.equals(other.start_time))
 			return false;
-		if (weekly_report_id != other.weekly_report_id)
+		if (weekly_report_id == null) {
+			if (other.weekly_report_id != null)
+				return false;
+		} else if (!weekly_report_id.equals(other.weekly_report_id))
 			return false;
 		return true;
 	}
+	
+	
 
 }

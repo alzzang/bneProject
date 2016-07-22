@@ -1,3 +1,4 @@
+<%@page import="kr.co.bne.dto.WeeklyReportDetailDTO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -71,12 +72,14 @@
 						<th>매출액</th>
 						<td><input type="text" name="sales" value="${monthlySales}" disabled></td>
 					</tr>
+					<tr>
+						<th>달성률</th>
+						<td></td>
+					</tr>
 				</thead>
 			</table>
 
 		</div>
-		
-		<input type = "hidden" name="nowIdx" value=${employeeIdList}/>
 	</div>
 	<!-- END CONTENT FRAME LEFT -->
 
@@ -100,10 +103,11 @@
 
 <script>
 	window.onload = function(){
-		var reportIdList = ${reportIdList};
-		var curIdx = reportIdList.length-1;
-		/* var reportDetail = ${weeklyReportDetail};
-		reportDetail["weeklyReport_id"] = ${weeklyReportDetail.weeklyReportDTO.getWeekly_report_id() }; */
+		var weeklyDetail = JSON.parse('${weeklyReportDetail}');
+		inputReportData(weeklyDetail);
+		
+		
+		var reportDetail = {};
 		$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
 		$('#calendarWeek').fullCalendar('getView').calendar.options.selectable = false;
 		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';

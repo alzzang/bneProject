@@ -6,5 +6,5 @@ import kr.co.bne.dto.WeeklyPlanDTO;
 
 public interface WeeklyPlanDAO {
 
-	public List<WeeklyPlanDTO> selectWeeklyPlanList(int weekly_report_id) throws Exception;
+	public List<WeeklyPlanDTO> selectWeeklyPlanList(String weekly_report_id) throws Exception;
 }
