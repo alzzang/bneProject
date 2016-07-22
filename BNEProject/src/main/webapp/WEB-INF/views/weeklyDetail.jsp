@@ -127,7 +127,6 @@
 			$('#calendarWeek').fullCalendar('renderEvent',{
 			   		"title":planDetailDTOList[i].content,
 				    "allDay":"",
-				    //"id":"15",
 				    "start":planDetailDTOList[i].start_time,
 				    "end":planDetailDTOList[i].end_time
 		    },true);
@@ -150,22 +149,6 @@
 		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>';
 		$('.fc-center').prepend(o);
 		
-		var tbodyTag
-		= 	'<tr>' + 
-				'<td class="fc-axis">매출</td>' +
-				'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
-				'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
-				'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
-				'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
-				'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
-			'</tr>';
-			
-		$('#weeklyTableHeader>tbody').html(tbodyTag);
-		
-		var s = $('#weeklyTableHeader>thead>tr>th');
-		for(var i=2; i<7; i++){
-			$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
-		}
 	
 	    $('.fc-next-button').on('click',function(){
 	    	$('#calendarWeek').fullCalendar('removeEvents');
