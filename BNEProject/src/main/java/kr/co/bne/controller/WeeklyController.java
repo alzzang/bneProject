@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -42,14 +43,19 @@ public class WeeklyController {
 		JsonObject weeklyReportDetail = new JsonObject();
 		Gson gson = new Gson();
 		JsonParser parser = new JsonParser();
+		String employee_id = result.getWeeklyReportDTO().getEmployee_id();
 		
 		JsonObject weeklyReportDTO = parser.parse(gson.toJson(result.getWeeklyReportDTO())).getAsJsonObject();
 		JsonArray weeklyPlanDTOList = parser.parse(gson.toJson(result.getWeeklyPlanDTOList())).getAsJsonArray();
 		JsonArray planDetailDTOList = parser.parse(gson.toJson(result.getPlanDetailDTOList())).getAsJsonArray();
+		JsonElement department_name = parser.parse(userService.selectEmployee(employee_id).getDepartment_name());
+		JsonElement employee_name = parser.parse(userService.selectEmployee(employee_id).getEmployee_name());
 		
 		weeklyReportDetail.add("weeklyReportDTO", weeklyReportDTO);
 		weeklyReportDetail.add("weeklyPlanDTOList", weeklyPlanDTOList);
 		weeklyReportDetail.add("planDetailDTOList", planDetailDTOList);
+		weeklyReportDetail.add("department_name", department_name);
+		weeklyReportDetail.add("employee_name", employee_name);
 		
 		return weeklyReportDetail;
 	}
@@ -101,18 +107,9 @@ public class WeeklyController {
 		
 		JsonObject weeklyReportDetail = parseWeeklyReportDetailDTO(result);
 		
-		String employee_id = result.getWeeklyReportDTO().getEmployee_id();
-		
-		EmployeeDTO employeeDTO = userService.selectEmployee(employee_id);
-		
-		String department_name = employeeDTO.getDepartment_name();
-		String employee_name = employeeDTO.getEmployee_name();
-		
 		System.out.println("주간계획 : " + weeklyReportDetail.toString());
 		
 		mv.addObject("weeklyReportDetail", weeklyReportDetail.toString());
-		mv.addObject("department_name", department_name);
-		mv.addObject("employee_name", employee_name);
 		mv.addObject("reportIdList", reportId_list);
 		
 		return mv;
@@ -138,7 +135,6 @@ public class WeeklyController {
 	        
 	        //임시 테스트값 삽입
 	        //dto.setWeekly_report_id(4);
-	        
 	        
 	        System.out.println(dto);
 	      }

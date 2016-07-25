@@ -3,17 +3,16 @@ package kr.co.bne.dto;
 public class WeeklyPlanDTO {
 	private int weekly_plan_id;
 	private String weekly_report_id;
-	private String content;
 	private int sales;
 	private String reg_date;
 	public WeeklyPlanDTO() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	public WeeklyPlanDTO(int weekly_plan_id, String weekly_report_id, String content, int sales, String reg_date) {
+	public WeeklyPlanDTO(int weekly_plan_id, String weekly_report_id, int sales, String reg_date) {
 		super();
 		this.weekly_plan_id = weekly_plan_id;
 		this.weekly_report_id = weekly_report_id;
-		this.content = content;
 		this.sales = sales;
 		this.reg_date = reg_date;
 	}
@@ -29,12 +28,6 @@ public class WeeklyPlanDTO {
 	public void setWeekly_report_id(String weekly_report_id) {
 		this.weekly_report_id = weekly_report_id;
 	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
 	public int getSales() {
 		return sales;
 	}
@@ -49,14 +42,13 @@ public class WeeklyPlanDTO {
 	}
 	@Override
 	public String toString() {
-		return "WeeklyPlanDTO [weekly_plan_id=" + weekly_plan_id + ", weekly_report_id=" + weekly_report_id
-				+ ", content=" + content + ", sales=" + sales + ", reg_date=" + reg_date + "]";
+		return "WeeklyPlanDTO [weekly_plan_id=" + weekly_plan_id + ", weekly_report_id=" + weekly_report_id + ", sales="
+				+ sales + ", reg_date=" + reg_date + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((reg_date == null) ? 0 : reg_date.hashCode());
 		result = prime * result + sales;
 		result = prime * result + weekly_plan_id;
@@ -72,11 +64,6 @@ public class WeeklyPlanDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		WeeklyPlanDTO other = (WeeklyPlanDTO) obj;
-		if (content == null) {
-			if (other.content != null)
-				return false;
-		} else if (!content.equals(other.content))
-			return false;
 		if (reg_date == null) {
 			if (other.reg_date != null)
 				return false;
@@ -93,6 +80,7 @@ public class WeeklyPlanDTO {
 			return false;
 		return true;
 	}
+
 	
-	
+
 }

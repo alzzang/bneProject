@@ -18,6 +18,19 @@
 }
 </style>
 
+
+     <!-- START DONUT CHART -->
+     <div class="panel panel-default">
+         <div class="panel-heading">
+             <h3 class="panel-title">달성률</h3>                                
+         </div>
+         <div class="panel-body">
+             <div id="weeklyDonut" style="height: 300px;"></div>
+         </div>
+     </div>
+     <!-- END DONUT CHART -->      
+     
+     
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -103,25 +116,27 @@
 			<button id='aaaa' > aa</button>
 	</div>
 	<!-- END CONTENT FRAME BODY -->
-
+  
 </div>
+
 <script>
 	var inputReportData = function(reportData){
 		var weeklyReportDTO = reportData.weeklyReportDTO;
 		var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
 		var planDetailDTOList = reportData.planDetailDTOList;
+		var employee_name = reportData.employee_name;
+		var department_name = reportData.department_name;
 		
 		$('#weekly_report_id').html(weeklyReportDTO.weekly_report_id);
 		$('#title').html(weeklyReportDTO.title);
 		$('#reg_date').html(weeklyReportDTO.reg_date);
-		$('#employee_name').html('${employee_name}');
-		$('#department_name').html('${department_name}');
+		$('#employee_name').html(employee_name);
+		$('#department_name').html(department_name);
 		$('#sales_goal').html(weeklyReportDTO.sales_goal);
 		$('#sales').html(weeklyReportDTO.sales);
 		var achievement_rate = Number(weeklyReportDTO.sales) / Number(weeklyReportDTO.sales_goal) * 100;
 		
 		$('#achievement_rate').html(achievement_rate + '%');
-		
 		
 		for(var i=0; i<planDetailDTOList.length; i++){
 			$('#calendarWeek').fullCalendar('renderEvent',{
@@ -135,6 +150,15 @@
 		for(var i=0; i<weeklyPlanDTOList.length; i++){
 			$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
 		}
+		
+	    Morris.Donut({
+	        element: 'weeklyDonut',
+	        data: [
+	            {label: "Sales", value: weeklyReportDTO.sales},
+	            {label: "Sales 남은거", value: Number(weeklyReportDTO.sales_goal) - Number(weeklyReportDTO.sales)},
+	        ],
+	        colors: ['#95B75D', '#1caf9a']
+	    });
 		
 	}
 
@@ -178,7 +202,15 @@
 	   	
 		var reportData = JSON.parse('${weeklyReportDetail}');
 		inputReportData(reportData);
-
+		
 	}
 
 </script>
+
+<!-- START THIS PAGE PLUGINS-->        
+ <script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
+ <script type="text/javascript" src="/js/plugins/jquery/jquery-ui.min.js"></script>
+ <script type="text/javascript" src="/js/plugins/bootstrap/bootstrap.min.js"></script>        
+<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
+<!-- END THIS PAGE PLUGINS-->       
