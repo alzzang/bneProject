@@ -139,7 +139,7 @@
 		$('#achievement_rate').html(achievement_rate + '%');
 		
 		for(var i=0; i<planDetailDTOList.length; i++){
-			$('#calendarWeek').fullCalendar('renderEvent',{
+			$('#calendar').fullCalendar('renderEvent',{
 			   		"title":planDetailDTOList[i].content,
 				    "allDay":"",
 				    "start":planDetailDTOList[i].start_time,
@@ -162,12 +162,11 @@
 		
 	}
 
-
 	window.onload = function(){
 		
 		var reportDetail = {};
-		$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
-		$('#calendarWeek').fullCalendar('getView').calendar.options.selectable = false;
+		$('#calendar').fullCalendar('getView').calendar.options.editable = false;
+		$('#calendar').fullCalendar('getView').calendar.options.selectable = false;
 		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
 		$('.fc-center').append(o);
 		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>';
@@ -175,14 +174,18 @@
 		
 	
 	    $('.fc-next-button').on('click',function(){
-	    	$('#calendarWeek').fullCalendar('removeEvents');
-	    	$('#calendarWeek').fullCalendar('next');
+	    	$('#calendar').fullCalendar('removeEvents');
+	    	$('#calendar').fullCalendar('next');
+	    	var reportId = $('#weekly_report_id').value;
+			var arr = reportId.split("_");
+			arr[1] = parseInt(arr[1])+1;
+			reportId = arr[0]+"_"+arr[1]+"_"+arr[2];
 	    	
 	    	$.ajax({
 	    		type:"POST",
 	    		url : "/weeklyReport/getPlan",
 	    		data:{
-	    			ReportId : 10
+	    			ReportId : reportId
 	    		},
 	    		success :function(data){
 /* 	    			alert("성공~");
@@ -195,8 +198,28 @@
 	    	
 	    });
 	   	$('.fc-prev-button').on('click',function(){
-	   		$('#calendarWeek').fullCalendar('removeEvents');
-	    	$('#calendarWeek').fullCalendar('prev');
+	   		$('#calendar').fullCalendar('removeEvents');
+	    	$('#calendar').fullCalendar('prev');
+	    	
+	    	var reportId = $('#weekly_report_id').value;
+			var arr = reportId.split("_");
+			arr[1] = parseInt(arr[1])-1;
+			reportId = arr[0]+"_"+arr[1]+"_"+arr[2];
+	    	
+	    	$.ajax({
+	    		type:"POST",
+	    		url : "/weeklyReport/getPlan",
+	    		data:{
+	    			ReportId : reportId
+	    		},
+	    		success :function(data){
+/* 	    			alert("성공~");
+ */	    			data;
+	    		},
+				error : function(){
+/* 					alert("실패~"); */
+				}
+	    	})
 	    });
 
 	   	
