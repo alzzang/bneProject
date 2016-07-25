@@ -10,13 +10,6 @@
 	border:0px solid black;
 }
 
-<%-- <c:set var="employeeIdList" scope = "request" value= "${reqeustScope.employeeIdList}" ></c:set> --%>
-<%
-/* 	List<Integer> reportIdList = (List<Integer>)request.getAttribute("reportIdList");
-	int reportSize = reportIdList.size(); 
-	int curIdx = reportIdList.size()-1; */
-%>
-
 .salesInput {
 	width:100%;
 	background-color: transparent;
@@ -25,6 +18,19 @@
 }
 </style>
 
+
+     <!-- START DONUT CHART -->
+     <div class="panel panel-default">
+         <div class="panel-heading">
+             <h3 class="panel-title">달성률</h3>                                
+         </div>
+         <div class="panel-body">
+             <div id="weeklyDonut" style="height: 300px;"></div>
+         </div>
+     </div>
+     <!-- END DONUT CHART -->      
+     
+     
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -46,8 +52,6 @@
 			<div class="page-title">
 				<h5>개인 정보</h5>
 			</div>
-			부서 ID : <input type="text" name="department_id" value="${user.department_id}" disabled><br>
-			로그인 ID : <input type="text" name="employee_id" value="${user.employee_id}" disabled>
 			주간계획 ID : <span id="weekly_report_id"></span><br>
 			
 			<table class="table">
@@ -93,6 +97,7 @@
 			</table>
 
 		</div>
+		
 	</div>
 	<!-- END CONTENT FRAME LEFT -->
 
@@ -111,27 +116,27 @@
 			<button id='aaaa' > aa</button>
 	</div>
 	<!-- END CONTENT FRAME BODY -->
-
+  
 </div>
 
 <script>
-
 	var inputReportData = function(reportData){
 		var weeklyReportDTO = reportData.weeklyReportDTO;
 		var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
 		var planDetailDTOList = reportData.planDetailDTOList;
+		var employee_name = reportData.employee_name;
+		var department_name = reportData.department_name;
 		
 		$('#weekly_report_id').html(weeklyReportDTO.weekly_report_id);
 		$('#title').html(weeklyReportDTO.title);
 		$('#reg_date').html(weeklyReportDTO.reg_date);
-		$('#employee_name').html('${employee_name}');
-		$('#department_name').html('${department_name}');
+		$('#employee_name').html(employee_name);
+		$('#department_name').html(department_name);
 		$('#sales_goal').html(weeklyReportDTO.sales_goal);
 		$('#sales').html(weeklyReportDTO.sales);
 		var achievement_rate = Number(weeklyReportDTO.sales) / Number(weeklyReportDTO.sales_goal) * 100;
 		
 		$('#achievement_rate').html(achievement_rate + '%');
-		
 		
 		for(var i=0; i<planDetailDTOList.length; i++){
 			$('#calendarWeek').fullCalendar('renderEvent',{
@@ -146,68 +151,66 @@
 			$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
 		}
 		
+	    Morris.Donut({
+	        element: 'weeklyDonut',
+	        data: [
+	            {label: "Sales", value: weeklyReportDTO.sales},
+	            {label: "Sales 남은거", value: Number(weeklyReportDTO.sales_goal) - Number(weeklyReportDTO.sales)},
+	        ],
+	        colors: ['#95B75D', '#1caf9a']
+	    });
+		
 	}
 
 
 	window.onload = function(){
-		var weeklyDetail = JSON.parse('${weeklyReportDetail}');
-		inputReportData(weeklyDetail);
-		
 		
 		var reportDetail = {};
 		$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
 		$('#calendarWeek').fullCalendar('getView').calendar.options.selectable = false;
 		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
 		$('.fc-center').append(o);
-		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>'
+		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>';
 		$('.fc-center').prepend(o);
 		
-		
+	
 	    $('.fc-next-button').on('click',function(){
 	    	$('#calendarWeek').fullCalendar('removeEvents');
 	    	$('#calendarWeek').fullCalendar('next');
-	    	curIdx++;
-	    	if(reportIdList.length-1>=curIdx){
-		    	$.ajax({
-		    		type:"POST",
-		    		url : "/weeklyReport/getPlan",
-		    		data:{
-		    			ReportId : reportIdList[curIdx]
-		    		},
-		    		success :function(data){
-		    			alert("성공");
-		    			addSegment(data.planDetailDTOList);
-		    		},
-					error : function(){
-						alert("실패");
-					}
-		    	})
-	    	}
+	    	
+	    	$.ajax({
+	    		type:"POST",
+	    		url : "/weeklyReport/getPlan",
+	    		data:{
+	    			ReportId : 10
+	    		},
+	    		success :function(data){
+/* 	    			alert("성공~");
+ */	    			data;
+	    		},
+				error : function(){
+/* 					alert("실패~"); */
+				}
+	    	})
+	    	
 	    });
 	   	$('.fc-prev-button').on('click',function(){
 	   		$('#calendarWeek').fullCalendar('removeEvents');
 	    	$('#calendarWeek').fullCalendar('prev');
-	    	curIdx--;
-	    	if(0<=curIdx){
-	    		
-	    	}
 	    });
-	   	var addSegment = function(planDetailList){
-	   		for(var i= 0; i<planDetailList.length; i++){
-			    $('#calendarWeek').fullCalendar('renderEvent',{
-				    "title":planDetailList[i].content,
-					    "allDay":"",
-					    //"id":"15",
-					    "start":planDetailList[i].start_time,
-					    "end":planDetailList[i].end_time
-			    },true);
-	   		}
-
-	   	};
 
 	   	
 		var reportData = JSON.parse('${weeklyReportDetail}');
 		inputReportData(reportData);
-
+		
 	}
+
 </script>
+
+<!-- START THIS PAGE PLUGINS-->        
+ <script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
+ <script type="text/javascript" src="/js/plugins/jquery/jquery-ui.min.js"></script>
+ <script type="text/javascript" src="/js/plugins/bootstrap/bootstrap.min.js"></script>        
+<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
+<!-- END THIS PAGE PLUGINS-->       

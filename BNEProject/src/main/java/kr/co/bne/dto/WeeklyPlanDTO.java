@@ -8,7 +8,7 @@ public class WeeklyPlanDTO {
 	public WeeklyPlanDTO() {
 		super();
 	}
-	public WeeklyPlanDTO(int weekly_plan_id, String weekly_report_id, String content, int sales, String reg_date) {
+	public WeeklyPlanDTO(int weekly_plan_id, String weekly_report_id, int sales, String reg_date) {
 		super();
 		this.weekly_plan_id = weekly_plan_id;
 		this.weekly_report_id = weekly_report_id;
@@ -41,8 +41,8 @@ public class WeeklyPlanDTO {
 	}
 	@Override
 	public String toString() {
-		return "WeeklyPlanDTO [weekly_plan_id=" + weekly_plan_id + ", weekly_report_id=" + weekly_report_id
-				+ ", sales=" + sales + ", reg_date=" + reg_date + "]";
+		return "WeeklyPlanDTO [weekly_plan_id=" + weekly_plan_id + ", weekly_report_id=" + weekly_report_id + ", sales="
+				+ sales + ", reg_date=" + reg_date + "]";
 	}
 	@Override
 	public int hashCode() {
