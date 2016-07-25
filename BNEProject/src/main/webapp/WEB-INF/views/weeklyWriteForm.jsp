@@ -17,22 +17,7 @@
 </style>
 <script type="text/javascript">
 window.onload = function(){
-	var tbodyTag
-	= 	'<tr>' + 
-			'<td class="fc-axis">매출</td>' +
-			'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
-		'</tr>';
-		
-	$('#weeklyTableHeader>tbody').html(tbodyTag);
-	
-	var s = $('#weeklyTableHeader>thead>tr>th');
-	for(var i=2; i<7; i++){
-		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
-	}
+
 	
 	$('bbbb').on('click',function(){
 		var s = $(".salesInput");
@@ -135,7 +120,7 @@ window.onload = function(){
 			<div class="col-md-12">
 				<div id="alert_holder"></div>
 				<div class="calendar">
-					<div id="calendarWeek" class="fc fc-ltr fc-unthemed">
+					<div id="calendar" class="fc fc-ltr fc-unthemed">
 					</div>
 				</div>
 			</div>
@@ -151,7 +136,25 @@ window.onload = function(){
 <script>
 window.onload = function(){
 	
-
+	var tbodyTag
+	= 	'<tr>' + 
+			'<td class="fc-axis">매출</td>' +
+			'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
+		'</tr>';
+		
+	$('#weeklyTableHeader>tbody').html(tbodyTag);
+	
+	var s = $('#weeklyTableHeader>thead>tr>th');
+	for(var i=2; i<7; i++){
+		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
+	} 
+	
+	
+	
 $('#aaaa').on('click',function(){
 	//insertDB();
 	//$('#calendarWeek').fullCalendar('next');
@@ -163,33 +166,61 @@ $('#aaaa').on('click',function(){
 	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
 	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
 	
-	var date = $('#calendarWeek').fullCalendar('getDate');
+	var date = $('#calendar').fullCalendar('getDate');
 	var year = date._d.getFullYear();
+	
+	
 	
 	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
 	var report_title = $('#weeklyReportId')[0].value;
-	var employee_name = "${user.employee_name}";
-	var department_name = "${user.department_name}";
+	if(report_title == ""){
+		report_title = weeklyNumber+"주의 계획";
+	}
+	
+	var employee_id = "${user.employee_id}";
+	var department_id = "${user.department_id}";
 	var salesGoal = 0;/* ${salesGoal}; */
 	var montlySales = 0;/* ${monthlySales}; */
+	
+	var dayOfWeek = ['mon','tue','wed','thu','fri'];
+	var sales = [];
+	var regdate = [];
+	for(var i= 0; i<5; i++){
+
+		sale = ($('#sales-'+dayOfWeek[i])[0].value);
+		regdate = ($('#sales-'+dayOfWeek[i])[0].attributes[3].textContent);
+		if(sales[i] == "")
+			sales[i] = 0;
+		
+		var plan = {
+					sales : sale,
+					reg_date : regdate
+		};
+		sales.push(plan);
+	}
 	
 	var weeklyReport = {
 			weekly_report_id : report_id,
 			title : report_title,
 			saleGoal : salesGoal,
 			sales : montlySales,
-			employee_name : employee_name,
-			department_name : department_name
+			employee_id : employee_id,
+			department_id : department_id
 	}
 	
-	var s = $('#calendarWeek').fullCalendar('clientEvents');
+	
+	
+	var s = $('#calendar').fullCalendar('clientEvents');
 	var allPlan = [];
 	for(var i = 0; i<s.length; i++){
 		var plan;
 		
 		var title = s[i].title;
-		var startTime = s[i].start._i;
-		var endTime = s[i].end._i;
+		
+		var startTimeOrigin = s[i].start.format().split('T');
+		var startTime = startTimeOrigin[0]+" "+startTimeOrigin[1];
+		var endTimeOrigin = s[i].end.format().split('T');
+		var endTime = endTimeOrigin[0]+" "+endTimeOrigin[1];
 		plan={
 				content:title,
 				start_time:startTime,
@@ -201,12 +232,14 @@ $('#aaaa').on('click',function(){
 
 	var jPlan = JSON.stringify(allPlan);
 	var jPlan2 = JSON.stringify(weeklyReport);
+	var jPlan3 = JSON.stringify(sales);
 	$('.fc-row .fc-widget-header');
 	
 	$.ajax({
 		type : "POST",
 		url : "/weeklyReport/write",
 		data : {
+			sales : jPlan3,
 			report : jPlan2,
 			weeklyPlan : jPlan
 		},

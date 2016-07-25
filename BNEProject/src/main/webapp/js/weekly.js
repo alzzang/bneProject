@@ -1,7 +1,7 @@
 
 $(function(){
 	
-	var salesCell
+/*	var salesCell
 	= 	'<tr>' + 
 			'<td class="fc-axis">매출</td>' +
 			'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
@@ -17,7 +17,7 @@ $(function(){
 	
 	for(var i=2; i<7; i++){
 		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
-	}
+	}*/
 /*
 
 	Map = function() {

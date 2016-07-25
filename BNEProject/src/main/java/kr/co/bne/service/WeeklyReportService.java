@@ -3,17 +3,14 @@ package kr.co.bne.service;
 import java.util.HashMap;
 import java.util.List;
 
-import kr.co.bne.dto.PlanDetailDTO;
-import kr.co.bne.dto.WeeklyPlanDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
-import kr.co.bne.dto.WeeklyReportName;
 
 public interface WeeklyReportService {
 
 	// 작성시 필요한 정보
 	public int getThisMonthlySales(String employee_id) throws Exception;
 	public int getSalesGoal(String employee_id) throws Exception;
-	public int writeWeeklyReport(WeeklyReportName wrDTO, List<WeeklyPlanDTO> wpDTOList, List<PlanDetailDTO> pdDTOList) throws Exception ;
+	public int writeWeeklyReport(WeeklyReportDetailDTO weeklyReportDetail) throws Exception ;
 	
 	//음뭘까??
 	public List<String> selectAllReportId(String employee_id) throws Exception;

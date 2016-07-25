@@ -5,8 +5,8 @@
 <mapper namespace="kr.co.bne.mapper.PlanDetail">
 
 	<insert id="insertPlanDetail" parameterType="PlanDetail">
-		INSERT INTO PLAN_DETAIL
-		VALUES(#{weekly_report_id}, #{weekly_plan_id}, #{content}, TO_DATE(#{start_time}, 'RRRR-MM-DD HH24:MI:SS'),  TO_DATE(#{end_time}, 'RRRR-MM-DD HH24:MI:SS'))
+		INSERT INTO PLAN_DETAIL(PLAN_DETAIL_ID,WEEKLY_REPORT_ID, CONTENT, START_TIME, END_TIME)
+		VALUES(PLAN_DETAIL_SEQ.nextval,#{weekly_report_id}, #{content}, TO_DATE(#{start_time}, 'RRRR-MM-DD HH24:MI:SS'),  TO_DATE(#{end_time}, 'RRRR-MM-DD HH24:MI:SS'))
 	</insert>
 	
 	<!-- 주간 계획 주에서 해당되는 계획 세부 일정 -->

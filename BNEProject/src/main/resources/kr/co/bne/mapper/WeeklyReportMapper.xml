@@ -80,4 +80,9 @@
 		            E.DEPARTMENT_ID = D.DEPARTMENT_ID AND
 		            WR.WEEKLY_REPORT_ID = #{value}
 	</select>
+	
+	<insert id="insertWeeklyReport" parameterType="WeeklyReport">
+		INSERT INTO WEEKLY_REPORT(WEEKLY_REPORT_ID, EMPLOYEE_ID, TITLE, SALES_GOAL, SALES, REG_DATE) 
+		VALUES(#{weekly_report_id}, #{employee_id}, #{title}, #{sales_goal}, #{sales},SYSDATE)
+	</insert>
 </mapper>
