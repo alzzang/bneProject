@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -89,30 +90,35 @@ public class WeeklyController {
 		return "weeklyWrite";
 	}
 	
-	@RequestMapping("/detail")
-	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request) throws Exception {
+	@RequestMapping("/detail/{employeeId}")
+	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request,@PathVariable("employeeId") String employeeId) throws Exception {
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
-		EmployeeDTO loginEmployeeDTO = (EmployeeDTO)request.getSession().getAttribute("user");
-
-		if(loginEmployeeDTO == null) {
+		EmployeeDTO eDTO = userService.selectEmployee(employeeId);
+		
+		if(eDTO == null) {
 			mv.setViewName("main");
 			return mv;
 		}
-		
-		List<String> reportId_list = weeklyReportService.selectAllReportId(loginEmployeeDTO.getEmployee_id());
-		
-//		System.out.println("리스트가비어있니? : " + reportId_list.isEmpty());
+		List<String> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
 		String lastWeeklyReportId = reportId_list.get(reportId_list.size()-1);
-//		System.out.println("그럼 마지막인덱스가 뭐니?? : " + lastWeeklyReportId);
 		WeeklyReportDetailDTO result = weeklyReportService.selectWeeklyReportDetail(lastWeeklyReportId);	
 		
+
 		JsonObject weeklyReportDetail = parseWeeklyReportDetailDTO(result);
+		
+		String employee_id = result.getWeeklyReportDTO().getEmployee_id();
+		
+		EmployeeDTO employeeDTO = userService.selectEmployee(employee_id);
+		
+		String department_name = employeeDTO.getDepartment_name();
+		String employee_name = employeeDTO.getEmployee_name();
 		
 		System.out.println("주간계획 : " + weeklyReportDetail.toString());
 		
-		mv.addObject("weeklyReportDetail", weeklyReportDetail.toString());
+		mv.addObject("weeklyReportDetail", weeklyReportDetail);
+		mv.addObject("department_name", department_name);
+		mv.addObject("employee_name", employee_name);
 		mv.addObject("reportIdList", reportId_list);
-		
 		return mv;
 	}
 	
@@ -174,11 +180,10 @@ public class WeeklyController {
 	}
 	@RequestMapping("/getPlan")
 	public @ResponseBody WeeklyReportDetailDTO getPlan(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam("ReportId")String reportId ){
-		WeeklyReportDetailDTO reportDetail = new WeeklyReportDetailDTO();
-		
-		
+		WeeklyReportDetailDTO reportDetail = null;
+		System.out.println(reportId);
 		try {
-			WeeklyReportDetailDTO result = weeklyReportService.selectWeeklyReportDetail(reportId);
+			reportDetail = weeklyReportService.selectWeeklyReportDetail(reportId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

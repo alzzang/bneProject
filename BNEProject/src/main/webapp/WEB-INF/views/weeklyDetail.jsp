@@ -108,7 +108,7 @@
 			<div class="col-md-12">
 				<div id="alert_holder"></div>
 				<div id="calanderDetail" class="calendar">
-					<div id="calendarWeek" class="fc fc-ltr fc-unthemed">
+					<div id="calendar" class="fc fc-ltr fc-unthemed">
 					</div>
 				</div>
 			</div>
@@ -176,23 +176,27 @@
 	    $('.fc-next-button').on('click',function(){
 	    	$('#calendar').fullCalendar('removeEvents');
 	    	$('#calendar').fullCalendar('next');
-	    	var reportId = $('#weekly_report_id').value;
-			var arr = reportId.split("_");
-			arr[1] = parseInt(arr[1])+1;
-			reportId = arr[0]+"_"+arr[1]+"_"+arr[2];
 	    	
+	    	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	    	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+	    	
+	    	var date = $('#calendar').fullCalendar('getDate');
+	    	var year = date._d.getFullYear();
+	    	
+	    	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
+	    
 	    	$.ajax({
 	    		type:"POST",
 	    		url : "/weeklyReport/getPlan",
 	    		data:{
-	    			ReportId : reportId
+	    			ReportId : report_id
 	    		},
 	    		success :function(data){
-/* 	    			alert("성공~");
- */	    			data;
+	    			alert("성공~");
+   					data;
 	    		},
 				error : function(){
-/* 					alert("실패~"); */
+					alert("실패~"); 
 				}
 	    	})
 	    	
@@ -201,23 +205,27 @@
 	   		$('#calendar').fullCalendar('removeEvents');
 	    	$('#calendar').fullCalendar('prev');
 	    	
-	    	var reportId = $('#weekly_report_id').value;
-			var arr = reportId.split("_");
-			arr[1] = parseInt(arr[1])-1;
-			reportId = arr[0]+"_"+arr[1]+"_"+arr[2];
+	    	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	    	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+	    	
+	    	var date = $('#calendar').fullCalendar('getDate');
+	    	var year = date._d.getFullYear();
+	    	
+	    	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
+	    
 	    	
 	    	$.ajax({
 	    		type:"POST",
 	    		url : "/weeklyReport/getPlan",
 	    		data:{
-	    			ReportId : reportId
+	    			ReportId : report_id
 	    		},
 	    		success :function(data){
-/* 	    			alert("성공~");
- */	    			data;
+ 	    			alert("성공~");
+	    			data;
 	    		},
 				error : function(){
-/* 					alert("실패~"); */
+					alert("실패~"); 
 				}
 	    	})
 	    });
