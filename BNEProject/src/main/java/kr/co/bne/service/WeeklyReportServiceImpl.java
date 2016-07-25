@@ -26,14 +26,21 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 	PlanDetailDAO planDetailDAO;
 
 	@Override
-	public int writeWeeklyReport(WeeklyReportDTO wrDTO, List<WeeklyPlanDTO> wpDTOList, List<PlanDetailDTO> pdDTOList) throws Exception  {
+	public int writeWeeklyReport(WeeklyReportDetailDTO weeklyReportDetail) throws Exception  {
 		int result = 0;
 		int planDetailResult = 0;
+		int weeklyPlanResult =0;
 		// 1. WeeklyReportDAO insert
+		//weeklyReportDAO.
+		int WeeklyReportResult = weeklyReportDAO.insertWeeklyReport(weeklyReportDetail.getWeeklyReportDTO());
+		System.out.println(WeeklyReportResult);
 		// 2. WeeklyPlanDAO insert * (mon, tue, wed, thu, fri)
+		for (WeeklyPlanDTO weeklyPlan : weeklyReportDetail.getWeeklyPlanDTOList()) {
+			weeklyPlanResult = weeklyPlanDAO.insertWeeklyPlan(weeklyPlan);
+		}
 		// 3-1. PlanDetailDAO insert 
-		for (PlanDetailDTO planDetailDTO : pdDTOList) {
-			planDetailResult += planDetailDAO.insertPlanDetail(planDetailDTO);
+		for (PlanDetailDTO planDetail : weeklyReportDetail.getPlanDetailDTOList()) {
+			planDetailResult += planDetailDAO.insertPlanDetail(planDetail);
 		}
 		
 		result += planDetailResult;

@@ -108,7 +108,7 @@
 			<div class="col-md-12">
 				<div id="alert_holder"></div>
 				<div id="calanderDetail" class="calendar">
-					<div id="calendarWeek" class="fc fc-ltr fc-unthemed">
+					<div id="calendar" class="fc fc-ltr fc-unthemed">
 					</div>
 				</div>
 			</div>
@@ -139,7 +139,7 @@
 		$('#achievement_rate').html(achievement_rate + '%');
 		
 		for(var i=0; i<planDetailDTOList.length; i++){
-			$('#calendarWeek').fullCalendar('renderEvent',{
+			$('#calendar').fullCalendar('renderEvent',{
 			   		"title":planDetailDTOList[i].content,
 				    "allDay":"",
 				    "start":planDetailDTOList[i].start_time,
@@ -162,12 +162,11 @@
 		
 	}
 
-
 	window.onload = function(){
 		
 		var reportDetail = {};
-		$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
-		$('#calendarWeek').fullCalendar('getView').calendar.options.selectable = false;
+		$('#calendar').fullCalendar('getView').calendar.options.editable = false;
+		$('#calendar').fullCalendar('getView').calendar.options.selectable = false;
 		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
 		$('.fc-center').append(o);
 		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>';
@@ -175,28 +174,60 @@
 		
 	
 	    $('.fc-next-button').on('click',function(){
-	    	$('#calendarWeek').fullCalendar('removeEvents');
-	    	$('#calendarWeek').fullCalendar('next');
+	    	$('#calendar').fullCalendar('removeEvents');
+	    	$('#calendar').fullCalendar('next');
 	    	
+	    	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	    	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+	    	
+	    	var date = $('#calendar').fullCalendar('getDate');
+	    	var year = date._d.getFullYear();
+	    	
+	    	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
+	    
 	    	$.ajax({
 	    		type:"POST",
 	    		url : "/weeklyReport/getPlan",
 	    		data:{
-	    			ReportId : 10
+	    			ReportId : report_id
 	    		},
 	    		success :function(data){
-/* 	    			alert("성공~");
- */	    			data;
+	    			alert("성공~");
+   					data;
 	    		},
 				error : function(){
-/* 					alert("실패~"); */
+					alert("실패~"); 
 				}
 	    	})
 	    	
 	    });
 	   	$('.fc-prev-button').on('click',function(){
-	   		$('#calendarWeek').fullCalendar('removeEvents');
-	    	$('#calendarWeek').fullCalendar('prev');
+	   		$('#calendar').fullCalendar('removeEvents');
+	    	$('#calendar').fullCalendar('prev');
+	    	
+	    	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	    	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+	    	
+	    	var date = $('#calendar').fullCalendar('getDate');
+	    	var year = date._d.getFullYear();
+	    	
+	    	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
+	    
+	    	
+	    	$.ajax({
+	    		type:"POST",
+	    		url : "/weeklyReport/getPlan",
+	    		data:{
+	    			ReportId : report_id
+	    		},
+	    		success :function(data){
+ 	    			alert("성공~");
+	    			data;
+	    		},
+				error : function(){
+					alert("실패~"); 
+				}
+	    	})
 	    });
 
 	   	

@@ -10,7 +10,6 @@ import kr.co.bne.dto.WeeklyPlanDTO;
 
 @Repository
 public class WeeklyPlanDAOImpl implements WeeklyPlanDAO {
-
 	@Autowired
 	private SqlSession sqlSession;
 	private String namespace = "kr.co.bne.mapper.WeeklyPlan" + ".";
@@ -19,6 +18,12 @@ public class WeeklyPlanDAOImpl implements WeeklyPlanDAO {
 	public List<WeeklyPlanDTO> selectWeeklyPlanList(String weekly_report_id) throws Exception {
 		List<WeeklyPlanDTO> resultList = sqlSession.selectList(namespace + "selectWeeklyPlanList", weekly_report_id);
 		return resultList;
+	}
+	@Override
+	public int insertWeeklyPlan(WeeklyPlanDTO weeklyPlan) {
+		int result = sqlSession.insert(namespace+"insertWeeklyPlan", weeklyPlan);
+		
+		return result;
 	}
 
 }

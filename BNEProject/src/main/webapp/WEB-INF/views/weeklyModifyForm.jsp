@@ -126,7 +126,6 @@ window.onload = function(){
 			</div>
 		</div>
 	<button id='aaaa'> aa</button>
-	<button id='bbbb'> bb</button>
 	</div>
 	<!-- END CONTENT FRAME BODY -->
 

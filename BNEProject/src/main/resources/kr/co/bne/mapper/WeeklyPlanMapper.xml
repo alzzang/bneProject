@@ -10,4 +10,8 @@
 		WHERE WEEKLY_REPORT_ID = #{value}
 		ORDER BY REG_DATE
 	</select>
+	
+	<insert id="insertWeeklyPlan" parameterType="WeeklyPlan">
+		INSERT INTO WEEKLY_PLAN(weekly_plan_id, weekly_report_id, sales, reg_date) VALUES(WEEKLY_PLAN_SEQ.nextval, #{weekly_report_id}, #{sales}, #{reg_date})
+	</insert>
 </mapper>

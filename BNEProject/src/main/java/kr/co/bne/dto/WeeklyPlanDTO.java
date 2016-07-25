@@ -7,7 +7,6 @@ public class WeeklyPlanDTO {
 	private String reg_date;
 	public WeeklyPlanDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public WeeklyPlanDTO(int weekly_plan_id, String weekly_report_id, int sales, String reg_date) {
 		super();
@@ -80,7 +79,6 @@ public class WeeklyPlanDTO {
 			return false;
 		return true;
 	}
-
 	
-
+	
 }

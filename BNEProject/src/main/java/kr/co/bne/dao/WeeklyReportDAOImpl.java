@@ -24,7 +24,6 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 
 	@Override
 	public int selectSalesGoal(String employee_id) throws Exception {
-		System.out.println(employee_id);
 		int result = sqlSession.selectOne(namespace + "selectSalesGoal", employee_id);
 		return result;
 	}
@@ -44,6 +43,12 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 	@Override
 	public WeeklyReportDTO selectWeeklyReport(String weekly_report_id) throws Exception {
 		WeeklyReportDTO result = sqlSession.selectOne(namespace + "selectWeeklyReport", weekly_report_id);
+		return result;
+	}
+
+	@Override
+	public int insertWeeklyReport(WeeklyReportDTO weeklyReport) throws Exception {
+		int result = sqlSession.insert(namespace + "insertWeeklyReport",weeklyReport);
 		return result;
 	}
 
