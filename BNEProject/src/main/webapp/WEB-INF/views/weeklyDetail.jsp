@@ -16,26 +16,22 @@
 	border:0px solid black;
 	text-align: center;
 }
+.fc-time-grid .fc-slats td {
+    height: 2.8em;
+}
+
+.detailInfoTable th{
+	text-align: left;
+	width: 100px;
+}
 </style>
 
 
-     <!-- START DONUT CHART -->
-     <div class="panel panel-default">
-         <div class="panel-heading">
-             <h3 class="panel-title">달성률</h3>                                
-         </div>
-         <div class="panel-body">
-             <div id="weeklyDonut" style="height: 300px;"></div>
-         </div>
-     </div>
-     <!-- END DONUT CHART -->      
-     
-     
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
 		<div class="page-title">
-			<h2>주간 계획</h2>
+			<h2>주간 계획 (weekly_report_id : <span id="weekly_report_id"></span>)</h2>
 		</div>
 		<div class="pull-right">
 			<button class="btn btn-default content-frame-left-toggle">
@@ -43,18 +39,16 @@
 			</button>
 		</div>
 	</div>
-	<!-- END CONTENT FRAME TOP -->
 
 	<!-- START CONTENT FRAME LEFT --> 
 	<div class="content-frame-left" style="height: 1054px;">
-	
-		<div class="panel-body">
-			<div class="page-title">
-				<h5>개인 정보</h5>
-			</div>
-			주간계획 ID : <span id="weekly_report_id"></span><br>
-			
-			<table class="table">
+
+		     <div class="panel panel-default" >
+		         <div class="panel-heading">
+		             <h3 class="panel-title">개인 정보</h3>                          
+		         </div>
+		         <div class="panel-body">
+		     	    <table class="table table-bordered detailInfoTable">
 				<thead>
 					<tr>
 						<th>소속</th>
@@ -76,34 +70,38 @@
 					</tr>
 				</thead>
 			</table>
-			<div class="page-title">
-				<h5>매출 현황</h5>
-			</div>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>목표</th>
-						<td><span id="sales_goal"></span></td>
-					</tr>
-					<tr>
-						<th>매출액</th>
-						<td><span id="sales"></span></td>
-					</tr>
-					<tr>
-						<th>달성률</th>
-						<td><span id="achievement_rate"></span></td>
-					</tr>
-				</thead>
-			</table>
-
-		</div>
-		
+		         </div>
+		     </div>
+	     <!-- START DONUT CHART -->
+	     <div class="panel panel-default" >
+	         <div class="panel-heading">
+	             <h3 class="panel-title">매출 현황</h3>                          
+	         </div>
+	         <div class="panel-body">
+					<table class="table table-bordered detailInfoTable">
+						<thead>
+							<tr>
+								<th>매출목표 </th>
+								<td><span id="sales_goal"></span>원</td>
+							</tr>
+		 					<tr>
+								<th>매출액</th>
+								<td><span id="sales"></span>원</td>
+							</tr>
+						</thead>
+					</table>
+					<hr>
+	             <div id="weeklyDonut" style="height: 300px;"></div>
+	         </div>
+	     </div>
+	     <!-- END DONUT CHART -->      
 	</div>
 	<!-- END CONTENT FRAME LEFT -->
 
+
+
 	<!-- START CONTENT FRAME BODY -->
 	<div class="content-frame-body padding-bottom-0" style="height: 887px;">
-
 		<div class="row">
 			<div class="col-md-12">
 				<div id="alert_holder"></div>
@@ -113,13 +111,34 @@
 				</div>
 			</div>
 		</div>
-			<button id='aaaa' > aa</button>
 	</div>
 	<!-- END CONTENT FRAME BODY -->
-  
 </div>
 
 <script>
+
+	// 매출액 입력
+	var makeSalesInput = function(){
+		var salesCell
+		= 	'<tr>' + 
+				'<td class="fc-axis">매출</td>' +
+				'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
+				'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
+				'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
+				'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
+				'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
+			'</tr>';
+			
+		$('#weeklyTableHeader>tbody').html(salesCell);
+		
+		var s = $('#weeklyTableHeader>thead>tr>th');
+		
+		for(var i=2; i<7; i++){
+			$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
+		}	
+	};
+	
+	// 불러온 값 입력
 	var inputReportData = function(reportData){
 		var weeklyReportDTO = reportData.weeklyReportDTO;
 		var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
@@ -133,48 +152,107 @@
 		$('#employee_name').html(employee_name);
 		$('#department_name').html(department_name);
 		$('#sales_goal').html(weeklyReportDTO.sales_goal);
-		$('#sales').html(weeklyReportDTO.sales);
+		 $('#sales').html(weeklyReportDTO.sales); 
+		
+		
 		var achievement_rate = Number(weeklyReportDTO.sales) / Number(weeklyReportDTO.sales_goal) * 100;
+		
+		if(weeklyReportDTO.sales_goal == 0 || weeklyReportDTO.sales_goal == null)
+			achievement_rate = 0;
 		
 		$('#achievement_rate').html(achievement_rate + '%');
 		
 		for(var i=0; i<planDetailDTOList.length; i++){
 			$('#calendar').fullCalendar('renderEvent',{
 			   		"title":planDetailDTOList[i].content,
-				    "allDay":"",
+				    "allDay":false,
 				    "start":planDetailDTOList[i].start_time,
 				    "end":planDetailDTOList[i].end_time
 		    },true);
 		}
-
+		
+		$('#calendar').fullCalendar( 'gotoDate', weeklyPlanDTOList[0].reg_date );
+		
+		// 매출액 정보 행 삽입
+		makeSalesInput();
+		
 		for(var i=0; i<weeklyPlanDTOList.length; i++){
 			$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
 		}
 		
-	    Morris.Donut({
+		
+		//////////////////////////도넛 시작//////////////////////////
+		
+		// 도넛을 비워주고
+		$('#weeklyDonut').empty();
+
+		var achievement_rate = Number(weeklyReportDTO.sales) / Number(weeklyReportDTO.sales_goal) * 100;
+
+		if(isNaN(achievement_rate) || !isFinite(achievement_rate))
+			achievement_rate = 0;
+		
+		var lack_rate = 100 - achievement_rate;
+		
+		if(lack_rate < 0)
+			lack_rate = 0;			
+
+		// 받아온 값으로 도넛을 새로 생성하고
+	    var salesDount = Morris.Donut({
 	        element: 'weeklyDonut',
 	        data: [
-	            {label: "Sales", value: weeklyReportDTO.sales},
-	            {label: "Sales 남은거", value: Number(weeklyReportDTO.sales_goal) - Number(weeklyReportDTO.sales)},
-	        ],
-	        colors: ['#95B75D', '#1caf9a']
-	    });
-		
+	            		{
+	            			label: "Achievement rate",
+	            			value: achievement_rate,
+	            			formatted: achievement_rate + '%'
+	            		},
+	            		{
+	            			label: "Lack of achievement?",
+	            			value: lack_rate,
+	            			formatted: lack_rate + '%'
+	            		}
+	            	],
+	        colors: ['#95B75D', '#1caf9a'],
+	        formatter: function(x, data){
+	        	return data.formatted;	
+	        },
+	        resize: true
+	    })
+	    
+	    // 매출액부분이 디폴트로 강조되도록
+	    salesDount.select(0);
+	    // 마우스를 떼도 매출액이 강조되도록
+	    $('#weeklyDonut').on('mouseout', function(){	salesDount.select(0);   });
+	    
+		//////////////////////////도넛 끝//////////////////////////
+	    
 	}
 
+	// 새로 불러온 자료 삽입
+	var getNewReportId = function(employee_id){
+
+	};
+	
+	
 	window.onload = function(){
 		
-		var reportDetail = {};
+		// 매출액 정보 행 삽입
+		//makeSalesInput();
+		
+		// 처음에 받아온 주간계획 정보 삽입 
+		var reportData = JSON.parse('${weeklyReportDetail}') 
+		inputReportData(reportData);
+		
+		// 이 주간계획서의 작성자 ID
+		var employee_id = reportData.weeklyReportDTO.employee_id;
+		
 		$('#calendar').fullCalendar('getView').calendar.options.editable = false;
 		$('#calendar').fullCalendar('getView').calendar.options.selectable = false;
 		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
 		$('.fc-center').append(o);
 		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>';
 		$('.fc-center').prepend(o);
-		
 	
 	    $('.fc-next-button').on('click',function(){
-	    	$('#calendar').fullCalendar('removeEvents');
 	    	$('#calendar').fullCalendar('next');
 	    	
 	    	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
@@ -183,8 +261,8 @@
 	    	var date = $('#calendar').fullCalendar('getDate');
 	    	var year = date._d.getFullYear();
 	    	
-	    	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
-	    
+	    	var report_id = year+"_"+weeklyNumber+"_"+employee_id;
+	    	
 	    	$.ajax({
 	    		type:"POST",
 	    		url : "/weeklyReport/getPlan",
@@ -192,17 +270,21 @@
 	    			ReportId : report_id
 	    		},
 	    		success :function(data){
-	    			alert("성공~");
-   					data;
+	    			if(data.weeklyReportDTO == null){
+	    				alert("입력된 주간계획이 없습니다!");
+				    	$('#calendar').fullCalendar('prev');
+	    			}else{
+	    		   		$('#calendar').fullCalendar('removeEvents');
+	    				inputReportData(data);
+	    			}
 	    		},
 				error : function(){
-					alert("실패~"); 
+					alert("주간계획 데이터를 불러오는데 실패했습니다."); 
 				}
 	    	})
-	    	
 	    });
-	   	$('.fc-prev-button').on('click',function(){
-	   		$('#calendar').fullCalendar('removeEvents');
+
+	    $('.fc-prev-button').on('click',function(){
 	    	$('#calendar').fullCalendar('prev');
 	    	
 	    	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
@@ -211,8 +293,7 @@
 	    	var date = $('#calendar').fullCalendar('getDate');
 	    	var year = date._d.getFullYear();
 	    	
-	    	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
-	    
+	    	var report_id = year+"_"+weeklyNumber+"_"+employee_id;
 	    	
 	    	$.ajax({
 	    		type:"POST",
@@ -221,18 +302,19 @@
 	    			ReportId : report_id
 	    		},
 	    		success :function(data){
- 	    			alert("성공~");
-	    			data;
+	    			if(data.weeklyReportDTO == null){
+						alert("입력된 주간계획이 없습니다!");
+				    	$('#calendar').fullCalendar('next');
+	    			}else{
+	    		   		$('#calendar').fullCalendar('removeEvents');
+	    				inputReportData(data);
+	    			}
 	    		},
 				error : function(){
-					alert("실패~"); 
+					alert("주간계획 데이터를 불러오는데 실패했습니다."); 
 				}
 	    	})
 	    });
-
-	   	
-		var reportData = JSON.parse('${weeklyReportDetail}');
-		inputReportData(reportData);
 		
 	}
 
