@@ -536,9 +536,11 @@ $(function() {
                     weekends : false,
                     allDaySlot: false,
                     weekNumbers: true,
-                    contentHeight : 378,
+                    cellHeight: 200,
+                    contentHeight : "auto",
                     businessHours:true,
                     weekNumbers:true,
+                    eventColor:'#1CAF9A',
                     select: function(start, end, allDay) {
                         var title = prompt('Event Title:');
                         if(!end.isAfter(start,'day')){

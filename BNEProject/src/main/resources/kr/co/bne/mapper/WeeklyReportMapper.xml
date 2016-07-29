@@ -40,7 +40,15 @@ FROM    (SELECT CASE WHEN TO_CHAR(NEXT_DAY(LPD.LAST_PLAN_DATE, 2), 'YYYYMM') = T
 	<!-- 새로 작성시 이번주에 필요한 매출 목표 -->
 	<select id="selectSalesGoal" parameterType="String" resultType="Integer">
 		<![CDATA[
-        
+		SELECT  MG.SALES_GOAL AS MONTHLY_SALES_GOAL
+		FROM    MONTHLY_GOAL MG, (SELECT  LAST_PLAN_DATE AS DATE1, NEXT_DAY(LAST_PLAN_DATE, 2) AS DATE2
+		             					             FROM    (SELECT  TRUNC(MAX(WP.REG_DATE),'DD') AS LAST_PLAN_DATE
+		                                						    FROM   WEEKLY_REPORT WR, WEEKLY_PLAN WP
+		                                    						WHERE  WR.EMPLOYEE_ID = #{value} AND
+		                                           								WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID)) LPD
+		WHERE   MG.EMPLOYEE_ID = #{value} AND
+			          MG.YEAR = TO_NUMBER(TO_CHAR(LPD.DATE2, 'YYYY')) AND
+			         MG.MONTH = TO_NUMBER(TO_CHAR(LPD.DATE2, 'MM'))
 		]]>
 	</select>
 	
