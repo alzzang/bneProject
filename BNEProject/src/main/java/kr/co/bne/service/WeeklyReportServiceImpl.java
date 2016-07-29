@@ -90,6 +90,22 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		
 		return result;
 	}
+	@Override
+	public int modifyWeeklyReport(WeeklyReportDetailDTO weeklyReportDetail) throws Exception {
+		
+		int planDetailResult = 0;
+		int weeklyPlanResult =0;
+		
+		for (WeeklyPlanDTO weeklyPlan : weeklyReportDetail.getWeeklyPlanDTOList()) {
+			weeklyPlanResult = weeklyPlanDAO.updateWeeklyPlan(weeklyPlan);
+		}
+		
+		planDetailDAO.deletePlanDetail(weeklyReportDetail.getWeeklyReportDTO().getWeekly_report_id());
+		for (PlanDetailDTO planDetail : weeklyReportDetail.getPlanDetailDTOList()) {
+			planDetailResult += planDetailDAO.insertPlanDetail(planDetail);
+		}
+		return 0;
+	}
 	
 
 }

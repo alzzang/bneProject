@@ -8,4 +8,5 @@ public interface WeeklyPlanDAO {
 
 	public List<WeeklyPlanDTO> selectWeeklyPlanList(String weekly_report_id) throws Exception;
 	public int insertWeeklyPlan(WeeklyPlanDTO weeklyPlan);
+	public int updateWeeklyPlan(WeeklyPlanDTO weeklyPlan);
 }

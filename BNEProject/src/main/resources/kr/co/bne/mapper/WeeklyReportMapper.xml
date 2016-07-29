@@ -79,4 +79,8 @@ FROM    (SELECT CASE WHEN TO_CHAR(NEXT_DAY(LPD.LAST_PLAN_DATE, 2), 'YYYYMM') = T
 		INSERT INTO WEEKLY_REPORT(WEEKLY_REPORT_ID, EMPLOYEE_ID, TITLE, SALES_GOAL, SALES, REG_DATE) 
 		VALUES(#{weekly_report_id}, #{employee_id}, #{title}, #{sales_goal}, #{sales},SYSDATE)
 	</insert>
+	
+	<delete id="deleteWeeklyReport" parameterType="String">
+		DELETE FROM WEEKLY_REPORT WHERE WEEKLY_REPORT_ID = #{value}
+	</delete>
 </mapper>

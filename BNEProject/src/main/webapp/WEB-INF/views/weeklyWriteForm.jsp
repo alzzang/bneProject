@@ -135,6 +135,7 @@ window.onload = function(){
 
 <script>
 window.onload = function(){
+	$('#calendar').fullCalendar('next');
 	
 	var tbodyTag
 	= 	'<tr>' + 
@@ -152,7 +153,7 @@ window.onload = function(){
 	for(var i=2; i<7; i++){
 		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
 	} 
-	
+	var date = $('#calendar').fullCalendar('getDate');
 	
 	
 $('#aaaa').on('click',function(){
@@ -251,19 +252,6 @@ $('#aaaa').on('click',function(){
 			alert("실패~");
 		}
 	})
-	
-    //$('div#trash>a').remove();
-/*    	$.ajax({
-		type : "POST",
-		url : "/weeklyReport/weeklyView",
-		data : {
-			report_id: $('#report_id').val()
-		},
-		success : function(data) {
-//			$('#approvalDiv').remove();
-			alert('ㅇㅋ.');
-		}
-	})*/
 	
 });
 }

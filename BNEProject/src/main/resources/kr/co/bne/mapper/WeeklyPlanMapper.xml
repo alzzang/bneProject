@@ -14,4 +14,8 @@
 	<insert id="insertWeeklyPlan" parameterType="WeeklyPlan">
 		INSERT INTO WEEKLY_PLAN(weekly_plan_id, weekly_report_id, sales, reg_date) VALUES(WEEKLY_PLAN_SEQ.nextval, #{weekly_report_id}, #{sales}, #{reg_date})
 	</insert>
+	
+	<update id="updateWeeklyPlan" parameterType="WeeklyPlan">
+		UPDATE WEEKLY_PLAN SET SALES= #{sales} WHERE WEEKLY_REPORT_ID = #{weekly_report_id}
+	</update>
 </mapper>

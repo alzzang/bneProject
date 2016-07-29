@@ -28,5 +28,11 @@ public class PlanDetailDAOImpl implements PlanDetailDAO {
 		List<PlanDetailDTO> resultList = sqlSession.selectList(namespace + "selectPlanDetailList", weekly_report_id);
 		return resultList;
 	}
+
+	@Override
+	public int deletePlanDetail(String ReportId) throws Exception {
+		int result = sqlSession.delete(namespace+"deletePlanDetail",ReportId);
+		return result;
+	}
 	
 }
