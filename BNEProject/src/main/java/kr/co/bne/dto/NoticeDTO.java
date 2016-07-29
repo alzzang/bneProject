@@ -5,6 +5,7 @@ public class NoticeDTO {
 	public enum NOTICE_TYPE {POST, CORRECT, COMMENT, APPROVAL};
 	
 	private String notice_type;
+	private int link_id;
 	private int notice_id;
 	private String subject;
 	private String object;
@@ -12,7 +13,12 @@ public class NoticeDTO {
 	private String read_flag;
 	
 	
-	
+	public int getLink_id() {
+		return link_id;
+	}
+	public void setLink_id(int link_id) {
+		this.link_id = link_id;
+	}
 	public String getNotice_type() {
 		return notice_type;
 	}

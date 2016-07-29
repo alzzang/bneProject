@@ -1,17 +1,21 @@
 package kr.co.bne.aspect;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import kr.co.bne.common.NoticeDeliver;
+import kr.co.bne.common.NoticeHeader;
 import kr.co.bne.common.type.NoticeType;
 import kr.co.bne.dao.DailyReportDAO;
 import kr.co.bne.dao.NoticeDAO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
+import kr.co.bne.dto.NoticeDTO;
 
 
 @Aspect
@@ -21,6 +25,9 @@ public class NoticeAspect {
 	private NoticeDAO noticeDAO;
 	@Autowired
 	private DailyReportDAO dailyReportDAO;
+	@Autowired
+	private NoticeDeliver deliver;
+	
 	
 	
 	public NoticeAspect() {
@@ -34,8 +41,12 @@ public class NoticeAspect {
 		System.out.println("일일보고 등록 aop 실행!!");
 		
 		DailyReportDTO dailyReport = (DailyReportDTO)joinPoint.getArgs()[0];
-		noticeDAO.insertNotice(NoticeType.DAILY_POST, dailyReport.getDaily_report_id(), dailyReport.getEmployee_id());	
+		List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.DAILY_POST, dailyReport.getDaily_report_id(), dailyReport.getEmployee_id());	
+		
 		//node.js에 보내는 코드도 작성
+		for(NoticeHeader dto : result) {
+			deliver.sendNotice(dto.getSubject_name(), dto.getObject_id(), dto.getLink_id(), dto.getNotice_type());
+		}
 	}
 	
 	
@@ -45,8 +56,12 @@ public class NoticeAspect {
 		System.out.println("승인 aop 실행!!");
 		
 		int daily_report_id = Integer.parseInt(joinPoint.getArgs()[0].toString());
-		noticeDAO.insertNotice(NoticeType.APPROVAL, daily_report_id);	
+		List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.APPROVAL, daily_report_id);	
+		
 		//node.js에 보내는 코드도 작성
+		for(NoticeHeader dto : result) {
+			deliver.sendNotice(dto.getSubject_name(), dto.getObject_id(), dto.getLink_id(), dto.getNotice_type());
+		}
 	}
 	
 	
@@ -58,8 +73,12 @@ public class NoticeAspect {
 		HashMap<String, String> map = (HashMap<String, String>)joinPoint.getArgs()[0];
 		int daily_report_id = Integer.parseInt(map.get("daily_report_id"));
 		
-		noticeDAO.insertNotice(NoticeType.COMMENT, daily_report_id);	
+		List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.COMMENT, daily_report_id);
+		
 		//node.js에 보내는 코드도 작성
+		for(NoticeHeader dto : result) {
+			deliver.sendNotice(dto.getSubject_name(), dto.getObject_id(), dto.getLink_id(), dto.getNotice_type());
+		}
 	}
 	
 	
@@ -71,8 +90,12 @@ public class NoticeAspect {
 		int daily_report_id = Integer.parseInt(joinPoint.getArgs()[0].toString());
 		DailyReportDetailDTO dailyReport = dailyReportDAO.selectDailyReport(Integer.toString(daily_report_id));
 		
-		noticeDAO.insertNotice(NoticeType.DAILY_CORRECT, daily_report_id, dailyReport.getEmployee_id());	
+		List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.DAILY_CORRECT, daily_report_id, dailyReport.getEmployee_id());
+		
 		//node.js에 보내는 코드도 작성
+		for(NoticeHeader dto : result) {
+			deliver.sendNotice(dto.getSubject_name(), dto.getObject_id(), dto.getLink_id(), dto.getNotice_type());
+		}
 	}
 
 }

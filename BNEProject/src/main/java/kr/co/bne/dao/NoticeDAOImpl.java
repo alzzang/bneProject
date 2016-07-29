@@ -8,9 +8,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.bne.common.NoticeDetail;
+import kr.co.bne.common.NoticeHeader;
 import kr.co.bne.common.type.NoticeType;
 import kr.co.bne.dto.NoticeDTO;
-import kr.co.bne.common.NoticeDetail;
 
 
 @Repository
@@ -22,19 +23,29 @@ public class NoticeDAOImpl implements NoticeDAO {
 	
 	
 	@Override
-	public boolean insertNotice(NoticeType notice_type, int link) throws Exception {
+	public List<NoticeHeader> insertNotice(NoticeType notice_type, int link) throws Exception {
 		return insertNotice(notice_type, link, null, null);
 	}
 	
 	
 	@Override
-	public boolean insertNotice(NoticeType notice_type, int link, String subject_id) throws Exception {
+	public List<NoticeHeader> insertNotice(NoticeType notice_type, int link, String subject_id) throws Exception {
 		return insertNotice(notice_type, link, subject_id, null);
 	}
 	
 	
 	@Override
-	public boolean insertNotice(NoticeType notice_type, int link, String subject_id, String object_id) throws Exception {
+	public int getUnreadNoticeCount(String object_id) throws Exception {
+		int count = sqlSession.selectOne("kr.co.bne.mapper.Notice.getUnreadNoticeCount", object_id);
+		return count;
+	}
+	
+	
+	
+	@Override
+	public List<NoticeHeader> insertNotice(NoticeType notice_type, int link, String subject_id, String object_id) throws Exception {
+		List<NoticeHeader> result = null;
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("link", link);
 		map.put("notice_type", notice_type.toString());
@@ -42,24 +53,20 @@ public class NoticeDAOImpl implements NoticeDAO {
 		map.put("object_id", object_id);
 		
 		sqlSession.insert("kr.co.bne.mapper.Notice.create_notice", map);
-		int result = (Integer)map.get("result");
-		System.out.println(result);
-		if(result > 0) {
-			return true;
-		}else {
-			return false;
-		}
+		result = (List<NoticeHeader>)map.get("result");
+
+		return result;
 	}
 	
 	
 	@Override
-	public List<NoticeDTO> selectNoticeList(String user_id, int perContentNum, int startIdx) {
+	public List<NoticeHeader> selectNoticeList(String user_id, int perContentNum, int startIdx) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("user_id", user_id);
 		map.put("perContentNum", perContentNum);
 		map.put("startIdx", startIdx);
 		
-		List<NoticeDTO> list = sqlSession.selectList("kr.co.bne.mapper.Notice.selectNoticeList", map);
+		List<NoticeHeader> list = sqlSession.selectList("kr.co.bne.mapper.Notice.selectNoticeList", map);
 		
 		return list;
 	}

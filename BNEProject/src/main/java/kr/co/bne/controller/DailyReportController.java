@@ -307,7 +307,7 @@ public class DailyReportController {
       ModelAndView model=new ModelAndView("dailyReportDetail");
       model.addObject("dailyReport", dailyReport);
       model.addObject("counselList",counsellingRecord);
-      
+
       HttpSession session=req.getSession();
       EmployeeDTO user=(EmployeeDTO) session.getAttribute("user");
       if(user.getPosition().equals("manager")){

@@ -37,7 +37,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 </style>
 
 <script type="text/javascript" src="/js/dailysettings.js"></script>
-<!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script> --> 
+<script src="http://127.0.0.1:10000/socket.io/socket.io.js"></script> 
 </head>
 
 
@@ -64,16 +64,8 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 			<tiles:insertAttribute name="body" />
 		</div>
  		
-<!--  		<script type="text/javascript">
-		var socket=io.connect('http://192.168.1.27:3000');
-		socket.emit('getId',{employeeId: '${sessionScope.user.employee_id}' });
-	
-		
-		socket.on('newmessage',function(data){
-			alert(data);
-			$('#appendtest').append('1');
-		});
-		</script>  -->
+ 		<div id="popup" style="float: right;">
+		</div>
 
 	</div>
 
@@ -100,9 +92,6 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 		</div>
 	</div>
 	<!-- END MESSAGE BOX-->
-
-
-
 
 	<!-- START PRELOADS -->
 	<audio id="audio-alert" src="/audio/alert.mp3" preload="auto"></audio>
@@ -152,9 +141,8 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 	<script type="text/javascript" src="/js/plugins.js"></script>
 	<script type="text/javascript" src="/js/actions.js"></script>
-	<script type ="text/javascript" src="/js/weekly.js"></script>
+	<script src="/js/notice_on_header.js"></script>
 	<script type="text/javascript" src="/js/usersettings.js"></script>
-
 	<script type="text/javascript" src="/js/dailysettings.js"></script>
 	
 	
@@ -164,6 +152,46 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
 
+
+
+	<script type="text/javascript">
+		var socket = io.connect('http://127.0.0.1:10000');
+		socket.emit('getId', {
+			employeeId : '${sessionScope.user.employee_id}'
+		});
+		
+		socket.on('newmessage', function(data) {
+			var message = createNoticeString(data.fromName, data.notice_type);
+			//alert(message);
+
+			var popup = '<div class="alert alert-danger" role="alert">' +
+            				'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>' +
+            				'<strong>Oh snap!</strong>' + message +
+        				'</div>'
+        				
+        	$('#popup').html(popup);
+        	$('#popup').stop().animate({top:-400}, 500);
+			
+			
+			$(function(){
+				var path = "/alarm/unReadCount/" + $("#employee_id").val();
+				
+				$.ajax({
+					url : path,
+					success : function(data) {
+						$("#newMessageCount_title").html(data);
+					}
+				});
+			});
+			
+			
+			if($('#noticeButton').hasClass('active')) {
+				getNoticeList(1, 5);	
+			}			
+		});
+
+		
+	</script>
 
 
 </body>

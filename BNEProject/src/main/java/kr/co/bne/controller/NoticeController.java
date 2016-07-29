@@ -12,13 +12,17 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
 import kr.co.bne.common.NoticeDetail;
+import kr.co.bne.common.NoticeHeader;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.NoticeService;
 
@@ -161,6 +165,52 @@ public class NoticeController {
 		pw.print(confirmedList);
 		pw.flush();
 		pw.close();
+	}
+	
+	
+	
+	
+	@RequestMapping(value="/notices/{startIdx}/{perContentNum}", method =  RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> getNoticeList(HttpSession session, Model model, HttpServletRequest req, HttpServletResponse res, @PathVariable("startIdx") int startIdx, @PathVariable("perContentNum") int perContentNum) throws IOException {
+		List<NoticeHeader> noticeList = null;
+		int newMessageCount = 0;
+		
+		String user_id = req.getParameter("user_id");
+		
+		try {
+			noticeList = noticeService.selectNoticeList(user_id, startIdx, perContentNum);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			newMessageCount = noticeService.getUnreadNoticeCount(user_id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("newMessageCount", newMessageCount);
+		map.put("noticeList", noticeList);
+
+		return map;
+	}
+	
+	
+	@RequestMapping(value="/unReadCount/{user_id}")
+	public @ResponseBody String getUnreadNoticeCount(@PathVariable String user_id) {
+		int count = 0;
+		try {
+			count = noticeService.getUnreadNoticeCount(user_id);
+			System.out.println("unreadCount" + count);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return Integer.toString(count);
 	}
 	
 }
