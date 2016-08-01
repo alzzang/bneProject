@@ -7,6 +7,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import kr.co.bne.common.NoticeDeliver;
 import kr.co.bne.common.NoticeHeader;
@@ -18,6 +19,7 @@ import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.NoticeDTO;
 
 
+@Component
 @Aspect
 public class NoticeAspect {
 	

@@ -16,6 +16,12 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
+
+
+<link rel="stylesheet" type="text/css" href="/css/notice_form.css" />
+
+
+
 <!-- <link rel="icon" href="/favicon.ico" type="image/x-icon" /> -->
 
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -59,15 +65,21 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 			<tiles:insertAttribute name="menu" />
 		</div>
 
+
+		<div
+			style="width: 220px; float: right; position: relative; background-color: black;"
+			id="popup"></div>
+
+
 		<div class="page-content">
 			<tiles:insertAttribute name="header" />
 			<tiles:insertAttribute name="body" />
 		</div>
- 		
- 		<div id="popup" style="float: right;">
-		</div>
 
 	</div>
+	
+	
+	
 
 	<!-- MESSAGE BOX-->
 	<div class="message-box animated fadeIn" data-sound="alert"
@@ -146,6 +158,9 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<script type="text/javascript" src="/js/dailysettings.js"></script>
 	
 	
+	<script type="text/javascript" src="/assets/plugins/bootstrap-notify-master/bootstrap-notify.js"></script>
+	
+	
 	<!-- <script type="text/javascript" src="/js/demo_dashboard.js"></script>
 	<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script> -->
 	<!-- <script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script> -->
@@ -162,15 +177,47 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 		
 		socket.on('newmessage', function(data) {
 			var message = createNoticeString(data.fromName, data.notice_type);
-			//alert(message);
+			var path = '/dailyReport/main';
+			
+			$.notify({
+				// options
+				message: message,
+				url: path,
+				target: '_self'
+			},{
+				// settings
+				element: '#popup',
+				position: 'absolute',
+				type: "customNoticeForm-danger",
+				allow_dismiss: true,
+				newest_on_top: false,
+				showProgressbar: false,
+				placement: {
+					from: "top",
+					align: "right"
+				},
+				offset: 20,
+				spacing: 10,
+				z_index: 1,
+				delay: 5000,
+				timer: 1000,
+				mouse_over: null,
+				animate: {
+					enter: 'animated lightSpeedIn',
+					exit: 'animated lightSpeedOut'
+				},
+				onShow: null,
+				onShown: null,
+				onClose: null,
+				onClosed: null,
+				icon_type: 'class',
+				template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+				'<span data-notify="title">{1}</span>' +
+				'<span data-notify="message">{2}</span>' +
+			'</div>'
+			});
 
-			var popup = '<div class="alert alert-danger" role="alert">' +
-            				'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>' +
-            				'<strong>Oh snap!</strong>' + message +
-        				'</div>'
-        				
-        	$('#popup').html(popup);
-        	$('#popup').stop().animate({top:-400}, 500);
+			
 			
 			
 			$(function(){
