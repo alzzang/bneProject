@@ -6,8 +6,9 @@
 <configuration>
 	
 	<typeAliases>
-		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/> 
+		 
 		<typeAlias alias="CounsellingRecord" type="kr.co.bne.dto.CounsellingRecordDTO"/>
+		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/>
 		<typeAlias alias="DailyReport" type="kr.co.bne.dto.DailyReportDTO"/>
 		<typeAlias alias="Department" type="kr.co.bne.dto.DepartmentDTO"/>
 		<typeAlias alias="Employee" type="kr.co.bne.dto.EmployeeDTO"/>
@@ -25,7 +26,11 @@
 		<typeAlias alias="CounsellingDetail" type="kr.co.bne.dto.CounsellingDetailDTO"/>
 		
 		<typeAlias alias="DailyReportChartListElement" type="kr.co.bne.dto.DailyReportChartDTO"/>
-		<typeAlias alias="DailyReportChart2ListElement" type="kr.co.bne.dto.DailyReportChart2DTO"/>
+		<typeAlias alias="DailyReportChart2ListElement" type="kr.co.bne.dto.DailyReportChart2DTO"/> 
+		<typeAlias alias="CounsellingManageSalesList" type="kr.co.bne.dto.CounsellingManageSalesDTO"/>
+		<typeAlias alias="CounsellingManageSales" type="kr.co.bne.common.CounsellingManageSales"/>
+		<typeAlias alias="CounsellingSalesGoal" type="kr.co.bne.common.CounsellingSalesGoal"/>
+		
 		
 	</typeAliases>
 

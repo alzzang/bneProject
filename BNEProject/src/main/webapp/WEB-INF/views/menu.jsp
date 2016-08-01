@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div id="mCSB_1"
 	class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside"
@@ -73,12 +73,25 @@
 				<ul>
 					<li><a href="layout-boxed.html">메인</a></li>
 
+
+					
+					<c:if test="${ sessionScope.user.position == 'manager' }">
+						<li><a href="/counselling/manageSales">매출목표 관리</a>
+						<div class="informer informer-danger"></div></li>
+					</c:if>
+					
+					
 					<!-- 사원 목록 -->
 					<li><a href="layout-nav-toggled.html">이동우</a>
 					<div class="informer informer-danger">4</div></li>
 					<li><a href="layout-nav-top.html">이태우</a>
 					<div class="informer informer-danger">4</div></li>
 					<!--  -->
+					
+					
+					
+					
+					
 				</ul></li>
 
 			<li class=""><a href="index.html"><span
@@ -244,7 +257,6 @@
 						</div>
 						<input type="text" hidden="true" name="id" id="employee_id"
 							value="${sessionScope.user.employee_id}">
-
 					</form>
 
 

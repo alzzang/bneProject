@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.bne.dto.DailyReportChartDTO;
+import kr.co.bne.dto.DailyReportEmployeeDTO;
 import kr.co.bne.service.DailyReportService;
 
 @Controller
@@ -52,10 +53,18 @@ public class MainController {
 	}
 
 	
-	@RequestMapping("/sales")
+	@RequestMapping("/monthlySales")
 	public @ResponseBody HashMap<String,Integer> getSales(HttpServletResponse res, @RequestParam("employee_id")String id) {
 		
 		return dailyReportService.selectMonthlyGoal(id);
+		
+	}
+	
+	@RequestMapping("/teamMonthlySales")
+	public @ResponseBody List<DailyReportEmployeeDTO> getTeamSales(HttpServletResponse res, @RequestParam("department_id")int id) {
+		List<DailyReportEmployeeDTO> temp = dailyReportService.selectTeamMonthlyGoal(id);
+		System.out.println(temp);
+		return temp;
 		
 	}
 	
@@ -63,10 +72,10 @@ public class MainController {
 	@RequestMapping(value = "/morrisChartLine", method = { RequestMethod.POST })
 	public @ResponseBody HashMap<String,List<?>> getDailyReportChart(HttpServletResponse res, @RequestParam("employee_id") String employee_id)
 			throws JSONException, IOException {
-		System.out.println("morrisChartLine id : "+employee_id);
-/*		List<DailyReportChartDTO> dailyRepoartChart = dailyReportService.searchDailyChartLine(employee_id);
-		System.out.println("!!"+dailyRepoartChart);
-		*/
+		
+	//	List<DailyReportChartDTO> dailyRepoartChart = dailyReportService.searchDailyChartLine(employee_id);
+	//	System.out.println("!!"+dailyRepoartChart);
+		
 		
 		return dailyReportService.searchDailyChartLine(employee_id);
 	}

@@ -1,6 +1,7 @@
 package kr.co.bne.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,6 +51,12 @@ public class UserServiceImpl implements UserService {
 	public void modifyFilePosition(String id) {
 		// TODO Auto-generated method stub
 		employeeDAO.updateFile(id);
+	}
+
+	@Override
+	public List<EmployeeDTO> getEmpSearch(String empSearch) {
+		
+		return employeeDAO.getEmpSearch(empSearch);
 	}
 
 }

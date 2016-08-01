@@ -20,13 +20,13 @@ public class ChartTest {
 	@Autowired
 	DailyReportDAO dao;
 	
-	@Test
+/*	@Test
 	public void test() throws Exception {
 		List<DailyReportChartDTO> list = dao.selectDailyReportChartLineList("1");
 		
 		for(DailyReportChartDTO dto : list) {
 			System.out.println(dto.getEmployee_id() + ":" + dto.getReg_date());
 		}
-	}
+	}*/
 
 }

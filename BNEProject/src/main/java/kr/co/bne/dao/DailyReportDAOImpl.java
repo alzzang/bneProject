@@ -147,6 +147,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Override
 	public int selectSumofMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
+		System.out.println("selectSumofMonthlyGoal : "+id);
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
 	}
 
@@ -163,6 +164,11 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		List<DailyReportChart2DTO> dailyRepoartChart2List = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChart2List");
 		System.out.println("list2 "+dailyRepoartChart2List);
 		return dailyRepoartChart2List;
+	}
+	@Override
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(int departmentId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMonthlyGoal", departmentId);
 	}
 	
 }

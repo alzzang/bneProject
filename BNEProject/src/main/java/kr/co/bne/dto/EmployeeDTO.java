@@ -8,6 +8,8 @@ public class EmployeeDTO {
 	private String position;
 	private String file_position;
 	private int department_id;
+	private String mobile_phone;
+	private String email;
 	public String getEmployee_id() {
 		return employee_id;
 	}
@@ -50,11 +52,41 @@ public class EmployeeDTO {
 	public void setDepartment_id(int department_id) {
 		this.department_id = department_id;
 	}
+	public String getMobile_phone() {
+		return mobile_phone;
+	}
+	public void setMobile_phone(String mobile_phone) {
+		this.mobile_phone = mobile_phone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	@Override
 	public String toString() {
-		return "EmployeeDTO [employee_id=" + employee_id + ", employee_name=" + employee_name + ", password=" + password
-				+ ", department_name=" + department_name + ", position=" + position + ", file_position=" + file_position
-				+ ", department_id=" + department_id + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("EmployeeDTO [employee_id=");
+		builder.append(employee_id);
+		builder.append(", employee_name=");
+		builder.append(employee_name);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", department_name=");
+		builder.append(department_name);
+		builder.append(", position=");
+		builder.append(position);
+		builder.append(", file_position=");
+		builder.append(file_position);
+		builder.append(", department_id=");
+		builder.append(department_id);
+		builder.append(", mobile_phone=");
+		builder.append(mobile_phone);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append("]");
+		return builder.toString();
 	}
-	
+
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
-import kr.co.bne.dto.DailyReportChartDTO;
+
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -40,7 +40,7 @@ public interface DailyReportService {
 	int getgetTotalUnapprovalNum(String position, String user_id);
 
 	HashMap<String, Object> selectTeamMemberList(String user_id);
-	
 	public HashMap<String, List<?>> searchDailyChartLine(String employee_id);
 	public HashMap<String,Integer> selectMonthlyGoal(String id);
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(int departmentId);
 }

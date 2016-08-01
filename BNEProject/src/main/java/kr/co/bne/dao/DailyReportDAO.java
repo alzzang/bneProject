@@ -27,6 +27,7 @@ public interface DailyReportDAO {
 	public void deleteCounsellingRecord(int i);
 	public int selectMonthlyGoal(String id);
 	public int selectSumofMonthlyGoal(String id);
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(int departmentId);
 	
 	
 	List<DailyReportListElement> selectDailyReportList(String user_id, int startIdx, int perContentNum,

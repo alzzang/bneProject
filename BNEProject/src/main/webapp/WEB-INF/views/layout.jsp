@@ -28,8 +28,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 }
 </style>
 
-<script src="http://localhost:3000/socket.io/socket.io.js"></script> 
-
+<!-- <script src="http://localhost:3000/socket.io/socket.io.js"></script>  -->
 <!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script>  -->
 </head>
 
@@ -39,7 +38,8 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 		<jsp:forward page="/user/login"/>
 	</c:if>
 
-	<input type="hidden" id='fileName' value='${sessionScope.fileName}'> 
+	<input type="hidden" id='fileName' value='${sessionScope.fileName}'>
+	<input type="hidden" id='department_id' value='${sessionScope.user.department_id}'>  
 	
 	<div class="page-container">
 		<div class="page-sidebar page-sidebar-fixed scroll mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="height: 979px;">
@@ -49,14 +49,15 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 			<tiles:insertAttribute name="header" />
 			<tiles:insertAttribute name="body" />
 		</div>
- <script type="text/javascript">
+
+<!--  <script type="text/javascript">
 		var socket=io.connect('http://localhost:3000');
 		socket.emit('getId',{employeeId: '${sessionScope.user.employee_id}' });
 		socket.on('newmessage',function(data){
 			alert(data);
 			$('#appendtest').append('1');
 		});
-</script>  
+</script>   -->
 	
 	</div>
 
