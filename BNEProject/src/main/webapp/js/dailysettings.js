@@ -98,7 +98,7 @@ function localSave(){
 	   });
 	   o["remove_Id"]=removeId;
 	   o["counsel_id"]=0;
-	   jsonArray.push(o);
+	   +jsonArray.push(o);
 	   console.log(o);
 	   console.log(jsonArray);
 	   var tagJson=JSON.stringify(o);

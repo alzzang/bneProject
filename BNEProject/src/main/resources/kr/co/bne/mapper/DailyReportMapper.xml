@@ -82,7 +82,10 @@
 	from (select employee_id, count(*) unApproval from DAILY_REPORT
 	      where department_id = (select department_id from department where manager_id = #{value})
 	            and approval_flag = 0
-	      group by employee_id) a, employee b
+	      group by employee_id) a, (select * from employee 
+                                    where department_id = (select department_id 
+                                                            from department 
+                                                            where manager_id = #{value})) b
 	where 	b.employee_id != #{value}
 			and a.employee_id(+) = b.employee_id
   order by b.employee_name asc

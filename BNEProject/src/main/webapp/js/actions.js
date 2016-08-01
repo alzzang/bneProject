@@ -190,9 +190,9 @@ $(document)
                /* END CONTENT FRAME */
 
                /* MAILBOX */
-               $(".mail .mail-star").on("click", function() {
+               /*$(".mail .mail-star").on("click", function() {
                   $(this).toggleClass("starred");
-               });
+               });*/
 
                $(".mail-checkall .iCheck-helper").on(
                      "click",

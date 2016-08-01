@@ -23,8 +23,12 @@
 		<typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>
 		<typeAlias alias="DailyReportDetail" type="kr.co.bne.dto.DailyReportDetailDTO"/>
 		<typeAlias alias="CounsellingDetail" type="kr.co.bne.dto.CounsellingDetailDTO"/>
-		<typeAlias alias="Notice" type="kr.co.bne.common.NoticeDetail"/>
+
 		
+		<typeAlias alias="DailyReportChartListElement" type="kr.co.bne.dto.DailyReportChartDTO"/>
+		<typeAlias alias="DailyReportChart2ListElement" type="kr.co.bne.dto.DailyReportChart2DTO"/> 
+		<typeAlias alias="Notice" type="kr.co.bne.common.NoticeDetail"/>
+		<typeAlias alias="NoticeHeader" type="kr.co.bne.common.NoticeHeader"/>
 	</typeAliases>
 
 	<mappers>
@@ -37,7 +41,7 @@
 		<mapper resource="kr/co/bne/mapper/EmployeeMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/SecondaryClientMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/WeeklyPlanMapper.xml"/>
-		<mapper resource="kr/co/bne/mapper/WeeklyReportMapper.xml"/>		
+		<mapper resource="kr/co/bne/mapper/WeeklyReportMapper.xml"/>	
 		<mapper resource="kr/co/bne/mapper/NoticeMapper.xml"/>		
 	</mappers>
 </configuration>

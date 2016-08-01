@@ -14,7 +14,10 @@
 	</definition>
 	
 	<definition name="main" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/board.jsp" />
+		<!-- <put-attribute name="body" value="/WEB-INF/views/board.jsp" /> -->
+		
+		
+	<put-attribute name="body" value="/WEB-INF/views/barChart.jsp" /> 
 	</definition>
 	
 	<definition name="main2" extends="tilesbase">

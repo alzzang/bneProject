@@ -16,6 +16,12 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
+
+
+<link rel="stylesheet" type="text/css" href="/css/notice_form.css" />
+
+
+
 <!-- <link rel="icon" href="/favicon.ico" type="image/x-icon" /> -->
 
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -37,7 +43,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 </style>
 
 <script type="text/javascript" src="/js/dailysettings.js"></script>
-<!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script> --> 
+<script src="http://127.0.0.1:10000/socket.io/socket.io.js"></script> 
 </head>
 
 
@@ -59,23 +65,21 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 			<tiles:insertAttribute name="menu" />
 		</div>
 
+
+		<div
+			style="width: 220px; float: right; position: relative; background-color: black;"
+			id="popup"></div>
+
+
 		<div class="page-content">
 			<tiles:insertAttribute name="header" />
 			<tiles:insertAttribute name="body" />
 		</div>
- 		
-<!--  		<script type="text/javascript">
-		var socket=io.connect('http://192.168.1.27:3000');
-		socket.emit('getId',{employeeId: '${sessionScope.user.employee_id}' });
-	
-		
-		socket.on('newmessage',function(data){
-			alert(data);
-			$('#appendtest').append('1');
-		});
-		</script>  -->
 
 	</div>
+	
+	
+	
 
 	<!-- MESSAGE BOX-->
 	<div class="message-box animated fadeIn" data-sound="alert"
@@ -100,9 +104,6 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 		</div>
 	</div>
 	<!-- END MESSAGE BOX-->
-
-
-
 
 	<!-- START PRELOADS -->
 	<audio id="audio-alert" src="/audio/alert.mp3" preload="auto"></audio>
@@ -152,10 +153,12 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 	<script type="text/javascript" src="/js/plugins.js"></script>
 	<script type="text/javascript" src="/js/actions.js"></script>
-	<script type ="text/javascript" src="/js/weekly.js"></script>
+	<script src="/js/notice_on_header.js"></script>
 	<script type="text/javascript" src="/js/usersettings.js"></script>
-
 	<script type="text/javascript" src="/js/dailysettings.js"></script>
+	
+	
+	<script type="text/javascript" src="/assets/plugins/bootstrap-notify-master/bootstrap-notify.js"></script>
 	
 	
 	<!-- <script type="text/javascript" src="/js/demo_dashboard.js"></script>
@@ -164,6 +167,78 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
 
+
+
+	<script type="text/javascript">
+		var socket = io.connect('http://127.0.0.1:10000');
+		socket.emit('getId', {
+			employeeId : '${sessionScope.user.employee_id}'
+		});
+		
+		socket.on('newmessage', function(data) {
+			var message = createNoticeString(data.fromName, data.notice_type);
+			var path = '/dailyReport/main';
+			
+			$.notify({
+				// options
+				message: message,
+				url: path,
+				target: '_self'
+			},{
+				// settings
+				element: '#popup',
+				position: 'absolute',
+				type: "customNoticeForm-danger",
+				allow_dismiss: true,
+				newest_on_top: false,
+				showProgressbar: false,
+				placement: {
+					from: "top",
+					align: "right"
+				},
+				offset: 20,
+				spacing: 10,
+				z_index: 1,
+				delay: 5000,
+				timer: 1000,
+				mouse_over: null,
+				animate: {
+					enter: 'animated lightSpeedIn',
+					exit: 'animated lightSpeedOut'
+				},
+				onShow: null,
+				onShown: null,
+				onClose: null,
+				onClosed: null,
+				icon_type: 'class',
+				template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+				'<span data-notify="title">{1}</span>' +
+				'<span data-notify="message">{2}</span>' +
+			'</div>'
+			});
+
+			
+			
+			
+			$(function(){
+				var path = "/alarm/unReadCount/" + $("#employee_id").val();
+				
+				$.ajax({
+					url : path,
+					success : function(data) {
+						$("#newMessageCount_title").html(data);
+					}
+				});
+			});
+			
+			
+			if($('#noticeButton').hasClass('active')) {
+				getNoticeList(1, 5);	
+			}			
+		});
+
+		
+	</script>
 
 
 </body>

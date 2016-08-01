@@ -54,187 +54,187 @@ public class DailyReportController {
 	ClientService clientService;
 	
 	@RequestMapping(value="/main") 
-	public String goMain(Model model, HttpServletRequest request, HttpSession session){
-		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
-		
-		if(user == null) {
-			return "redirect:/user/login";
-		}
-		
-		String position = user.getPosition();
+   public String goMain(Model model, HttpServletRequest request, HttpSession session){
+      EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
+      
+      if(user == null) {
+         return "redirect:/user/login";
+      }
+      
+      String position = user.getPosition();
 
-		if("manager".equals(position)){ //manager이면
-			return "redirect:/dailyReport/main/all/1";
-		}else {
-			return "redirect:/dailyReport/main/employee/" + user.getEmployee_id() + "/1";
-		}
-	}
-	
-	
-	@RequestMapping(value="/main/all") 
-	public String goMain_Manager(Model model, HttpServletRequest request, HttpSession session){
-		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");		
+      if("manager".equals(position)){ //manager이면
+         return "redirect:/dailyReport/main/all/1";
+      }else {
+         return "redirect:/dailyReport/main/employee/" + user.getEmployee_id() + "/1";
+      }
+   }
+   
+   
+   @RequestMapping(value="/main/all") 
+   public String goMain_Manager(Model model, HttpServletRequest request, HttpSession session){
+      EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");      
 
-		if(user == null) {
-			return "redirect:/user/login";
-		}
+      if(user == null) {
+         return "redirect:/user/login";
+      }
 
-		//employee인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
-		if(!"manager".equals(user.getPosition())) {
-			return "redirect:/dailyReport/main/employee/" + user.getEmployee_id();
-		}
-		
-		return goMain_Manager(model, request, session, 1);
-	}
-	
-	
-	@RequestMapping(value="/main/all/{page}") 
-	public String goMain_Manager(Model model, HttpServletRequest request, HttpSession session, @PathVariable("page") int page){
-		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");		
-		
-		if(user == null) {
-			return "redirect:/user/login";
-		}
-		
-		HashMap<String, Object> dailyReportListMap = null;		
-		HashMap<String, Object> serviceParams = new HashMap<String, Object>();
-		int totalUnapprovalNum = 0;
-		List<DailyReportTeamListElement> memberList = null;
-		
-		//employee인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
-		if(!"manager".equals(user.getPosition())) {
-			return "redirect:/dailyReport/main/employee/" + user.getEmployee_id();
-		}
-		
-		Enumeration parameterNames = request.getParameterNames();
-				
-		while(parameterNames.hasMoreElements()) {
-			String parameterName = (String)parameterNames.nextElement();
-			
-			if("employee_id".equals(parameterName)) {
-				serviceParams.put("employee_id", request.getParameter(parameterName));
-				model.addAttribute("currentEmployee_id", (String)serviceParams.get("employee_id"));
-			}else if("reg_date".equals(parameterName)) {
-				serviceParams.put("reg_date", request.getParameter(parameterName));
-				model.addAttribute("currentReg_date", (String)serviceParams.get("reg_date"));
-			}else if("approval_flag".equals(parameterName)) {
-				serviceParams.put("approval_flag", Integer.parseInt(request.getParameter(parameterName)));
-				
-				if((Integer)serviceParams.get("approval_flag") == 0) {
-					model.addAttribute("currentApproval_flag", "미승인 목록");
-				}else if((Integer)serviceParams.get("approval_flag") == 1) {
-					model.addAttribute("currentApproval_flag", "승인 목록");
-				}
-			}
-		}
+      //employee인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
+      if(!"manager".equals(user.getPosition())) {
+         return "redirect:/dailyReport/main/employee/" + user.getEmployee_id();
+      }
+      
+      return goMain_Manager(model, request, session, 1);
+   }
+   
+   
+   @RequestMapping(value="/main/all/{page}") 
+   public String goMain_Manager(Model model, HttpServletRequest request, HttpSession session, @PathVariable("page") int page){
+      EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");      
+      
+      if(user == null) {
+         return "redirect:/user/login";
+      }
+      
+      HashMap<String, Object> dailyReportListMap = null;      
+      HashMap<String, Object> serviceParams = new HashMap<String, Object>();
+      int totalUnapprovalNum = 0;
+      List<DailyReportTeamListElement> memberList = null;
+      
+      //employee인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
+      if(!"manager".equals(user.getPosition())) {
+         return "redirect:/dailyReport/main/employee/" + user.getEmployee_id();
+      }
+      
+      Enumeration parameterNames = request.getParameterNames();
+            
+      while(parameterNames.hasMoreElements()) {
+         String parameterName = (String)parameterNames.nextElement();
+         
+         if("employee_id".equals(parameterName)) {
+            serviceParams.put("employee_id", request.getParameter(parameterName));
+            model.addAttribute("currentEmployee_id", (String)serviceParams.get("employee_id"));
+         }else if("reg_date".equals(parameterName)) {
+            serviceParams.put("reg_date", request.getParameter(parameterName));
+            model.addAttribute("currentReg_date", (String)serviceParams.get("reg_date"));
+         }else if("approval_flag".equals(parameterName)) {
+            serviceParams.put("approval_flag", Integer.parseInt(request.getParameter(parameterName)));
+            
+            if((Integer)serviceParams.get("approval_flag") == 0) {
+               model.addAttribute("currentApproval_flag", "미승인 목록");
+            }else if((Integer)serviceParams.get("approval_flag") == 1) {
+               model.addAttribute("currentApproval_flag", "승인 목록");
+            }
+         }
+      }
+      System.out.println(serviceParams.toString());
+      Gson gson = new Gson();
+      String serviceParamsStr = gson.toJson(serviceParams);
+      
+      
+      dailyReportListMap = dailyReportService.selectDailyReportList("manager", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
+      
+      
+      HashMap<String, Object> TeamMemeberMenuList = dailyReportService.selectTeamMemberList(user.getEmployee_id());
+      totalUnapprovalNum = (Integer) TeamMemeberMenuList.get("totalUnapprovalNum");
+      memberList = (List<DailyReportTeamListElement>) TeamMemeberMenuList.get("memberList");
+      
+      
+      model.addAttribute("dailyReportList", dailyReportListMap.get("dailyReportList"));
+      model.addAttribute("totalPageNum", dailyReportListMap.get("totalPageNum"));
+      model.addAttribute("totalUnapprovalNum", totalUnapprovalNum);
+      model.addAttribute("memberList", memberList);
+      model.addAttribute("serviceParamsStr", serviceParamsStr);
+      
+      model.addAttribute("currentPage", page);      
+      
+      
+      model.addAttribute("url", "/dailyReport/main/all");
+      
+      return "dailyReportMain";
+   }
+   
+   
+   @RequestMapping(value="/main/employee/{id}") 
+   public String goMain_Employee(Model model, HttpServletRequest request, HttpSession session, @PathVariable("id") String employee_id){
+      EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
 
-		Gson gson = new Gson();
-		String serviceParamsStr = gson.toJson(serviceParams);
-		
-		
-		dailyReportListMap = dailyReportService.selectDailyReportList("manager", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
-		
-		
-		HashMap<String, Object> TeamMemeberMenuList = dailyReportService.selectTeamMemberList(user.getEmployee_id());
-		totalUnapprovalNum = (Integer) TeamMemeberMenuList.get("totalUnapprovalNum");
-		memberList = (List<DailyReportTeamListElement>) TeamMemeberMenuList.get("memberList");
-		
-		
-		model.addAttribute("dailyReportList", dailyReportListMap.get("dailyReportList"));
-		model.addAttribute("totalPageNum", dailyReportListMap.get("totalPageNum"));
-		model.addAttribute("totalUnapprovalNum", totalUnapprovalNum);
-		model.addAttribute("memberList", memberList);
-		model.addAttribute("serviceParamsStr", serviceParamsStr);
-		
-		model.addAttribute("currentPage", page);		
-		
-		
-		model.addAttribute("url", "/dailyReport/main/all");
-		
-		return "dailyReportMain";
-	}
-	
-	
-	@RequestMapping(value="/main/employee/{id}") 
-	public String goMain_Employee(Model model, HttpServletRequest request, HttpSession session, @PathVariable("id") String employee_id){
-		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
+      if(user == null) {
+         return "redirect:/user/login";
+      }
 
-		if(user == null) {
-			return "redirect:/user/login";
-		}
+      //manager인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
+      if("manager".equals(user.getPosition())) {
+         return "redirect:/dailyReport/main/all/1";
+      }
 
-		//manager인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
-		if("manager".equals(user.getPosition())) {
-			return "redirect:/dailyReport/main/all/1";
-		}
-
-		return goMain_Employee(model, request, session, employee_id, 1);
-	}
-	
-	
-	
-	
-	
-	@RequestMapping(value="/main/employee/{id}/{page}") 
-	public String goMain_Employee(Model model, HttpServletRequest request, HttpSession session, @PathVariable("id") String employee_id, @PathVariable("page") int page){
-		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
-		
-		if(user == null) {
-			return "redirect:/user/login";
-		}
-		
-		HashMap<String, Object> dailyReportListMap = null;		
-		HashMap<String, Object> serviceParams = new HashMap<String, Object>();
-		int totalUnapprovalNum = 0;
-		List<DailyReportTeamListElement> memberList = null;
-		
-		
-		//manager인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
-		if("manager".equals(user.getPosition())) {
-			return "redirect:/dailyReport/main/all/1";
-		}
-		
-		
-		serviceParams.put("employee_id", employee_id);
-		model.addAttribute("employee_id", (String)serviceParams.get("employee_id"));
-		
-		
-		
-		Enumeration parameterNames = request.getParameterNames();
-		
-		while(parameterNames.hasMoreElements()) {
-			String parameterName = (String)parameterNames.nextElement();
-			
-			if("reg_date".equals(parameterName)) {
-				serviceParams.put("reg_date", request.getParameter(parameterName));
-				model.addAttribute("currentReg_date", (String)serviceParams.get("reg_date"));
-			}else if("approval_flag".equals(parameterName)) {
-				serviceParams.put("approval_flag", Integer.parseInt(request.getParameter(parameterName)));
-				
-				if((Integer)serviceParams.get("approval_flag") == 0) {
-					model.addAttribute("currentApproval_flag", "미승인 목록");
-				}else if((Integer)serviceParams.get("approval_flag") == 1) {
-					model.addAttribute("currentApproval_flag", "승인 목록");
-				}
-			}
-		}
-	
-		Gson gson = new Gson();
-		String serviceParamsStr = gson.toJson(serviceParams);
-		
-		
-		dailyReportListMap = dailyReportService.selectDailyReportList("employee", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
-		totalUnapprovalNum = dailyReportService.getgetTotalUnapprovalNum("member", employee_id);
-		
-		model.addAttribute("dailyReportList", dailyReportListMap.get("dailyReportList"));
-		model.addAttribute("totalPageNum", dailyReportListMap.get("totalPageNum"));
-		model.addAttribute("totalUnapprovalNum", totalUnapprovalNum);
-		model.addAttribute("serviceParamsStr", serviceParamsStr);
-		model.addAttribute("currentPage", page);		
-		model.addAttribute("url", "/dailyReport/main/employee/" + employee_id);
-		
-		return "dailyReportMain";
-	}
+      return goMain_Employee(model, request, session, employee_id, 1);
+   }
+   
+   
+   
+   
+   
+   @RequestMapping(value="/main/employee/{id}/{page}") 
+   public String goMain_Employee(Model model, HttpServletRequest request, HttpSession session, @PathVariable("id") String employee_id, @PathVariable("page") int page){
+      EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
+      
+      if(user == null) {
+         return "redirect:/user/login";
+      }
+      
+      HashMap<String, Object> dailyReportListMap = null;      
+      HashMap<String, Object> serviceParams = new HashMap<String, Object>();
+      int totalUnapprovalNum = 0;
+      List<DailyReportTeamListElement> memberList = null;
+      
+      
+      //manager인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
+      if("manager".equals(user.getPosition())) {
+         return "redirect:/dailyReport/main/all/1";
+      }
+      
+      
+      serviceParams.put("employee_id", employee_id);
+      model.addAttribute("employee_id", (String)serviceParams.get("employee_id"));
+      
+      
+      
+      Enumeration parameterNames = request.getParameterNames();
+      
+      while(parameterNames.hasMoreElements()) {
+         String parameterName = (String)parameterNames.nextElement();
+         
+         if("reg_date".equals(parameterName)) {
+            serviceParams.put("reg_date", request.getParameter(parameterName));
+            model.addAttribute("currentReg_date", (String)serviceParams.get("reg_date"));
+         }else if("approval_flag".equals(parameterName)) {
+            serviceParams.put("approval_flag", Integer.parseInt(request.getParameter(parameterName)));
+            
+            if((Integer)serviceParams.get("approval_flag") == 0) {
+               model.addAttribute("currentApproval_flag", "미승인 목록");
+            }else if((Integer)serviceParams.get("approval_flag") == 1) {
+               model.addAttribute("currentApproval_flag", "승인 목록");
+            }
+         }
+      }
+      System.out.println(serviceParams.toString());
+      Gson gson = new Gson();
+      String serviceParamsStr = gson.toJson(serviceParams);
+      
+      
+      dailyReportListMap = dailyReportService.selectDailyReportList("employee", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
+      totalUnapprovalNum = dailyReportService.getgetTotalUnapprovalNum("member", employee_id);
+      
+      model.addAttribute("dailyReportList", dailyReportListMap.get("dailyReportList"));
+      model.addAttribute("totalPageNum", dailyReportListMap.get("totalPageNum"));
+      model.addAttribute("totalUnapprovalNum", totalUnapprovalNum);
+      model.addAttribute("serviceParamsStr", serviceParamsStr);
+      model.addAttribute("currentPage", page);      
+      model.addAttribute("url", "/dailyReport/main/employee/" + employee_id);
+      
+      return "dailyReportMain";
+   }
 	@RequestMapping(value="/update" ,method = RequestMethod.POST)
 	public ModelAndView goUpdate(@RequestParam("daily_report_id")String id,HttpServletRequest req,HttpServletResponse res){
 		DailyReportDTO dailyreport=dailyReportService.searchDailyReport(id);

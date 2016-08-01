@@ -3,7 +3,80 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.Notice">
-<select id="selectUnconfirmedNotices" parameterType="hashmap" resultType="Notice">
+	
+	<parameterMap id="procMap" type="HashMap">
+		<parameter property="notice_type" mode="IN" jdbcType="VARCHAR" javaType="String" />
+		<parameter property="link" mode="IN" jdbcType="INTEGER" javaType="int" />
+		<parameter property="result" mode="OUT" jdbcType="CURSOR" javaType="java.sql.ResultSet" resultMap="NoticeHeader"/>
+		<parameter property="subject_id" mode="IN" jdbcType="VARCHAR" javaType="String" />
+		<parameter property="object_id" mode="IN" jdbcType="VARCHAR" javaType="String" />
+	</parameterMap>
+	
+	
+	<resultMap type="Notice" id="Notice">
+		<result column="notice_type" property="notice_type"/>
+		<result column="link_id" property="link_id"/>
+		<result column="notice_id" property="notice_id"/>
+		<result column="subject" property="subject"/>
+		<result column="object" property="object"/>
+		<result column="reg_date" property="reg_date"/>
+		<result column="read_flag" property="read_flag"/>
+	</resultMap>
+	
+	
+	
+	<resultMap type="NoticeHeader" id="NoticeHeader">
+		<result column="notice_type" property="notice_type"/>
+		<result column="notice_id" property="notice_id"/>
+		<result column="subject_name" property="subject_name"/>
+		<result column="subject_id" property="subject_id"/>
+		<result column="reg_date" property="reg_date"/>
+		<result column="link_id" property="link_id"/>
+		<result column="object_id" property="object_id"/>
+	</resultMap>
+	
+
+
+	<insert id="create_notice" parameterMap="procMap" statementType="CALLABLE">
+		{call NOTICE_PKG.CREATE_NOTICE (?,?,?,?,?)}
+	</insert>
+	
+	
+	
+	<select id="getUnreadNoticeCount" parameterType="String" resultType="Integer">
+		select count(*)
+		from notice
+		where OBJECT=#{value} and SUBJECT != #{value} and READ_FLAG=0
+	</select>
+	
+	
+	
+	<select id="selectNoticeList" parameterType="hashmap" resultMap="NoticeHeader">
+		select notice_type, notice_id, b.employee_name subject_name, subject subject_id, b.FILE_POSITION, reg_date, link_id
+		from (select idx, notice_type, notice_id, subject, reg_date, read_flag, link_id
+				from (select ROW_NUMBER() OVER (ORDER BY importance_level asc, reg_date desc) idx, notice_type, notice_id, link_id, subject, object, importance_level, to_char(reg_date, 'yyyy-mm-dd hh:mm:ss') reg_date, read_flag
+				      from (select n.notice_type, n.notice_id, n.subject, t.IMPORTANCE_LEVEL, n.object, n.reg_date, n.read_flag, link_id 
+				            from notice n, notice_type t 
+				            where n.notice_type = t.notice_type_id)
+				      where object = #{user_id} and read_flag = 0) a
+				where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}) a, employee b
+		where a.subject != #{user_id} and
+		      a.subject = b.employee_id
+		order by idx asc
+	</select>
+	
+	
+	<update id="updateOneReadFlag" parameterType="int">
+		UPDATE notice SET read_flag = 1 WHERE notice_id = #{value}
+	</update>
+	
+	
+	<update id="updateAllReadFlag">
+		UPDATE notice SET read_flag = 1
+	</update>
+	
+	
+	<select id="selectUnconfirmedNotices" parameterType="hashmap" resultType="Notice">
 <if test='position.equals("manager")'>
 <![CDATA[
 select unconfirmed.*
