@@ -21,7 +21,6 @@ var jsonArray=new Array();
 	jsonArray=counsellingArray;
  	 var t=JSON.stringify(jsonArray);
  	localStorage.setItem("tt", t);
- 	alert(t);
 });
  
  $(window).load( function(){
@@ -29,7 +28,6 @@ var jsonArray=new Array();
 	 var b=$('#dailyGoal').val();
 	 changeProgress(a,b);
 	 setUpdateContents('${dailyReport.content}');
-	 //pasteHTML();
  });
 </script>
 <div class="content-frame">
@@ -95,8 +93,7 @@ var jsonArray=new Array();
 						<div class="panel-heading ui-draggable-handle">
 							<h3 class="panel-title">일일 업무 보고 작성</h3>
 							<ul class="panel-controls">
-								<li><a href="#" class="panel-remove"><span
-										class="fa fa-times"></span></a></li>
+								<li></li>
 							</ul>
 						</div>
 						<div class="panel-body">
@@ -316,8 +313,7 @@ var jsonArray=new Array();
 </div>
 			</div>
 			<div class="modal-footer">
-				<!-- 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary pull-right">Submit</button>	 -->
+
 			</div>
 		</div>
 

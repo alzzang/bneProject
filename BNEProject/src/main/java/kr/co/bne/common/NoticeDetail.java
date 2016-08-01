@@ -8,6 +8,8 @@ public class NoticeDetail {
 	private String passtime;
 	private String employee_name;
 	private String content;
+	private int link_id;
+	private String  subject;
 	public int getImportance_level() {
 		return importance_level;
 	}
@@ -50,11 +52,24 @@ public class NoticeDetail {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public int getLink_id() {
+		return link_id;
+	}
+	public void setLink_id(int link_id) {
+		this.link_id = link_id;
+	}
 	@Override
 	public String toString() {
-		return "NoticeDTO [importance_level=" + importance_level + ", notice_type=" + notice_type + ", notice_id="
+		return "NoticeDetail [importance_level=" + importance_level + ", notice_type=" + notice_type + ", notice_id="
 				+ notice_id + ", reg_date=" + reg_date + ", passtime=" + passtime + ", employee_name=" + employee_name
-				+ ", content=" + content + "]";
+				+ ", content=" + content + ", link_id=" + link_id + "]";
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	

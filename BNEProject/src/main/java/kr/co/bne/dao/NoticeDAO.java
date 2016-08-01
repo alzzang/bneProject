@@ -11,4 +11,6 @@ public interface NoticeDAO {
 
 	List<NoticeDetail> selectconfirmedNotice(Map<String, String> map);
 
+	Object updateUnconfirmed(int noticeId);
+
 }

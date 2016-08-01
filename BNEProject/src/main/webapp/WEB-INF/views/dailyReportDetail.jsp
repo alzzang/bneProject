@@ -7,10 +7,7 @@
 <script src="/js/dailysettings.js"></script>
 
  <script>
-/* $( window ).load(function innerContent(){
-	var content='${dailyReport.content}';
-	$('#dailyReportContent').prepend(content);
-}); */
+
 $(document).ready(function(){
 	var a = ${dailyReport.drsales};
 	var b = ${dailyReport.wpsales}
@@ -96,11 +93,24 @@ $(document).ready(function(){
 					
 					<c:if test="${user.employee_id eq dailyReport.employee_id &&dailyReport.approval_flag eq 0}">
 					<div class="pull-right">
-						<button class="btn btn-success pull-right" onclick="updateDaily(${dailyReport.daily_report_id})" >
-					<span class="fa fa-check" ></span> 수정
-					
+						<button class="btn btn-success pull-right" onclick="deleteDaily(${dailyReport.daily_report_id})" >
+					<span class="fa fa-check" ></span> 삭제
 					</button>
 					</div>
+					
+					<div class="pull-right">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+					
+					
+					<div class="pull-right">
+						<button class="btn btn-success pull-right" onclick="updateDaily(${dailyReport.daily_report_id})" >
+					<span class="fa fa-check" ></span> 수정
+					</button>
+					
+					</div>
+					
+					
 					</c:if>
 					
 					<%-- 
@@ -353,8 +363,7 @@ $(document).ready(function(){
 </div>
 			</div>
 			<div class="modal-footer">
-				<!-- 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary pull-right">Submit</button>	 -->
+
 			</div>
 		</div>
 

@@ -27,4 +27,10 @@ public class NoticeDAOImpl implements NoticeDAO {
 		return sqlSession.selectList("kr.co.bne.mapper.Notice.selectconfirmedNotices", map);
 	}
 
+	@Override
+	public Object updateUnconfirmed(int noticeId) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("kr.co.bne.mapper.Notice.updateUnconfirmed", noticeId);
+	}
+
 }

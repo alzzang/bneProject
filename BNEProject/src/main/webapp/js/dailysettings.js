@@ -1,6 +1,30 @@
 /**
  * 
  */
+function deleteDaily(id){
+	event.stopPropagation();
+	event.preventDefault();
+	
+	var r = confirm("삭제하시겠습니까?");
+	    if (r == true) {
+	    	$.ajax({
+	    		type : "POST",
+	    		url : "/dailyReport/delete",
+	    		data : {
+	    			dailyReportId: id
+	    		},
+	    		success : function(data) {
+	    			window.location.href = "/dailyReport/main";
+	    			alert('삭제되었습니다.');
+	    		}
+	    	})
+	    } else {
+	    	alert('삭제가 취소되었습니다.');
+	    	event.stopPropagation();
+	    	event.preventDefault();
+	    }
+}
+
 function updateDaily(id){
 	event.preventDefault();
 	
@@ -19,8 +43,6 @@ function updateDaily(id){
 	//폼전송
 	form.submit();  
 	
-	/*var url = "update?daily_report_id="+id;    
-	location.href=url;*/
 }
 
 function detailDaily(id){
@@ -41,13 +63,30 @@ function detailDaily(id){
 	form.submit();  
 }
 
-function testJSON1(){
+function detailWeekly(id,subject){
+	event.preventDefault();
+	var form = document.createElement("form");     
+	form.setAttribute("method","post");                    
+	form.setAttribute("action","/weeklyReport/detail"+subject);        
+	document.body.appendChild(form);                        
+	 
+	//input
+	var input_id = document.createElement("input");  
+	input_id.setAttribute("type", "hidden");                 
+	input_id.setAttribute("name", "weeekly_report_id");                        
+	input_id.setAttribute("value", id);                          
+	form.appendChild(input_id);
+	 
+	//폼전송
+	form.submit();  
+}
+
+function localSave(){
 	$("#modalContent").val($( "#contentDiv" ).html());
 	  var o = {};
 	   var a = $( "#dailyModalForm" ).serializeArray();
 	   
 	   $.each(a, function() {
-		  // alert(this.name+":"+this.value);
 		     if (o[this.name]) {
 	           if (!o[this.name].push) {
 	               o[this.name] = [o[this.name]];
@@ -68,7 +107,7 @@ function testJSON1(){
 	   localStorage.setItem("tt", t);
 }
 //local 저장소 update
-function testJSON2(val){
+function localUpdate(val){
 	var localVar=jQuery.parseJSON(localStorage.getItem("tt"));
 	var tempIdx;
 	$.each( localVar, function( idx, value ) {
@@ -84,7 +123,6 @@ function testJSON2(val){
 	   var a = $( "#dailyModalForm" ).serializeArray();
 	   
 	   $.each(a, function() {
-		  // alert(this.name+":"+this.value);
 		     if (o[this.name]) {
 	           if (!o[this.name].push) {
 	               o[this.name] = [o[this.name]];
@@ -99,22 +137,16 @@ function testJSON2(val){
 	   
 	   jsonArray[tempIdx]=o;
 	   
-	   /*
-	    * html 코드 변경된걸로 적용  onclick과 span값 변경하기
-	    * 그리고 JSON으로 변환후 로컬스토리지에 다시 저장하기
-	   */
+
 	   $('#'+val+' a').attr('onclick', 'tagTest('+o.counsel_id+','+'\''+o.title+'\''+','+'\''+o.content+'\''+','+'\''+o.counselling_id+'\''+','+'\''+o.sec_client_id+'\''+','+'\''+o.address+'\''+','+'\''+o.client_id+'\''+','+'\''+o.representative+'\''+')'); 
 	   $('#'+val+' a').html('<span class="fa fa-tag"></span>'+o.title);
-	   //  tagTest('+'\''+obj.counsel_id+'\''+','+'\''+obj.title+'\''+','+'\''+obj.content+'\''+','+'\''+obj.counselling_id+'\''+','+'\''+obj.sec_client_id+'\''+','+'\''+obj.address+'\''+','+'\''+obj.client_id +'\''+','+'\''+obj.representative+'\''+','+'\''+obj.remove_Id+'\''+')"
-	   /*$('#'+val+' a').bind('click', function() {
-		   alert('aa');
-		 });*/
+
 	   var t=JSON.stringify(jsonArray);
 	   localStorage.setItem("tt", t);
 	   console.log(t);
 }
 //db update
-function testJSON3(val){
+function dbUpdate(val){
 	var localVar=jQuery.parseJSON(localStorage.getItem("tt"));
 	var tempIdx;
 	$.each( localVar, function( idx, value ) {
@@ -129,7 +161,6 @@ function testJSON3(val){
 	   var a = $( "#dailyModalForm" ).serializeArray();
 	   
 	   $.each(a, function() {
-		  // alert(this.name+":"+this.value);
 		     if (o[this.name]) {
 	           if (!o[this.name].push) {
 	               o[this.name] = [o[this.name]];
@@ -183,7 +214,7 @@ function tagTest(b,c,d,e,f,g,h,i,j){
 		$('#client_id').val(h);
 		$('#representative').val(i);	
 		
-		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON2('+j+')">Submit</button>');
+		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="localUpdate('+j+')">Submit</button>');
 	}else{
 		alert('띠용!!');
 		$('#modalTitle').val(c);
@@ -200,7 +231,7 @@ function tagTest(b,c,d,e,f,g,h,i,j){
 		$('#address').val(g);
 		$('#client_id').val(h);
 		$('#representative').val(i);
-		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON3('+j+')">Submit</button>');
+		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="dbUpdate('+j+')">Submit</button>');
 	}
 	
 

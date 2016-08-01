@@ -151,7 +151,7 @@ $('#myModal1').on('shown.bs.modal',	function() {
 		selectSecontClient($(this).val());
 	});
 	$('#modalAdd').on('click',function(){
-		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON1()">Submit</button>');
+		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="localSave()">Submit</button>');
 	});
 	
 	

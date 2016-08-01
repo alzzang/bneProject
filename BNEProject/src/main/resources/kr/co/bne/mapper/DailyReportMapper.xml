@@ -113,7 +113,7 @@
 
 	<select id="selectEmployee" parameterType="String" resultType="DailyReportEmployee">
 	<![CDATA[select d.DEPARTMENT_NAME,e.employee_name,m.SALES_GOAL,e.employee_id from EMPLOYEE e, MONTHLY_GOAL m, department d 
-       where e.employee_id=m.EMPLOYEE_ID and e.DEPARTMENT_ID=e.DEPARTMENT_ID and e.employee_id=#{employee_id} and m.YEAR=(select TO_CHAR(SYSDATE,'YYYY') from dual) and 
+       where e.employee_id=m.EMPLOYEE_ID and e.DEPARTMENT_ID=d.DEPARTMENT_ID and e.employee_id=#{employee_id} and m.YEAR=(select TO_CHAR(SYSDATE,'YYYY') from dual) and 
        m.MONTH=(select TO_CHAR(SYSDATE,'MM') from dual)]]>
 	</select>
 	
@@ -131,11 +131,10 @@
 	<select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
 	<![CDATA[
 	select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
-dr.AFTER_GAUGE,dr.CONTENT,wp.SALES as wpsales,dr.MANAGER_COMMENT, dr.APPROVAL_FLAG,e1.EMPLOYEE_NAME manager_name,e1.FILE_POSITION manager_file_position
-from employee e, employee e1, daily_report dr, WEEKLY_REPORT wr, WEEKLY_PLAN wp, department d
-where e.employee_id=dr.employee_id and  e.EMPLOYEE_ID=wr.EMPLOYEE_ID and 
-wr.WEEKLY_REPORT_ID=wp.WEEKLY_REPORT_ID and wp.REG_DATE=dr.REG_DATE and 
-e.EMPLOYEE_ID=dr.EMPLOYEE_ID and d.department_id=dr.department_id and e1.EMPLOYEE_ID=d.MANAGER_ID
+dr.AFTER_GAUGE,dr.CONTENT,dr.MANAGER_COMMENT, dr.APPROVAL_FLAG,e1.EMPLOYEE_NAME manager_name,e1.FILE_POSITION manager_file_position
+from employee e, employee e1, daily_report dr, department d
+where e.employee_id=dr.employee_id and  
+d.department_id=dr.department_id and e1.EMPLOYEE_ID=d.MANAGER_ID
 and dr.daily_report_id=#{id}
 	]]>
 	</select>
@@ -192,4 +191,8 @@ and dr.daily_report_id=#{id}
 	<update id="deleteComment" parameterType="String">
 		update daily_report set manager_comment='' where daily_report_id=#{daily_report_id}
 	</update>
+	
+	<delete id="deleteReport" parameterType="String">
+		delete daily_report where daily_report_id=#{id}
+	</delete>
 </mapper>

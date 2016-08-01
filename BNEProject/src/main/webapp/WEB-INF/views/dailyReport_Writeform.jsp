@@ -12,7 +12,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- 111 -->
 
-<!-- <script src="/js/dailysettings.js"></script> -->
 <script>
 
 var jsonArray=new Array();
@@ -83,8 +82,7 @@ var removeId=0;
 						<div class="panel-heading ui-draggable-handle">
 							<h3 class="panel-title">일일 업무 보고 작성</h3>
 							<ul class="panel-controls">
-								<li><a href="#" class="panel-remove"><span
-										class="fa fa-times"></span></a></li>
+								<li></li>
 							</ul>
 						</div>
 						<div class="panel-body">
@@ -294,7 +292,7 @@ var removeId=0;
 					</div>
 
 					<div class="panel-footer" id="counselling-footer">
-					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON1()">Submit</button>
+					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="localSave()">Submit</button>
 					</div> 
 				</div>
 				<input type="hidden" value="${sessionScope.user.department_id }" name="department_id">
@@ -307,8 +305,6 @@ var removeId=0;
 </div>
 			</div>
 			<div class="modal-footer">
-				<!-- 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary pull-right">Submit</button>	 -->
 			</div>
 		</div>
 

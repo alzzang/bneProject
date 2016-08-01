@@ -3,19 +3,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- <style>
- #log{
-	position:fixed;
-	top:0;
-	left:0;
-	width:100px;
-	height:50px;
-	background-color:rgba(0,0,0,0.7);
-	color:white;
-	text-align:center;
-	line-height:50px;
-}
-</style> -->
 <script>
 var tasksIdx=2;
 var tasksCompleteIdx=2;
@@ -31,8 +18,6 @@ $(window).load(function(){
 			 if (timer) {
 				unconfirmedData(); // 실행
 			} 
-			//alert('aa');
-			//sendData();
 			tasksIdx++;
 		};
 	});
@@ -47,6 +32,27 @@ $(window).load(function(){
 	});
 
 });
+
+function selectNoticeType(type){
+	event.preventDefault();
+	
+	var form = document.createElement("form");     
+	form.setAttribute("method","post");                    
+	form.setAttribute("action","/alarm/detail");        
+	document.body.appendChild(form);                        
+	 
+	//input
+	var input_id = document.createElement("input");  
+	input_id.setAttribute("type", "hidden");                 
+	input_id.setAttribute("name", "notice_type");                        
+	input_id.setAttribute("value", type);                          
+	form.appendChild(input_id);
+	 
+	//폼전송
+	form.submit();  
+		
+}
+
 function unconfirmedData(){
 		timer = false;
 
@@ -56,6 +62,7 @@ function unconfirmedData(){
 					// 주소 넣기
 					data : {
 						"start" : tasksIdx,
+						"type" : $('#notice_type').val()
 					},
 					dataType : 'json',
 					error : function() {
@@ -71,13 +78,17 @@ function unconfirmedData(){
 							for(var i=0;i<len;i++){
 								var html="";
 								if(list[i].notice_type=="DAILY_POST"){
-									html='<div class="task-item task-primary">';
+									html='<div class="task-item task-primary" id="'+list[i].notice_id+'" onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
 								}else if(list[i].notice_type=="WEEKLY_POST"){
-									html='<div class="task-item task-success">';
+									html='<div class="task-item task-success" id="'+list[i].notice_id+'" onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
 								}else if(list[i].notice_type=="DAILY_CORRECT"){
-									html='<div class="task-item task-warning">';
+									html='<div class="task-item task-warning" id="'+list[i].notice_id+'" onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
 								}else if(list[i].notice_type=="WEEKLY_CORRECT"){
-									html='<div class="task-item task-danger">';
+									html='<div class="task-item task-danger" id="'+list[i].notice_id+'" onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
+								}else if(list[i].notice_type=="APPROVAL"){
+									html='<div class="task-item task-primary" id="'+list[i].notice_id+'" onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
+								}else if(list[i].notice_type=="COMMENT"){
+									html='<div class="task-item task-warning" id="'+list[i].notice_id+'" onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
 								}
 								html+='<div class="task-text ui-sortable-handle">'+list[i].content+'</div>';
 								html+='<div class="task-footer">'+'<div class="pull-left"><span class="fa fa-clock-o"></span>'+list[i].passtime+'</div>';
@@ -89,12 +100,36 @@ function unconfirmedData(){
 								}, 500)
 							}
 						}
-						//var ip = $('#ip').val();
-						//var kind = $('#kind').val();
 					}
 		});
 }
+function moveLink(noticeId,type,linkId,subject){
+	$.ajax({
+		type : "POST",
+		url : '/alarm/click',
+		data : {
+			"noticeId" : noticeId
+		},
+		success : function(data) {
+			if(type=="DAILY_POST"){
+				detailDaily(linkId);
+			}else if(type=="WEEKLY_POST"){
+				detailWeekly(linkId,subject);
+			}else if(type=="DAILY_CORRECT"){
+				detailDaily(linkId);
+			}else if(type=="WEEKLY_CORRECT"){
+				detailWeekly(linkId,subject);
+			}else if(type=="APPROVAL"){
+				detailDaily(linkId);
+			}else if(type=="COMMENT"){
+				detailDaily(linkId);
+			}
+		}
+	});
+	
+}
 function confirmedData(){
+	
 	timer1 = false;
 
 	$.ajax({
@@ -103,6 +138,7 @@ function confirmedData(){
 				// 주소 넣기
 				data : {
 					"start" : tasksCompleteIdx,
+					"type" : $('#notice_type').val()
 				},
 				dataType : 'json',
 				error : function() {
@@ -118,13 +154,17 @@ function confirmedData(){
 						for(var i=0;i<len;i++){
 							var html="";
 							if(list[i].notice_type=="DAILY_POST"){
-								html='<div class="task-item task-primary task-complete">';
+								html='<div class="task-item task-primary task-complete"  id="'+list[i].notice_id+'" onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
 							}else if(list[i].notice_type=="WEEKLY_POST"){
-								html='<div class="task-item task-success task-complete">';
+								html='<div class="task-item task-success task-complete"  id="'+list[i].notice_id+'"onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
 							}else if(list[i].notice_type=="DAILY_CORRECT"){
-								html='<div class="task-item task-warning task-complete">';
+								html='<div class="task-item task-warning task-complete"   id="'+list[i].notice_id+'"onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
 							}else if(list[i].notice_type=="WEEKLY_CORRECT"){
-								html='<div class="task-item task-danger task-complete">';
+								html='<div class="task-item task-danger task-complete"  id="'+list[i].notice_id+'" onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
+							}else if(list[i].notice_type=="APPROVAL"){
+								html='<div class="task-item task-primary task-complete"  id="'+list[i].notice_id+'" onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
+							}else if(list[i].notice_type=="COMMENT"){
+								html='<div class="task-item task-warning task-complete"  id="'+list[i].notice_id+'" onclick='+'\"moveLink(this.id,'+'\''+list[i].notice_type+'\''+','+list[i].link_id+','+list[i].subject+')'+'\"'+'>';
 							}
 							html+='<div class="task-text ui-sortable-handle">'+list[i].content+'</div>';
 							html+='<div class="task-footer">'+'<div class="pull-left"><span class="fa fa-clock-o"></span>'+list[i].passtime+'</div>';
@@ -136,30 +176,46 @@ function confirmedData(){
 							}, 500)
 						}
 					}
-					//var ip = $('#ip').val();
-					//var kind = $('#kind').val();
 				}
 	});
 }
-function testAdd(){
-	var html='<div class="task-item task-success">';                                    
-    html+='<div class="task-text ui-sortable-handle">Suspendisse a tempor eros. Curabitur fringilla maximus lorem, eget congue lacus ultrices eu. Nunc et molestie elit. Curabitur consectetur mollis ipsum, id hendrerit nunc molestie id.</div>';
-    html+='<div class="task-footer"><div class="pull-left"><span class="fa fa-clock-o"></span> 1h 45min</div>';
-    html+='<div class="pull-right"><a href="#"><span class="fa fa-chain"></span></a> <a href="#"><span class="fa fa-comments"></span></a></div></div></div>';
-	$('#tasks_completed').append(html);
+
+function removeUnconfirmed(noticeId,type,linkId,subject){
+	event.stopPropagation();
+	$.ajax({
+		type : "POST",
+		url : '/alarm/click',
+		data : {
+			"noticeId" : noticeId
+		},
+		success : function(data) {
+			
+			
+			var $html=$('<div class="task-item task-nowconfirmed" id="'+noticeId+'" onclick='+'\"moveLink('+noticeId+','+'\''+type+'\''+','+linkId+','+subject+')'+'\"'+'>'+$('#'+noticeId+'').html()+'</div>');
+
+			if(type=="DAILY_POST"){
+				$html.addClass("task-primary")
+			}else if(type=="WEEKLY_POST"){
+				$html.addClass("task-success")
+			}else if(type=="DAILY_CORRECT"){
+				$html.addClass("task-warning")
+			}else if(type=="WEEKLY_CORRECT"){
+				$html.addClass("task-danger")
+			}else if(type=="APPROVAL"){
+				$html.addClass("task-primary")
+			}else if(type=="COMMENT"){
+				$html.addClass("task-warning")
+			}
+			$('#'+noticeId+'').remove();
+			$('#tasks_completed').prepend($html);
+			$('#'+noticeId+' a').remove();		
+		}
+	});
+	
 }
 </script> 
-<!-- <style>
-.pre-scrollable, .myDiv1{
-    height: 90px;
-    width: 300px;
-    border: 1px solid;
-    background-color: lavender;
-    overflow: scroll;
-}
-</style> -->
-<div class="content-frame">  
-<button id="btn1" onclick="testAdd()">aaa</button>   
+
+<div class="content-frame">   
                     <!-- START CONTENT FRAME TOP -->
                     <div class="content-frame-top">                        
                         <div class="page-title">                    
@@ -184,10 +240,18 @@ function testAdd(){
                         <div class="form-group">
                             <h4>Task groups:</h4>
                             <div class="list-group border-bottom">
-                                <a href="#" class="list-group-item"><span class="fa fa-circle text-primary"></span> 등록</a>
-                                <a href="#" class="list-group-item"><span class="fa fa-circle text-success"></span> 커멘트</a>
-                                <a href="#" class="list-group-item"><span class="fa fa-circle text-warning"></span> 승인</a>
-                                <a href="#" class="list-group-item"><span class="fa fa-circle text-danger"></span> 수정</a>
+                            	<a href="#" class="list-group-item" onclick="selectNoticeType('')"><span class="fa fa-circle text-muted"></span> 전체</a>
+                                <c:if test="${position eq 'manager'}">
+                                <a href="#" class="list-group-item" onclick="selectNoticeType('DAILY_POST')"><span class="fa fa-circle text-primary"></span> 일일업무 등록</a>
+                                <a href="#" class="list-group-item" onclick="selectNoticeType('DAILY_CORRECT')"><span class="fa fa-circle text-warning"></span> 일일업무 수정</a>
+                                </c:if>
+                                <c:if test="${position eq 'employee'}">
+                                <a href="#" class="list-group-item" onclick="selectNoticeType('APPROVAL')"><span class="fa fa-circle text-primary"></span> 승인</a>
+                                <a href="#" class="list-group-item" onclick="selectNoticeType('COMMENT')"><span class="fa fa-circle text-warning"></span> COMMENT</a>
+                                </c:if>
+                                <a href="#" class="list-group-item" onclick="selectNoticeType('WEEKLY_POST')"><span class="fa fa-circle text-success"></span> 주간업무 등록</a>
+                                <a href="#" class="list-group-item" onclick="selectNoticeType('WEEKLY_CORRECT')"><span class="fa fa-circle text-danger"></span> 주간업무 수정</a>
+                                
                                 <!-- <a href="#" class="list-group-item"><span class="fa fa-circle text-info"></span> Work</a> -->
                             </div>
                         </div>
@@ -208,18 +272,24 @@ function testAdd(){
                                 <div class="tasks ui-sortable pre-scrollable" id="tasks">
 									<c:forEach items="${unList}" var="ulist">
 										<c:if test="${ulist.notice_type eq 'DAILY_POST'}">
-											<div class="task-item task-primary" onclick="alert('aa')">
+											<div class="task-item task-primary" id="${ulist.notice_id }" onclick="moveLink(this.id,'${ulist.notice_type}',${ulist.link_id},${ulist.subject })">
 										</c:if>
 										<c:if test="${ulist.notice_type eq 'WEEKLY_POST'}">
-											<div class="task-item task-success" onclick="alert('aa')">
+											<div class="task-item task-success" id="${ulist.notice_id }" onclick="moveLink(this.id,'${ulist.notice_type}',${ulist.link_id},${ulist.subject })">
 										</c:if>
 										<c:if test="${ulist.notice_type eq 'DAILY_CORRECT'}">
-											<div class="task-item task-warning" onclick="alert('aa')">
+											<div class="task-item task-warning" id="${ulist.notice_id }" onclick="moveLink(this.id,'${ulist.notice_type}',${ulist.link_id},${ulist.subject })">
 										</c:if>
 										<c:if test="${ulist.notice_type eq 'WEEKLY_CORRECT'}">
-											<div class="task-item task-danger" onclick="alert('aa')">
+											<div class="task-item task-danger" id="${ulist.notice_id }" onclick="moveLink(this.id,'${ulist.notice_type}',${ulist.link_id},${ulist.subject })">
 										</c:if>
-										                      
+										<c:if test="${ulist.notice_type eq 'APPROVAL'}">
+											<div class="task-item task-primary" id="${ulist.notice_id }" onclick="moveLink(this.id,'${ulist.notice_type}',${ulist.link_id},${ulist.subject })">
+										</c:if>
+										<c:if test="${ulist.notice_type eq 'COMMENT'}">
+											<div class="task-item task-warning" id="${ulist.notice_id }" onclick="moveLink(this.id,'${ulist.notice_type}',${ulist.link_id},${ulist.subject })">
+										</c:if>
+										    <a class="pull-right" href="#" onclick="removeUnconfirmed(${ulist.notice_id },'${ulist.notice_type}',${ulist.link_id},${ulist.subject })"><span class="glyphicon glyphicon-remove"></span></a>                
                                         	<div class="task-text ui-sortable-handle">${ulist.content}</div>
                                         	<div class="task-footer">
                                             	<div class="pull-left"><span class="fa fa-clock-o"></span>${ulist.passtime}</div>                                    
@@ -242,16 +312,23 @@ function testAdd(){
                                     
                                     <c:forEach items="${cnList}" var="clist">
 										<c:if test="${clist.notice_type eq 'DAILY_POST'}">
-											<div class="task-item task-primary task-complete">
+											<div class="task-item task-primary task-complete" id="${ulist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
 										</c:if>
 										<c:if test="${clist.notice_type eq 'WEEKLY_POST'}">
-											<div class="task-item task-success task-complete">
+											<div class="task-item task-success task-complete" id="${ulist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
 										</c:if>
 										<c:if test="${clist.notice_type eq 'DAILY_CORRECT'}">
-											<div class="task-item task-warning task-complete">
+											<div class="task-item task-warning task-complete" id="${ulist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
 										</c:if>
 										<c:if test="${clist.notice_type eq 'WEEKLY_CORRECT'}">
-											<div class="task-item task-danger task-complete">
+											<div class="task-item task-danger task-complete" id="${ulist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
+										</c:if>
+										
+										<c:if test="${clist.notice_type eq 'APPROVAL'}">
+											<div class="task-item task-primary task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
+										</c:if>
+										<c:if test="${clist.notice_type eq 'COMMENT'}">
+											<div class="task-item task-warning task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
 										</c:if>
 										                    
                                         	<div class="task-text ui-sortable-handle">${clist.content}</div>
@@ -260,20 +337,8 @@ function testAdd(){
                                         	</div>                                    
                                     	</div>
 									</c:forEach>
-                                    <!-- <div class="task-item task-danger task-complete">                                    
-                                        <div class="task-text ui-sortable-handle">Donec maximus sodales feugiat.</div>
-                                        <div class="task-footer">
-                                            <div class="pull-left"><span class="fa fa-clock-o"></span> 15min</div>                                    
-                                        </div>                                    
-                                    </div>
-                                    
-                                    <div class="task-item task-info task-complete">                                    
-                                        <div class="task-text ui-sortable-handle">Aliquam eget est a dui tincidunt commodo in nec ante.</div>
-                                        <div class="task-footer">
-                                            <div class="pull-left"><span class="fa fa-clock-o"></span> 35min</div>                                    
-                                        </div>                                    
-                                    </div>
-                                     -->                                   
+									<input type="hidden" id="notice_type"	value="${type}">
+                                                                    
                                 </div>
                             </div>
                         </div>                        

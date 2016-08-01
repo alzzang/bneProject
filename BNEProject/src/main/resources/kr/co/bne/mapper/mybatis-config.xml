@@ -23,7 +23,7 @@
 		<typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>
 		<typeAlias alias="DailyReportDetail" type="kr.co.bne.dto.DailyReportDetailDTO"/>
 		<typeAlias alias="CounsellingDetail" type="kr.co.bne.dto.CounsellingDetailDTO"/>
-		<typeAlias alias="Notice" type="kr.co.bne.dto.NoticeDTO"/>
+		<typeAlias alias="Notice" type="kr.co.bne.common.NoticeDetail"/>
 		
 	</typeAliases>
 

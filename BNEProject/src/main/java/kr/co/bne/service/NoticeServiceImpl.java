@@ -27,4 +27,10 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDAO.selectconfirmedNotice(map);
 	}
 
+	@Override
+	public void click(int noticeId) {
+		// TODO Auto-generated method stub
+		noticeDAO.updateUnconfirmed(noticeId);
+	}
+
 }

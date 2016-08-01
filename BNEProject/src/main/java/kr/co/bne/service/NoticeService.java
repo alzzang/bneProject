@@ -11,4 +11,6 @@ public interface NoticeService {
 
 	List<NoticeDetail> searchconfirmedNotice(Map<String, String> map);
 
+	void click(int noticeId);
+
 }

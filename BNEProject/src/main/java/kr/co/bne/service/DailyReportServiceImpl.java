@@ -95,7 +95,21 @@ public class DailyReportServiceImpl implements DailyReportService {
 	@Override
 	public DailyReportDetailDTO viewReport(String id) {
 		// TODO Auto-generated method stub
-		return dao.selectDailyReport(id);  
+		DailyReportDetailDTO dto=dao.selectDailyReport(id);
+		HashMap<String,String> map=new HashMap<String, String>();
+		map.put("reg_date", dto.getReg_date());
+		map.put("employee_id", dto.getEmployee_id());
+		int wpsales=0;
+		try {
+			wpsales=dao.selectDailySalesGoal(map);
+		} catch (Exception e) {
+			// TODO: handle exception
+			dto.setWpsales(wpsales);
+		}
+
+		//System.out.println(obj);
+		//dto.setWpsales(wpsales);
+		return dto;  
 	}
 
 	@Override
@@ -175,6 +189,13 @@ public class DailyReportServiceImpl implements DailyReportService {
 	public void removeComment(String daily_report_id) {
 		// TODO Auto-generated method stub
 		dao.deleteComment(daily_report_id);
+	}
+
+
+	@Override
+	public void delete(String id) {
+		// TODO Auto-generated method stub
+		dao.deleteReport(id);
 	}
 
 }

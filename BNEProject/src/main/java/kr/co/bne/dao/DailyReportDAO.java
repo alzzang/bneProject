@@ -39,4 +39,5 @@ public interface DailyReportDAO {
 	int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException;
 	public void insertComment(HashMap<String, String> map);
 	public void deleteComment(String daily_report_id);
+	public void deleteReport(String id);
 }

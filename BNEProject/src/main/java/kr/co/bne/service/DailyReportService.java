@@ -38,5 +38,6 @@ public interface DailyReportService {
 	HashMap<String, Object> selectTeamMemberList(String user_id);
 	public void writeComment(HashMap<String, String> map);
 	public void removeComment(String daily_report_id);
+	public void delete(String id);
 	
 }
