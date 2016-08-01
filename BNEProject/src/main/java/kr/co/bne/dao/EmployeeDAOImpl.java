@@ -49,9 +49,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 	}
 	@Override
+	public List<EmployeeDTO> selectTeamMember(int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.Employee.selectTeamMember",id);
+	}
+	@Override
 	public List<EmployeeDTO> getEmpSearch(String empSearch) {
 
 		return sqlSession.selectList("kr.co.bne.mapper.Employee.empSearch", empSearch);
 	}
+	
 
 }

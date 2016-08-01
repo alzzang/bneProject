@@ -9,5 +9,6 @@ public interface UserService {
 	public void modifyPassword(String id, String rawPassword);
 	public void modifyFilePosition(String id, String filePosition);
 	public void modifyFilePosition(String id);
+	public List<EmployeeDTO> getTeamMember(String position, int departmentId);
 	public List<EmployeeDTO> getEmpSearch(String empSearch);
 }

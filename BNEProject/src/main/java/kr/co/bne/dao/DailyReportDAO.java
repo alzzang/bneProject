@@ -27,7 +27,10 @@ public interface DailyReportDAO {
 	public void deleteCounsellingRecord(int i);
 	public int selectMonthlyGoal(String id);
 	public int selectSumofMonthlyGoal(String id);
-	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(int departmentId);
+	
+	public int selectMonthlyGoalManager(String id);
+	public int selectSumofMonthlyGoalManager(String id);
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String id);
 	
 	
 	List<DailyReportListElement> selectDailyReportList(String user_id, int startIdx, int perContentNum,
@@ -43,6 +46,7 @@ public interface DailyReportDAO {
 	int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException;
 	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id);
 	public List<DailyReportChart2DTO> selectDailyReportChartLine2List();
+	public List<?> selectVehicleGauge(String id);
 	
 	
 }

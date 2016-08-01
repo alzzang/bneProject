@@ -45,8 +45,7 @@
 							<label class="col-md-2 control-label">Re-New Password</label>
 							<div class="col-md-2">
 								<input type="password" class="form-control" name="renewpassword" id="renewpassword"
-											
-									title="Password must contain at least 6 characters, including UPPER/lowercase and numbers." required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" placeholder="Re-New Password" id="renewpassword">
+							    		title="Please check that you've entered and confirmed your password! " required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" placeholder="Re-New Password" id="renewpassword">
 							</div>
 						</div>
 

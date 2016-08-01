@@ -15,11 +15,13 @@
 	</definition>
 	
 	<definition name="main" extends="tilesbase">
-		<!-- <put-attribute name="body" value="/WEB-INF/views/board.jsp" /> -->
-		
-		
-	<put-attribute name="body" value="/WEB-INF/views/barChart.jsp" /> 
+	<put-attribute name="body" value="/WEB-INF/views/main.jsp" /> 
 	</definition>
+	
+	<definition name="chartPage" extends="tilesbase">
+	<put-attribute name="body" value="/WEB-INF/views/chart.jsp" /> 
+	</definition>
+	
 	
 	<definition name="main2" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/counsellingForm.jsp" />

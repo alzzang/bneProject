@@ -54,9 +54,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<EmployeeDTO> getTeamMember(String position,int departmentId) {
+		// TODO Auto-generated method stub
+		
+		if(position.equals("manager")){
+			return employeeDAO.selectTeamMember(departmentId);	
+		}
+		
+	return null;
+	}
+
+	@Override
 	public List<EmployeeDTO> getEmpSearch(String empSearch) {
 		
 		return employeeDAO.getEmpSearch(empSearch);
 	}
-
 }

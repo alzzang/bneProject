@@ -57,15 +57,10 @@ function selectSecontClient(value) {
 }
 
 $(function() {
-
-
-
 	$('#sockettest').on('click',function(){
-				socket.emit('notice',{fromId:'1', toId:'2', message:'notice'});
-		});	
+		socket.emit('notice',{fromId:($("#employee_id").val()), toId:'2', message:'새로운 메세지'});
+	});	
 	
-
-
 	$('#myModal1').on('shown.bs.modal',	function() {
 		var myDropzone = Dropzone.forElement("#myDropzone");
 		var mockFile = {
@@ -87,16 +82,13 @@ $(function() {
 		$(this).find('.note-editable').empty();
 		var myDropzone = Dropzone.forElement("#myDropzone");
 		myDropzone.removeAllFiles();
-		
 	});
-
 	$("#counsel_id").change(function() {
 		$("#sec_client_id").val('');
 	    $(this).find('form')[0].reset();
 	    $(this).find('.note-editable').empty();
-	    $(this).find('#myDropzone').filter($('.dz-preview').remove());
+	    //$(this).find('#myDropzone').filter($('.dz-preview').remove());
 	});
-
 	$('#myModal4').on('hidden.bs.modal', function() {
 		$("#sec_client_id").val('');
 	    $(this).find('form')[0].reset();
@@ -166,6 +158,7 @@ $(function() {
 */	
 	$("#empSearch").on("keyup",function(e){
 		/* db에 보낼 str*/
+		
 		var str=$("#empSearch").val();
 		var html='';
 		var html2='';
@@ -177,9 +170,6 @@ $(function() {
 		}else{
 			empSearchKeyUp(str,keycode);
 		}
-		
-		
-		
 	});
 	
 	$("#empSearch").on("click",function(e){

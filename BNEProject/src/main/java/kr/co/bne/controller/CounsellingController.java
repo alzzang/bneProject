@@ -69,7 +69,7 @@ public class CounsellingController {
 
 		List<SecondaryClientDTO> secondaryClient = secondaryClientService.getSecondaryClient(clientId);
 
-		System.out.println(secondaryClient);
+		
 		for (SecondaryClientDTO temp : secondaryClient) {
 			jobj = new JSONObject();
 			jobj.put("client_id", temp.getClient_id());

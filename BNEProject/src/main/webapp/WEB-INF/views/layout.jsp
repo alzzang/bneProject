@@ -28,8 +28,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 }
 </style>
 
-<!-- <script src="http://localhost:3000/socket.io/socket.io.js"></script>  -->
-<!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script>  -->
+<!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script> -->
 </head>
 
 <body>
@@ -39,7 +38,15 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	</c:if>
 
 	<input type="hidden" id='fileName' value='${sessionScope.fileName}'>
-	<input type="hidden" id='department_id' value='${sessionScope.user.department_id}'>  
+	<input type="hidden" name="department_id" id="department_id" value="${sessionScope.user.department_id}">
+
+<!--   <script type="text/javascript">
+   	 var socket;
+	 var socket=io.connect('http://192.168.1.27:3000');
+	 socket.emit('employeeId',{employeeId: '${sessionScope.user.employee_id}'});
+	 socket.on('newmessage',function(data){ noty({text: data.fromId+'로부터 메세지가도착했습니다.', layout: 'topRight', type: 'success', timeout: 5000}) });
+  </script>    -->
+		
 	
 	<div class="page-container">
 		<div class="page-sidebar page-sidebar-fixed scroll mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="height: 979px;">
@@ -49,16 +56,6 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 			<tiles:insertAttribute name="header" />
 			<tiles:insertAttribute name="body" />
 		</div>
-
-<!--  <script type="text/javascript">
-		var socket=io.connect('http://localhost:3000');
-		socket.emit('getId',{employeeId: '${sessionScope.user.employee_id}' });
-		socket.on('newmessage',function(data){
-			alert(data);
-			$('#appendtest').append('1');
-		});
-</script>   -->
-	
 	</div>
 
 	<!-- MESSAGE BOX-->
@@ -123,7 +120,13 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<script type="text/javascript" src="/js/weekly.js"></script>
 	<script type="text/javascript" src="/js/usersettings.js"></script>
 	<script type="text/javascript" src="/js/dailysettings.js"></script>
-	<!-- <script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script> -->
+	
+	<script type='text/javascript' src='/js/plugins/noty/jquery.noty.js'></script>
+    <script type='text/javascript' src='/js/plugins/noty/layouts/topCenter.js'></script>
+    <script type='text/javascript' src='/js/plugins/noty/layouts/topLeft.js'></script>
+    <script type='text/javascript' src='/js/plugins/noty/layouts/topRight.js'></script>            
+    <script type='text/javascript' src='/js/plugins/noty/themes/default.js'></script>
+
 	
 	
 	<!-- END TEMPLATE -->

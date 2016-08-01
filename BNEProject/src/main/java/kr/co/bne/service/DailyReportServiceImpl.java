@@ -64,7 +64,6 @@ public class DailyReportServiceImpl implements DailyReportService {
 		List<DailyReportListElement> dailyReportList = null;
 		int totalPageNum = 0;
 		
-		
 		dailyReportList = dao.selectDailyReportList(user_id, startIdx, perContentNum, params);
 		totalPageNum = dao.getPagingNum_DailyReportList(user_id, perContentNum, params);
 		
@@ -167,12 +166,18 @@ public class DailyReportServiceImpl implements DailyReportService {
 	}
 
 	@Override
-	public HashMap<String, Integer> selectMonthlyGoal(String id) {
+	public HashMap<String, Integer> selectMonthlyGoal(String id,String position) {
 		// TODO Auto-generated method stub
 		HashMap<String, Integer> result = new HashMap<String, Integer>();
-		result.put("monthlyGoal", dao.selectMonthlyGoal(id));
-		result.put("sumofMonthlyGoal", dao.selectSumofMonthlyGoal(id));
 		
+		if(position.equals("manager")){
+			result.put("monthlyGoal", dao.selectMonthlyGoalManager(id));
+			result.put("sumofMonthlyGoal", dao.selectSumofMonthlyGoalManager(id));
+		}
+		else{
+			result.put("monthlyGoal", dao.selectMonthlyGoal(id)); //목표액
+			result.put("sumofMonthlyGoal", dao.selectSumofMonthlyGoal(id)); //달성액
+		}
 		return result;
 	}
 
@@ -185,12 +190,15 @@ public class DailyReportServiceImpl implements DailyReportService {
 		result.put("List2", dao.selectDailyReportChartLine2List());
 		return result;
 	}
-
-
 	@Override
-	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(int departmentId) {
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId) {
 		// TODO Auto-generated method stub
-		return dao.selectTeamMonthlyGoal(departmentId);
+		return dao.selectTeamMonthlyGoal(employeeId);
+	}
+	@Override
+	public List<?> selectVehicleGauge(String id) {
+		// TODO Auto-generated method stub
+		return dao.selectVehicleGauge(id);
 	}
 
 
