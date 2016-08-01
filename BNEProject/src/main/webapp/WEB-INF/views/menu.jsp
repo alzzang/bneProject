@@ -49,12 +49,6 @@
 						<span class="fa fa-gear"></span></a> 
 						<a href="#"	class="profile-control-right" id="sockettest">
 							<span class="fa fa-envelope"></span></a>
-
-						<a href="/user/changeProfile" class="profile-control-left"> <span
-							class="fa fa-gear"></span></a> <a href="#"
-							class="profile-control-right" id="sockettest"> <span
-							class="fa fa-envelope"></span></a>
-
 					</div>
 
 				</div>
@@ -90,21 +84,9 @@
 
 
 
-			<li class="xn-openable"><a href="#"><span
-					class="fa fa-file-text-o"></span> <span class="xn-text">Layouts</span></a>
-				<ul>
-					<li><a href="layout-boxed.html">Boxed</a></li>
-					<li><a href="layout-nav-toggled.html">Navigation Toggled</a></li>
-					<li><a href="layout-nav-top.html">Navigation Top</a></li>
-					<li><a href="layout-nav-right.html">Navigation Right</a></li>
-					<li><a href="layout-nav-top-fixed.html">Top Navigation
-							Fixed</a></li>
-					<li><a href="layout-nav-custom.html">Custom Navigation</a></li>
-					<li><a href="layout-frame-left.html">Frame Left Column</a></li>
-					<li><a href="layout-frame-right.html">Frame Right Column</a></li>
-					<li><a href="layout-search-left.html">Search Left Side</a></li>
-					<li><a href="blank.html">Blank Page</a></li>
-				</ul></li>
+			<li class=""><a href="/chart/page"><span
+					class="fa fa-file-text-o"></span> <span class="xn-text">chart</span></a>
+				</li>
 			<li class="xn-title">Components</li>
 			<li class="xn-openable"><a href="#"><span class="fa fa-cogs"></span>
 					<span class="xn-text">UI Kits</span></a>

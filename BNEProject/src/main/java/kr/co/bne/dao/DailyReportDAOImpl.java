@@ -112,12 +112,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		
 		return pageNum;
 	}
-	
-	
 
-
-	
-	
 	@Override
 	public List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException {
 		List<DailyReportTeamListElement> teamList = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMemberList", user_id);
@@ -151,23 +146,37 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	}
 
 	@Override
+	public int selectMonthlyGoalManager(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectMonthlyGoalManager", id);
+	}
+	@Override
+	public int selectSumofMonthlyGoalManager(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoalManager", id);
+	}
+	@Override
 	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id){
-		System.out.println("DAO chart id : "+id);
+		
 		List<DailyReportChartDTO> dailyRepoartChartList = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChartList",id);
-		System.out.println("list"+dailyRepoartChartList);
 		return dailyRepoartChartList;
 	}
 	
 	@Override
 	public List<DailyReportChart2DTO> selectDailyReportChartLine2List(){
 		List<DailyReportChart2DTO> dailyRepoartChart2List = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChart2List");
-		System.out.println("list2 "+dailyRepoartChart2List);
 		return dailyRepoartChart2List;
 	}
 	@Override
-	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(int departmentId) {
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMonthlyGoal", departmentId);
+		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMonthlyGoal", id);
 	}
+	@Override
+	public List<?> selectVehicleGauge(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectVehicleGauge", id);
+	}
+	
 	
 }

@@ -1,14 +1,24 @@
-var morrisCharts = function() {
+var mainpageMorrisCharts = function() {
 	$.ajax({
 		type : "POST",
-		url : "/monthlySales",
+		url : "/chart/monthlySales",
 		data : {
 			employee_id : $('#employee_id').val()
 		},
 		dataType : 'json',
 		success : function(data) {
 
-			var achievement = data.sumofMonthlyGoal / data.monthlyGoal * 100;
+			var achievement = Math.round((data.sumofMonthlyGoal / data.monthlyGoal) * 100);
+			var achievermentLimit = achievement;
+			
+			if(achievement>=100){
+				achievermentLimit=100;
+			}
+			
+			if(isNaN(achievement)||!isFinite(achievement)){
+				achievement=0;
+			}
+			
 			Morris.Donut({
 				element : 'morris-donut-example',
 				data : [ {
@@ -17,9 +27,10 @@ var morrisCharts = function() {
 					formatted : achievement+'%'
 				}, {
 					label : "lack of achievement rate",
-					value : 100-achievement,
-					formatted : 100-achievement+'%'
+					value : 100-achievermentLimit,
+					formatted : 100-achievermentLimit+'%'
 				} ],
+				colors : [ '#95B75D', '#1caf9a'],
 				formatter : function(x, data) {
 					return data.formatted;
 				}
@@ -32,27 +43,29 @@ var morrisCharts = function() {
 
 	$.ajax({
 		type : "POST",
-		url : "/teamMonthlySales",
+		url : "/chart/teamMonthlySales",
 		data : {
-			department_id : $('#department_id').val()
+			employee_id : $('#department_id').val()
 		},
 		dataType : 'json',
 		success : function(data) {
 			var morrisData = [];
-					
 			for(var i=0; i<data.length;i++){
 				morrisData.push({
 					y: data[i].employee_name,
 					a: data[i].sales_goal
 				});
 			}
-			
 			Morris.Bar({
 				element : 'morris-bar-example1',
 				data : morrisData,
 				xkey : 'y',
 				ykeys : [ 'a' ],
-				labels : [ 'monthly Sales' ]
+				labels : [ 'monthly Sales' ],
+				barColors : [ '#33414E' ],
+				gridTextSize : 2,
+				resize : true				
+				
 			});
 		},
 		error : function() {
@@ -60,91 +73,105 @@ var morrisCharts = function() {
 		}
 	});
 
+	$.ajax({
+		type : "POST",
+		url : "/chart/morrisChartLine",
+		data : {
+			// login employee_id 받아오기
+			employee_id : $('#employee_id').val()
+		},
+		dataType : 'json',
+
+		success : function(data) {
+			var jsonLoop = new Array();
+			
+			list1 = data.List1;
+			list2 = data.List2;
+			var chartFlag = true;
+			for (var i = 0; i < list2.length; i++) {
+
+				for (var j = 0; j < list1.length; j++) {
+					if (list2[i].reg_date === list1[j].reg_date) {
+
+						jsonLoop.push({
+							y : list2[i].reg_date,
+							a : list1[j].sales,
+							b : list2[i].sales
+						});
+						chartFlag = false;
+					}
+				}
+				if (chartFlag) {
+					jsonLoop.push({
+						y : list2[i].reg_date,
+						a : 0,
+						b : list2[i].sales
+					});
+				}
+				chartFlag = true;
+			}
+			Morris.Line({
+				element : 'morris-line-example',
+				data : jsonLoop,
+				xkey : 'y',
+				ykeys : [ 'a', 'b' ],
+				labels : [ 'My Sales', 'Avg Team Sales' ],
+				resize : true,
+				lineColors : [ '#33414E', '#95B75D' ]
+			});
+		},
+		error : function() {
+			alert('error');
+		}
+	});
+}
+
+
+var subpageMorrisCharts = function(data) {
 	
+	var employeeId=$('#employee_id').val();
+	
+	if(data!=undefined){
+		employeeId=data;
+	}
 
-	Morris.Bar({
-		element : 'morris-bar-example2',
-		data : [ {
-			y : '일',
-			a : 260
-		}, {
-			y : '월',
-			a : 2850
-		}, {
-			y : '화',
-			a : 2133
-		}, {
-			y : '수',
-			a : 2754
-		}, {
-			y : '목',
-			a : 2905
-		}, {
-			y : '금',
-			a : 2163
-		}, {
-			y : '토',
-			a : 731
-		} ],
-		xkey : 'y',
-		ykeys : [ 'a' ],
-		labels : [ 'Series A' ]
+	$.ajax({
+		type : "POST",
+		url : "/chart/vehicleGauge",
+		data : {
+			employee_id :  employeeId
+		},
+		dataType : 'json',
+		success : function(data) {
+			$("#morris-bar-gaugeChart").empty();
+			
+			var morrisData = [];
+			for(var i=0; i<data.length;i++){
+				morrisData.push({
+					y: data[i].day,
+					a: data[i].distance
+				});
+			}
+			Morris.Bar({
+				element : 'morris-bar-gaugeChart',
+				data : morrisData,
+				xkey : 'y',
+				ykeys : [ 'a' ],
+				labels : [ 'distance' ],
+				barColors : [ '#33414E' ],
+				gridTextSize : 2,
+				resize : true				
+				
+			});
+		},
+		error : function() {
+			alert("nono");
+		}
 	});
-	Morris.Bar({
-		element : 'morris-bar-example3',
-		data : [ {
-			y : '홍길동',
-			a : 260
-		}, {
-			y : '홍길동',
-			a : 2850
-		}, {
-			y : '홍길동',
-			a : 2133
-		}, {
-			y : '홍길동',
-			a : 2754
-		}, {
-			y : '홍길동',
-			a : 2905
-		}, {
-			y : '홍길동',
-			a : 2163
-		}, {
-			y : '홍길동',
-			a : 2163
-		}, {
-			y : '홍길동',
-			a : 2163
-		}, {
-			y : '홍길동',
-			a : 2850
-		}, {
-			y : '홍길동',
-			a : 2133
-		}, {
-			y : '홍길동',
-			a : 2754
-		}, {
-			y : '홍길동',
-			a : 2905
-		}, {
-			y : '홍길동',
-			a : 2163
-		}, {
-			y : '홍길동',
-			a : 2163
-		}, {
-			y : '홍길동',
-			a : 2163
-		}, {
-			y : '홍길동',
-			a : 731
-		} ],
-		xkey : 'y',
-		ykeys : [ 'a' ],
-		labels : [ 'Series A' ]
-	});
+}
 
-
-}();
+$("#member_id").change(function() {
+	
+	subpageMorrisCharts($(this).val());
+	
+});

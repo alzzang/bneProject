@@ -30,4 +30,10 @@
 	]]>
 	</select>
 
+	<select id="selectTeamMember" resultType="Employee" parameterType="Integer">
+	<![CDATA[select employee_name,employee_id from employee where department_id=#{values}]]>
+	</select>
+
+
+
 </mapper>
