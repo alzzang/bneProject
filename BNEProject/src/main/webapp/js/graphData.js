@@ -8,16 +8,28 @@ var mainpageMorrisCharts = function() {
 		dataType : 'json',
 		success : function(data) {
 
+			
+		
+			
+				
 			var achievement = Math.round((data.sumofMonthlyGoal / data.monthlyGoal) * 100);
+			
+			if(isNaN(achievement)||!isFinite(achievement)){
+				achievement=0;
+			}
+			
+			var achievermentLimit = achievement;
+				
+			if(achievement>=100){
+				achievermentLimit=100;
+			}
+			
 			var achievermentLimit = achievement;
 			
 			if(achievement>=100){
 				achievermentLimit=100;
 			}
-			
-			if(isNaN(achievement)||!isFinite(achievement)){
-				achievement=0;
-			}
+		
 			
 			Morris.Donut({
 				element : 'morris-donut-example',

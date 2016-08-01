@@ -53,31 +53,7 @@ public class MainController {
 	}
 
 	
-	@RequestMapping("/monthlySales")
-	public @ResponseBody HashMap<String,Integer> getSales(HttpServletRequest req,HttpServletResponse res, @RequestParam("employee_id")String id) {
-		
-		HttpSession session = req.getSession();
-		EmployeeDTO employee = (EmployeeDTO)session.getAttribute("user");
-		
-		return dailyReportService.selectMonthlyGoal(id, employee.getPosition());
-		
-	}
-	
-	@RequestMapping("/teamMonthlySales")
-	public @ResponseBody List<DailyReportEmployeeDTO> getTeamSales(HttpServletResponse res, @RequestParam("employee_id")String id) {
-		return dailyReportService.selectTeamMonthlyGoal(id);
-	}
-	
-/*	@RequestMapping("/vehiclegauge")
-	public @ResponseBody HashMap<String,List<>> getVehiclegauge(HttpServletResponse res, @RequestParam("employee_id")String id) {
-		return dailyReportService.selectTeamMonthlyGoal(id);
-	}
-*/
-	@RequestMapping(value = "/morrisChartLine", method = { RequestMethod.POST })
-	public @ResponseBody HashMap<String,List<?>> getDailyReportChart(HttpServletResponse res, @RequestParam("employee_id") String employee_id)
-			throws JSONException, IOException {
-	return dailyReportService.searchDailyChartLine(employee_id);
-	}
+
 	
 	
 }

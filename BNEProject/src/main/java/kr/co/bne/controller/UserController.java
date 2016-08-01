@@ -135,13 +135,7 @@ public class UserController {
 		EmployeeDTO employeeDTO = new EmployeeDTO();
 		employeeDTO = userService.validCheck(id, rawPassword);
 		String newpassword = req.getParameter("newpassword");
-		System.out.println("========================");
-		System.out.println("========================");
-		System.out.println("========================");
-		System.out.println("========================");
-		System.out.println("========================");
-		System.out.println("getPosition : "+employeeDTO.getPosition());
-
+		
 		if (newpassword == null) {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
@@ -176,8 +170,7 @@ public class UserController {
 	@RequestMapping(value = "/searchUser/{empId}", method = { RequestMethod.GET })
 	public String showSearchUser(Model model,@PathVariable String empId, HttpServletRequest req, HttpServletResponse res)
 			throws IOException {
-		System.out.println("searchUser empId : "+empId);
-		
+				
 		EmployeeDTO ed = employeeDAO.selectEmployee(empId);
 		model.addAttribute("emp",ed);
 		System.out.println("where ? : ");

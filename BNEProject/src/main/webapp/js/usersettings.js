@@ -158,6 +158,7 @@ $(function() {
 */	
 	$("#empSearch").on("keyup",function(e){
 		/* db에 보낼 str*/
+		
 		var str=$("#empSearch").val();
 		var html='';
 		var html2='';
@@ -169,9 +170,6 @@ $(function() {
 		}else{
 			empSearchKeyUp(str,keycode);
 		}
-		
-		
-		
 	});
 	
 	$("#empSearch").on("click",function(e){
