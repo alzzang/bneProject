@@ -528,7 +528,8 @@ function x_navigation(){
     
     /* XN-SEARCH */
     $(".xn-search").on("click",function(){
-        $(this).find("input").focus();
+    	console.log('xn-search on click');
+//        $(this).find("input").focus();
     })
     /* END XN-SEARCH */
 

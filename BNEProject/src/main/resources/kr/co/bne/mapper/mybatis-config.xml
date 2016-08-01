@@ -26,6 +26,10 @@
 		
 		<typeAlias alias="DailyReportChartListElement" type="kr.co.bne.dto.DailyReportChartDTO"/>
 		<typeAlias alias="DailyReportChart2ListElement" type="kr.co.bne.dto.DailyReportChart2DTO"/> 
+		<typeAlias alias="CounsellingManageSalesList" type="kr.co.bne.dto.CounsellingManageSalesDTO"/>
+		<typeAlias alias="CounsellingManageSales" type="kr.co.bne.common.CounsellingManageSales"/>
+		<typeAlias alias="CounsellingSalesGoal" type="kr.co.bne.common.CounsellingSalesGoal"/>
+		
 		
 		<typeAlias alias="Gauge" type="kr.co.bne.dto.GaugeDTO"/>
 		

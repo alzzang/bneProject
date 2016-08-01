@@ -13,6 +13,7 @@ public interface EmployeeDAO {
 	public void updateFile(HashMap<String, String> info);
 	public void updateFile(String id);
 	public EmployeeDTO selectImage(String employee_id);
+	public List<EmployeeDTO> getEmpSearch(String empSearch);
 		
 	
 }

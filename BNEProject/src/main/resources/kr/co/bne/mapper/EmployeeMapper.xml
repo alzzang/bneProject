@@ -10,6 +10,8 @@
         ELSE 'employee' END position from employee e, department d where e.DEPARTMENT_ID = d.DEPARTMENT_ID
   		and employee_id = #{value}]]>
 	</select>
+	
+	
 
 	<update id="updatePassword" parameterType="HashMap">
 	<![CDATA[update employee set password=#{password} where employee_id=#{id}]]>
@@ -29,6 +31,17 @@
 	select employee_name,file_position from employee where employee_id='1'
 	]]>
 	</select>
+	
+	<select id="empSearch" parameterType="String" resultType="Employee">
+		<![CDATA[
+		    select EMPLOYEE_ID,EMPLOYEE_NAME,DEPARTMENT_ID
+			from employee
+			where EMPLOYEE_NAME like #{value}
+			order by 2
+	  	]]>
+	</select>
+	
+	
 
 	<select id="selectTeamMember" resultType="Employee" parameterType="Integer">
 	<![CDATA[select employee_name,employee_id from employee where department_id=#{values}]]>

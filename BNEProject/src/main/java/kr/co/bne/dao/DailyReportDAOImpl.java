@@ -142,6 +142,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Override
 	public int selectSumofMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
+		System.out.println("selectSumofMonthlyGoal : "+id);
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
 	}
 

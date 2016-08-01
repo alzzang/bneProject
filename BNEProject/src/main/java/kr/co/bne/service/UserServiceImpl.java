@@ -64,4 +64,9 @@ public class UserServiceImpl implements UserService {
 	return null;
 	}
 
+	@Override
+	public List<EmployeeDTO> getEmpSearch(String empSearch) {
+		
+		return employeeDAO.getEmpSearch(empSearch);
+	}
 }
