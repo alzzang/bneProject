@@ -132,8 +132,7 @@ window.onload = function(){
 	for(var i=2; i<7; i++){
 		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
 	} 
-	var date = $('#calendar').fullCalendar('getDate');
-	
+	var date = $('#calendar').fullCalendar('getDate');	
 	
 $('#aaaa').on('click',function(){
 	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
@@ -142,9 +141,9 @@ $('#aaaa').on('click',function(){
 	var date = $('#calendar').fullCalendar('getDate');
 	var year = date._d.getFullYear();
 	
-	
-	
 	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
+	
+	
 	var report_title = $('#weeklyReportId')[0].value;
 	if(report_title == ""){
 		report_title = weeklyNumber+"주의 계획";

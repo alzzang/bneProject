@@ -41,6 +41,7 @@
 	<!-- END CONTENT FRAME TOP -->
 
 	<!-- START CONTENT FRAME LEFT --> 
+	<form  action="/weeklyReport/modifyWeeklyReport" method="post">	
 	<div class="content-frame-left" style="height: 1054px;">
 	 <div class="panel panel-default" >
 		<div class="panel-heading">
@@ -48,7 +49,7 @@
 				<h3 class="panel-title">개인 정보</h3>
 			</div>	
 		</div>	
-			<form  action="/weeklyReport/modifyWeeklyReport" method="post">	
+			
 			<input type ="hidden" name = "weekly_report_id" id = "weekly_report_id" ><br>
 			<input type="hidden" name="department_id" value="${user.department_id}" disabled><br>
 			<input type="hidden" name="employee_Id" value="${employee_Id}" disabled>
@@ -115,8 +116,10 @@
 			</div>
 		</div>
 	</div>
+	</form>    
 	<!-- END CONTENT FRAME BODY -->
-</div>    
+</div>
+
 <script>
 	var makeReportId = function(flag){
 		var report_id;
@@ -362,8 +365,8 @@
 			})
 		});
 
-		var reportData = JSON.parse('${weeklyReportDetail}');
-		inputReportData(reportData);
+/* 		var reportData = JSON.parse('${weeklyReportDetail}');
+		inputReportData(reportData); */
 
 	}
 </script>

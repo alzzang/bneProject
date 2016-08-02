@@ -1,5 +1,6 @@
 package kr.co.bne.controller;
 
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,7 +67,7 @@ public class WeeklyController {
 	
 	
 	@RequestMapping("/writeForm")
-	public String WeeklyWriteForm(Model model, HttpSession session) throws Exception{
+	public String WeeklyWriteForm(Model model,HttpServletResponse response,HttpServletRequest request, HttpSession session) throws Exception{
 		EmployeeDTO loginEmployee = (EmployeeDTO) session.getAttribute("user");
 		
 		System.out.println("들어옴");
@@ -86,9 +87,30 @@ public class WeeklyController {
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		model.addAttribute("currentDate", dateFormat.format(calendar.getTime()));
+		int week_of_year = calendar.get(Calendar.WEEK_OF_YEAR) +1; 
+		int year = calendar.get(Calendar.YEAR);
+		String weekly_report_id = year+"_"+week_of_year+"_"+loginId;
 		
-		System.out.println(loginEmployee.toString());
-		
+		System.out.println(weekly_report_id);
+		WeeklyReportDetailDTO reportDetail = weeklyReportService.selectWeeklyReportDetail(weekly_report_id);
+		if(reportDetail != null){
+			String o = request.getHeader("ORIGIN");
+			String referer =  request.getHeader("referer");
+			String urlArr[] = referer.split("http://");
+			urlArr = urlArr[1].split("/");
+			String splitUrl = "/"+urlArr[1];
+			String origin[] = referer.split(splitUrl);
+			
+			String url = referer.replace(origin[0], "");
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script>var flag = confirm('작성된 계획이 존재합니다. 계획을 보시겠습니까?\\n취소 시 전의 있던 페이지로 이동합니다.'); if(flag == 1){window.location.href='/weeklyReport/detail/"+loginId+"'}else {window.location.href='"+url+"'}</script>");
+			out.flush();
+			out.close();
+
+			/*if(choice == 0)*/
+				//return "redirect:/weeklyReport/detail/"+loginId;
+		}
 		return "weeklyWrite";
 	}
 	
@@ -201,7 +223,7 @@ public class WeeklyController {
 	}
 	
 	@RequestMapping("/modifyWeeklyReport")
-	public ModelAndView modifyWeeklyReport(Model model,HttpServletRequest request,HttpServletResponse response)throws Exception {
+	public ModelAndView modifyWeeklyReport(Model model,HttpServletRequest request,HttpServletResponse responsel)throws Exception {
 		ModelAndView mv = new ModelAndView("weeklyModify");
 		String weeklyReportId = (String)request.getParameter("weekly_report_id");
 		System.out.println("weeklyReportId"+weeklyReportId);
