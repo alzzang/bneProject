@@ -5,7 +5,7 @@ import java.util.List;
 
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
-
+import kr.co.bne.dto.DailyReportChart2DTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -44,4 +44,5 @@ public interface DailyReportService {
 	public HashMap<String,Integer> selectMonthlyGoal(String id, String position);
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId);
 	public List<?> selectVehicleGauge(String id);
+	public List<DailyReportChart2DTO> selectCustomersSales(int departmentid);
 }

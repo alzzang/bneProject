@@ -162,7 +162,6 @@ public class UserController {
 		
 			String temp="%"+empSearch+"%";
 			List<EmployeeDTO> list =userService.getEmpSearch(temp);
-			System.out.println(list);
 			return list;
 	}
 
@@ -173,8 +172,6 @@ public class UserController {
 				
 		EmployeeDTO ed = employeeDAO.selectEmployee(empId);
 		model.addAttribute("emp",ed);
-		System.out.println("where ? : ");
-		
 		return "searchUser";
 	}
 }

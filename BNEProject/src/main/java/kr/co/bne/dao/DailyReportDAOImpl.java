@@ -177,6 +177,11 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectVehicleGauge", id);
 	}
+	@Override
+	public List<DailyReportChart2DTO> selectCustomerSales(int departmentId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectCustomerSales", departmentId);
+	}
 	
 	
 }

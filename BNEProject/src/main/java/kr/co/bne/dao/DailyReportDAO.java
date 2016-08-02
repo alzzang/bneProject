@@ -42,11 +42,10 @@ public interface DailyReportDAO {
 	List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException;
 
 	int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException;
-
 	int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException;
 	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id);
 	public List<DailyReportChart2DTO> selectDailyReportChartLine2List();
 	public List<?> selectVehicleGauge(String id);
-	
+	public List<DailyReportChart2DTO> selectCustomerSales(int departmentId);
 	
 }

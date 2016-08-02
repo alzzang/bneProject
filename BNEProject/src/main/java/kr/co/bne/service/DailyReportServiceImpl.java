@@ -12,7 +12,7 @@ import kr.co.bne.dao.DailyReportDAO;
 import kr.co.bne.dao.EmployeeDAO;
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
-
+import kr.co.bne.dto.DailyReportChart2DTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -199,6 +199,13 @@ public class DailyReportServiceImpl implements DailyReportService {
 	public List<?> selectVehicleGauge(String id) {
 		// TODO Auto-generated method stub
 		return dao.selectVehicleGauge(id);
+	}
+
+
+	@Override
+	public List<DailyReportChart2DTO> selectCustomersSales(int departmentId) {
+		// TODO Auto-generated method stub
+		return dao.selectCustomerSales(departmentId);
 	}
 
 

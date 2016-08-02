@@ -7,30 +7,19 @@ var mainpageMorrisCharts = function() {
 		},
 		dataType : 'json',
 		success : function(data) {
-
-			
-		
-			
 				
 			var achievement = Math.round((data.sumofMonthlyGoal / data.monthlyGoal) * 100);
 			
 			if(isNaN(achievement)||!isFinite(achievement)){
 				achievement=0;
 			}
-			
+
 			var achievermentLimit = achievement;
 				
 			if(achievement>=100){
 				achievermentLimit=100;
 			}
-			
-			var achievermentLimit = achievement;
-			
-			if(achievement>=100){
-				achievermentLimit=100;
-			}
-		
-			
+					
 			Morris.Donut({
 				element : 'morris-donut-example',
 				data : [ {
@@ -57,7 +46,7 @@ var mainpageMorrisCharts = function() {
 		type : "POST",
 		url : "/chart/teamMonthlySales",
 		data : {
-			employee_id : $('#department_id').val()
+			department_id : $('#department_id').val()
 		},
 		dataType : 'json',
 		success : function(data) {
@@ -138,11 +127,46 @@ var mainpageMorrisCharts = function() {
 	});
 }
 
+var customerSales = function(){
+	
+	$.ajax({
+		type : "POST",
+		url : "/chart/customersSales",
+		data : {
+			department_id : $('#department_id').val()
+		},
+		dataType : 'json',
+		success : function(data) {
+			
+			for(var i=0; i<data.length;i++){
+				var html= "<div class='progress-list'> " +
+						"<div class='pull-left'>" +
+						"<strong>" +
+						data[i].client_name +
+						"</strong></div> " +
+						"<div class='pull-right'>" +
+						data[i].sales +"만"+
+						"</div> " +
+						"<div class='progress progress-small progress-striped active'>"+
+						"<div class='progress-bar progress-bar-primary' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100' style='width: " +
+						data[i].sales_rate +
+						"%;'>"+
+						data[i].sales_rate+
+						"</div></div></div>";
+				$("#customerSales").append(html);
+			}
+		},
+		error : function() {
+			alert("nono");
+		}
+	});
+	
+}
 
-var subpageMorrisCharts = function(data) {
+
+var gaugeDistance = function(data) {
 	
 	var employeeId=$('#employee_id').val();
-	
 	if(data!=undefined){
 		employeeId=data;
 	}
@@ -155,6 +179,7 @@ var subpageMorrisCharts = function(data) {
 		},
 		dataType : 'json',
 		success : function(data) {
+							
 			$("#morris-bar-gaugeChart").empty();
 			
 			var morrisData = [];
@@ -180,10 +205,9 @@ var subpageMorrisCharts = function(data) {
 			alert("nono");
 		}
 	});
+
 }
 
 $("#member_id").change(function() {
-	
-	subpageMorrisCharts($(this).val());
-	
+	gaugeDistance($(this).val());
 });
