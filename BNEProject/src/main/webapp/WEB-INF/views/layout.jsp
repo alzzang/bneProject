@@ -153,7 +153,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 	<script type="text/javascript" src="/js/plugins.js"></script>
 	<script type="text/javascript" src="/js/actions.js"></script>
-	<script type="text/javascript" src="/js/dailysettings.js"></script>
+	<!-- <script type="text/javascript" src="/js/dailysettings.js"></script> -->
 	<script src="/js/notice_on_header.js"></script>
 	<script type="text/javascript" src="/js/usersettings.js"></script>
 	
@@ -179,6 +179,19 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 		socket.on('newmessage', function(data) {
 			var message = createNoticeString(data.fromName, data.notice_type);
 			var path = '/dailyReport/main';
+			
+			$.ajax({
+				url : "/alarm/unReadCount/" + $("#employee_id").val(),
+				success : function(data) {
+					$("#newMessageCount_title").html(data);
+				}
+			});
+			
+			if($('#noticeButton').hasClass('active')) {
+				getNoticeList(1, 5);	
+			}	
+			
+			
 			
 			$.notify({
 				// options
@@ -218,24 +231,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 			'</div>'
 			});
 
-			
-			
-			
-			$(function(){
-				var path = "/alarm/unReadCount/" + $("#employee_id").val();
-				
-				$.ajax({
-					url : path,
-					success : function(data) {
-						$("#newMessageCount_title").html(data);
-					}
-				});
-			});
-			
-			
-			if($('#noticeButton').hasClass('active')) {
-				getNoticeList(1, 5);	
-			}			
+					
 		});
 
 		
