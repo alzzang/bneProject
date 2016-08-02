@@ -32,7 +32,7 @@ public class MainController {
 	@RequestMapping("/main")
 	public String goMain() {
 
-		return "main";
+		return "mainboard";
 
 	}
 		

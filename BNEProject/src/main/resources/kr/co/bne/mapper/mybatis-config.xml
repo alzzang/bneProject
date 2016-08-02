@@ -46,6 +46,6 @@
 		<mapper resource="kr/co/bne/mapper/SecondaryClientMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/WeeklyPlanMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/WeeklyReportMapper.xml"/>		
-
+		<mapper resource="kr/co/bne/mapper/NoticeMapper.xml"/>
 	</mappers>
 </configuration>

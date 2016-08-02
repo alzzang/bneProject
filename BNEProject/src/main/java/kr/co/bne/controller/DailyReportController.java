@@ -227,55 +227,76 @@ public class DailyReportController {
 		
 		return "dailyReportMain";
 	}
-	@RequestMapping(value="/update")
+	@RequestMapping(value="/update" ,method = RequestMethod.POST)
 	public ModelAndView goUpdate(@RequestParam("daily_report_id")String id,HttpServletRequest req,HttpServletResponse res){
 		DailyReportDTO dailyreport=dailyReportService.searchDailyReport(id);
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
 		String counsellingJson=new Gson().toJson(counsellingRecord);
-		
 		String[] tt=dailyreport.getReg_date().split(" ");
 		dailyreport.setReg_date(tt[0]);
+		
+		List<ClientDTO> clietns=clientService.getClient();
+		
 		ModelAndView model=new ModelAndView("updateDailyReport");
 		model.addObject("dailyReport",dailyreport);
 		model.addObject("counsellingJson", counsellingJson);
+		model.addObject("clients", clietns);
 		return model;
 	}
 
 	
-	@RequestMapping("/write")
+		@RequestMapping("/write")
 	public ModelAndView goWriteform(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session=req.getSession();
 		EmployeeDTO sessionid = (EmployeeDTO) session.getAttribute("user");
 		DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(sessionid.getEmployee_id());
+		List<ClientDTO> clietns=clientService.getClient();
+		
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
 		model.addObject("employee", employee);
-				
+		model.addObject("clients", clietns);
+		
+		
 		return model;
 	}
 	@RequestMapping("/writeform")
-	public ModelAndView goWrite(@ModelAttribute DailyReportDTO dailyReportDTO  ,HttpServletRequest req, HttpServletResponse res) {
-		ModelAndView model=new ModelAndView("dailyReport_Writeform");
+	public ModelAndView goWrite(@ModelAttribute DailyReportDTO dailyReportDTO  ,HttpServletRequest req, HttpServletResponse res,RedirectAttributes redirectAttributes) {
+		ModelAndView model=new ModelAndView("redirectDetail");
 		JsonParser parser=new JsonParser();
-		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
+		JsonArray json=null;
 		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
-		for(int i=0;i<json.size();i++){
-			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
-			list.add(dto);
-		
+		try {
+			json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
+			for(int i=0;i<json.size();i++){
+				CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			dailyReportService.writeDailyReport(dailyReportDTO,list);
 		}
-		dailyReportService.writeDailyReport(dailyReportDTO,list);
-		
+		model.addObject("dailyReportId", dailyReportDTO.getDaily_report_id());
+	
 		return model;
 	}
 	
 	
-	@RequestMapping("/detail")
-	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id) {
+@RequestMapping(value="/detail", method = RequestMethod.POST)
+	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id,HttpServletRequest req,HttpServletResponse res) {
 		DailyReportDetailDTO dailyReport=dailyReportService.viewReport(id);
+		
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
+		
 		ModelAndView model=new ModelAndView("dailyReportDetail");
 		model.addObject("dailyReport", dailyReport);
 		model.addObject("counselList",counsellingRecord);
+		
+		HttpSession session=req.getSession();
+		EmployeeDTO user=(EmployeeDTO) session.getAttribute("user");
+		//if(user.getPosition().equals("manager")){
+			DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(dailyReport.getEmployee_id());
+			session.setAttribute("employee", employee);
 		
 		return model;
 	}
@@ -294,7 +315,6 @@ public class DailyReportController {
 		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
 		for(int i=0;i<json.size();i++){
 			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
-			
 			list.add(dto);
 		}
 		dailyReportService.updateDailyReport(dailyReportDTO,list);
@@ -338,7 +358,21 @@ public class DailyReportController {
 	public void goApproval(@RequestParam("report_id")String daily_report_id,HttpServletRequest req,HttpServletRequest res){
 		dailyReportService.approvalDailyReport(daily_report_id);
 	}
+	@RequestMapping(value="/writecomment", method = RequestMethod.POST)
+	public void writeComment(@RequestParam("report_id")String daily_report_id,@RequestParam("comment")String comment,HttpServletRequest req,HttpServletResponse res){
+		HashMap<String, String> map=new HashMap<String, String>();
+		map.put("daily_report_id", daily_report_id);
+		map.put("comment", comment);
+		dailyReportService.writeComment(map);
+
+	}
 	
+	@RequestMapping(value="/deletecomment", method = RequestMethod.POST)
+	public void writeComment(@RequestParam("report_id")String daily_report_id,HttpServletRequest req,HttpServletResponse res){
+
+		dailyReportService.removeComment(daily_report_id);
+
+	}
 /*	@RequestMapping("/jsontest")
 	public void goJSON(HttpServletRequest req,HttpServletResponse res){
 		String aa=req.getParameter("dd");

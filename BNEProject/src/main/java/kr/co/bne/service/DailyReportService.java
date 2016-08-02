@@ -40,6 +40,10 @@ public interface DailyReportService {
 	int getgetTotalUnapprovalNum(String position, String user_id);
 
 	HashMap<String, Object> selectTeamMemberList(String user_id);
+	public void writeComment(HashMap<String, String> map);
+	public void removeComment(String daily_report_id);
+	public void delete(String id);
+	
 	public HashMap<String, List<?>> searchDailyChartLine(String employee_id);
 	public HashMap<String,Integer> selectMonthlyGoal(String id, String position);
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId);

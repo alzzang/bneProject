@@ -5,7 +5,7 @@ import java.util.List;
 public class DailyReportDTO {
 	private int daily_report_id;
 	private int department_id;
-	private int employee_id;
+	private String employee_id;
 	private String title;
 	private String reg_date;
 	private int sales;
@@ -18,7 +18,7 @@ public class DailyReportDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public DailyReportDTO(int daily_report_id, int department_id, int employee_id, String title, String reg_date,
+	public DailyReportDTO(int daily_report_id, int department_id, String employee_id, String title, String reg_date,
 			int sales, int before_gauge, int after_gauge, String content, String manager_comment, int approval_flag) {
 		super();
 		this.daily_report_id = daily_report_id;
@@ -45,10 +45,10 @@ public class DailyReportDTO {
 	public void setDepartment_id(int department_id) {
 		this.department_id = department_id;
 	}
-	public int getEmployee_id() {
+	public String getEmployee_id() {
 		return employee_id;
 	}
-	public void setEmployee_id(int employee_id) {
+	public void setEmployee_id(String employee_id) {
 		this.employee_id = employee_id;
 	}
 	public String getTitle() {
@@ -109,7 +109,7 @@ public class DailyReportDTO {
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + daily_report_id;
 		result = prime * result + department_id;
-		result = prime * result + employee_id;
+		result = prime * result + Integer.parseInt(employee_id);
 		result = prime * result + ((manager_comment == null) ? 0 : manager_comment.hashCode());
 		result = prime * result + ((reg_date == null) ? 0 : reg_date.hashCode());
 		result = prime * result + sales;

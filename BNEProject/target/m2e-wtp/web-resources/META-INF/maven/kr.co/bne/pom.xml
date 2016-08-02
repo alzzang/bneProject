@@ -129,20 +129,34 @@
 		</dependency>
 
 
+      
+      
+      <!-- AspectJ <dependency> <groupId>org.aspectj</groupId> <artifactId>aspectjrt</artifactId> 
+         <version>${org.aspectj-version}</version> </dependency> <dependency> <groupId>aspectj</groupId> 
+         <artifactId>aspectjweaver</artifactId> <version>1.5.3</version> </dependency> -->
+
+      <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+      <dependency>
+         <groupId>org.aspectj</groupId>
+         <artifactId>aspectjrt</artifactId>
+         <version>1.8.9</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+      <dependency>
+         <groupId>org.aspectj</groupId>
+         <artifactId>aspectjweaver</artifactId>
+         <version>1.8.9</version>
+      </dependency>
 
 
-		<!-- AspectJ -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
-		</dependency>
 
-		<dependency>
-			<groupId>aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.5.3</version>
-		</dependency>
+
+
+
+
+
+
 
 
 		<!-- Logging -->

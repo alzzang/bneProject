@@ -25,7 +25,7 @@
 
 
 
-			<li class="xn-profile active">
+			<li class="xn-profile active" id="dropdd">
 			
 				<a href="#" class="profile-mini"> <img
 					src="/user/download/${sessionScope.user.file_position}/"></a>
@@ -84,10 +84,10 @@
 					
 					
 					
-					
-					
 				</ul></li>
-
+			<li class=""><a href="/dailyReport/write"><span
+					class="fa fa-desktop"></span> <span class="xn-text">일일 업무 보고</span></a>
+			</li>
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">일일 업무 보고</span></a>
 			</li>
@@ -100,6 +100,29 @@
 			<li class=""><a href="/chart/page"><span
 					class="fa fa-file-text-o"></span> <span class="xn-text">chart</span></a>
 				</li>
+				<li class="xn-openable"><a href="#"><span
+					class="fa fa-file-text-o"></span> <span class="xn-text">Layouts</span></a>
+				<ul>
+					<li><a href="layout-boxed.html">Boxed</a></li>
+					<li><a href="layout-nav-toggled.html">Navigation Toggled</a></li>
+					<li><a href="layout-nav-top.html">Navigation Top</a></li>
+					<li><a href="layout-nav-right.html">Navigation Right</a></li>
+					<li><a href="layout-nav-top-fixed.html">Top Navigation
+							Fixed</a></li>
+					<li><a href="layout-nav-custom.html">Custom Navigation</a></li>
+					<li><a href="layout-frame-left.html">Frame Left Column</a></li>
+					<li><a href="layout-frame-right.html">Frame Right Column</a></li>
+					<li><a href="layout-search-left.html">Search Left Side</a></li>
+					<li><a href="blank.html">Blank Page</a></li>
+				</ul></li>
+			
+			
+			
+			
+			
+			
+			
+			
 			<li class="xn-title">Components</li>
 			<li class="xn-openable"><a href="#"><span class="fa fa-cogs"></span>
 					<span class="xn-text">UI Kits</span></a>

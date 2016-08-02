@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="kr.co.bne.mapper.DailyReport">
+
 
 	<resultMap type="DailyReportListElement" id="DailyReportListElement">
 		<result column="employee_id" property="employee_id" />
@@ -40,8 +40,7 @@
 
 
 	<!-- 전체 리스트 페이징 -->
-	<select id="selectDailyReportList" parameterType="hashmap"
-		resultMap="DailyReportListElement">
+	<select id="selectDailyReportList" parameterType="hashmap" resultMap="DailyReportListElement">
 
 		select daily_report_id idx, employee_id, employee_name, title,
 		reg_date, approval_flag
@@ -289,7 +288,17 @@ and dr.daily_report_id=#{id}
 	select nvl(b.sales,0) sales, c.client_name, nvl(round(sales/sum(sales)over()*100),0) as sales_rate from (select sum(a.sales) sales, s.client_id from (select c.SEC_CLIENT_ID, d.sales from daily_report d, COUNSEL_RECORD c where d.DAILY_REPORT_ID = c.DAILY_REPORT_ID and d.REG_DATE between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 and c.DEPARTMENT_ID=#{value})a, SECONDARY_CLIENT s where a.SEC_CLIENT_ID=s.SEC_CLIENT_ID group by s.client_id) b,client c where b.client_id (+)= c.client_id and department_id=#{value}]]>
 	</select>
 
-
+<update id="insertComment" parameterType="hashmap">
+		update daily_report set manager_comment=#{comment} where daily_report_id=#{daily_report_id}
+	</update>
+	
+	<update id="deleteComment" parameterType="String">
+		update daily_report set manager_comment='' where daily_report_id=#{daily_report_id}
+	</update>
+	
+	<delete id="deleteReport" parameterType="String">
+		delete daily_report where daily_report_id=#{id}
+	</delete>
 
 
 </mapper>

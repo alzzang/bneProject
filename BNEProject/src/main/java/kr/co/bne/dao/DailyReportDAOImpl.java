@@ -182,6 +182,11 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectCustomerSales", departmentId);
 	}
+	@Override
+	public void deleteReport(String id) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteReport", id);
+	}
 	
 	
 }

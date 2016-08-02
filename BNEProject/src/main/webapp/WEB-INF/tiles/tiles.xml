@@ -45,7 +45,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/password.jsp"/>
 	</definition>
 	
-	
+	<definition name="redirectDetail" template="/WEB-INF/views/redirectDetail.jsp"/>
 	
 	<definition name="updateDailyReport" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Modifyform.jsp"/>

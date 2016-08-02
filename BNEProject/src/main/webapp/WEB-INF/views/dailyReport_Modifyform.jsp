@@ -21,7 +21,6 @@ var jsonArray=new Array();
 	jsonArray=counsellingArray;
  	 var t=JSON.stringify(jsonArray);
  	localStorage.setItem("tt", t);
- 	alert(t);
 });
  
  $(window).load( function(){
@@ -29,7 +28,6 @@ var jsonArray=new Array();
 	 var b=$('#dailyGoal').val();
 	 changeProgress(a,b);
 	 setUpdateContents('${dailyReport.content}');
-	 //pasteHTML();
  });
 </script>
 <div class="content-frame">
@@ -60,15 +58,15 @@ var jsonArray=new Array();
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td>${employee.department_name}</td>
+						<td>${sessionScope.employee.department_name}</td>
 					</tr>
 					<tr>
 						<th>성명</th>
-						<td>${employee.employee_name}</td>
+						<td>${sessionScope.employee.employee_name}</td>
 					</tr>
 					<tr>
 						<th>매출목표</th>
-						<td>${employee.sales_goal}</td>
+						<td id="goalValue">${sessionScope.employee.sales_goal}</td>
 					</tr>
 				</thead>
 			</table>
@@ -76,6 +74,10 @@ var jsonArray=new Array();
 
 		</div>
 	</div>
+	
+	<script>
+	$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
+	</script>
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->
@@ -91,8 +93,7 @@ var jsonArray=new Array();
 						<div class="panel-heading ui-draggable-handle">
 							<h3 class="panel-title">일일 업무 보고 작성</h3>
 							<ul class="panel-controls">
-								<li><a href="#" class="panel-remove"><span
-										class="fa fa-times"></span></a></li>
+								<li></li>
 							</ul>
 						</div>
 						<div class="panel-body">
@@ -191,7 +192,6 @@ var jsonArray=new Array();
 								</div>
 							</div>
 							<jsp:include page="SmartEditor2.jsp"></jsp:include>
-							<%-- <jsp:include page="../../SmartEditor2.jsp"></jsp:include> --%>
 							<div class="panel-footer">
 								<button class="btn btn-primary pull-right"
 									id="dailyReportSubmit" onclick="submitContents()">Submit</button>
@@ -269,8 +269,9 @@ var jsonArray=new Array();
 								class="col-md-4 col-xs-12"> <select class="form-control"
 								name="counselling_id" id="counselling_id" required>
 									<option value="" disabled selected hidden="true">선택하세요!</option>
-									<option value="1">동작대리점</option>
-									<option value="2">검암대리점</option>
+									<c:forEach var="client" items="${clients}" >
+										<option value="${client.client_id }">${client.client_name}</option>
+									</c:forEach>
 							</select> <span class="help-block">Select box </span>
 							</span> 
 							<span class="col-md-2 col-xs-12"> 
@@ -312,8 +313,7 @@ var jsonArray=new Array();
 </div>
 			</div>
 			<div class="modal-footer">
-				<!-- 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary pull-right">Submit</button>	 -->
+
 			</div>
 		</div>
 
