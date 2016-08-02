@@ -119,7 +119,7 @@ public class DailyReportController {
 				}
 			}
 		}
-		System.out.println(serviceParams.toString());
+		
 		Gson gson = new Gson();
 		String serviceParamsStr = gson.toJson(serviceParams);
 		
@@ -210,7 +210,7 @@ public class DailyReportController {
 				}
 			}
 		}
-		System.out.println(serviceParams.toString());
+		
 		Gson gson = new Gson();
 		String serviceParamsStr = gson.toJson(serviceParams);
 		
@@ -246,13 +246,10 @@ public class DailyReportController {
 	public ModelAndView goWriteform(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session=req.getSession();
 		EmployeeDTO sessionid = (EmployeeDTO) session.getAttribute("user");
-		System.out.println(sessionid.getEmployee_id());
 		DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(sessionid.getEmployee_id());
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
 		model.addObject("employee", employee);
-		
-		
-		System.out.println(employee);
+				
 		return model;
 	}
 	@RequestMapping("/writeform")
@@ -264,7 +261,7 @@ public class DailyReportController {
 		for(int i=0;i<json.size();i++){
 			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
 			list.add(dto);
-			System.out.println(dto);
+		
 		}
 		dailyReportService.writeDailyReport(dailyReportDTO,list);
 		
@@ -297,7 +294,7 @@ public class DailyReportController {
 		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
 		for(int i=0;i<json.size();i++){
 			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
-			System.out.println(dto);
+			
 			list.add(dto);
 		}
 		dailyReportService.updateDailyReport(dailyReportDTO,list);

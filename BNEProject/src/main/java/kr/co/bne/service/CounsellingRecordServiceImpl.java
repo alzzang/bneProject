@@ -50,7 +50,7 @@ public class CounsellingRecordServiceImpl implements CounsellingRecordService {
 		/* insert */
 		System.out.println("Here Service.. getIsEmpty = "+csg.getIs_empty());
 		if(csg.getIs_empty()==1){
-			System.out.println("csg.empty=1 i'm Insert");
+			
 			counsellingRecordDAO.insertSalesGoal(csg);
 			
 		/* update */
