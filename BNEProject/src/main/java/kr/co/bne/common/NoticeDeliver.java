@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class NoticeDeliver {
 	
-	private final static String ip = "http://127.0.0.1";
+	private final static String ip = "http://192.168.1.6";
 	private final static int port = 10000;	
 	private final static String addr = ip + ":" + port + "/";
 

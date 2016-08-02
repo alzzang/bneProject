@@ -60,7 +60,7 @@
 				</div>
 			</div>
 			<div class="panel-footer text-center">
-				<a href="pages-messages.html">Show all messages</a>
+				<a href="/alarm/detail">Show all messages</a>
 			</div>
 		</div></li>
 	<!-- END MESSAGES -->

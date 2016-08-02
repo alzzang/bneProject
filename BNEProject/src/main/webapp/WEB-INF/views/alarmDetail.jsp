@@ -103,7 +103,7 @@ function unconfirmedData(){
 					}
 		});
 }
-function moveLink(noticeId,type,linkId,subject){
+/* function moveLink(noticeId,type,linkId,subject){
 	$.ajax({
 		type : "POST",
 		url : '/alarm/click',
@@ -127,7 +127,7 @@ function moveLink(noticeId,type,linkId,subject){
 		}
 	});
 	
-}
+} */
 function confirmedData(){
 	
 	timer1 = false;

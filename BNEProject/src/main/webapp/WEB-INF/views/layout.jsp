@@ -43,7 +43,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 </style>
 
 <script type="text/javascript" src="/js/dailysettings.js"></script>
-<script src="http://127.0.0.1:10000/socket.io/socket.io.js"></script> 
+<script src="http://192.168.1.6:10000/socket.io/socket.io.js"></script> 
 </head>
 
 
@@ -153,9 +153,10 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 	<script type="text/javascript" src="/js/plugins.js"></script>
 	<script type="text/javascript" src="/js/actions.js"></script>
+	<script type="text/javascript" src="/js/dailysettings.js"></script>
 	<script src="/js/notice_on_header.js"></script>
 	<script type="text/javascript" src="/js/usersettings.js"></script>
-	<script type="text/javascript" src="/js/dailysettings.js"></script>
+	
 	
 	
 	<script type="text/javascript" src="/assets/plugins/bootstrap-notify-master/bootstrap-notify.js"></script>
@@ -170,7 +171,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 
 	<script type="text/javascript">
-		var socket = io.connect('http://127.0.0.1:10000');
+		var socket = io.connect('http://192.168.1.6:10000');
 		socket.emit('getId', {
 			employeeId : '${sessionScope.user.employee_id}'
 		});

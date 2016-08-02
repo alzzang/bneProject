@@ -99,8 +99,9 @@ function createNoticeElementHTML(noticeObj) {
 		return;
 	}
 	
+	var params = noticeObj.notice_id + ", '" + noticeObj.notice_type + "', " + noticeObj.link_id + ", '" + noticeObj.subject_id + "'";
 	
-	var html = '<a href="' + href + '" class="list-group-item">' +
+	var html = '<a href="#" onclick="moveLink(' + params + ')" class="list-group-item">' +
 					'<span class="fa fa-circle text-warning"></span>' +
 					'<img src="' + file + '" class="pull-left" alt="' + noticeObj.user_name + '">' +
 					'<span class="contacts-title">'+ noticeObj.subject_name + '</span>' +

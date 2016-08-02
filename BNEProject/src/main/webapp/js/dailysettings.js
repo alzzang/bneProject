@@ -1,6 +1,33 @@
 /**
  * 
  */
+function moveLink(noticeId,type,linkId,subject){
+	$.ajax({
+		type : "POST",
+		url : '/alarm/click',
+		data : {
+			"noticeId" : noticeId
+		},
+		success : function(data) {
+			if(type=="DAILY_POST"){
+				detailDaily(linkId);
+			}else if(type=="WEEKLY_POST"){
+				detailWeekly(linkId,subject);
+			}else if(type=="DAILY_CORRECT"){
+				detailDaily(linkId);
+			}else if(type=="WEEKLY_CORRECT"){
+				detailWeekly(linkId,subject);
+			}else if(type=="APPROVAL"){
+				detailDaily(linkId);
+			}else if(type=="COMMENT"){
+				detailDaily(linkId);
+			}
+		}
+	});
+	
+}
+
+
 function deleteDaily(id){
 	event.stopPropagation();
 	event.preventDefault();
@@ -280,14 +307,20 @@ function changeProgress(money,goal){
 	achievementRate=Math.round(achievementRate);
 	achievementRate=achievementRate/100;
 	/*achievementRate=Math.round10(achievementRate,-3); */
-	if(achievementRate == 0) {
+	if(achievementRate == 0 ) {
+		alert(achievementRate+":");
 		var rate=achievementRate.toString()+'%';
 		$("#progressCondition").css('width',0.1);
 		$("#progressCondition").html(rate);
 		
+	}else if(isNaN(achievementRate)){
+		var rate='0%';
+		$("#progressCondition").css('width',0.1);
+		$("#progressCondition").html(rate);
 	}
 	else{
-
+		//alert(achievementRate);
+		
 		if(achievementRate>100){
 			achievementRate=100;
 		}
