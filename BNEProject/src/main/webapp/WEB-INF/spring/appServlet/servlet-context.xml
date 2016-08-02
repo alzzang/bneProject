@@ -26,7 +26,6 @@
 
 	<context:component-scan base-package="kr.co.bne" />
 
-
 	<beans:bean
 		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" />
 
@@ -38,6 +37,7 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
+	
 	<beans:bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 

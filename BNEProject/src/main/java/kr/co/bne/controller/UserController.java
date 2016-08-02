@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,13 +15,17 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import kr.co.bne.dao.EmployeeDAO;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.UserService;
 
@@ -30,6 +35,10 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	EmployeeDAO employeeDAO;
+
 	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
@@ -83,6 +92,7 @@ public class UserController {
 		}
 		inputStream.close();
 		outStream.close();
+		
 	}
 
 	private String getDestinationLocation() {
@@ -125,11 +135,10 @@ public class UserController {
 		EmployeeDTO employeeDTO = new EmployeeDTO();
 		employeeDTO = userService.validCheck(id, rawPassword);
 		String newpassword = req.getParameter("newpassword");
-
+		
 		if (newpassword == null) {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
-				//System.out.println( employeeDTO.getFile_position());
 				session.setAttribute("fileName", employeeDTO.getFile_position());
 				
 				return "redirect:/main";
@@ -145,5 +154,27 @@ public class UserController {
 			return "redirect:/user/changeProfile";
 		}
 	}
+	
 
+	@RequestMapping(value = "/empSearch", method = { RequestMethod.POST })
+	public @ResponseBody List<EmployeeDTO> getEmpSearch(@RequestParam("empSearch") String empSearch ,HttpServletRequest req) {
+		System.out.println("empSearch :"+empSearch);
+		
+			String temp="%"+empSearch+"%";
+			List<EmployeeDTO> list =userService.getEmpSearch(temp);
+			System.out.println(list);
+			return list;
+	}
+
+	
+	@RequestMapping(value = "/searchUser/{empId}", method = { RequestMethod.GET })
+	public String showSearchUser(Model model,@PathVariable String empId, HttpServletRequest req, HttpServletResponse res)
+			throws IOException {
+				
+		EmployeeDTO ed = employeeDAO.selectEmployee(empId);
+		model.addAttribute("emp",ed);
+		System.out.println("where ? : ");
+		
+		return "searchUser";
+	}
 }

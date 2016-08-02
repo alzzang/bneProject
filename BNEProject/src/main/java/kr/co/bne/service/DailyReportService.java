@@ -3,8 +3,9 @@ package kr.co.bne.service;
 import java.util.HashMap;
 import java.util.List;
 
-
+import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
+
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -17,26 +18,21 @@ import org.springframework.stereotype.Service;
 
 import kr.co.bne.common.DailyReportListElement;
 import kr.co.bne.common.DailyReportTeamListElement;
-import kr.co.bne.dao.DailyReportDAO;
 
 
 public interface DailyReportService {
-
-	void approvalDailyReport(String daily_report_id);
-
-	List<CounsellingRecordDTO> searchCounselRecord(String id);
-
-	EmployeeDTO searchImage(String employee_id);
-
-	int searchDailySales(HashMap<String, String> map);
-
-	DailyReportDetailDTO viewReport(String id);
-
-	void writeDailyReport(DailyReportDTO dailyReportDTO);
-
-	DailyReportEmployeeDTO searchPreSales(String employee_id);
-
-	HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum,
+	public DailyReportEmployeeDTO searchPreSales(String employee_id);
+	public void writeDailyReport(DailyReportDTO dailyReportDTO, List<CounsellingRecordDTO> list);
+	public DailyReportDetailDTO viewReport(String id);
+	public int searchDailySales(HashMap<String, String> map);
+	public EmployeeDTO searchImage(String employee_id);
+	public List<CounsellingDetailDTO> searchCounselRecord(String id);
+	public void approvalDailyReport(String daily_report_id);
+	public DailyReportDTO searchDailyReport(String id);
+	public void updateDailyReport(DailyReportDTO dailyReportDTO);
+	public void writeCounsellingRecord(List<CounsellingRecordDTO> result);
+	public void updateDailyReport(DailyReportDTO dailyReportDTO, List<CounsellingRecordDTO> list);
+		HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum,
 			HashMap<String, Object> params);
 
 	HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum);
@@ -44,7 +40,8 @@ public interface DailyReportService {
 	int getgetTotalUnapprovalNum(String position, String user_id);
 
 	HashMap<String, Object> selectTeamMemberList(String user_id);
-
-	
-	
+	public HashMap<String, List<?>> searchDailyChartLine(String employee_id);
+	public HashMap<String,Integer> selectMonthlyGoal(String id, String position);
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId);
+	public List<?> selectVehicleGauge(String id);
 }

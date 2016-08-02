@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import kr.co.bne.dto.CounsellingDetailDTO;
 
 import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dto.CounsellingRecordDTO;
@@ -113,7 +119,7 @@ public class DailyReportController {
 				}
 			}
 		}
-		System.out.println(serviceParams.toString());
+		
 		Gson gson = new Gson();
 		String serviceParamsStr = gson.toJson(serviceParams);
 		
@@ -204,7 +210,7 @@ public class DailyReportController {
 				}
 			}
 		}
-		System.out.println(serviceParams.toString());
+		
 		Gson gson = new Gson();
 		String serviceParamsStr = gson.toJson(serviceParams);
 		
@@ -225,43 +231,55 @@ public class DailyReportController {
 		
 		return "dailyReportMain";
 	}
-	
+	@RequestMapping(value="/update")
+	public ModelAndView goUpdate(@RequestParam("daily_report_id")String id,HttpServletRequest req,HttpServletResponse res){
+		DailyReportDTO dailyreport=dailyReportService.searchDailyReport(id);
+		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
+		String counsellingJson=new Gson().toJson(counsellingRecord);
+		
+		String[] tt=dailyreport.getReg_date().split(" ");
+		dailyreport.setReg_date(tt[0]);
+		ModelAndView model=new ModelAndView("updateDailyReport");
+		model.addObject("dailyReport",dailyreport);
+		model.addObject("counsellingJson", counsellingJson);
+		return model;
+	}
 
 	
 	@RequestMapping("/write")
 	public ModelAndView goWriteform(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session=req.getSession();
 		EmployeeDTO sessionid = (EmployeeDTO) session.getAttribute("user");
-		System.out.println(sessionid.getEmployee_id());
 		DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(sessionid.getEmployee_id());
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
 		model.addObject("employee", employee);
-		System.out.println(employee);
+				
 		return model;
 	}
 	@RequestMapping("/writeform")
 	public ModelAndView goWrite(@ModelAttribute DailyReportDTO dailyReportDTO  ,HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
-		System.out.println(dailyReportDTO);
-		dailyReportService.writeDailyReport(dailyReportDTO);
+		JsonParser parser=new JsonParser();
+		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
+		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
+		for(int i=0;i<json.size();i++){
+			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
+			list.add(dto);
 		
+		}
+		dailyReportService.writeDailyReport(dailyReportDTO,list);
 		
-		System.out.println("JSON"+req.getParameter("counsellingJSON"));
 		return model;
 	}
 	
 	
 	@RequestMapping("/detail")
-	public ModelAndView goViewmanager() {
-		String id="60";
+	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id) {
 		DailyReportDetailDTO dailyReport=dailyReportService.viewReport(id);
-		List<CounsellingRecordDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
-		System.out.println(counsellingRecord);
+		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
 		ModelAndView model=new ModelAndView("dailyReportDetail");
 		model.addObject("dailyReport", dailyReport);
 		model.addObject("counselList",counsellingRecord);
-		System.out.println(dailyReport);
-
 		
 		return model;
 	}
@@ -269,6 +287,23 @@ public class DailyReportController {
 	@RequestMapping("/inputarea")
 	public String goInputarea(){
 		return "inputarea";
+	}
+	
+	@RequestMapping("/updateform")
+	public  ModelAndView  goUpdateForm(@ModelAttribute DailyReportDTO dailyReportDTO ,HttpServletRequest req,HttpServletResponse res){
+		ModelAndView model=new ModelAndView("dailyReport_Writeform");
+		JsonParser parser=new JsonParser();
+		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
+		
+		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
+		for(int i=0;i<json.size();i++){
+			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
+			
+			list.add(dto);
+		}
+		dailyReportService.updateDailyReport(dailyReportDTO,list);
+		
+		return model;
 	}
 	
 	@RequestMapping("/dailysales")
@@ -308,10 +343,9 @@ public class DailyReportController {
 		dailyReportService.approvalDailyReport(daily_report_id);
 	}
 	
-	@RequestMapping("/jsontest")
+/*	@RequestMapping("/jsontest")
 	public void goJSON(HttpServletRequest req,HttpServletResponse res){
 		String aa=req.getParameter("dd");
-		System.out.println("aa"+aa);
-	}
+	}*/
 
 }

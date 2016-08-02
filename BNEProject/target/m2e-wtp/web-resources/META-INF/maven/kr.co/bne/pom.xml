@@ -16,12 +16,36 @@
    </properties>
    <dependencies>
 
+
       <!-- http://mvnrepository.com/artifact/org.json/json -->
       <dependency>
          <groupId>org.json</groupId>
          <artifactId>json</artifactId>
          <version>20090211</version>
       </dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+
+
+
+		<!-- http://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
 
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -250,7 +274,12 @@
          <artifactId>gson</artifactId>
          <version>2.3.1</version>
       </dependency>
-      
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
 
 
 
@@ -261,6 +290,12 @@
          <version>2.3.1</version>
       </dependency>
 
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.5.4</version>
+</dependency>
 
 
    </dependencies>

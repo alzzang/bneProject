@@ -4,11 +4,55 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.CounsellingRecord">
 
+<resultMap type="CounsellingManageSalesList" id="CounsellingManageSalesList">
+	<result column="employee_id" property="employee_id"/>
+	<result column="sales_goal" property="sales_goal"/>
+</resultMap>
+
+
 <insert id="insertCounsellingRecord" parameterType="CounsellingRecord">
 	<![CDATA[insert into counsel_record values(counsel_record_seq.nextval,#{department_id},#{daily_report_id},sysdate,#{title},#{content},#{sec_client_id})]]>
 </insert>
 <select id="selectCounsellingRecord" parameterType="Integer" resultType="CounsellingRecord">
 	<![CDATA[select s.*, r.*,c.REPRESENTATIVE,c.client_name from SECONDARY_CLIENT s,COUNSEL_RECORD r, client c where s.CLIENT_ID=c.CLIENT_ID and s.SEC_CLIENT_ID=r.SEC_CLIENT_ID and r.COUNSEL_ID=#{value}]]>
 </select>
+
+
+<select id="selectManageUser" parameterType="Integer" resultType="Employee"> 
+
+select e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.department_id from employee e,department d
+where e.department_id=#{value}
+minus 
+select e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.department_id 
+from employee e,department d
+where e.employee_id=d.manager_id
+order by 2
+</select>
+
+<select id="selectManageSalesList" parameterType="CounsellingManageSales" resultType="CounsellingManageSalesList"> 
+select b.EMPLOYEE_NAME,a.employee_id,a.sales_goal,a.year,a.month,b.department_id 
+from (select e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.department_id 
+      from employee e,department d
+      where e.department_id=#{department_id}
+      minus 
+      select e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.department_id 
+      from employee e,department d
+      where e.employee_id=d.manager_id) b,monthly_goal a
+where a.employee_id=b.employee_id and b.department_id=1 and year = #{year} and month = #{month}
+
+</select>
+
+<select id="insertSalesGoal" parameterType="CounsellingSalesGoal" > 
+	insert into MONTHLY_GOAL values (monthly_goal_id_sequence.nextval,#{employee_id},#{sales_goal},#{year},#{month})
+</select>
+
+<select id="updateSalesGoal" parameterType="CounsellingSalesGoal" > 
+	
+update MONTHLY_GOAL set sales_goal = #{sales_goal}
+where employee_id=#{employee_id} and year = #{year} and month = #{month}
+
+</select>
+
+
 
 </mapper>
