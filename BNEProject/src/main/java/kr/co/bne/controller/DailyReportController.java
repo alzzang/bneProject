@@ -235,6 +235,7 @@ public class DailyReportController {
       
       return "dailyReportMain";
    }
+   
 	@RequestMapping(value="/update" ,method = RequestMethod.POST)
 	public ModelAndView goUpdate(@RequestParam("daily_report_id")String id,HttpServletRequest req,HttpServletResponse res){
 		DailyReportDTO dailyreport=dailyReportService.searchDailyReport(id);

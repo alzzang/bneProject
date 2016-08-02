@@ -85,11 +85,13 @@ public class NoticeAspect {
 	
 	
 	
-	@AfterReturning("execution(public * kr.co.bne.dao.DailyReportDAO.updateDailyReport(..))")
+	@AfterReturning("execution(public * kr.co.bne.service.DailyReportService.updateDailyReport(..))")
 	public void execInsertNotice_DAILY_CORRECT(JoinPoint joinPoint) throws Throwable {
 		System.out.println("일일보고 수정 aop 실행!!");
 		
-		int daily_report_id = Integer.parseInt(joinPoint.getArgs()[0].toString());
+		
+		
+		int daily_report_id = ((DailyReportDTO)(joinPoint.getArgs()[0])).getDaily_report_id();
 		DailyReportDetailDTO dailyReport = dailyReportDAO.selectDailyReport(Integer.toString(daily_report_id));
 		
 		List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.DAILY_CORRECT, daily_report_id, dailyReport.getEmployee_id());
