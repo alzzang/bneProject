@@ -26,27 +26,6 @@ window.onload = function(){
 };
 </script>
 
-<%-- <table border="1">
-	<tr>
-	<c:forEach items="${dayList}" var="day">
-		<th>${day.key}</th>
-	</c:forEach>
-	</tr>
-	<tr>
-	<c:forEach items="${dayList}" var="day">
-		<td>${day.value}</td>
-	</c:forEach>
-	</tr>
-</table>
-
-<script lang="javascript">
-window.onload = function(){
-	<c:forEach items="${dayList}" var="day">
-		$("th[class='fc-day-header fc-widget-header fc-${day.key}']").text("${day.value}");	
-	</c:forEach>
-};
-</script> --%>
-
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -135,6 +114,7 @@ window.onload = function(){
 
 <script>
 window.onload = function(){
+	$('#calendar').fullCalendar('next');
 	
 	var tbodyTag
 	= 	'<tr>' + 
@@ -152,17 +132,10 @@ window.onload = function(){
 	for(var i=2; i<7; i++){
 		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
 	} 
-	
+	var date = $('#calendar').fullCalendar('getDate');
 	
 	
 $('#aaaa').on('click',function(){
-	//insertDB();
-	//$('#calendarWeek').fullCalendar('next');
-/*		var s = $('#calendarWeek').fullCalendar('clientEvents');
-	alert(s[0]);*/
-	//editable 속성 false;
-	//$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
-	
 	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
 	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
 	
@@ -189,8 +162,8 @@ $('#aaaa').on('click',function(){
 
 		sale = ($('#sales-'+dayOfWeek[i])[0].value);
 		regdate = ($('#sales-'+dayOfWeek[i])[0].attributes[3].textContent);
-		if(sales[i] == "")
-			sales[i] = 0;
+		if(sale == "")
+			sale = 0;
 		
 		var plan = {
 					sales : sale,
@@ -251,19 +224,6 @@ $('#aaaa').on('click',function(){
 			alert("실패~");
 		}
 	})
-	
-    //$('div#trash>a').remove();
-/*    	$.ajax({
-		type : "POST",
-		url : "/weeklyReport/weeklyView",
-		data : {
-			report_id: $('#report_id').val()
-		},
-		success : function(data) {
-//			$('#approvalDiv').remove();
-			alert('ㅇㅋ.');
-		}
-	})*/
 	
 });
 }

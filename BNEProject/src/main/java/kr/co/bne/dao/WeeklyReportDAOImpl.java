@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.bne.common.WeeklyReportSearchElement;
+import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.WeeklyReportDTO;
 
 @Repository
@@ -18,13 +20,19 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 
 	@Override
 	public int selectThisMonthlySales(String employee_id) throws Exception {
-		int result = sqlSession.selectOne(namespace + "selectThisMonthlySales", employee_id);
+		int result = 0;
+		if(sqlSession.selectOne(namespace + "selectThisMonthlySales", employee_id) != null){
+			result = sqlSession.selectOne(namespace + "selectThisMonthlySales", employee_id);
+		}
 		return result;
 	}
 
 	@Override
 	public int selectSalesGoal(String employee_id) throws Exception {
-		int result = sqlSession.selectOne(namespace + "selectSalesGoal", employee_id);
+		int result = 0;
+		if(sqlSession.selectOne(namespace + "selectSalesGoal", employee_id) != null){
+			result = sqlSession.selectOne(namespace + "selectSalesGoal", employee_id);
+		}
 		return result;
 	}
 
@@ -49,6 +57,13 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 	@Override
 	public int insertWeeklyReport(WeeklyReportDTO weeklyReport) throws Exception {
 		int result = sqlSession.insert(namespace + "insertWeeklyReport",weeklyReport);
+		return result;
+	}
+
+	@Override
+	public  List<WeeklyReportSearchElement> selectWeeklyReportList(Map parameterMap) throws Exception {
+		 List<WeeklyReportSearchElement> result = null;
+		result = sqlSession.selectList(namespace+"selectWeeklyReportList", parameterMap);
 		return result;
 	}
 

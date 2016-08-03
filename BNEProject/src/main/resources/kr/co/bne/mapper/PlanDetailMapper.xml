@@ -15,5 +15,8 @@
 			FROM    PLAN_DETAIL
 			WHERE  WEEKLY_REPORT_ID = #{value}
 	</select>
-
+	
+	<delete id="deletePlanDetail" parameterType = "String">
+		DELETE FROM PLAN_DETAIL WHERE WEEKLY_REPORT_ID = #{value}
+	</delete>
 </mapper>

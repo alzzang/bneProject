@@ -45,8 +45,16 @@
 	<definition name="weeklyWrite" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/weeklyWriteForm.jsp"/>
 	</definition>
-		<definition name="weeklyDetail" extends="tilesbase">
+	<definition name="weeklyDetail" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/weeklyDetail.jsp"/>
+	</definition>
+	
+	<definition name="weeklySearch" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/weeklySearch.jsp"/>
+	</definition>
+	
+	<definition name="weeklyModify" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/weeklyModifyForm.jsp"/>
 	</definition>
 	
 	<definition name="login" template="/WEB-INF/views/pages-login.jsp" />

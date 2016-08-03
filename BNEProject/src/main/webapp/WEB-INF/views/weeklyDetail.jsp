@@ -26,12 +26,11 @@
 }
 </style>
 
-
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
 		<div class="page-title">
-			<h2>주간 계획 (weekly_report_id : <span id="weekly_report_id"></span>)</h2>
+			<h2>주간 계획 </h2>
 		</div>
 		<div class="pull-right">
 			<button class="btn btn-default content-frame-left-toggle">
@@ -39,16 +38,22 @@
 			</button>
 		</div>
 	</div>
+	<!-- END CONTENT FRAME TOP -->
 
 	<!-- START CONTENT FRAME LEFT --> 
 	<div class="content-frame-left" style="height: 1054px;">
-
-		     <div class="panel panel-default" >
-		         <div class="panel-heading">
-		             <h3 class="panel-title">개인 정보</h3>                          
-		         </div>
-		         <div class="panel-body">
-		     	    <table class="table table-bordered detailInfoTable">
+	 <div class="panel panel-default" >
+		<div class="panel-heading">
+			<div class="page-title">
+				<h3 class="panel-title">개인 정보</h3>
+			</div>	
+		</div>	
+			<form  action="/weeklyReport/modifyWeeklyReport" method="post">	
+			<input type ="hidden" name = "weekly_report_id" id = "weekly_report_id" ><br>
+			<input type="hidden" name="department_id" value="${user.department_id}" disabled><br>
+			<input type="hidden" name="employee_Id" value="${employee_Id}" disabled>
+			<div class="panel-body">
+			<table class="table table-bordered detailInfoTable">
 				<thead>
 					<tr>
 						<th>소속</th>
@@ -70,8 +75,8 @@
 					</tr>
 				</thead>
 			</table>
-		         </div>
-		     </div>
+	      </div>
+		</div>
 	     <!-- START DONUT CHART -->
 	     <div class="panel panel-default" >
 	         <div class="panel-heading">
@@ -97,11 +102,10 @@
 	     <!-- END DONUT CHART -->      
 	</div>
 	<!-- END CONTENT FRAME LEFT -->
-
-
-
+	
 	<!-- START CONTENT FRAME BODY -->
 	<div class="content-frame-body padding-bottom-0" style="height: 887px;">
+
 		<div class="row">
 			<div class="col-md-12">
 				<div id="alert_holder"></div>
@@ -113,11 +117,24 @@
 		</div>
 	</div>
 	<!-- END CONTENT FRAME BODY -->
-</div>
-
+</div>    
 <script>
+	var makeReportId = function(flag){
+		var report_id;
+		var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+		var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
 
-	// 매출액 입력
+		var date = $('#calendar').fullCalendar('getDate');
+		var year = date._d.getFullYear();
+		if(flag == 'prev'){
+			report_id = year + "_" + (weeklyNumber-1) + "_" + ${employee_Id};
+		}
+		else if(flag == 'next'){
+			report_id = year + "_" + (weeklyNumber+1) + "_" + ${employee_Id};
+		}
+		return report_id;
+	};
+	
 	var makeSalesInput = function(){
 		var salesCell
 		= 	'<tr>' + 
@@ -137,51 +154,66 @@
 			$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
 		}	
 	};
-	
-	// 불러온 값 입력
-	var inputReportData = function(reportData){
-		var weeklyReportDTO = reportData.weeklyReportDTO;
-		var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
-		var planDetailDTOList = reportData.planDetailDTOList;
-		var employee_name = reportData.employee_name;
-		var department_name = reportData.department_name;
-		
-		$('#weekly_report_id').html(weeklyReportDTO.weekly_report_id);
-		$('#title').html(weeklyReportDTO.title);
-		$('#reg_date').html(weeklyReportDTO.reg_date);
-		$('#employee_name').html(employee_name);
-		$('#department_name').html(department_name);
-		$('#sales_goal').html(weeklyReportDTO.sales_goal);
-		 $('#sales').html(weeklyReportDTO.sales); 
+
+	var isModify = function(now){
+		var result = false;
 		
 		
-		var achievement_rate = Number(weeklyReportDTO.sales) / Number(weeklyReportDTO.sales_goal) * 100;
+		var lastDayWeek = $('#calendar').fullCalendar('getView').end;
+		lastDayWeek._d.setDate(lastDayWeek._d.getDate() +1)
+		var getDate = lastDayWeek._d.getDate();
+		console.log(lastDayWeek);
+		console.log(now);
+		//console.log(now<lastDayWeek);
+/* 		lastDayWeek._d.setDate(lastDayWeek._d.getDate() +1);
+		lastDayWeek._d.setHours(24); */
+		if(now<lastDayWeek)
+			return true;
 		
-		if(weeklyReportDTO.sales_goal == 0 || weeklyReportDTO.sales_goal == null)
+		return result;
+	}
+	var inputReportData = function(reportData) {
+
+
+			var weeklyReportDTO = reportData.weeklyReportDTO;
+			var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
+			var planDetailDTOList = reportData.planDetailDTOList;
+			var employee_name = reportData.employee_name;
+			var department_name = reportData.department_name;
+
+			$('#weekly_report_id')[0].value = weeklyReportDTO.weekly_report_id;
+			$('#title').html(weeklyReportDTO.title);
+			$('#reg_date').html(weeklyReportDTO.reg_date);
+			$('#employee_name').html(employee_name);
+			$('#department_name').html(department_name);
+			$('#sales_goal').html(weeklyReportDTO.sales_goal);
+			$('#sales').html(weeklyReportDTO.sales);
+			var achievement_rate = Number(weeklyReportDTO.sales) / Number(weeklyReportDTO.sales_goal) * 100;
+
+			$('#achievement_rate').html(achievement_rate + '%');
+			if(weeklyReportDTO.sales_goal == 0 || weeklyReportDTO.sales_goal == null)
 			achievement_rate = 0;
+			$('#achievement_rate').html(achievement_rate + '%');
+
+			for (var i = 0; i < planDetailDTOList.length; i++) {
+				$('#calendar').fullCalendar('renderEvent', {
+					"title" : planDetailDTOList[i].content,
+					"allDay" : false,
+					"start" : planDetailDTOList[i].start_time,
+					"end" : planDetailDTOList[i].end_time
+				}, true);
+			}
+
+			$('#calendar').fullCalendar( 'gotoDate', weeklyPlanDTOList[0].reg_date );
 		
-		$('#achievement_rate').html(achievement_rate + '%');
-		
-		for(var i=0; i<planDetailDTOList.length; i++){
-			$('#calendar').fullCalendar('renderEvent',{
-			   		"title":planDetailDTOList[i].content,
-				    "allDay":false,
-				    "start":planDetailDTOList[i].start_time,
-				    "end":planDetailDTOList[i].end_time
-		    },true);
-		}
-		
-		$('#calendar').fullCalendar( 'gotoDate', weeklyPlanDTOList[0].reg_date );
-		
-		// 매출액 정보 행 삽입
-		makeSalesInput();
-		
-		for(var i=0; i<weeklyPlanDTOList.length; i++){
-			$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
-		}
-		
-		
-		//////////////////////////도넛 시작//////////////////////////
+			// 매출액 정보 행 삽입
+			makeSalesInput();
+			
+			for(var i=0; i<weeklyPlanDTOList.length; i++){
+				$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
+			}
+	
+			//////////////////////////도넛 시작//////////////////////////
 		
 		// 도넛을 비워주고
 		$('#weeklyDonut').empty();
@@ -222,21 +254,11 @@
 	    salesDount.select(0);
 	    // 마우스를 떼도 매출액이 강조되도록
 	    $('#weeklyDonut').on('mouseout', function(){	salesDount.select(0);   });
-	    
-		//////////////////////////도넛 끝//////////////////////////
-	    
 	}
 
-	// 새로 불러온 자료 삽입
-	var getNewReportId = function(employee_id){
+	window.onload = function() {
+		var isModifyButton = true;
 
-	};
-	
-	
-	window.onload = function(){
-		
-		// 매출액 정보 행 삽입
-		//makeSalesInput();
 		
 		// 처음에 받아온 주간계획 정보 삽입 
 		var reportData = JSON.parse('${weeklyReportDetail}') 
@@ -244,6 +266,7 @@
 		
 		// 이 주간계획서의 작성자 ID
 		var employee_id = reportData.weeklyReportDTO.employee_id;
+		var weekly_report_id = reportData.weeklyReportDTO.weekly_report_id;
 		
 		$('#calendar').fullCalendar('getView').calendar.options.editable = false;
 		$('#calendar').fullCalendar('getView').calendar.options.selectable = false;
@@ -251,74 +274,99 @@
 		$('.fc-center').append(o);
 		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>';
 		$('.fc-center').prepend(o);
-	
-	    $('.fc-next-button').on('click',function(){
-	    	$('#calendar').fullCalendar('next');
-	    	
-	    	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
-	    	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
-	    	
-	    	var date = $('#calendar').fullCalendar('getDate');
-	    	var year = date._d.getFullYear();
-	    	
-	    	var report_id = year+"_"+weeklyNumber+"_"+employee_id;
-	    	
-	    	$.ajax({
-	    		type:"POST",
-	    		url : "/weeklyReport/getPlan",
-	    		data:{
-	    			ReportId : report_id
-	    		},
-	    		success :function(data){
+		
+		var sessionUserId = ${user.employee_id};
+		var employeeId = ${employee_Id};
+		var date = $('#calendar').fullCalendar('getDate');
+		var now = $('#calendar').fullCalendar('getView').calendar.getNow();
+		if(sessionUserId == employeeId && isModify(now)){
+			o = '<button type="submit" class="fc-button fc-state-default fc-corner-right fc-corner-left"><span class="fa fa-pencil"></span></button></form>';
+			$('.fc-right').prepend(o);
+		}
+
+		$('.fc-next-button').on('click', function() {
+			var report_id = makeReportId('next');
+			
+			//$('#weekly_report_id').html(report_id);
+			$.ajax({
+				type : "POST",
+				url : "/weeklyReport/getPlan",
+				data : {
+					ReportId : report_id
+				},
+				success : function(data) {
 	    			if(data.weeklyReportDTO == null){
 	    				alert("입력된 주간계획이 없습니다!");
-				    	$('#calendar').fullCalendar('prev');
 	    			}else{
+	    				$('#calendar').fullCalendar('next');
 	    		   		$('#calendar').fullCalendar('removeEvents');
+	    		   		
+	    				if(sessionUserId == employeeId){
+	    	 				if(!isModify(now)){
+	    						$('.fc-right').empty();
+	    						isModifyButton = false;
+	    	 				}
+	    	 				else if(isModify(now) && isModifyButton == false){
+	    	 					o = '<button type="submit" class="fc-button fc-state-default fc-corner-right fc-corner-left"><span class="fa fa-pencil"></span></button>';
+	    	 					$('.fc-right').prepend(o);
+	    	 					isModifyButton = true;
+	    	 				}
+	    				}
 	    				inputReportData(data);
 	    			}
-	    		},
-				error : function(){
+				},
+				error : function() {
 					alert("주간계획 데이터를 불러오는데 실패했습니다."); 
 				}
-	    	})
-	    });
+			})
 
-	    $('.fc-prev-button').on('click',function(){
-	    	$('#calendar').fullCalendar('prev');
-	    	
-	    	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
-	    	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
-	    	
-	    	var date = $('#calendar').fullCalendar('getDate');
-	    	var year = date._d.getFullYear();
-	    	
-	    	var report_id = year+"_"+weeklyNumber+"_"+employee_id;
-	    	
-	    	$.ajax({
-	    		type:"POST",
-	    		url : "/weeklyReport/getPlan",
-	    		data:{
-	    			ReportId : report_id
-	    		},
-	    		success :function(data){
+		});
+		$('.fc-prev-button').on('click', function() {
+			
+			var report_id = makeReportId('prev');
+		
+			$.ajax({
+				type : "POST",
+				url : "/weeklyReport/getPlan",
+				data : {
+					ReportId : report_id
+				},
+				success : function(data) {
 	    			if(data.weeklyReportDTO == null){
 						alert("입력된 주간계획이 없습니다!");
-				    	$('#calendar').fullCalendar('next');
+				    	//$('#calendar').fullCalendar('next');
 	    			}else{
-	    		   		$('#calendar').fullCalendar('removeEvents');
+	    				$('#calendar').fullCalendar('prev');
+	    				$('#calendar').fullCalendar('removeEvents');
+
+	    				result = isModify(now);
+	    				console.log(result);
+	    	 			if(sessionUserId == employeeId){
+	    	 				if(!result){
+	    						$('.fc-right').empty();
+	    						isModifyButton = false;
+	    	 				}else if(result && isModifyButton == false){
+	    	 					o = '<button type="submit" class="fc-button fc-state-default fc-corner-right fc-corner-left"><span class="fa fa-pencil"></span></button>';
+	    	 					$('.fc-right').prepend(o);
+	    	 					isModifyButton = true;
+	    	 				}
+	    				}
+	    				
+	    				
+	    		   		
 	    				inputReportData(data);
 	    			}
-	    		},
-				error : function(){
+				},
+				error : function() {
 					alert("주간계획 데이터를 불러오는데 실패했습니다."); 
 				}
-	    	})
-	    });
-		
-	}
+			})
+		});
 
-	
+		var reportData = JSON.parse('${weeklyReportDetail}');
+		inputReportData(reportData);
+
+	}
 </script>
 
 <!-- START THIS PAGE PLUGINS-->        

@@ -10,4 +10,5 @@ public interface PlanDetailDAO {
 	@Transactional
 	public int insertPlanDetail(PlanDetailDTO planDetailDTO) throws Exception;
 	public List<PlanDetailDTO> selectPlanDetailList(String weekly_report_id) throws Exception;
+	public int deletePlanDetail(String ReportId) throws Exception;
 }

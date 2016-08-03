@@ -3,7 +3,9 @@ package kr.co.bne.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +26,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import kr.co.bne.common.WeeklyReportSearchElement;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.PlanDetailDTO;
 import kr.co.bne.dto.WeeklyPlanDTO;
@@ -75,12 +78,12 @@ public class WeeklyController {
 		
 		String loginId = loginEmployee.getEmployee_id();
 		
-/*		int salesGoal = weeklyReportService.getSalesGoal(loginId);
-		int monthlySales = weeklyReportService.getThisMonthlySales(loginId);*/
+		int salesGoal = weeklyReportService.getSalesGoal(loginId);
+		int monthlySales = weeklyReportService.getThisMonthlySales(loginId);
 		//HashMap<String, String> dayList = weeklyReportService.getDayList(loginId);
 		
-/*		model.addAttribute("salesGoal", salesGoal);
-		model.addAttribute("monthlySales", monthlySales);*/
+		model.addAttribute("salesGoal", salesGoal);
+		model.addAttribute("monthlySales", monthlySales);
 		//model.addAttribute("dayList", dayList);
 		
 		Calendar calendar = Calendar.getInstance();
@@ -121,6 +124,7 @@ public class WeeklyController {
 		
 		mv.addObject("weeklyReportDetail", weeklyReportDetail);
 		mv.addObject("reportIdList", reportId_list);
+		mv.addObject("employee_Id", employeeId);
 		return mv;
 	}
 	
@@ -137,34 +141,27 @@ public class WeeklyController {
 		
 		JsonArray json=(JsonArray)parser.parse(weeklyPlan);
 		JsonObject jsonWeeklyReport = (JsonObject)parser.parse(weeklyReport);
-/*		System.out.println(weeklyPlan);
-		System.out.println(json);*/
 		List<PlanDetailDTO> planDetailList = new ArrayList();
 		
 		WeeklyReportDTO weeklyReportDTO;
 		weeklyReportDTO = (new Gson()).fromJson(jsonWeeklyReport, WeeklyReportDTO.class);
-		
-		//System.out.println(json.get(0));
+
 		for(int i=0;i<json.size();i++){
 			PlanDetailDTO dto;
 	        dto=(new Gson()).fromJson(json.get(i), PlanDetailDTO.class);
 	        planDetailList.add(dto);
 	        
 	        dto.setWeekly_report_id(weeklyReportDTO.getWeekly_report_id());
-	        System.out.println(dto);
 	      }
 		
-		System.out.println("-----------------------------------------------------------------");
 		JsonArray json1 = (JsonArray)parser.parse(sales);
 		List<WeeklyPlanDTO> weeklyPlanList = new ArrayList<WeeklyPlanDTO>();
-		System.out.println("여기까진들어옴");
 		
 		for(int i = 0; i<json1.size(); i++){
 			WeeklyPlanDTO dto = new WeeklyPlanDTO();
 
 			dto = (new Gson()).fromJson(json1.get(i), WeeklyPlanDTO.class);
 			dto.setWeekly_report_id(weeklyReportDTO.getWeekly_report_id());
-			System.out.println(dto);
 			weeklyPlanList.add(dto);
 		}
 		
@@ -204,6 +201,108 @@ public class WeeklyController {
 		reportDetail.setWeeklyReportDTO(report);*/
 		return reportDetail;
 		
+	}
+	
+	@RequestMapping("/modifyWeeklyReport")
+	public ModelAndView modifyWeeklyReport(Model model,HttpServletRequest request,HttpServletResponse response)throws Exception {
+		ModelAndView mv = new ModelAndView("weeklyModify");
+		String weeklyReportId = (String)request.getParameter("weekly_report_id");
+		System.out.println("weeklyReportId"+weeklyReportId);
+		WeeklyReportDetailDTO result = weeklyReportService.selectWeeklyReportDetail(weeklyReportId);
+		
+		JsonObject weeklyReportDetail = parseWeeklyReportDetailDTO(result);
+		
+		String employee_id = result.getWeeklyReportDTO().getEmployee_id();
+		
+		EmployeeDTO employeeDTO = userService.selectEmployee(employee_id);
+		
+		String department_name = employeeDTO.getDepartment_name();
+		String employee_name = employeeDTO.getEmployee_name();
+		
+		mv.addObject("weeklyReportDetail", weeklyReportDetail);
+		mv.addObject("department_name", department_name);
+		mv.addObject("employee_name", employee_name);
+		mv.addObject("employee_Id", employee_id);
+		System.out.println("여기까지옴");
+		return mv;
+	}
+	
+	@RequestMapping("/modify")
+	public void modify(HttpServletResponse response,HttpServletRequest request, @RequestParam("report")String weeklyReport, @RequestParam("sales")String sales )throws Exception{
+		System.out.println("Modify");
+		String weeklyPlan =  request.getParameter("weeklyPlan");
+		
+		JsonParser parser= new JsonParser();
+		
+		JsonArray json=(JsonArray)parser.parse(weeklyPlan);
+		JsonObject jsonWeeklyReport = (JsonObject)parser.parse(weeklyReport);
+		List<PlanDetailDTO> planDetailList = new ArrayList();
+		
+		WeeklyReportDTO weeklyReportDTO;
+		weeklyReportDTO = (new Gson()).fromJson(jsonWeeklyReport, WeeklyReportDTO.class);
+
+		for(int i=0;i<json.size();i++){
+			PlanDetailDTO dto;
+	        dto=(new Gson()).fromJson(json.get(i), PlanDetailDTO.class);
+	        planDetailList.add(dto);
+	        
+	        dto.setWeekly_report_id(weeklyReportDTO.getWeekly_report_id());
+	      }
+		
+		JsonArray json1 = (JsonArray)parser.parse(sales);
+		List<WeeklyPlanDTO> weeklyPlanList = new ArrayList<WeeklyPlanDTO>();
+		
+		for(int i = 0; i<json1.size(); i++){
+			WeeklyPlanDTO dto = new WeeklyPlanDTO();
+
+			dto = (new Gson()).fromJson(json1.get(i), WeeklyPlanDTO.class);
+			dto.setWeekly_report_id(weeklyReportDTO.getWeekly_report_id());
+			weeklyPlanList.add(dto);
+		}
+		
+		
+		WeeklyReportDetailDTO weeklyReportDetail = new WeeklyReportDetailDTO();
+		weeklyReportDetail.setWeeklyReportDTO(weeklyReportDTO);
+		weeklyReportDetail.setPlanDetailDTOList(planDetailList);
+		weeklyReportDetail.setWeeklyPlanDTOList(weeklyPlanList);
+		// 작성 부분		
+		int result = weeklyReportService.modifyWeeklyReport(weeklyReportDetail);
+		
+		System.out.println("redirect:/weeklyReport/detail/"+weeklyReportDTO.getEmployee_id());
+		//return "redirect:/weeklyReport/detail/"+weeklyReportDTO.getEmployee_id()+"/";
+	}
+	
+	@RequestMapping("/search")
+	public ModelAndView searchWeeklyReport(HttpSession session, HttpServletRequest request,HttpServletResponse response)throws Exception {
+		ModelAndView mv = new ModelAndView("weeklySearch");
+		
+		EmployeeDTO loginUser = (EmployeeDTO) session.getAttribute("user");
+		
+		String employee_id = loginUser.getEmployee_id();
+		String department_id = loginUser.getDepartment_id() + "";
+		
+		Map<String, String> parameterMap = new HashMap<String, String>();
+		
+		parameterMap.put("employee_id", employee_id);
+		parameterMap.put("department_id", department_id);
+		
+		System.out.println(loginUser.toString());
+
+		// 내 주간계획 목록
+		List<WeeklyReportSearchElement> myWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
+		mv.addObject("myWeeklyReportList", myWeeklyReportList);
+		
+		// 내 부서의 주간계획 목록
+		parameterMap.replace("employee_id", null);
+		List<WeeklyReportSearchElement> myDeptWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
+		mv.addObject("myDeptWeeklyReportList", myDeptWeeklyReportList);
+
+		// 전체 주간계획 목록
+		parameterMap.replace("department_id", null);
+		List<WeeklyReportSearchElement> allDeptWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
+		mv.addObject("allDeptWeeklyReportList", allDeptWeeklyReportList);
+		
+		return mv;
 	}
 	
 	

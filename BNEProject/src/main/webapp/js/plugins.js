@@ -529,7 +529,7 @@ $(function() {
                         right: ''
                     },
                     editable: true,
-                    eventSources: {url: "assets/ajax_fullcalendar.php"},
+                    eventSources: {url: "/assets/ajax_fullcalendar.php"},
                     droppable: true,
                     selectable: true,
                     selectHelper: true,
@@ -629,6 +629,7 @@ $(function() {
             }
         }
     }();
+    
     
     formElements.init();
     uiElements.init();

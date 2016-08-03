@@ -25,5 +25,10 @@ public class WeeklyPlanDAOImpl implements WeeklyPlanDAO {
 		
 		return result;
 	}
+	@Override
+	public int updateWeeklyPlan(WeeklyPlanDTO weeklyPlan) {
+		int result = sqlSession.update(namespace+"updateWeeklyPlan",weeklyPlan);
+		return result;
+	}
 
 }
