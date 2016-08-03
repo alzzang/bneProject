@@ -196,12 +196,12 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Override
 	public int selectMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectMonthlyGoal", id);
 	}
 	@Override
 	public int selectSumofMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
 	}
 
 }

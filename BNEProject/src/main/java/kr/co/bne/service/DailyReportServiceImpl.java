@@ -80,6 +80,7 @@ public class DailyReportServiceImpl implements DailyReportService {
 	@Override
 	public DailyReportEmployeeDTO searchPreSales(String employee_id) {
 		// TODO Auto-generated method stub
+		
 		return dao.selectPreSales(employee_id);
 	}
 
@@ -184,10 +185,6 @@ public class DailyReportServiceImpl implements DailyReportService {
 
 	public HashMap<String, Integer> selectMonthlyGoal(String id,String position) {
 
-	
-		
-		
-	
 	
 
 		HashMap<String, Integer> result = new HashMap<String, Integer>();

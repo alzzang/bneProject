@@ -648,10 +648,19 @@ function x_navigation() {
        
     
     /* XN-SEARCH */
+    
+    
+    
     $(".xn-search").on("click",function(){
     	console.log('xn-search on click');
 //        $(this).find("input").focus();
     })
+    
+    $(".x-navigation .profile-image").click(function(){
+        $("#myModal1").modal('show');
+     });
+      
+    
     /* END XN-SEARCH */
     
 }

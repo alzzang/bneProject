@@ -97,8 +97,7 @@
 
 
 
-	<select id="selectTeamMemberList" parameterType="java.lang.String"
-		resultMap="DailyReportTeamListElement">
+	<select id="selectTeamMemberList" parameterType="java.lang.String" resultMap="DailyReportTeamListElement">
 		select b.employee_id, b.employee_name, b.department_id, nvl(a.unApproval, 0)
 		unApproval
 		from (select employee_id, count(*) unApproval from DAILY_REPORT
@@ -110,23 +109,6 @@
 		and a.employee_id(+) = b.employee_id
 		order by b.employee_name asc
 	</select>
-
-<select id="selectTeamMemberList" parameterType="java.lang.String" resultMap="DailyReportTeamListElement"> 
-	select b.employee_id, b.employee_name, b.department_id, nvl(a.unApproval, 0) unApproval
-	from (select employee_id, count(*) unApproval from DAILY_REPORT
-	      where department_id = (select department_id from department where manager_id = #{value})
-	            and approval_flag = 0
-	      group by employee_id) a, (select * from employee 
-                                    where department_id = (select department_id 
-                                                            from department 
-                                                            where manager_id = #{value})) b
-	where 	b.employee_id != #{value}
-			and a.employee_id(+) = b.employee_id
-  order by b.employee_name asc
-</select>
-
-
-
 
 	<select id="selectDailyChartList" parameterType="java.lang.String"
 		resultMap="DailyReportChartListElement">
@@ -156,14 +138,6 @@
 		select count(*) from DAILY_REPORT
 		where department_id = (select department_id from department where
 		manager_id = #{value})
-		and APPROVAL_FLAG = 0
-	</select>
-
-
-	<select id="getTotalUnapprovalNum_Member" parameterType="String"
-		resultType="int">
-		select count(*) from DAILY_REPORT
-		where employee_id = #{value}
 		and APPROVAL_FLAG = 0
 	</select>
 
@@ -252,9 +226,6 @@ and dr.daily_report_id=#{id}
 		counsel_record where counsel_id=#{counsel_id}
 	</delete>
 
-
-	<!-- <select id="selectMonthlyGoal" parameterType="String" resultType="DailyReport"> 
-		<![CDATA[ select * from daily_report where daily_report_id=#{id} ]]> </select> -->
 
 	<select id="selectMonthlyGoal" parameterType="String" resultType="Integer">
 		<![CDATA[

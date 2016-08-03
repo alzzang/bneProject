@@ -134,6 +134,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
 
+
 <script type="text/javascript">
 		var socket = io.connect('http://192.168.1.6:10000');
 		socket.emit('getId', {

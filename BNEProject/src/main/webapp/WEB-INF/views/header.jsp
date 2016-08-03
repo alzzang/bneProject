@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 
-
 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
                     <!-- TOGGLE NAVIGATION -->
                     <li class="xn-icon-button">
@@ -8,15 +7,16 @@
                     </li>
                     <!-- END TOGGLE NAVIGATION -->
                     <!-- SEARCH -->
-                            <li class="xn-search">
+                    <li class="xn-search">
                             <input type="text" id="empSearch" name="search" placeholder="Search...">
                     </li>   
       
                    <!-- END SEARCH -->
 	<!-- SIGN OUT -->
-	<li class="xn-icon-button pull-right"><a href="#"
-		class="mb-control" data-box="#mb-signout"><span
-			class="fa fa-sign-out"></span></a></li>
+	<li class="xn-icon-button pull-right">
+	<a href="#" class="mb-control" data-box="#mb-signout">
+	<span class="fa fa-sign-out"></span></a>
+	</li>
 	<!-- END SIGN OUT -->
 	<!-- MESSAGES -->
 	<li class="xn-icon-button pull-right" id="noticeButton" onclick='getNoticeList(1, 5)'><a href="#"><span
@@ -39,9 +39,8 @@
 				<div id="mCSB_2"
 					class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside"
 					tabindex="0">
-					<div id="mCSB_2_container"
-						class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y"
-						style="position: relative; top: 0; left: 0;" dir="ltr">
+					
+					<div id="mCSB_2_container"	class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y"	style="position: relative; top: 0; left: 0;" dir="ltr">
 						<!-- notice list 들어가는 부분 -->
 					</div>
 					<div id="mCSB_2_scrollbar_vertical"

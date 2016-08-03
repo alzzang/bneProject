@@ -64,7 +64,7 @@
 	</definition>
 	
 	<definition name="mainboard" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/mainboard.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/main.jsp"/>
 	</definition>
 	
 	<!-- <definition name="main" extends="bodybase">

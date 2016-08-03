@@ -44,7 +44,7 @@ public class UserController {
 	@Autowired
 	EmployeeDAO employeeDAO;
 
-
+	@Autowired
 	private DailyReportService dailyReportService;
 
 	
@@ -144,12 +144,15 @@ public class UserController {
 		employeeDTO = userService.validCheck(id, rawPassword);
 		String newpassword = req.getParameter("newpassword");
 		
+		
+		
 		if (newpassword == null) {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
 				session.setAttribute("fileName", employeeDTO.getFile_position());
 
-				DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
+				DailyReportEmployeeDTO employee= dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
+				
 				session.setAttribute("employee", employee);
 				
 				return "redirect:/main";

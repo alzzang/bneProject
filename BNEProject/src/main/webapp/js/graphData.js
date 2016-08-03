@@ -9,7 +9,7 @@ var mainpageMorrisCharts = function() {
 		success : function(data) {
 				
 			var achievement = Math.round((data.sumofMonthlyGoal / data.monthlyGoal) * 100);
-			
+						
 			if(isNaN(achievement)||!isFinite(achievement)){
 				achievement=0;
 			}
