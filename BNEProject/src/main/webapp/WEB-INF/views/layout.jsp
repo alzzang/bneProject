@@ -3,10 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<!-- 
-morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascript" src="js/demo_dashboard.js"></script>
-							<script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>
- -->
 <html>
 
 <head>
@@ -27,17 +23,14 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	display: none;
 }
 </style>
-<<<<<<< HEAD
+
 
 <!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script> -->
-=======
->>>>>>> refs/remotes/origin/develop
+
+
 <script type="text/javascript" src="/js/dailysettings.js"></script>
-<<<<<<< HEAD
 <script src="http://192.168.1.6:10000/socket.io/socket.io.js"></script> 
-=======
-<!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script> -->
->>>>>>> refs/remotes/origin/develop
+
 </head>
 
 <body>
@@ -140,11 +133,11 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
-<<<<<<< HEAD
 
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 <script type="text/javascript">
 		var socket = io.connect('http://192.168.1.6:10000');
 		socket.emit('getId', {
@@ -205,8 +198,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 				'<span data-notify="message">{2}</span>' +
 			'</div>'
 			});
-
-					
+				
 		});
 
 		

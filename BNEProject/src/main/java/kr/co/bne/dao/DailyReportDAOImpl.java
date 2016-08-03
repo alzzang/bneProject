@@ -24,16 +24,14 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	@Override
+	
 	public DailyReportEmployeeDTO selectPreSales(String employee_id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectEmployee", employee_id);
 	}
 	@Override
 	public int insertDailyReport(DailyReportDTO dailyReportDTO) {
-<<<<<<< HEAD
-				
-=======
->>>>>>> refs/remotes/origin/develop
+
 		// TODO Auto-generated method stub
 		return sqlSession.insert("kr.co.bne.mapper.DailyReport.insertDailyReport", dailyReportDTO);
 		
@@ -116,10 +114,6 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		
 		return pageNum;
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/develop
 
 	@Override
 	public List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException {
@@ -152,11 +146,6 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
 	}
-
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/develop
 	@Override
 	public int selectMonthlyGoalManager(String id) {
 		// TODO Auto-generated method stub
@@ -195,18 +184,9 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectCustomerSales", departmentId);
 	}
 	@Override
-<<<<<<< HEAD
-	public int selectMonthlyGoal(String id) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectMonthlyGoal", id);
-	}
-	@Override
-	public int selectSumofMonthlyGoal(String id) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
-	}
 
-=======
+
+
 	public void deleteReport(String id) {
 		// TODO Auto-generated method stub
 		sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteReport", id);
@@ -221,7 +201,6 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
->>>>>>> refs/remotes/origin/develop
+
+
 }

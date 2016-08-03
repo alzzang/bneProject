@@ -25,20 +25,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
 import kr.co.bne.dao.EmployeeDAO;
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 import kr.co.bne.dto.DailyReportEmployeeDTO;
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.DailyReportService;
 import kr.co.bne.service.UserService;
@@ -55,10 +53,10 @@ public class UserController {
 
 	@Autowired
 	private DailyReportService dailyReportService;
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
@@ -164,17 +162,7 @@ public class UserController {
 				session.setAttribute("fileName", employeeDTO.getFile_position());
 
 				DailyReportEmployeeDTO employee= dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
-				
-<<<<<<< HEAD
-=======
-				DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
->>>>>>> refs/remotes/origin/develop
 				session.setAttribute("employee", employee);
-				
-<<<<<<< HEAD
-=======
-				
->>>>>>> refs/remotes/origin/develop
 				return "redirect:/main";
 			}
 			return "redirect:/user/login";

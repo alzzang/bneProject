@@ -25,21 +25,14 @@ public interface DailyReportDAO {
 	public void insertCounsellingRecord(CounsellingRecordDTO counsellingRecordDTO);
 	public void updateCounsellingRecord(CounsellingRecordDTO counsellingRecordDTO);
 	public void deleteCounsellingRecord(int i);
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
 	public int selectMonthlyGoal(String id);
 	public int selectSumofMonthlyGoal(String id);
 	
 	public int selectMonthlyGoalManager(String id);
 	public int selectSumofMonthlyGoalManager(String id);
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String id);
-<<<<<<< HEAD
 
-
-=======
->>>>>>> refs/remotes/origin/develop
 	
 	
 	List<DailyReportListElement> selectDailyReportList(String user_id, int startIdx, int perContentNum,
@@ -52,24 +45,16 @@ public interface DailyReportDAO {
 
 	int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException;
 	int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException;
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
 	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id);
 	public List<DailyReportChart2DTO> selectDailyReportChartLine2List();
 	public List<?> selectVehicleGauge(String id);
 	public List<DailyReportChart2DTO> selectCustomerSales(int departmentId);
-<<<<<<< HEAD
-	
 
-=======
->>>>>>> refs/remotes/origin/develop
+
 	public void insertComment(HashMap<String, String> map);
 	public void deleteComment(String daily_report_id);
 	public void deleteReport(String id);
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
 }

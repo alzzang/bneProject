@@ -22,10 +22,7 @@
 		<result column="unApproval" property="unApproval" />
 	</resultMap>
 
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
 
 	<resultMap type="DailyReportChartListElement" id="DailyReportChartListElement">
 		<result column="department_id" property="department_id" />
@@ -39,10 +36,7 @@
 		<result column="reg_date" property="reg_date" />
 		<result column="sales" property="sales" />
 	</resultMap>
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/develop
 
 
 
@@ -102,29 +96,28 @@
 
 
 
-<<<<<<< HEAD
-	<select id="selectTeamMemberList" parameterType="java.lang.String" resultMap="DailyReportTeamListElement">
-=======
 
-	<select id="selectTeamMemberList" parameterType="java.lang.String"
-		resultMap="DailyReportTeamListElement">
->>>>>>> refs/remotes/origin/develop
-		select b.employee_id, b.employee_name, b.department_id, nvl(a.unApproval, 0)
-		unApproval
-		from (select employee_id, count(*) unApproval from DAILY_REPORT
-		where department_id = (select department_id from department where
-		manager_id = #{value})
-		and approval_flag = 0
-		group by employee_id) a, employee b
-		where b.employee_id != #{value}
-		and a.employee_id(+) = b.employee_id
-		order by b.employee_name asc
-	</select>
+	
 
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/develop
+<select id="selectTeamMemberList" parameterType="java.lang.String" resultMap="DailyReportTeamListElement"> 
+   select b.employee_id, b.employee_name, b.department_id, nvl(a.unApproval, 0) unApproval
+   from (select employee_id, count(*) unApproval from DAILY_REPORT
+         where department_id = (select department_id from department where manager_id = #{value})
+               and approval_flag = 0
+         group by employee_id) a, (select * from employee 
+                                    where department_id = (select department_id 
+                                                            from department 
+                                                            where manager_id = #{value})) b
+   where    b.employee_id != #{value}
+         and a.employee_id(+) = b.employee_id
+  order by b.employee_name asc
+</select>
+
+
+
+
+
 	<select id="selectDailyChartList" parameterType="java.lang.String"
 		resultMap="DailyReportChartListElement">
 		select department_id,employee_id,to_char(reg_date,'yyyy-mm') as reg_date,
@@ -136,10 +129,10 @@
 		order by 3
 	</select>
 
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 	<select id="selectDailyChart2List" resultMap="DailyReportChart2ListElement">
 		select to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
 		from daily_report
@@ -147,12 +140,12 @@
 		group by to_char(reg_date,'yyyy-mm')
 		order by 1
 	</select>
-<<<<<<< HEAD
 
 
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 
 	<select id="getTotalUnapprovalNum_Manager" parameterType="String"
 		resultType="int">
@@ -166,32 +159,30 @@
 
 	<select id="selectEmployee" parameterType="String" resultType="DailyReportEmployee">
 	<![CDATA[select d.DEPARTMENT_NAME,e.employee_name,m.SALES_GOAL,e.employee_id from EMPLOYEE e, MONTHLY_GOAL m, department d 
-       where e.employee_id=m.EMPLOYEE_ID and e.DEPARTMENT_ID=e.DEPARTMENT_ID and e.employee_id=#{employee_id} and m.YEAR=(select TO_CHAR(SYSDATE,'YYYY') from dual) and 
+       where e.employee_id=m.EMPLOYEE_ID and e.DEPARTMENT_ID=d.DEPARTMENT_ID and e.employee_id=#{employee_id} and m.YEAR=(select TO_CHAR(SYSDATE,'YYYY') from dual) and 
        m.MONTH=(select TO_CHAR(SYSDATE,'MM') from dual)]]>
 	</select>
 
-	<insert id="insertDailyReport" parameterType="DailyReport">
-		insert into daily_report
-		values(daily_report_seq.nextval,#{department_id},#{employee_id},#{title},#{reg_date},#{sales},#{before_gauge},#{after_gauge},#{content},'',0)
-		<selectKey keyProperty="daily_report_id" resultType="Integer"
-			order="AFTER">
-			select daily_report_seq.CURRVAL from dual
-		</selectKey>
+<insert id="insertDailyReport" parameterType="DailyReport">
+    insert into daily_report values(daily_report_seq.nextval,#{department_id},#{employee_id},#{title},#{reg_date},#{sales},#{before_gauge},#{after_gauge},#{content},'',0)
+   <selectKey keyProperty="daily_report_id" resultType="Integer" order="AFTER">
+      select daily_report_seq.CURRVAL from dual
+   </selectKey>
+   
+   </insert>
 
-	</insert>
 
-	<select id="selectDailyReport" parameterType="String"
-		resultType="DailyReportDetail">
-	<![CDATA[
-	select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
-dr.AFTER_GAUGE,dr.CONTENT,wp.SALES as wpsales,dr.MANAGER_COMMENT, dr.APPROVAL_FLAG,e1.EMPLOYEE_NAME manager_name,e1.FILE_POSITION manager_file_position
-from employee e, employee e1, daily_report dr, WEEKLY_REPORT wr, WEEKLY_PLAN wp, department d
-where e.employee_id=dr.employee_id and  e.EMPLOYEE_ID=wr.EMPLOYEE_ID and 
-wr.WEEKLY_REPORT_ID=wp.WEEKLY_REPORT_ID and wp.REG_DATE=dr.REG_DATE and 
-e.EMPLOYEE_ID=dr.EMPLOYEE_ID and d.department_id=dr.department_id and e1.EMPLOYEE_ID=d.MANAGER_ID
+  <select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
+   <![CDATA[
+   select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
+dr.AFTER_GAUGE,dr.CONTENT,dr.MANAGER_COMMENT, dr.APPROVAL_FLAG,e1.EMPLOYEE_NAME manager_name,e1.FILE_POSITION manager_file_position
+from employee e, employee e1, daily_report dr, department d
+where e.employee_id=dr.employee_id and  
+d.department_id=dr.department_id and e1.EMPLOYEE_ID=d.MANAGER_ID
 and dr.daily_report_id=#{id}
-	]]>
-	</select>
+   ]]>
+   </select>
+
 
 	<select id="selectDailySalesGoal" parameterType="hashmap"
 		resultType="Integer">
@@ -302,15 +293,8 @@ and dr.daily_report_id=#{id}
 	select nvl(b.sales,0) sales, c.client_name, nvl(round(sales/sum(sales)over()*100),0) as sales_rate from (select sum(a.sales) sales, s.client_id from (select c.SEC_CLIENT_ID, d.sales from daily_report d, COUNSEL_RECORD c where d.DAILY_REPORT_ID = c.DAILY_REPORT_ID and d.REG_DATE between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 and c.DEPARTMENT_ID=#{value})a, SECONDARY_CLIENT s where a.SEC_CLIENT_ID=s.SEC_CLIENT_ID group by s.client_id) b,client c where b.client_id (+)= c.client_id and department_id=#{value}]]>
 	</select>
 
-<<<<<<< HEAD
-
-
-
-	
-	<update id="insertComment" parameterType="hashmap">
-=======
 <update id="insertComment" parameterType="hashmap">
->>>>>>> refs/remotes/origin/develop
+
 		update daily_report set manager_comment=#{comment} where daily_report_id=#{daily_report_id}
 	</update>
 	

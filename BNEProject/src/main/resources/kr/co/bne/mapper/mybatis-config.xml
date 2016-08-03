@@ -6,10 +6,10 @@
 <configuration>
 	
 	<typeAliases>
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/>
 		<typeAlias alias="CounsellingRecord" type="kr.co.bne.dto.CounsellingRecordDTO"/>
 		<typeAlias alias="DailyReport" type="kr.co.bne.dto.DailyReportDTO"/>
@@ -30,32 +30,32 @@
 		
 		<typeAlias alias="DailyReportChartListElement" type="kr.co.bne.dto.DailyReportChartDTO"/>
 		<typeAlias alias="DailyReportChart2ListElement" type="kr.co.bne.dto.DailyReportChart2DTO"/> 
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 		<typeAlias alias="CounsellingManageSalesList" type="kr.co.bne.dto.CounsellingManageSalesDTO"/>
 		<typeAlias alias="CounsellingManageSales" type="kr.co.bne.common.CounsellingManageSales"/>
 		<typeAlias alias="CounsellingSalesGoal" type="kr.co.bne.common.CounsellingSalesGoal"/>
 		
-<<<<<<< HEAD
+
 		
 		<typeAlias alias="Gauge" type="kr.co.bne.dto.GaugeDTO"/>
 		
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
 		<typeAlias alias="Notice" type="kr.co.bne.common.NoticeDetail"/>
 		<typeAlias alias="Gauge" type="kr.co.bne.dto.GaugeDTO"/>
 		<typeAlias alias="NoticeHeader" type="kr.co.bne.common.NoticeHeader"/>
-<<<<<<< HEAD
 
-=======
+
+
 		
       	
 		
 		
->>>>>>> refs/remotes/origin/develop
+
 	</typeAliases>
 
 	<mappers>

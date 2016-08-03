@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -83,10 +83,10 @@ public class DailyReportController {
 			return "redirect:/user/login";
 		}
 
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 		//employee인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
 		if(!"manager".equals(user.getPosition())) {
 			return "redirect:/dailyReport/main/employee/" + user.getEmployee_id();
@@ -248,8 +248,8 @@ public class DailyReportController {
    public String goMain_Employee(Model model, HttpServletRequest request, HttpSession session, @PathVariable("id") String employee_id){
       EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
 
 		if(user == null) {
 			return "redirect:/user/login";
@@ -260,10 +260,10 @@ public class DailyReportController {
 			return "redirect:/dailyReport/main/all/1";
 		}
 
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 		return goMain_Employee(model, request, session, employee_id, 1);
 	}
 	
@@ -402,13 +402,9 @@ public class DailyReportController {
       return "dailyReportMain";
    }
    
-=======
->>>>>>> refs/remotes/origin/develop
-	@RequestMapping(value="/update" ,method = RequestMethod.POST)
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+	@RequestMapping(value="/update" ,method = RequestMethod.POST)
 	public ModelAndView goUpdate(@RequestParam("daily_report_id")String id,HttpServletRequest req,HttpServletResponse res){
 		DailyReportDTO dailyreport=dailyReportService.searchDailyReport(id);
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
@@ -435,19 +431,19 @@ public class DailyReportController {
 		
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
 		model.addObject("employee", employee);
-<<<<<<< HEAD
+
 
 				
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
 		model.addObject("clients", clietns);
 		
 		
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 		return model;
 	}
 	@RequestMapping("/writeform")
@@ -456,12 +452,12 @@ public class DailyReportController {
 		JsonParser parser=new JsonParser();
 		JsonArray json=null;
 		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
-<<<<<<< HEAD
+
 
 		
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
 		try {
 			json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
 			for(int i=0;i<json.size();i++){
@@ -472,10 +468,10 @@ public class DailyReportController {
 			// TODO: handle exception
 		}finally {
 			dailyReportService.writeDailyReport(dailyReportDTO,list);
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
+
+
+
 		}
 		model.addObject("dailyReportId", dailyReportDTO.getDaily_report_id());
 	
@@ -516,13 +512,8 @@ public class DailyReportController {
 		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
 		for(int i=0;i<json.size();i++){
 			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
-<<<<<<< HEAD
-
-			
 
 
-=======
->>>>>>> refs/remotes/origin/develop
 			list.add(dto);
 		}
 		dailyReportService.updateDailyReport(dailyReportDTO,list);

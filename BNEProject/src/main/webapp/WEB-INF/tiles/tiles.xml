@@ -46,10 +46,6 @@
 	</definition>
 	
 	<definition name="redirectDetail" template="/WEB-INF/views/redirectDetail.jsp"/>
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/develop
 	
 	<definition name="updateDailyReport" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Modifyform.jsp"/>
@@ -62,7 +58,6 @@
 	<definition name="aaa" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/SmartEditor2.jsp"/>
 	</definition>
-<<<<<<< HEAD
 	
 	<definition name="alarmDetail" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/alarmDetail.jsp"/>
@@ -71,10 +66,7 @@
 	<definition name="mainboard" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/main.jsp"/>
 	</definition>
-	
-=======
->>>>>>> refs/remotes/origin/develop
-	<!-- <definition name="main" extends="bodybase">
+<!-- <definition name="main" extends="bodybase">
 		<put-attribute name="nav" value="/WEB-INF/views/nav.jsp"/>
 		<put-attribute name="content" value="/WEB-INF/views/content.jsp"/>
 	</definition> -->
@@ -89,7 +81,7 @@
 	
 
 	<definition name="mainboard" extends="tilesbase">
-	<put-attribute name="body" value="/WEB-INF/views/mainboard.jsp"/>
+	<put-attribute name="body" value="/WEB-INF/views/main.jsp"/>
 	</definition>
 </tiles-definitions>
  
