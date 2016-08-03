@@ -71,6 +71,13 @@
 		<put-attribute name="body" value="/WEB-INF/views/searchUserResult.jsp"/>
 	</definition>
 	
+	
+	<definition name="searchUserList" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/searchUserResultList.jsp"/>
+	</definition>
+	
+	
+	
 
 
 </tiles-definitions>

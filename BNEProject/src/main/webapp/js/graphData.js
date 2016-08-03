@@ -1,4 +1,4 @@
-var mainpageMorrisCharts = function() {
+var mainpageMorri sCharts = function() {
 	$.ajax({
 		type : "POST",
 		url : "/chart/monthlySales",
@@ -90,7 +90,9 @@ var mainpageMorrisCharts = function() {
 		url : "/chart/morrisChartLine",
 		data : {
 			// login employee_id 받아오기
-			employee_id : $('#employee_id').val()
+			employee_id : $('#employee_id').val(),
+			department_id: $('#department_id').val()
+			
 		},
 		dataType : 'json',
 
@@ -99,7 +101,19 @@ var mainpageMorrisCharts = function() {
 			
 			list1 = data.List1;
 			list2 = data.List2;
+			var d = new Date();
+		    var n = d.getFullYear();
+			if(list2.length==0){
+
+//				$("#morris-line-example").append('<span>no data</span>');
+				jsonLoop.push({
+					y : n+'',
+					a : 0,
+					b : 0
+				});
+			}
 			var chartFlag = true;
+			
 			for (var i = 0; i < list2.length; i++) {
 
 				for (var j = 0; j < list1.length; j++) {
@@ -127,7 +141,7 @@ var mainpageMorrisCharts = function() {
 				data : jsonLoop,
 				xkey : 'y',
 				ykeys : [ 'a', 'b' ],
-				labels : [ 'My Sales', 'Avg Team Sales' ],
+				labels : [ 'My Sales', 'Team Sales Avg' ],
 				resize : true,
 				lineColors : [ '#33414E', '#95B75D' ]
 			});

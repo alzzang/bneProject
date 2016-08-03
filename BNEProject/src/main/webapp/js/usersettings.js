@@ -217,6 +217,13 @@ $(function() {
 					
 					
 				}else{
+//					var more='<div class="panel-footer text-center">'+
+//                    '    <a class="showUserList" href="#">List로 보기</a>'+
+//                    '</div>';
+					var more='<a href="#" id="iii" class="list-group-item showUserList text-center panel-footer">'+
+                    '        <span class="contacts-title">List로 보기</span>'+
+                    '    </a>';
+					
 					for(var i=0;i<data.length;i++){
 						console.log('data find '+i);
 						html2='<a href="#" id="iii'+data[i].employee_id+'" class="list-group-item">'+
@@ -235,19 +242,22 @@ $(function() {
 						})(i);
 						
 					}
-					
-					
+                    
+					$("#empSGJ").append(more);
 					$(".xn-search").attr("class","xn-search active");
 					
+
 					if(keycode=='13'){
 						console.log('str:'+str);
-						
-						
-						
-						
-						
-						
+						location.href='/user/empSearch2?empSearch='+str;
 					}
+					
+					
+					/* problem */
+					$(".showUserList").on("click",function(e){
+//						e.stopPropagation();
+						location.href='/user/empSearch2?empSearch='+str;
+					});
 					
 				}// end else
 				
@@ -264,5 +274,13 @@ $(function() {
 		});//end ajax
 		
 	};
+	
+	$(".aabbcc").on("click",function(){
+		var a = $(this).attr("id");
+		a=a.replace("ioi","");
+		location.href='/user/searchUser/'+a;
+	});
+	
+	
 
 })

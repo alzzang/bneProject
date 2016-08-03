@@ -34,7 +34,7 @@
 	
 	<select id="empSearch" parameterType="String" resultType="Employee">
 		<![CDATA[
-		    select EMPLOYEE_ID,EMPLOYEE_NAME,DEPARTMENT_ID
+		    select EMPLOYEE_ID,EMPLOYEE_NAME,DEPARTMENT_ID,mobile_phone,email,file_position
 			from employee
 			where EMPLOYEE_NAME like #{value}
 			order by 2

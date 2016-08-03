@@ -263,14 +263,7 @@
                     monthpicker.trigger('monthpicker-click-month', $(this).data('month'));
                     $(this).closest('table').find('.ui-state-active').removeClass('ui-state-active');
                     $(this).addClass('ui-state-active');
-                    
-                    
                     counsellingAjax();
-                    
-                    
-                    
-                    
-                    
                 }
             });
  

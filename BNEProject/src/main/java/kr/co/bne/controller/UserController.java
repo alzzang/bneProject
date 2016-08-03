@@ -156,10 +156,9 @@ public class UserController {
 	}
 	
 
+	/* javascript에서 필요한 정보를 json 으로 변환 return */
 	@RequestMapping(value = "/empSearch", method = { RequestMethod.POST })
 	public @ResponseBody List<EmployeeDTO> getEmpSearch(@RequestParam("empSearch") String empSearch ,HttpServletRequest req) {
-		System.out.println("empSearch :"+empSearch);
-		
 			String temp="%"+empSearch+"%";
 			List<EmployeeDTO> list =userService.getEmpSearch(temp);
 			System.out.println(list);
@@ -167,6 +166,7 @@ public class UserController {
 	}
 
 	
+	/*    */
 	@RequestMapping(value = "/searchUser/{empId}", method = { RequestMethod.GET })
 	public String showSearchUser(Model model,@PathVariable String empId, HttpServletRequest req, HttpServletResponse res)
 			throws IOException {
@@ -175,6 +175,21 @@ public class UserController {
 		model.addAttribute("emp",ed);
 		System.out.println("where ? : ");
 		
+		
 		return "searchUser";
 	}
+	
+	@RequestMapping(value = "/empSearch2", method = { RequestMethod.GET })
+	public String getEmpSearch2(Model model,@RequestParam("empSearch") String empSearch ,HttpServletRequest req) {
+		System.out.println("empSearch2 @@ : "+empSearch);
+		
+			String temp="%"+empSearch+"%";
+			List<EmployeeDTO> list2 =userService.getEmpSearch(temp);
+			model.addAttribute("list", list2);
+			System.out.println(list2);
+			return "searchUserList";
+	}
+	
+	
+	
 }
