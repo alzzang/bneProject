@@ -1,19 +1,119 @@
 /**
  * 
  */
-function updateDaily(id){
-	event.preventDefault();
-	var url = "update?daily_report_id="+id;    
-	location.href=url;
+function moveLink(noticeId,type,linkId,subject){
+	$.ajax({
+		type : "POST",
+		url : '/alarm/click',
+		data : {
+			"noticeId" : noticeId
+		},
+		success : function(data) {
+			if(type=="DAILY_POST"){
+				detailDaily(linkId);
+			}else if(type=="WEEKLY_POST"){
+				detailWeekly(linkId,subject);
+			}else if(type=="DAILY_CORRECT"){
+				detailDaily(linkId);
+			}else if(type=="WEEKLY_CORRECT"){
+				detailWeekly(linkId,subject);
+			}else if(type=="APPROVAL"){
+				detailDaily(linkId);
+			}else if(type=="COMMENT"){
+				detailDaily(linkId);
+			}
+		}
+	});
+	
 }
 
-function testJSON1(){
+
+function deleteDaily(id){
+	event.stopPropagation();
+	event.preventDefault();
+	
+	var r = confirm("삭제하시겠습니까?");
+	    if (r == true) {
+	    	$.ajax({
+	    		type : "POST",
+	    		url : "/dailyReport/delete",
+	    		data : {
+	    			dailyReportId: id
+	    		},
+	    		success : function(data) {
+	    			window.location.href = "/dailyReport/main";
+	    			alert('삭제되었습니다.');
+	    		}
+	    	})
+	    } else {
+	    	alert('삭제가 취소되었습니다.');
+	    	event.stopPropagation();
+	    	event.preventDefault();
+	    }
+}
+
+function updateDaily(id){
+	event.preventDefault();
+	
+	var form = document.createElement("form");     
+	form.setAttribute("method","post");                    
+	form.setAttribute("action","/dailyReport/update");        
+	document.body.appendChild(form);                        
+	 
+	//input
+	var input_id = document.createElement("input");  
+	input_id.setAttribute("type", "hidden");                 
+	input_id.setAttribute("name", "daily_report_id");                        
+	input_id.setAttribute("value", id);                          
+	form.appendChild(input_id);
+	 
+	//폼전송
+	form.submit();  
+	
+}
+
+function detailDaily(id){
+	event.preventDefault();
+	var form = document.createElement("form");     
+	form.setAttribute("method","post");                    
+	form.setAttribute("action","/dailyReport/detail");        
+	document.body.appendChild(form);                        
+	 
+	//input
+	var input_id = document.createElement("input");  
+	input_id.setAttribute("type", "hidden");                 
+	input_id.setAttribute("name", "dailyReportId");                        
+	input_id.setAttribute("value", id);                          
+	form.appendChild(input_id);
+	 
+	//폼전송
+	form.submit();  
+}
+
+function detailWeekly(id,subject){
+	event.preventDefault();
+	var form = document.createElement("form");     
+	form.setAttribute("method","post");                    
+	form.setAttribute("action","/weeklyReport/detail"+subject);        
+	document.body.appendChild(form);                        
+	 
+	//input
+	var input_id = document.createElement("input");  
+	input_id.setAttribute("type", "hidden");                 
+	input_id.setAttribute("name", "weeekly_report_id");                        
+	input_id.setAttribute("value", id);                          
+	form.appendChild(input_id);
+	 
+	//폼전송
+	form.submit();  
+}
+
+function localSave(){
 	$("#modalContent").val($( "#contentDiv" ).html());
 	  var o = {};
 	   var a = $( "#dailyModalForm" ).serializeArray();
 	   
 	   $.each(a, function() {
-		  // alert(this.name+":"+this.value);
 		     if (o[this.name]) {
 	           if (!o[this.name].push) {
 	               o[this.name] = [o[this.name]];
@@ -31,11 +131,10 @@ function testJSON1(){
 	   var tagJson=JSON.stringify(o);
 	   addTag(tagJson);
 	    var t=JSON.stringify(jsonArray);
-	    alert(':sss'+t);
 	   localStorage.setItem("tt", t);
 }
 //local 저장소 update
-function testJSON2(val){
+function localUpdate(val){
 	var localVar=jQuery.parseJSON(localStorage.getItem("tt"));
 	var tempIdx;
 	$.each( localVar, function( idx, value ) {
@@ -51,7 +150,6 @@ function testJSON2(val){
 	   var a = $( "#dailyModalForm" ).serializeArray();
 	   
 	   $.each(a, function() {
-		  // alert(this.name+":"+this.value);
 		     if (o[this.name]) {
 	           if (!o[this.name].push) {
 	               o[this.name] = [o[this.name]];
@@ -66,22 +164,16 @@ function testJSON2(val){
 	   
 	   jsonArray[tempIdx]=o;
 	   
-	   /*
-	    * html 코드 변경된걸로 적용  onclick과 span값 변경하기
-	    * 그리고 JSON으로 변환후 로컬스토리지에 다시 저장하기
-	   */
+
 	   $('#'+val+' a').attr('onclick', 'tagTest('+o.counsel_id+','+'\''+o.title+'\''+','+'\''+o.content+'\''+','+'\''+o.counselling_id+'\''+','+'\''+o.sec_client_id+'\''+','+'\''+o.address+'\''+','+'\''+o.client_id+'\''+','+'\''+o.representative+'\''+')'); 
 	   $('#'+val+' a').html('<span class="fa fa-tag"></span>'+o.title);
-	   //  tagTest('+'\''+obj.counsel_id+'\''+','+'\''+obj.title+'\''+','+'\''+obj.content+'\''+','+'\''+obj.counselling_id+'\''+','+'\''+obj.sec_client_id+'\''+','+'\''+obj.address+'\''+','+'\''+obj.client_id +'\''+','+'\''+obj.representative+'\''+','+'\''+obj.remove_Id+'\''+')"
-	   /*$('#'+val+' a').bind('click', function() {
-		   alert('aa');
-		 });*/
+
 	   var t=JSON.stringify(jsonArray);
 	   localStorage.setItem("tt", t);
 	   console.log(t);
 }
 //db update
-function testJSON3(val){
+function dbUpdate(val){
 	var localVar=jQuery.parseJSON(localStorage.getItem("tt"));
 	var tempIdx;
 	$.each( localVar, function( idx, value ) {
@@ -91,13 +183,11 @@ function testJSON3(val){
 			}
 			
 	});
-	alert(tempIdx);
 	$("#modalContent").val($( "#contentDiv" ).html());
 	  var o = {};
 	   var a = $( "#dailyModalForm" ).serializeArray();
 	   
 	   $.each(a, function() {
-		  // alert(this.name+":"+this.value);
 		     if (o[this.name]) {
 	           if (!o[this.name].push) {
 	               o[this.name] = [o[this.name]];
@@ -122,13 +212,11 @@ function testJSON3(val){
 	   
 	   var t=JSON.stringify(jsonArray);
 	   localStorage.setItem("tt", t);
-	   alert('db업데이트후'+t);
 	   console.log(t);
 }
 function addTag(testdata){
 	var obj = jQuery.parseJSON(testdata);
 	console.log(obj);
-	alert(JSON.stringify(testdata));
 //	var cc="obj.title";
 	var appendHtml='<li id="'+obj.remove_Id+'"><a href="#" data-toggle="modal" data-target="#myModal2" onclick="tagTest('+'\''+obj.counsel_id+'\''+','+'\''+obj.title+'\''+','+'\''+obj.content+'\''+','+'\''+obj.counselling_id+'\''+','+'\''+obj.sec_client_id+'\''+','+'\''+obj.address+'\''+','+'\''+obj.client_id +'\''+','+'\''+obj.representative+'\''+','+'\''+obj.remove_Id+'\''+')"><span class="fa fa-tag"></span>'
 	appendHtml+=obj.title+'</a><span class="glyphicon glyphicon-remove " onclick="removeTag('+'\''+obj.remove_Id+'\''+','+0+')"></span></li>';
@@ -153,7 +241,7 @@ function tagTest(b,c,d,e,f,g,h,i,j){
 		$('#client_id').val(h);
 		$('#representative').val(i);	
 		
-		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON2('+j+')">Submit</button>');
+		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="localUpdate('+j+')">Submit</button>');
 	}else{
 		alert('띠용!!');
 		$('#modalTitle').val(c);
@@ -170,7 +258,7 @@ function tagTest(b,c,d,e,f,g,h,i,j){
 		$('#address').val(g);
 		$('#client_id').val(h);
 		$('#representative').val(i);
-		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON3('+j+')">Submit</button>');
+		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="dbUpdate('+j+')">Submit</button>');
 	}
 	
 
@@ -190,13 +278,10 @@ function tagDetail(department_name,employee_name,reg_date,title,client_id,client
 }
 function removeTag(seq,val){
 	if(val==0){
-		alert(0);
 		jsonArray = jQuery.grep(jsonArray, function( n ) {
-			alert(n.remove_Id);
 			  return n.remove_Id!=seq;
 		});
 	}else if(val==1){
-		alert(1);
 		console.log(jsonArray);
 		$.each( jsonArray, function( idx, value ) {
 			if(value["counsel_id"]==seq){
@@ -212,7 +297,6 @@ function removeTag(seq,val){
 	$(t).remove();
 	 var removeJson=JSON.stringify(jsonArray);
 	   localStorage.setItem("tt", removeJson);
-	   alert(localStorage.getItem("tt"));
 }
 
 function changeProgress(money,goal){
@@ -223,14 +307,20 @@ function changeProgress(money,goal){
 	achievementRate=Math.round(achievementRate);
 	achievementRate=achievementRate/100;
 	/*achievementRate=Math.round10(achievementRate,-3); */
-	if(achievementRate == 0) {
+	if(achievementRate == 0 ) {
+		alert(achievementRate+":");
 		var rate=achievementRate.toString()+'%';
 		$("#progressCondition").css('width',0.1);
 		$("#progressCondition").html(rate);
 		
+	}else if(isNaN(achievementRate)){
+		var rate='0%';
+		$("#progressCondition").css('width',0.1);
+		$("#progressCondition").html(rate);
 	}
 	else{
-
+		//alert(achievementRate);
+		
 		if(achievementRate>100){
 			achievementRate=100;
 		}
@@ -255,6 +345,12 @@ function approvalDaily() {
     		success : function(data) {
     			$('#approvalDiv').remove();
     			alert('승인되었습니다.');
+    			/*event.preventDefault();*/
+    		},
+    		error : function(data)
+    		{
+    			console.log(data);
+    			alert('에러입니');
     		}
     	})
     	
@@ -263,6 +359,7 @@ function approvalDaily() {
     	alert('승인이 취소되었습니다.');
         /*txt = "You pressed Cancel!";*/
     }
+    event.preventDefault();
     /*document.getElementById("demo").innerHTML = txt;*/
 }
 
@@ -273,7 +370,55 @@ function computeGuage(){
 	  $('#result_guage').val(result);
 }
 
+function insertComment(){
+	$.ajax({
+		type : "POST",
+		url : "/dailyReport/writecomment",
+		data : {
+			report_id: $('#report_id').val(),
+			comment : $('#managerComment').val()
+		},
+		success : function(data) {
+			var html='<div class="timeline-body comments">'+'<div class="comment-item">'+' <img src="/user/download/'+$('#manager_file_position').val()+'/">'+                               
+                     '<p class="comment-head">'+' <a href="#">'+$('#manager_name').val()+'</a>'
+                      +'<a href="#" class="pull-right" onclick="deleteComment()">삭제</a><span class="pull-right">&nbsp;|&nbsp;</span>'+
+                      '<a href="#" class="pull-right" onclick="modifyComment('+'\''+$('#managerComment').val()+'\''+')">수정</a></p>'+$('#managerComment').val()+'</div></div>' ;                   
+			$('#commentDiv').html(html);
+		}
 
+	})
+}
+function modifyComment(val){
+	alert(val);
+	var html='<div class="form-group push-up-20"><div class="col-md-12"><div class="input-group">'+
+		'<input class="form-control" placeholder="팀장 의견" id="managerComment" value="'+val+'">'
+		+'<span class="input-group-addon"><a href="#" onclick="insertComment()">'+
+		 '<span	class="fa fa-pencil"></span></a></span></div></div></div>';			
+	$('#commentDiv').html(html);
+		
+
+}
+
+function deleteComment(){
+	$.ajax({
+		type : "POST",
+		url : "/dailyReport/deletecomment",
+		data : {
+			report_id: $('#report_id').val()
+		},
+		success : function(data) {
+			var html='<div class="form-group push-up-20"><div class="col-md-12"><div class="input-group">'+
+				'<input class="form-control" placeholder="팀장 의견" id="managerComment">'
+				+'<span class="input-group-addon"><a href="#" onclick="insertComment()">'+
+				 '<span	class="fa fa-pencil"></span></a></span></div></div></div>';			
+			$('#commentDiv').html(html);
+		}
+
+	})
+}
+function addComma(val){
+	return val.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
+}
 function searchSalesGoal(reg_date) {
 
 	$.ajax({

@@ -1,0 +1,25 @@
+@import url(http://fonts.googleapis.com/css?family=Old+Standard+TT:400,700);
+[data-notify="container"][class*="customNoticeForm-"] {
+	background-color: rgba(216, 6, 71, 0.7);
+	border-width: 0px;
+	border-radius: 10px;
+	/* box-shadow: 0px 0px 5px rgb(29, 33, 39); */
+	font-family: inherit;
+	letter-spacing: 1px;
+	color: white;
+}
+[data-notify="container"].alert-customNoticeForm-info {
+	border-left-color: #3b3a30;
+}
+[data-notify="container"].alert-customNoticeForm-danger {
+	border-left-color: #3b3a30;
+}
+[data-notify="container"][class*="alert-customNoticeForm-"] > [data-notify="title"] {
+	color: #3b3a30;
+	display: block;
+	font-weight: 700;
+	margin-bottom: 5px;
+}
+[data-notify="container"][class*="alert-customNoticeForm-"] > [data-notify="message"] {
+	font-weight: 400;
+}

@@ -30,6 +30,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	}
 	@Override
 	public int insertDailyReport(DailyReportDTO dailyReportDTO) {
+		System.out.println("dailyreport insert 했지롱");		
 		// TODO Auto-generated method stub
 		return sqlSession.insert("kr.co.bne.mapper.DailyReport.insertDailyReport", dailyReportDTO);
 		
@@ -113,6 +114,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		return pageNum;
 	}
 
+
 	@Override
 	public List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException {
 		List<DailyReportTeamListElement> teamList = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMemberList", user_id);
@@ -124,9 +126,11 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Override
 	public int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException {
 		int TotalUnapprovalNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getTotalUnapprovalNum_Manager", user_id);
+		
 		return TotalUnapprovalNum;
 	}
-		
+	
+	
 	
 	@Override
 	public int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException {
@@ -134,16 +138,23 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		
 		return TotalUnapprovalNum;
 	}
+	
 	@Override
-	public int selectMonthlyGoal(String id) {
+	public void insertComment(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectMonthlyGoal", id);
+		sqlSession.update("kr.co.bne.mapper.DailyReport.insertComment", map);
 	}
 	@Override
-	public int selectSumofMonthlyGoal(String id) {
+	public void deleteComment(String daily_report_id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
+		sqlSession.update("kr.co.bne.mapper.DailyReport.deleteComment", daily_report_id);
 	}
+	@Override
+	public void deleteReport(String id) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteReport", id);
+	}
+
 
 	@Override
 	public int selectMonthlyGoalManager(String id) {
@@ -182,6 +193,15 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectCustomerSales", departmentId);
 	}
-	
-	
+	@Override
+	public int selectMonthlyGoal(String id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int selectSumofMonthlyGoal(String id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

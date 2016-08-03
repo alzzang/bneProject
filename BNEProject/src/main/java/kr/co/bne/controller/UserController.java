@@ -25,8 +25,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+
 import kr.co.bne.dao.EmployeeDAO;
+
+import kr.co.bne.dto.DailyReportEmployeeDTO;
+
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.service.DailyReportService;
 import kr.co.bne.service.UserService;
 
 @Controller
@@ -38,6 +43,9 @@ public class UserController {
 	
 	@Autowired
 	EmployeeDAO employeeDAO;
+
+
+	private DailyReportService dailyReportService;
 
 	
 	public void setFileName(String fileName, HttpServletRequest req){
@@ -140,6 +148,9 @@ public class UserController {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
 				session.setAttribute("fileName", employeeDTO.getFile_position());
+
+				DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
+				session.setAttribute("employee", employee);
 				
 				return "redirect:/main";
 			}

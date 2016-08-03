@@ -25,7 +25,7 @@
 
 
 
-			<li class="xn-profile active">
+			<li class="xn-profile active" id="dropdd">
 			
 				<a href="#" class="profile-mini"> <img
 					src="/user/download/${sessionScope.user.file_position}/"></a>

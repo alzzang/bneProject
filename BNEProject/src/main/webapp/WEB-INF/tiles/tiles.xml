@@ -9,7 +9,6 @@
 	<definition name="dailyReport_Writeform" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Writeform.jsp"/>
 	</definition>
-	
 	<definition name="dailyReportMain" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReportMain.jsp"/>
 	</definition>
@@ -45,7 +44,8 @@
 		<put-attribute name="body" value="/WEB-INF/views/password.jsp"/>
 	</definition>
 	
-	
+	<definition name="redirectDetail" template="/WEB-INF/views/redirectDetail.jsp"/>
+
 	
 	<definition name="updateDailyReport" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Modifyform.jsp"/>
@@ -58,6 +58,15 @@
 	<definition name="aaa" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/SmartEditor2.jsp"/>
 	</definition>
+	
+	<definition name="alarmDetail" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/alarmDetail.jsp"/>
+	</definition>
+	
+	<definition name="mainboard" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/mainboard.jsp"/>
+	</definition>
+	
 	<!-- <definition name="main" extends="bodybase">
 		<put-attribute name="nav" value="/WEB-INF/views/nav.jsp"/>
 		<put-attribute name="content" value="/WEB-INF/views/content.jsp"/>

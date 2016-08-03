@@ -18,7 +18,9 @@
 		<!-- AOP - aspect 사용. -->
 	<aop:aspectj-autoproxy />
 	
-	<context:component-scan base-package="kr.co.bne.dao" />
+	
+	<context:component-scan base-package="kr.co.bne.dao" />	
+	<context:component-scan base-package="kr.co.bne.aspect" />
 
 				
 	<!-- datasource -->

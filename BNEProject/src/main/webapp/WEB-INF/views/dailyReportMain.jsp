@@ -167,7 +167,7 @@ for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
 	                                        <span class="<%=className%>"></span>
 	                                    </div>
 	                                    <div class="mail-user"><%=report.getEmployee_name() %></div>                                    
-	                                    <a href="/dailyReport/detail?dailyReportId=<%=report.getIdx() %>" class="mail-text"><%=report.getTitle() %></a>                                    
+	                                    <a onclick="detailDaily('<%=report.getIdx()%>')"class="mail-text"><%=report.getTitle() %></a>                                    
 	                                    <div class="mail-date"><%=report.getReg_date() %></div>
                                 	</div>
                                 

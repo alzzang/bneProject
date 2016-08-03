@@ -12,7 +12,9 @@ import kr.co.bne.dao.DailyReportDAO;
 import kr.co.bne.dao.EmployeeDAO;
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
+
 import kr.co.bne.dto.DailyReportChart2DTO;
+
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -95,7 +97,21 @@ public class DailyReportServiceImpl implements DailyReportService {
 	@Override
 	public DailyReportDetailDTO viewReport(String id) {
 		// TODO Auto-generated method stub
-		return dao.selectDailyReport(id);  
+		DailyReportDetailDTO dto=dao.selectDailyReport(id);
+		HashMap<String,String> map=new HashMap<String, String>();
+		map.put("reg_date", dto.getReg_date());
+		map.put("employee_id", dto.getEmployee_id());
+		int wpsales=0;
+		try {
+			wpsales=dao.selectDailySalesGoal(map);
+		} catch (Exception e) {
+			// TODO: handle exception
+			dto.setWpsales(wpsales);
+		}
+
+		//System.out.println(obj);
+		//dto.setWpsales(wpsales);
+		return dto;  
 	}
 
 	@Override
@@ -116,7 +132,6 @@ public class DailyReportServiceImpl implements DailyReportService {
 		return dao.selectCounselList(id);
 	}
 
-	
 	@Override
 	public void approvalDailyReport(String daily_report_id) {
 		// TODO Auto-generated method stub
@@ -166,8 +181,15 @@ public class DailyReportServiceImpl implements DailyReportService {
 	}
 
 	@Override
+
 	public HashMap<String, Integer> selectMonthlyGoal(String id,String position) {
-		// TODO Auto-generated method stub
+
+	
+		
+		
+	
+	
+
 		HashMap<String, Integer> result = new HashMap<String, Integer>();
 		
 		if(position.equals("manager")){
@@ -179,16 +201,20 @@ public class DailyReportServiceImpl implements DailyReportService {
 			result.put("sumofMonthlyGoal", dao.selectSumofMonthlyGoal(id)); //달성액
 		}
 		return result;
-	}
 
+		
+
+	}
+	public void writeComment(HashMap<String, String> map) {
+
+		// TODO Auto-generated method stub
+			dao.insertComment(map);
+			}
 
 	@Override
-	public HashMap<String, List<?>> searchDailyChartLine(String employee_id) {
+	public void removeComment(String daily_report_id) {
 		// TODO Auto-generated method stub
-		HashMap<String, List<?>> result = new HashMap<String,List<?>>();
-		result.put("List1", dao.selectDailyReportChartLineList(employee_id));
-		result.put("List2", dao.selectDailyReportChartLine2List());
-		return result;
+		dao.deleteComment(daily_report_id);
 	}
 	@Override
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId) {
@@ -203,12 +229,30 @@ public class DailyReportServiceImpl implements DailyReportService {
 
 
 	@Override
+
 	public List<DailyReportChart2DTO> selectCustomersSales(int departmentId) {
-		// TODO Auto-generated method stub
 		return dao.selectCustomerSales(departmentId);
+	}
+	
+	
+	@Override
+	public void delete(String id) {
+
+		// TODO Auto-generated method stub
+		dao.deleteReport(id);
+
 	}
 
 
+	@Override
+	public HashMap<String, List<?>> searchDailyChartLine(String employee_id) {
+		// TODO Auto-generated method stub
+		HashMap<String, List<?>> result = new HashMap<String,List<?>>();
+		result.put("List1", dao.selectDailyReportChartLineList(employee_id));
+		result.put("List2", dao.selectDailyReportChartLine2List());
+		return result;
+		
+		
+	}
 
-	
 }
