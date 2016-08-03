@@ -110,8 +110,6 @@ public class DailyReportServiceImpl implements DailyReportService {
 			dto.setWpsales(wpsales);
 		}
 
-		//System.out.println(obj);
-		//dto.setWpsales(wpsales);
 		return dto;  
 	}
 

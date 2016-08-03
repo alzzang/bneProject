@@ -33,12 +33,12 @@ public class NoticeAspect {
 	
 	
 	public NoticeAspect() {
-		System.out.println("aspect 생성!!");
+		
 	}
 
 	@AfterReturning("execution(public int kr.co.bne.dao.DailyReportDAO.insertDailyReport(..))")
 	public void execInsertNotice_DAILY_POST(JoinPoint joinPoint) throws Throwable {
-		System.out.println("일일보고 등록 aop 실행!!");
+		
 		
 		DailyReportDTO dailyReport = (DailyReportDTO)joinPoint.getArgs()[0];
 		List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.DAILY_POST, dailyReport.getDaily_report_id(), dailyReport.getEmployee_id());	
@@ -53,7 +53,7 @@ public class NoticeAspect {
 	
 	@AfterReturning("execution(public * kr.co.bne.dao.DailyReportDAO.updateApproval(..))")
 	public void execInsertNotice_APPROVAL(JoinPoint joinPoint) throws Throwable {
-		System.out.println("승인 aop 실행!!");
+		
 		
 		int daily_report_id = Integer.parseInt(joinPoint.getArgs()[0].toString());
 		List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.APPROVAL, daily_report_id);	
@@ -68,7 +68,7 @@ public class NoticeAspect {
 	
 	@AfterReturning("execution(public * kr.co.bne.dao.DailyReportDAO.*Comment(..))") //댓글 수정, 댓글 등록 모두다
 	public void execInsertNotice_COMMENT(JoinPoint joinPoint) throws Throwable {
-		System.out.println("comment aop 실행!!");
+		
 		
 		HashMap<String, String> map = (HashMap<String, String>)joinPoint.getArgs()[0];
 		int daily_report_id = Integer.parseInt(map.get("daily_report_id"));
@@ -85,7 +85,7 @@ public class NoticeAspect {
 	
 	@AfterReturning("execution(public * kr.co.bne.service.DailyReportService.updateDailyReport(..))")
 	public void execInsertNotice_DAILY_CORRECT(JoinPoint joinPoint) throws Throwable {
-		System.out.println("일일보고 수정 aop 실행!!");
+		
 		
 		
 		

@@ -32,7 +32,7 @@ public class DailyReportDAOTest {
 		
 		int cnt = 1;
 		for(DailyReportListElement el : list) {
-			System.out.println((cnt++) + ":" + el.getTitle());
+			
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class DailyReportDAOTest {
 		/*map.put("reg_date", "2016-06-27");*/
 		
 		int num = dailyReportDAO.getPagingNum_DailyReportList("2", 25, map);
-		System.out.println(num);
+	
 	}
 	
 	
@@ -73,7 +73,7 @@ public class DailyReportDAOTest {
 		map.put("approval_flag", 0);
 		
 		int num = dailyReportDAO.getPagingNum_DailyReportList("1", 25, map);
-		System.out.println(num);
+		
 	}
 
 

@@ -208,7 +208,7 @@ public class DailyReportController {
             }
          }
       }
-      System.out.println(serviceParams.toString());
+      
       Gson gson = new Gson();
       String serviceParamsStr = gson.toJson(serviceParams);
       
@@ -370,7 +370,7 @@ public class DailyReportController {
             }
          }
       }
-      System.out.println(serviceParams.toString());
+      
       Gson gson = new Gson();
       String serviceParamsStr = gson.toJson(serviceParams);
       

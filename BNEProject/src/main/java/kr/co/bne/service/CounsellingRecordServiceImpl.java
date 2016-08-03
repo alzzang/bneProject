@@ -48,7 +48,7 @@ public class CounsellingRecordServiceImpl implements CounsellingRecordService {
 	@Override
 	public void insertUpdateSalesGoal(CounsellingSalesGoal csg) {
 		/* insert */
-		System.out.println("Here Service.. getIsEmpty = "+csg.getIs_empty());
+		
 		if(csg.getIs_empty()==1){
 			
 			counsellingRecordDAO.insertSalesGoal(csg);
