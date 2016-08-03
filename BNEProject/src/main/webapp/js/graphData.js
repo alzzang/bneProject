@@ -1,4 +1,4 @@
-var mainpageMorri sCharts = function() {
+var mainpageMorrisCharts = function() {
 	$.ajax({
 		type : "POST",
 		url : "/chart/monthlySales",
