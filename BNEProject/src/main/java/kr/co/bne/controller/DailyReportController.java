@@ -570,7 +570,6 @@ public class DailyReportController {
 	public void writeComment(@RequestParam("report_id")String daily_report_id,HttpServletRequest req,HttpServletResponse res){
 
 		dailyReportService.removeComment(daily_report_id);
-
 	}
 /*	@RequestMapping("/jsontest")
 	public void goJSON(HttpServletRequest req,HttpServletResponse res){

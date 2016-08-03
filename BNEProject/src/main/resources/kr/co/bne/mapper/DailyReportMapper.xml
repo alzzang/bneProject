@@ -45,12 +45,16 @@
 
 		select daily_report_id idx, employee_id, employee_name, title,
 		reg_date, approval_flag
-		from (select ROW_NUMBER() OVER (order by reg_date desc) idx,
-		d.daily_report_id, d.employee_id, e.employee_name, d.title,
+		from (select ROW_NUMBER() OVER (order by
+		reg_date desc) idx,
+		d.daily_report_id, d.employee_id, e.employee_name,
+		d.title,
 		to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
-		from daily_report d , employee e
+		from
+		daily_report d , employee e
 		where d.employee_id = e.employee_id
-		and d.department_id = (select department_id from employee where
+		and
+		d.department_id = (select department_id from employee where
 		employee_id = #{user_id})
 		<if test="employee_id != null">
 			and d.employee_id = #{employee_id}
@@ -71,13 +75,14 @@
 
 
 	<!-- 전체 리스트 페이지 갯수 -->
-	<select id="getPagingNum_DailyReportList" parameterType="hashmap"
-		resultType="int">
+	<select id="getPagingNum_DailyReportList" parameterType="hashmap" resultType="int">
 
 		select ceil(count(*)/#{perContentNum}) cnt
-		from daily_report d , employee e
+		from daily_report d ,
+		employee e
 		where d.employee_id = e.employee_id
-		and d.department_id = (select
+		and d.department_id =
+		(select
 		department_id from employee where employee_id = #{user_id})
 		<if test="employee_id != null">
 			and d.employee_id = #{employee_id}
@@ -91,68 +96,53 @@
 
 	</select>
 
+	<select id="selectTeamMemberList" parameterType="java.lang.String" resultMap="DailyReportTeamListElement">
+		select b.employee_id, b.employee_name, b.department_id, nvl(a.unApproval, 0)
+		unApproval
+		from (select employee_id, count(*) unApproval from DAILY_REPORT
+		where department_id = (select department_id from department where
+		manager_id = #{value})
+		and approval_flag = 0
+		group by employee_id) a, (select * from employee
+		where department_id = (select department_id
+		from department
+		where manager_id = #{value})) b
+		where b.employee_id != #{value}
+		and a.employee_id(+) = b.employee_id
+		order by b.employee_name asc
+	</select>
 
-
-
-
-
-
-	
-
-
-<select id="selectTeamMemberList" parameterType="java.lang.String" resultMap="DailyReportTeamListElement"> 
-   select b.employee_id, b.employee_name, b.department_id, nvl(a.unApproval, 0) unApproval
-   from (select employee_id, count(*) unApproval from DAILY_REPORT
-         where department_id = (select department_id from department where manager_id = #{value})
-               and approval_flag = 0
-         group by employee_id) a, (select * from employee 
-                                    where department_id = (select department_id 
-                                                            from department 
-                                                            where manager_id = #{value})) b
-   where    b.employee_id != #{value}
-         and a.employee_id(+) = b.employee_id
-  order by b.employee_name asc
-</select>
-
-
-
-
-
-	<select id="selectDailyChartList" parameterType="java.lang.String"
-		resultMap="DailyReportChartListElement">
-		select department_id,employee_id,to_char(reg_date,'yyyy-mm') as reg_date,
+	<select id="selectDailyChartList" parameterType="java.lang.String" resultMap="DailyReportChartListElement">
+		select department_id,employee_id,to_char(reg_date,'yyyy-mm')
+		as reg_date,
 		sum(sales) as sales
 		from daily_report
-		where reg_date between add_months(sysdate,-12) and add_months(sysdate,-1)
-		and EMPLOYEE_ID =#{value}
-		group by to_char(reg_date,'yyyy-mm'), EMPLOYEE_ID,department_id
+		where reg_date between
+		add_months(sysdate,-12) and add_months(sysdate,-1)
+		and EMPLOYEE_ID
+		=#{value}
+		group by to_char(reg_date,'yyyy-mm'),
+		EMPLOYEE_ID,department_id
 		order by 3
 	</select>
 
-
-
-
-
 	<select id="selectDailyChart2List" resultMap="DailyReportChart2ListElement">
-		select to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
+		select
+		to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
 		from daily_report
-		where reg_date between add_months(sysdate,-12) and add_months(sysdate,-1)
+		where reg_date between add_months(sysdate,-12) and
+		add_months(sysdate,-1)
 		group by to_char(reg_date,'yyyy-mm')
 		order by 1
 	</select>
 
-
-
-
-
-
-
-	<select id="getTotalUnapprovalNum_Manager" parameterType="String"
-		resultType="int">
+	<select id="getTotalUnapprovalNum_Manager" parameterType="String" resultType="int">
 		select count(*) from DAILY_REPORT
-		where department_id = (select department_id from department where
+		where department_id =
+		(select department_id from department where
 		manager_id = #{value})
-		and APPROVAL_FLAG = 0
+		and
+		APPROVAL_FLAG = 0
 	</select>
 
 
@@ -163,16 +153,18 @@
        m.MONTH=(select TO_CHAR(SYSDATE,'MM') from dual)]]>
 	</select>
 
-<insert id="insertDailyReport" parameterType="DailyReport">
-    insert into daily_report values(daily_report_seq.nextval,#{department_id},#{employee_id},#{title},#{reg_date},#{sales},#{before_gauge},#{after_gauge},#{content},'',0)
-   <selectKey keyProperty="daily_report_id" resultType="Integer" order="AFTER">
-      select daily_report_seq.CURRVAL from dual
-   </selectKey>
-   
-   </insert>
+	<insert id="insertDailyReport" parameterType="DailyReport">
+		insert into daily_report
+		values(daily_report_seq.nextval,#{department_id},#{employee_id},#{title},#{reg_date},#{sales},#{before_gauge},#{after_gauge},#{content},'',0)
+		<selectKey keyProperty="daily_report_id" resultType="Integer"
+			order="AFTER">
+			select daily_report_seq.CURRVAL from dual
+		</selectKey>
+
+	</insert>
 
 
-  <select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
+	<select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
    <![CDATA[
    select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
 dr.AFTER_GAUGE,dr.CONTENT,dr.MANAGER_COMMENT, dr.APPROVAL_FLAG,e1.EMPLOYEE_NAME manager_name,e1.FILE_POSITION manager_file_position
@@ -181,11 +173,10 @@ where e.employee_id=dr.employee_id and
 d.department_id=dr.department_id and e1.EMPLOYEE_ID=d.MANAGER_ID
 and dr.daily_report_id=#{id}
    ]]>
-   </select>
+	</select>
 
 
-	<select id="selectDailySalesGoal" parameterType="hashmap"
-		resultType="Integer">
+	<select id="selectDailySalesGoal" parameterType="hashmap" resultType="Integer">
 	<![CDATA[
 		select p.SALES
 		from EMPLOYEE e, WEEKLY_REPORT r, WEEKLY_PLAN p
@@ -193,8 +184,7 @@ and dr.daily_report_id=#{id}
 	]]>
 	</select>
 
-	<select id="selectCounselRecordList" parameterType="String"
-		resultType="CounsellingDetail">
+	<select id="selectCounselRecordList" parameterType="String" resultType="CounsellingDetail">
 	<![CDATA[
 	select cr.COUNSEL_ID,d.department_name, e.EMPLOYEE_NAME,cr.REG_DATE,cr.title,c.CLIENT_ID, c.CLIENT_NAME,c.REPRESENTATIVE,sc.sec_client_id, sc.SEC_CLIENT_NAME,sc.ADDRESS,cr.CONTENT
 	from daily_report dr,counsel_record cr,employee e,DEPARTMENT d,SECONDARY_CLIENT sc,CLIENT c
@@ -262,13 +252,10 @@ and dr.daily_report_id=#{id}
 		<![CDATA[
 		select COALESCE(sum(sales),0) as sales from daily_report where department_id=(select department_id from employee where employee_id=#{value}) and reg_date between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1
 		]]>
-		<!-- select sum(sales) from daily_report where department_id=(select department_id from employee where employee_id=#{value}) and reg_date between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 -->
 	</select>
 
-	<select id="selectTeamMonthlyGoal" parameterType="String" resultType="DailyReportEmployee">
-		<!-- <![CDATA[
-		select abc.employee_name,sum(abc.sales) as sales_goal from (select d.department_id, e.employee_id, e.employee_name, d.sales  from daily_report d, employee e where d.employee_id = e.employee_id and d.reg_Date between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 and d.DEPARTMENT_ID=(select department_id from employee where employee_id=#{values})) abc group by employee_name
-		]]> -->
+	<select id="selectTeamMonthlyGoal" parameterType="String"
+		resultType="DailyReportEmployee">
 	<![CDATA[
 	  select employee_id, employee_name, sum(sales) sales_goal from 
 	  (select a.employee_id, a.employee_name, NVL2( b.sales, b.sales, 0) sales, NVL2( b.reg_date, to_char(b.reg_date, 'yyyymmdd'), '0') reg_date
@@ -278,9 +265,8 @@ and dr.daily_report_id=#{id}
       reg_date between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1) b where b.employee_id (+)= a.employee_id) 
       group by employee_id, employee_name]]>
 	</select>
-	
-	<select id="selectVehicleGauge" parameterType="String" resultType="Gauge">
-	
+
+	<select id="selectVehicleGauge" parameterType="String"	resultType="Gauge">
 	<![CDATA[
 	 select day,dte, sum(distance) distance from (select aa.day, aa.dte, nvl(bb.distance,0)distance from
 	(select a.day,a.dte from (select to_char(sysdate+level,'D') dte, to_char(sysdate+level,'DY') day from dual connect by level <=7 )a where a.dte between 2 and 6) aa, 
@@ -288,22 +274,22 @@ and dr.daily_report_id=#{id}
 	]]>
 	</select>
 
-	<select id="selectCustomerSales" parameterType="Integer" resultType="DailyReportChart2ListElement">
+	<select id="selectCustomerSales" parameterType="Integer"
+		resultType="DailyReportChart2ListElement">
 	<![CDATA[
 	select nvl(b.sales,0) sales, c.client_name, nvl(round(sales/sum(sales)over()*100),0) as sales_rate from (select sum(a.sales) sales, s.client_id from (select c.SEC_CLIENT_ID, d.sales from daily_report d, COUNSEL_RECORD c where d.DAILY_REPORT_ID = c.DAILY_REPORT_ID and d.REG_DATE between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 and c.DEPARTMENT_ID=#{value})a, SECONDARY_CLIENT s where a.SEC_CLIENT_ID=s.SEC_CLIENT_ID group by s.client_id) b,client c where b.client_id (+)= c.client_id and department_id=#{value}]]>
 	</select>
 
-<update id="insertComment" parameterType="hashmap">
+	<update id="insertComment" parameterType="hashmap">
+		update daily_report set	manager_comment=#{comment} where daily_report_id=#{daily_report_id}
+	</update>
 
-		update daily_report set manager_comment=#{comment} where daily_report_id=#{daily_report_id}
-	</update>
-	
 	<update id="deleteComment" parameterType="String">
-		update daily_report set manager_comment='' where daily_report_id=#{daily_report_id}
+		update daily_report set	manager_comment='' where daily_report_id=#{daily_report_id}
 	</update>
-	
+
 	<delete id="deleteReport" parameterType="String">
-		delete daily_report where daily_report_id=#{id}
+		delete daily_report	where daily_report_id=#{id}
 	</delete>
 
 

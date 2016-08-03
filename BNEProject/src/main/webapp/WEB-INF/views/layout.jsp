@@ -128,6 +128,7 @@
     <script type='text/javascript' src='/js/plugins/noty/layouts/topLeft.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topRight.js'></script>            
     <script type='text/javascript' src='/js/plugins/noty/themes/default.js'></script>
+    <script type='text/javascript' src='/js/notice_on_header.js'></script>
 
 	
 	
