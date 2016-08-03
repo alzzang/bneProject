@@ -48,7 +48,7 @@ public interface DailyReportDAO {
 
 
 	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id);
-	public List<DailyReportChart2DTO> selectDailyReportChartLine2List();
+	public List<DailyReportChart2DTO> selectDailyReportChartLine2List(int department_id);
 	public List<?> selectVehicleGauge(String id);
 	public List<DailyReportChart2DTO> selectCustomerSales(int departmentId);
 

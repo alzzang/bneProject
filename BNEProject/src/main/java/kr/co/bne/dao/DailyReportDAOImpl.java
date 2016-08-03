@@ -164,8 +164,8 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	}
 	
 	@Override
-	public List<DailyReportChart2DTO> selectDailyReportChartLine2List(){
-		List<DailyReportChart2DTO> dailyRepoartChart2List = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChart2List");
+	public List<DailyReportChart2DTO> selectDailyReportChartLine2List(int department_id){
+		List<DailyReportChart2DTO> dailyRepoartChart2List = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChart2List",department_id);
 		return dailyRepoartChart2List;
 	}
 	@Override

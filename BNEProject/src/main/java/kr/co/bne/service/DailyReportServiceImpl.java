@@ -225,11 +225,11 @@ public class DailyReportServiceImpl implements DailyReportService {
 	}
 
 	@Override
-	public HashMap<String, List<?>> searchDailyChartLine(String employee_id) {
+	public HashMap<String, List<?>> searchDailyChartLine(String employee_id,int department_id) {
 		// TODO Auto-generated method stub
 		HashMap<String, List<?>> result = new HashMap<String,List<?>>();
 		result.put("List1", dao.selectDailyReportChartLineList(employee_id));
-		result.put("List2", dao.selectDailyReportChartLine2List());
+		result.put("List2", dao.selectDailyReportChartLine2List(department_id));
 		return result;
 	}
 	@Override
@@ -268,15 +268,21 @@ public class DailyReportServiceImpl implements DailyReportService {
 	}
 
 
-
-
-
-
 	@Override
 	public void removeComment(String daily_report_id) {
 		// TODO Auto-generated method stub
 		dao.deleteComment(daily_report_id);
 	}
+
+	@Override
+	   public HashMap<String, List<?>> searchDailyChartLine(String employee_id,int department_id) {
+	      // TODO Auto-generated method stub
+	      HashMap<String, List<?>> result = new HashMap<String,List<?>>();
+	      result.put("List1", dao.selectDailyReportChartLineList(employee_id));
+	      result.put("List2", dao.selectDailyReportChartLine2List(department_id));
+	      return result;
+	   }
+
 
 
 	

@@ -117,21 +117,38 @@
 		as reg_date,
 		sum(sales) as sales
 		from daily_report
+
 		where reg_date between
 		add_months(sysdate,-12) and add_months(sysdate,-1)
 		and EMPLOYEE_ID
 		=#{value}
 		group by to_char(reg_date,'yyyy-mm'),
 		EMPLOYEE_ID,department_id
+
+		where reg_date between add_months(sysdate,-11) and add_months(sysdate,0)
+		and EMPLOYEE_ID =#{value}
+		group by to_char(reg_date,'yyyy-mm'), EMPLOYEE_ID,department_id
+
 		order by 3
 	</select>
+
 
 	<select id="selectDailyChart2List" resultMap="DailyReportChart2ListElement">
 		select
 		to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
+
+	</select>
+	
+	<select id="selectDailyChart2List" parameterType="Integer" resultMap="DailyReportChart2ListElement">
+		select to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
+
 		from daily_report
+
 		where reg_date between add_months(sysdate,-12) and
 		add_months(sysdate,-1)
+
+		where reg_date between add_months(sysdate,-11) and add_months(sysdate,0) and department_id=#{value}
+
 		group by to_char(reg_date,'yyyy-mm')
 		order by 1
 	</select>

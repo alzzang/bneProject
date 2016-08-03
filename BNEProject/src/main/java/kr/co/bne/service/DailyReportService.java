@@ -39,7 +39,7 @@ public interface DailyReportService {
 	public void delete(String id);
 	
 
-	public HashMap<String, List<?>> searchDailyChartLine(String employee_id);
+	public HashMap<String, List<?>> searchDailyChartLine(String employee_id,int department_id);
 	public HashMap<String,Integer> selectMonthlyGoal(String id, String position);
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId);
 	public List<?> selectVehicleGauge(String id);

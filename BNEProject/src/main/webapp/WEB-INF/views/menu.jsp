@@ -92,6 +92,7 @@
 				</ul></li>
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 =======
 			<li class=""><a href="/dailyReport/write"><span
 					class="fa fa-desktop"></span> <span class="xn-text">일일 업무 보고</span></a>
@@ -100,6 +101,9 @@
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">일일 업무 보고</span></a>
 			</li>
+=======
+			<li class=""><a href="index.html"><span class="fa fa-desktop"></span> <span class="xn-text">Message</span></a></li>
+>>>>>>> refs/remotes/origin/develop
 
 			<li class=""><a href="index.html"><span
 					class="fa fa-desktop"></span> <span class="xn-text">프로필</span></a></li>

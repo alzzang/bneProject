@@ -81,10 +81,12 @@ public class ChartController {
 		pw.close();
 	}
 
-	@RequestMapping(value = "/morrisChartLine", method = { RequestMethod.POST })
-	public @ResponseBody HashMap<String, List<?>> getDailyReportChart(HttpServletResponse res,
-			@RequestParam("employee_id") String employee_id) throws JSONException, IOException {
-		return dailyReportService.searchDailyChartLine(employee_id);
-	}
+		@RequestMapping(value = "/morrisChartLine", method = { RequestMethod.POST })
+	public @ResponseBody HashMap<String,List<?>> getDailyReportChart(HttpServletResponse res, @RequestParam("employee_id") String employee_id,@RequestParam("department_id") int department_id)
+			throws JSONException, IOException {
+		
+		System.out.println("employeeid, departmentid"+employee_id+" : "+department_id);
+	return dailyReportService.searchDailyChartLine(employee_id,department_id);
+	}	
 
 }
