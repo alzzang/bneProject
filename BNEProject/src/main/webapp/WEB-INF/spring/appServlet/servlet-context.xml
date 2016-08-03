@@ -24,12 +24,16 @@
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 
+<<<<<<< HEAD
 	<context:component-scan base-package="kr.co.bne" />
 
 	<beans:bean
 		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" />
 
 <beans:bean
+=======
+   <beans:bean
+>>>>>>> refs/remotes/origin/develop
       class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
       <beans:property name="definitions">
          <beans:list>
@@ -38,7 +42,13 @@
       </beans:property>
    </beans:bean>
    
+<<<<<<< HEAD
 	
+=======
+   <!-- <beans:bean id="passwordEncoder"
+      class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" /> -->
+
+>>>>>>> refs/remotes/origin/develop
 
 
 </beans:beans>

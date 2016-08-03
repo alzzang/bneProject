@@ -8,7 +8,10 @@ public class EmployeeDTO {
 	private String position;
 	private String file_position;
 	private int department_id;
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 	private String mobile_phone;
 	private String email;
 
@@ -73,8 +76,10 @@ public class EmployeeDTO {
 	public int getSales_goal() {
 		return sales_goal;
 	}
+	
 	public void setSales_goal(int sales_goal) {
 		this.sales_goal = sales_goal;
+<<<<<<< HEAD
 
 	}
 	@Override
@@ -85,6 +90,8 @@ public class EmployeeDTO {
 				+ ", department_name=" + department_name + ", position=" + position + ", file_position=" + file_position
 				+ ", department_id=" + department_id + ", sales_goal=" + sales_goal + "]";
 
+=======
+>>>>>>> refs/remotes/origin/develop
 	}
 
 }

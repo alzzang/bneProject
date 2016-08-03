@@ -23,11 +23,17 @@ import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.DailyReportService;
 
 @Controller
-
 public class MainController {
 	
 	@Autowired
 	DailyReportService dailyReportService;
+	
+	
+	public MainController() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	
 	@RequestMapping("/main")
 	public String goMain() {

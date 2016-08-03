@@ -12,9 +12,15 @@ import kr.co.bne.dao.DailyReportDAO;
 import kr.co.bne.dao.EmployeeDAO;
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 import kr.co.bne.dto.DailyReportChart2DTO;
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -131,6 +137,7 @@ public class DailyReportServiceImpl implements DailyReportService {
 		return dao.selectCounselList(id);
 	}
 
+	
 	@Override
 	public void approvalDailyReport(String daily_report_id) {
 		// TODO Auto-generated method stub
@@ -180,11 +187,18 @@ public class DailyReportServiceImpl implements DailyReportService {
 	}
 
 	@Override
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 	public HashMap<String, Integer> selectMonthlyGoal(String id,String position) {
+<<<<<<< HEAD
 
 	
 
+=======
+		// TODO Auto-generated method stub
+>>>>>>> refs/remotes/origin/develop
 		HashMap<String, Integer> result = new HashMap<String, Integer>();
 		
 		if(position.equals("manager")){
@@ -196,6 +210,10 @@ public class DailyReportServiceImpl implements DailyReportService {
 			result.put("sumofMonthlyGoal", dao.selectSumofMonthlyGoal(id)); //달성액
 		}
 		return result;
+<<<<<<< HEAD
+=======
+	}
+>>>>>>> refs/remotes/origin/develop
 
 		
 
@@ -207,9 +225,12 @@ public class DailyReportServiceImpl implements DailyReportService {
 			}
 
 	@Override
-	public void removeComment(String daily_report_id) {
+	public HashMap<String, List<?>> searchDailyChartLine(String employee_id) {
 		// TODO Auto-generated method stub
-		dao.deleteComment(daily_report_id);
+		HashMap<String, List<?>> result = new HashMap<String,List<?>>();
+		result.put("List1", dao.selectDailyReportChartLineList(employee_id));
+		result.put("List2", dao.selectDailyReportChartLine2List());
+		return result;
 	}
 	@Override
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId) {
@@ -224,9 +245,17 @@ public class DailyReportServiceImpl implements DailyReportService {
 
 
 	@Override
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 	public List<DailyReportChart2DTO> selectCustomersSales(int departmentId) {
+<<<<<<< HEAD
+=======
+		// TODO Auto-generated method stub
+>>>>>>> refs/remotes/origin/develop
 		return dao.selectCustomerSales(departmentId);
+<<<<<<< HEAD
 	}
 	
 	
@@ -248,6 +277,29 @@ public class DailyReportServiceImpl implements DailyReportService {
 		return result;
 		
 		
+=======
+>>>>>>> refs/remotes/origin/develop
 	}
 
+	@Override
+	public void writeComment(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		dao.insertComment(map);
+	}
+
+
+	@Override
+	public void removeComment(String daily_report_id) {
+		// TODO Auto-generated method stub
+		dao.deleteComment(daily_report_id);
+	}
+
+
+	@Override
+	public void delete(String id) {
+		// TODO Auto-generated method stub
+		dao.deleteReport(id);
+	}
+
+	
 }

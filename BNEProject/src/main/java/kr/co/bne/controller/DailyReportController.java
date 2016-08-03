@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -39,6 +42,7 @@ import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.ClientService;
+import kr.co.bne.service.ClientServiceImpl;
 import kr.co.bne.service.DailyReportService;
 
 @Controller
@@ -54,32 +58,35 @@ public class DailyReportController {
 	ClientService clientService;
 	
 	@RequestMapping(value="/main") 
-   public String goMain(Model model, HttpServletRequest request, HttpSession session){
-      EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
-      
-      if(user == null) {
-         return "redirect:/user/login";
-      }
-      
-      String position = user.getPosition();
+	public String goMain(Model model, HttpServletRequest request, HttpSession session){
+		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
+		
+		if(user == null) {
+			return "redirect:/user/login";
+		}
+		
+		String position = user.getPosition();
 
-      if("manager".equals(position)){ //manager이면
-         return "redirect:/dailyReport/main/all/1";
-      }else {
-         return "redirect:/dailyReport/main/employee/" + user.getEmployee_id() + "/1";
-      }
-   }
-   
-   
-   @RequestMapping(value="/main/all") 
-   public String goMain_Manager(Model model, HttpServletRequest request, HttpSession session){
-      EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");      
+		if("manager".equals(position)){ //manager이면
+			return "redirect:/dailyReport/main/all/1";
+		}else {
+			return "redirect:/dailyReport/main/employee/" + user.getEmployee_id() + "/1";
+		}
+	}
+	
+	
+	@RequestMapping(value="/main/all") 
+	public String goMain_Manager(Model model, HttpServletRequest request, HttpSession session){
+		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");		
 
-      if(user == null) {
-         return "redirect:/user/login";
-      }
+		if(user == null) {
+			return "redirect:/user/login";
+		}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 		//employee인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
 		if(!"manager".equals(user.getPosition())) {
 			return "redirect:/dailyReport/main/employee/" + user.getEmployee_id();
@@ -159,6 +166,7 @@ public class DailyReportController {
 /*	@RequestMapping(value="/main/employee/{id}") 
 	public String goMain_Employee(Model model, HttpServletRequest request, HttpSession session, @PathVariable("id") String employee_id){
 		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
+<<<<<<< HEAD
 
       //employee인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
       if(!"manager".equals(user.getPosition())) {
@@ -240,17 +248,22 @@ public class DailyReportController {
    public String goMain_Employee(Model model, HttpServletRequest request, HttpSession session, @PathVariable("id") String employee_id){
       EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
 
+=======
+>>>>>>> refs/remotes/origin/develop
 
-      if(user == null) {
-         return "redirect:/user/login";
-      }
+		if(user == null) {
+			return "redirect:/user/login";
+		}
 
-      //manager인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
-      if("manager".equals(user.getPosition())) {
-         return "redirect:/dailyReport/main/all/1";
-      }
+		//manager인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
+		if("manager".equals(user.getPosition())) {
+			return "redirect:/dailyReport/main/all/1";
+		}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 		return goMain_Employee(model, request, session, employee_id, 1);
 	}
 	
@@ -318,6 +331,7 @@ public class DailyReportController {
 		
 		return "dailyReportMain";
 	}
+<<<<<<< HEAD
 	@RequestMapping(value="/update")
 =======
       return goMain_Employee(model, request, session, employee_id, 1);
@@ -388,8 +402,13 @@ public class DailyReportController {
       return "dailyReportMain";
    }
    
+=======
+>>>>>>> refs/remotes/origin/develop
 	@RequestMapping(value="/update" ,method = RequestMethod.POST)
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 	public ModelAndView goUpdate(@RequestParam("daily_report_id")String id,HttpServletRequest req,HttpServletResponse res){
 		DailyReportDTO dailyreport=dailyReportService.searchDailyReport(id);
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
@@ -397,7 +416,7 @@ public class DailyReportController {
 		String[] tt=dailyreport.getReg_date().split(" ");
 		dailyreport.setReg_date(tt[0]);
 		
-		List<ClientDTO> clietns=clientService.getClient();
+		List<ClientDTO> clietns = clientService.getClient();
 		
 		ModelAndView model=new ModelAndView("updateDailyReport");
 		model.addObject("dailyReport",dailyreport);
@@ -407,7 +426,7 @@ public class DailyReportController {
 	}
 
 	
-	@RequestMapping("/write")
+		@RequestMapping("/write")
 	public ModelAndView goWriteform(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session=req.getSession();
 		EmployeeDTO sessionid = (EmployeeDTO) session.getAttribute("user");
@@ -416,25 +435,33 @@ public class DailyReportController {
 		
 		ModelAndView model=new ModelAndView("dailyReport_Writeform");
 		model.addObject("employee", employee);
+<<<<<<< HEAD
 
 				
 
+=======
+>>>>>>> refs/remotes/origin/develop
 		model.addObject("clients", clietns);
 		
 		
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 		return model;
 	}
-
 	@RequestMapping("/writeform")
 	public ModelAndView goWrite(@ModelAttribute DailyReportDTO dailyReportDTO  ,HttpServletRequest req, HttpServletResponse res,RedirectAttributes redirectAttributes) {
 		ModelAndView model=new ModelAndView("redirectDetail");
 		JsonParser parser=new JsonParser();
 		JsonArray json=null;
 		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
+<<<<<<< HEAD
 
 		
 
+=======
+>>>>>>> refs/remotes/origin/develop
 		try {
 			json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
 			for(int i=0;i<json.size();i++){
@@ -445,7 +472,10 @@ public class DailyReportController {
 			// TODO: handle exception
 		}finally {
 			dailyReportService.writeDailyReport(dailyReportDTO,list);
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 		}
 		model.addObject("dailyReportId", dailyReportDTO.getDaily_report_id());
 	
@@ -453,7 +483,7 @@ public class DailyReportController {
 	}
 	
 	
-	@RequestMapping(value="/detail", method = RequestMethod.POST)
+@RequestMapping(value="/detail", method = RequestMethod.POST)
 	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id,HttpServletRequest req,HttpServletResponse res) {
 		DailyReportDetailDTO dailyReport=dailyReportService.viewReport(id);
 		
@@ -471,12 +501,7 @@ public class DailyReportController {
 		
 		return model;
 	}
-	@RequestMapping(value="/delete", method = RequestMethod.POST)
-	public String deleteDailyReport(@RequestParam("dailyReportId")String id,HttpServletRequest req,HttpServletResponse res)
-	{
-		dailyReportService.delete(id);
-		return "redirect:/dailyReport/write";
-	}
+	
 	@RequestMapping("/inputarea")
 	public String goInputarea(){
 		return "inputarea";
@@ -491,10 +516,13 @@ public class DailyReportController {
 		List<CounsellingRecordDTO> list= new ArrayList<CounsellingRecordDTO>();
 		for(int i=0;i<json.size();i++){
 			CounsellingRecordDTO dto=(new Gson()).fromJson(json.get(i), CounsellingRecordDTO.class);
+<<<<<<< HEAD
 
 			
 
 
+=======
+>>>>>>> refs/remotes/origin/develop
 			list.add(dto);
 		}
 		dailyReportService.updateDailyReport(dailyReportDTO,list);
@@ -534,12 +562,10 @@ public class DailyReportController {
 		pw.close();*/
 	}
 	
-	@RequestMapping(value="/approval", method = RequestMethod.POST)
-	public void goApproval(@RequestParam("report_id")String daily_report_id,HttpServletRequest req,HttpServletResponse res){
+	@RequestMapping("/approval")
+	public void goApproval(@RequestParam("report_id")String daily_report_id,HttpServletRequest req,HttpServletRequest res){
 		dailyReportService.approvalDailyReport(daily_report_id);
-
 	}
-	
 	@RequestMapping(value="/writecomment", method = RequestMethod.POST)
 	public void writeComment(@RequestParam("report_id")String daily_report_id,@RequestParam("comment")String comment,HttpServletRequest req,HttpServletResponse res){
 		HashMap<String, String> map=new HashMap<String, String>();
@@ -555,7 +581,9 @@ public class DailyReportController {
 		dailyReportService.removeComment(daily_report_id);
 
 	}
+/*	@RequestMapping("/jsontest")
+	public void goJSON(HttpServletRequest req,HttpServletResponse res){
+		String aa=req.getParameter("dd");
+	}*/
 
 }
-
-

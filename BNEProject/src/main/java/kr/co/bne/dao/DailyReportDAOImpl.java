@@ -30,7 +30,10 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	}
 	@Override
 	public int insertDailyReport(DailyReportDTO dailyReportDTO) {
+<<<<<<< HEAD
 				
+=======
+>>>>>>> refs/remotes/origin/develop
 		// TODO Auto-generated method stub
 		return sqlSession.insert("kr.co.bne.mapper.DailyReport.insertDailyReport", dailyReportDTO);
 		
@@ -113,7 +116,10 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		
 		return pageNum;
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 
 	@Override
 	public List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException {
@@ -126,11 +132,9 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Override
 	public int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException {
 		int TotalUnapprovalNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getTotalUnapprovalNum_Manager", user_id);
-		
 		return TotalUnapprovalNum;
 	}
-	
-	
+		
 	
 	@Override
 	public int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException {
@@ -138,24 +142,21 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		
 		return TotalUnapprovalNum;
 	}
-	
 	@Override
-	public void insertComment(HashMap<String, String> map) {
+	public int selectMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
-		sqlSession.update("kr.co.bne.mapper.DailyReport.insertComment", map);
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectMonthlyGoal", id);
 	}
 	@Override
-	public void deleteComment(String daily_report_id) {
+	public int selectSumofMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
-		sqlSession.update("kr.co.bne.mapper.DailyReport.deleteComment", daily_report_id);
-	}
-	@Override
-	public void deleteReport(String id) {
-		// TODO Auto-generated method stub
-		sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteReport", id);
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 	@Override
 	public int selectMonthlyGoalManager(String id) {
 		// TODO Auto-generated method stub
@@ -194,6 +195,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectCustomerSales", departmentId);
 	}
 	@Override
+<<<<<<< HEAD
 	public int selectMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectMonthlyGoal", id);
@@ -204,4 +206,22 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
 	}
 
+=======
+	public void deleteReport(String id) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteReport", id);
+	}
+	@Override
+	public void insertComment(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void deleteComment(String daily_report_id) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+>>>>>>> refs/remotes/origin/develop
 }

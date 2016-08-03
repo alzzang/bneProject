@@ -6,7 +6,10 @@
 <configuration>
 	
 	<typeAliases>
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/>
 		<typeAlias alias="CounsellingRecord" type="kr.co.bne.dto.CounsellingRecordDTO"/>
 		<typeAlias alias="DailyReport" type="kr.co.bne.dto.DailyReportDTO"/>
@@ -24,26 +27,39 @@
 		<typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>
 		<typeAlias alias="DailyReportDetail" type="kr.co.bne.dto.DailyReportDetailDTO"/>
 		<typeAlias alias="CounsellingDetail" type="kr.co.bne.dto.CounsellingDetailDTO"/>
-
 		
 		<typeAlias alias="DailyReportChartListElement" type="kr.co.bne.dto.DailyReportChartDTO"/>
 		<typeAlias alias="DailyReportChart2ListElement" type="kr.co.bne.dto.DailyReportChart2DTO"/> 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 		<typeAlias alias="CounsellingManageSalesList" type="kr.co.bne.dto.CounsellingManageSalesDTO"/>
 		<typeAlias alias="CounsellingManageSales" type="kr.co.bne.common.CounsellingManageSales"/>
 		<typeAlias alias="CounsellingSalesGoal" type="kr.co.bne.common.CounsellingSalesGoal"/>
 		
+<<<<<<< HEAD
 		
 		<typeAlias alias="Gauge" type="kr.co.bne.dto.GaugeDTO"/>
 		
 
+=======
+>>>>>>> refs/remotes/origin/develop
 		<typeAlias alias="Notice" type="kr.co.bne.common.NoticeDetail"/>
+		<typeAlias alias="Gauge" type="kr.co.bne.dto.GaugeDTO"/>
 		<typeAlias alias="NoticeHeader" type="kr.co.bne.common.NoticeHeader"/>
+<<<<<<< HEAD
 
+=======
+		
+      	
+		
+		
+>>>>>>> refs/remotes/origin/develop
 	</typeAliases>
 
 	<mappers>
-	<!-- <mapper resource="kr/co/ggb/mapper/BoardMapper.xml"/> -->
+	
 
 		<mapper resource="kr/co/bne/mapper/ClientMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/CounsellingRecordMapper.xml"/>
@@ -52,7 +68,7 @@
 		<mapper resource="kr/co/bne/mapper/EmployeeMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/SecondaryClientMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/WeeklyPlanMapper.xml"/>
-		<mapper resource="kr/co/bne/mapper/WeeklyReportMapper.xml"/>	
-		<mapper resource="kr/co/bne/mapper/NoticeMapper.xml"/>		
+		<mapper resource="kr/co/bne/mapper/WeeklyReportMapper.xml"/>		
+		<mapper resource="kr/co/bne/mapper/NoticeMapper.xml"/>
 	</mappers>
 </configuration>

@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="kr.co.bne.mapper.DailyReport">
 
 
@@ -23,7 +22,10 @@
 		<result column="unApproval" property="unApproval" />
 	</resultMap>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 
 	<resultMap type="DailyReportChartListElement" id="DailyReportChartListElement">
 		<result column="department_id" property="department_id" />
@@ -37,12 +39,15 @@
 		<result column="reg_date" property="reg_date" />
 		<result column="sales" property="sales" />
 	</resultMap>
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/develop
 
 
 
 	<!-- 전체 리스트 페이징 -->
-	<select id="selectDailyReportList" parameterType="hashmap"
-		resultMap="DailyReportListElement">
+	<select id="selectDailyReportList" parameterType="hashmap" resultMap="DailyReportListElement">
 
 		select daily_report_id idx, employee_id, employee_name, title,
 		reg_date, approval_flag
@@ -97,7 +102,13 @@
 
 
 
+<<<<<<< HEAD
 	<select id="selectTeamMemberList" parameterType="java.lang.String" resultMap="DailyReportTeamListElement">
+=======
+
+	<select id="selectTeamMemberList" parameterType="java.lang.String"
+		resultMap="DailyReportTeamListElement">
+>>>>>>> refs/remotes/origin/develop
 		select b.employee_id, b.employee_name, b.department_id, nvl(a.unApproval, 0)
 		unApproval
 		from (select employee_id, count(*) unApproval from DAILY_REPORT
@@ -110,6 +121,10 @@
 		order by b.employee_name asc
 	</select>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/develop
 	<select id="selectDailyChartList" parameterType="java.lang.String"
 		resultMap="DailyReportChartListElement">
 		select department_id,employee_id,to_char(reg_date,'yyyy-mm') as reg_date,
@@ -121,7 +136,10 @@
 		order by 3
 	</select>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/develop
 	<select id="selectDailyChart2List" resultMap="DailyReportChart2ListElement">
 		select to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
 		from daily_report
@@ -129,9 +147,12 @@
 		group by to_char(reg_date,'yyyy-mm')
 		order by 1
 	</select>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> refs/remotes/origin/develop
 
 	<select id="getTotalUnapprovalNum_Manager" parameterType="String"
 		resultType="int">
@@ -145,7 +166,7 @@
 
 	<select id="selectEmployee" parameterType="String" resultType="DailyReportEmployee">
 	<![CDATA[select d.DEPARTMENT_NAME,e.employee_name,m.SALES_GOAL,e.employee_id from EMPLOYEE e, MONTHLY_GOAL m, department d 
-       where e.employee_id=m.EMPLOYEE_ID and e.DEPARTMENT_ID=d.DEPARTMENT_ID and e.employee_id=#{employee_id} and m.YEAR=(select TO_CHAR(SYSDATE,'YYYY') from dual) and 
+       where e.employee_id=m.EMPLOYEE_ID and e.DEPARTMENT_ID=e.DEPARTMENT_ID and e.employee_id=#{employee_id} and m.YEAR=(select TO_CHAR(SYSDATE,'YYYY') from dual) and 
        m.MONTH=(select TO_CHAR(SYSDATE,'MM') from dual)]]>
 	</select>
 
@@ -163,10 +184,11 @@
 		resultType="DailyReportDetail">
 	<![CDATA[
 	select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
-dr.AFTER_GAUGE,dr.CONTENT,dr.MANAGER_COMMENT, dr.APPROVAL_FLAG,e1.EMPLOYEE_NAME manager_name,e1.FILE_POSITION manager_file_position
-from employee e, employee e1, daily_report dr, department d
-where e.employee_id=dr.employee_id and  
-d.department_id=dr.department_id and e1.EMPLOYEE_ID=d.MANAGER_ID
+dr.AFTER_GAUGE,dr.CONTENT,wp.SALES as wpsales,dr.MANAGER_COMMENT, dr.APPROVAL_FLAG,e1.EMPLOYEE_NAME manager_name,e1.FILE_POSITION manager_file_position
+from employee e, employee e1, daily_report dr, WEEKLY_REPORT wr, WEEKLY_PLAN wp, department d
+where e.employee_id=dr.employee_id and  e.EMPLOYEE_ID=wr.EMPLOYEE_ID and 
+wr.WEEKLY_REPORT_ID=wp.WEEKLY_REPORT_ID and wp.REG_DATE=dr.REG_DATE and 
+e.EMPLOYEE_ID=dr.EMPLOYEE_ID and d.department_id=dr.department_id and e1.EMPLOYEE_ID=d.MANAGER_ID
 and dr.daily_report_id=#{id}
 	]]>
 	</select>
@@ -280,11 +302,15 @@ and dr.daily_report_id=#{id}
 	select nvl(b.sales,0) sales, c.client_name, nvl(round(sales/sum(sales)over()*100),0) as sales_rate from (select sum(a.sales) sales, s.client_id from (select c.SEC_CLIENT_ID, d.sales from daily_report d, COUNSEL_RECORD c where d.DAILY_REPORT_ID = c.DAILY_REPORT_ID and d.REG_DATE between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 and c.DEPARTMENT_ID=#{value})a, SECONDARY_CLIENT s where a.SEC_CLIENT_ID=s.SEC_CLIENT_ID group by s.client_id) b,client c where b.client_id (+)= c.client_id and department_id=#{value}]]>
 	</select>
 
+<<<<<<< HEAD
 
 
 
 	
 	<update id="insertComment" parameterType="hashmap">
+=======
+<update id="insertComment" parameterType="hashmap">
+>>>>>>> refs/remotes/origin/develop
 		update daily_report set manager_comment=#{comment} where daily_report_id=#{daily_report_id}
 	</update>
 	
@@ -295,5 +321,7 @@ and dr.daily_report_id=#{id}
 	<delete id="deleteReport" parameterType="String">
 		delete daily_report where daily_report_id=#{id}
 	</delete>
+
+
 </mapper>
 

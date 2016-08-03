@@ -8,9 +8,19 @@
    <![CDATA[select e.*, d.department_name,
         CASE WHEN employee_id in (select manager_id from department) THEN 'manager'
         ELSE 'employee' END position from employee e, department d where e.DEPARTMENT_ID = d.DEPARTMENT_ID
+<<<<<<< HEAD
         and employee_id = #{value}]]>
    </select>
 
+=======
+  		and employee_id = #{value}]]>
+	</select>
+	
+	
+	<!-- <![CDATA[select * from employee where employee_id=#{value}]]> -->
+
+	
+>>>>>>> refs/remotes/origin/develop
 
 	<update id="updatePassword" parameterType="HashMap">
 	<![CDATA[update employee set password=#{password} where employee_id=#{id}]]>
