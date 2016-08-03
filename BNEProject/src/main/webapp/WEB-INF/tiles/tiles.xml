@@ -14,9 +14,9 @@
 		<put-attribute name="body" value="/WEB-INF/views/dailyReportMain.jsp"/>
 	</definition>
 	
-	<definition name="main" extends="tilesbase">
+	<!-- <definition name="main" extends="tilesbase">
 	<put-attribute name="body" value="/WEB-INF/views/main.jsp" /> 
-	</definition>
+	</definition> -->
 	
 	<definition name="chartPage" extends="tilesbase">
 	<put-attribute name="body" value="/WEB-INF/views/chart.jsp" /> 
@@ -72,7 +72,9 @@
 	</definition>
 	
 
-
+	<definition name="mainboard" extends="tilesbase">
+	<put-attribute name="body" value="/WEB-INF/views/mainboard.jsp"/>
+	</definition>
 </tiles-definitions>
  
 

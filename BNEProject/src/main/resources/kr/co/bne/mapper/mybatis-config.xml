@@ -30,13 +30,17 @@
 		<typeAlias alias="CounsellingManageSales" type="kr.co.bne.common.CounsellingManageSales"/>
 		<typeAlias alias="CounsellingSalesGoal" type="kr.co.bne.common.CounsellingSalesGoal"/>
 		
-		
+		<typeAlias alias="Notice" type="kr.co.bne.common.NoticeDetail"/>
 		<typeAlias alias="Gauge" type="kr.co.bne.dto.GaugeDTO"/>
+		<typeAlias alias="NoticeHeader" type="kr.co.bne.common.NoticeHeader"/>
+		
+      	
+		
 		
 	</typeAliases>
 
 	<mappers>
-	<!-- <mapper resource="kr/co/ggb/mapper/BoardMapper.xml"/> -->
+	
 
 		<mapper resource="kr/co/bne/mapper/ClientMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/CounsellingRecordMapper.xml"/>

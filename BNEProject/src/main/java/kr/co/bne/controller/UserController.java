@@ -26,7 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.bne.dao.EmployeeDAO;
+import kr.co.bne.dto.DailyReportEmployeeDTO;
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.service.DailyReportService;
 import kr.co.bne.service.UserService;
 
 @Controller

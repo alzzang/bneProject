@@ -77,4 +77,4 @@ public class EmployeeDTO {
 		this.sales_goal = sales_goal;
 	}
 
-
+}

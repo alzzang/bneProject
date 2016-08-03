@@ -18,14 +18,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import kr.co.bne.dto.ClientDTO;
 import kr.co.bne.dto.CounsellingDetailDTO;
 
 import kr.co.bne.common.DailyReportTeamListElement;
@@ -34,6 +37,8 @@ import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.service.ClientService;
+import kr.co.bne.service.ClientServiceImpl;
 import kr.co.bne.service.DailyReportService;
 
 @Controller
@@ -44,6 +49,9 @@ public class DailyReportController {
 	
 	@Autowired
 	private DailyReportService dailyReportService;
+	
+	@Autowired
+	ClientService clientService;
 	
 	@RequestMapping(value="/main") 
 	public String goMain(Model model, HttpServletRequest request, HttpSession session){
@@ -235,7 +243,7 @@ public class DailyReportController {
 		String[] tt=dailyreport.getReg_date().split(" ");
 		dailyreport.setReg_date(tt[0]);
 		
-		List<ClientDTO> clietns=clientService.getClient();
+		List<ClientDTO> clietns = clientService.getClient();
 		
 		ModelAndView model=new ModelAndView("updateDailyReport");
 		model.addObject("dailyReport",dailyreport);

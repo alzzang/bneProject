@@ -149,16 +149,6 @@
          <version>1.8.9</version>
       </dependency>
 
-
-
-
-
-
-
-
-
-
-
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
