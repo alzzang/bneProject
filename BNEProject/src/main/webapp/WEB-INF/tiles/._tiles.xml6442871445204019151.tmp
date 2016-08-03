@@ -1,0 +1,81 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="tilesbase" template="/WEB-INF/views/layout.jsp">
+		<put-attribute name="menu" value="/WEB-INF/views/menu.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>	
+
+	<definition name="mainboard" extends="tilesbase">
+	<put-attribute name="body" value="/WEB-INF/views/mainboard.jsp"/>
+	</definition> 
+
+<!-- 	<definition name="dailyReport_Writeform" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Writeform.jsp"/>
+	</definition>
+	
+	<definition name="dailyReportMain" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/dailyReportMain.jsp"/>
+	</definition>
+	
+	<definition name="chartPage" extends="tilesbase">
+	<put-attribute name="body" value="/WEB-INF/views/chart.jsp" /> 
+	</definition>
+	
+	
+	<definition name="main2" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/counsellingForm.jsp" />
+	</definition>
+	
+	
+	
+	
+	
+	<definition name="dailyReportDetail" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/dailyReportDetail.jsp"/>
+	</definition>
+	
+	<definition name="login" template="/WEB-INF/views/pages-login.jsp"/>
+	
+	<definition name="edit" template="/WEB-INF/views/SmartEditor2Skin.jsp"/>
+	
+	<definition name="inputarea" template="/WEB-INF/views/smart_editor2_inputarea.jsp"/>
+	
+	<definition name="password" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/password.jsp"/>
+	</definition>
+	
+	<definition name="redirectDetail" template="/WEB-INF/views/redirectDetail.jsp"/>
+	
+	<definition name="updateDailyReport" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Modifyform.jsp"/>
+	 </definition>	
+	
+	<definition name="WeeklyWriteForm" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/WeeklyWriteForm.jsp"/>
+	</definition>
+
+	<definition name="aaa" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/SmartEditor2.jsp"/>
+	</definition>
+	<definition name="main" extends="bodybase">
+		<put-attribute name="nav" value="/WEB-INF/views/nav.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/content.jsp"/>
+	</definition>
+
+	<definition name="manageSales" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/manageSales.jsp"/>
+	</definition>
+	
+	<definition name="searchUser" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/searchUserResult.jsp"/>
+	</definition>
+	
+
+	<definition name="mainboard" extends="tilesbase">
+	<put-attribute name="body" value="/WEB-INF/views/mainboard.jsp"/>
+	</definition> -->
+</tiles-definitions>
+ 
+
+
