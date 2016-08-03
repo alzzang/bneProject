@@ -19,13 +19,12 @@
 	</li>
 	<!-- END SIGN OUT -->
 	<!-- MESSAGES -->
-	<li class="xn-icon-button pull-right" id="noticeButton" onclick='getNoticeList(1, 5)'><a href="#"><span
-			class="fa fa-bell"></span></a>
+	<li class="xn-icon-button pull-right" id="noticeButton" onclick='getNoticeList(1, 5)'>
+	<a href="#"><span class="fa fa-bell"></span></a>
 		<div class="informer informer-warning" id="newMessageCount_title">3</div>
 		<div class="informer informer-danger" id="appendtest"></div>
 
-		<div
-			class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging ui-draggable">
+		<div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging ui-draggable">
 			<div class="panel-heading ui-draggable-handle">
 				<h3 class="panel-title">
 					<span class="fa fa-bell"></span> Notices

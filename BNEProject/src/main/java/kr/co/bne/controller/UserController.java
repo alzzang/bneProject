@@ -172,7 +172,7 @@ public class UserController {
 
 	@RequestMapping(value = "/empSearch", method = { RequestMethod.POST })
 	public @ResponseBody List<EmployeeDTO> getEmpSearch(@RequestParam("empSearch") String empSearch ,HttpServletRequest req) {
-		System.out.println("empSearch :"+empSearch);
+		
 		
 			String temp="%"+empSearch+"%";
 			List<EmployeeDTO> list =userService.getEmpSearch(temp);
