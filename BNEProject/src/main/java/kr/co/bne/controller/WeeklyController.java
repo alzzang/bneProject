@@ -133,6 +133,7 @@ public class WeeklyController {
 		WeeklyReportDTO dto = new WeeklyReportDTO();
 		return "main";
 	}
+	
 	@RequestMapping("/write")
 	public String WeeklyWrite(Model model,HttpServletResponse response,HttpServletRequest request, @RequestParam("report")String weeklyReport, @RequestParam("sales")String sales ) throws Exception{
 		String weeklyPlan =  request.getParameter("weeklyPlan");
@@ -288,19 +289,10 @@ public class WeeklyController {
 		
 		System.out.println(loginUser.toString());
 
-		// 내 주간계획 목록
-		List<WeeklyReportSearchElement> myWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
-		mv.addObject("myWeeklyReportList", myWeeklyReportList);
-		
 		// 내 부서의 주간계획 목록
 		parameterMap.replace("employee_id", null);
 		List<WeeklyReportSearchElement> myDeptWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
 		mv.addObject("myDeptWeeklyReportList", myDeptWeeklyReportList);
-
-		// 전체 주간계획 목록
-		parameterMap.replace("department_id", null);
-		List<WeeklyReportSearchElement> allDeptWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
-		mv.addObject("allDeptWeeklyReportList", allDeptWeeklyReportList);
 		
 		return mv;
 	}
