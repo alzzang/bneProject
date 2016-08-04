@@ -153,7 +153,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 
 	<script type="text/javascript" src="/js/plugins.js"></script>
 	<script type="text/javascript" src="/js/actions.js"></script>
-	<script type="text/javascript" src="/js/dailysettings.js"></script>
+	<!-- <script type="text/javascript" src="/js/dailysettings.js"></script> -->
 	<script src="/js/notice_on_header.js"></script>
 	<script type="text/javascript" src="/js/usersettings.js"></script>
 	

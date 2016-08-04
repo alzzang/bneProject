@@ -8,11 +8,14 @@ function viewList(option, value) {
 	var originParams =jQuery.parseJSON($("#params").val());
 	var path = $("#url").val();
 	
+	console.log(originParams);
+	
 	var page = 1;
 	var employee_id = originParams.employee_id;
 	var reg_date = originParams.reg_date;
 	var approval_flag = originParams.approval_flag;
 
+	var search_text = originParams.search_text;
 
 	if(option == "page") { //페이지가 옵션에 있으면 페이지 갱신
 		page = value;
@@ -21,12 +24,15 @@ function viewList(option, value) {
 		page = 1;
 	}else if(option == "employee_id") {
 		employee_id = value;
+		search_text='';
 		page = 1;
 	}else if(option == "approval_flag") {
 		approval_flag = value;
 		page = 1;
+	}else if(option == "search"){
+		search_text=$("#searchText").val();
+		page=1;
 	}
-	
 	path += "/" + page;
 	var form = document.createElement("form");
 	form.setAttribute("method", "POST");
@@ -56,7 +62,17 @@ function viewList(option, value) {
 		hiddenField.setAttribute("value", reg_date);
 		form.appendChild(hiddenField);
 	}
-
+	/*
+	*/
+	if( search_text != undefined){
+	//	alert(typeof search_text+":");
+		var hiddenField = document.createElement("input");
+		hiddenField.setAttribute("type", "hidden");
+		hiddenField.setAttribute("name", "search_text");
+		hiddenField.setAttribute("value", search_text);
+		form.appendChild(hiddenField);
+	}
+	
 	document.body.appendChild(form);
 
 	form.submit();

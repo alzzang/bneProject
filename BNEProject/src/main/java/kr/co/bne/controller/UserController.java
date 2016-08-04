@@ -138,6 +138,7 @@ public class UserController {
 				session.setAttribute("fileName", employeeDTO.getFile_position());
 				
 				DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
+				System.out.println(employee+"임플로이");
 				session.setAttribute("employee", employee);
 				
 				return "redirect:/main";

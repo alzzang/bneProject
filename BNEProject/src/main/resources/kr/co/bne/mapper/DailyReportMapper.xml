@@ -44,6 +44,9 @@
          <if test="approval_flag != null">
             and d.approval_flag = #{approval_flag}
          </if>
+         <if test="search_text != null">
+	  	 	and title like '%' || #{search_text} || '%'
+		</if> 	
          ) a        
    where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
    order by idx asc  
@@ -68,7 +71,9 @@
 	<if test="approval_flag != null">
 	   	and d.approval_flag = #{approval_flag}
 	</if> 		
-
+	<if test="search_text != null">
+	   	and title like '%' || #{search_text} || '%'
+	</if> 	
 </select>
 
 
