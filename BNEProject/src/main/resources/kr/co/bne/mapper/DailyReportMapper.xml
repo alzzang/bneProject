@@ -112,46 +112,30 @@
 		order by b.employee_name asc
 	</select>
 
-	<select id="selectDailyChartList" parameterType="java.lang.String" resultMap="DailyReportChartListElement">
-		select department_id,employee_id,to_char(reg_date,'yyyy-mm')
-		as reg_date,
-		sum(sales) as sales
-		from daily_report
-
-		where reg_date between
-		add_months(sysdate,-12) and add_months(sysdate,-1)
-		and EMPLOYEE_ID
-		=#{value}
-		group by to_char(reg_date,'yyyy-mm'),
-		EMPLOYEE_ID,department_id
-
-		where reg_date between add_months(sysdate,-11) and add_months(sysdate,0)
-		and EMPLOYEE_ID =#{value}
-		group by to_char(reg_date,'yyyy-mm'), EMPLOYEE_ID,department_id
-
-		order by 3
-	</select>
+ <select id="selectDailyChartList" parameterType="java.lang.String"  resultMap="DailyReportChartListElement">
+      select department_id,employee_id,to_char(reg_date,'yyyy-mm') as reg_date,
+      sum(sales) as sales
+      from daily_report
+      where reg_date between add_months(sysdate,-11) and add_months(sysdate,0)
+      and EMPLOYEE_ID =#{value}
+      group by to_char(reg_date,'yyyy-mm'), EMPLOYEE_ID,department_id
+      order by 3
+   </select>
 
 
-	<select id="selectDailyChart2List" resultMap="DailyReportChart2ListElement">
+	<!-- <select id="selectDailyChart2List" resultMap="DailyReportChart2ListElement">
 		select
 		to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
 
-	</select>
+	</select> -->
 	
-	<select id="selectDailyChart2List" parameterType="Integer" resultMap="DailyReportChart2ListElement">
-		select to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
-
-		from daily_report
-
-		where reg_date between add_months(sysdate,-12) and
-		add_months(sysdate,-1)
-
-		where reg_date between add_months(sysdate,-11) and add_months(sysdate,0) and department_id=#{value}
-
-		group by to_char(reg_date,'yyyy-mm')
-		order by 1
-	</select>
+	   <select id="selectDailyChart2List" parameterType="Integer" resultMap="DailyReportChart2ListElement">
+      select to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
+      from daily_report
+      where reg_date between add_months(sysdate,-11) and add_months(sysdate,0) and department_id=#{value}
+      group by to_char(reg_date,'yyyy-mm')
+      order by 1
+   </select>
 
 	<select id="getTotalUnapprovalNum_Manager" parameterType="String" resultType="int">
 		select count(*) from DAILY_REPORT
@@ -287,7 +271,7 @@ and dr.daily_report_id=#{id}
 	<![CDATA[
 	 select day,dte, sum(distance) distance from (select aa.day, aa.dte, nvl(bb.distance,0)distance from
 	(select a.day,a.dte from (select to_char(sysdate+level,'D') dte, to_char(sysdate+level,'DY') day from dual connect by level <=7 )a where a.dte between 2 and 6) aa, 
-	(select to_char(reg_date,'DY') day, after_gauge-before_gauge as distance from DAILY_REPORT where reg_date between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 and employee_id=#{value})bb where bb.day(+)=aa.day) group by day,dte
+	(select to_char(reg_date,'DY') day, after_gauge-before_gauge as distance from DAILY_REPORT where reg_date between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 and employee_id=#{value})bb where bb.day(+)=aa.day) group by day,dte order by dte
 	]]>
 	</select>
 

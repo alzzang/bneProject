@@ -224,14 +224,7 @@ public class DailyReportServiceImpl implements DailyReportService {
 			dao.insertComment(map);
 	}
 
-	@Override
-	public HashMap<String, List<?>> searchDailyChartLine(String employee_id,int department_id) {
-		// TODO Auto-generated method stub
-		HashMap<String, List<?>> result = new HashMap<String,List<?>>();
-		result.put("List1", dao.selectDailyReportChartLineList(employee_id));
-		result.put("List2", dao.selectDailyReportChartLine2List(department_id));
-		return result;
-	}
+
 	@Override
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId) {
 		// TODO Auto-generated method stub

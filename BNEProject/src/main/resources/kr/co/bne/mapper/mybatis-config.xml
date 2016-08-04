@@ -6,10 +6,6 @@
 <configuration>
 	
 	<typeAliases>
-
-
-
-
 		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/>
 		<typeAlias alias="CounsellingRecord" type="kr.co.bne.dto.CounsellingRecordDTO"/>
 		<typeAlias alias="DailyReport" type="kr.co.bne.dto.DailyReportDTO"/>
@@ -18,7 +14,6 @@
 		<typeAlias alias="SecondaryClient" type="kr.co.bne.dto.SecondaryClientDTO"/>
 		<typeAlias alias="WeeklyPlan" type="kr.co.bne.dto.WeeklyPlanDTO"/>
 		<typeAlias alias="WeeklyReport" type="kr.co.bne.dto.WeeklyReportDTO"/>
-		
 		<typeAlias alias="DailyReportListElement" type="kr.co.bne.common.DailyReportListElement"/>
 		<typeAlias alias="DailyReportTeamListElement" type="kr.co.bne.common.DailyReportTeamListElement"/>
 		
@@ -60,9 +55,8 @@
 
 	<mappers>
 	
-
-		<mapper resource="kr/co/bne/mapper/ClientMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/CounsellingRecordMapper.xml"/>
+		<mapper resource="kr/co/bne/mapper/ClientMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/DailyReportMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/DepartmentMapper.xml"/>		
 		<mapper resource="kr/co/bne/mapper/EmployeeMapper.xml"/>

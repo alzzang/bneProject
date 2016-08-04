@@ -50,7 +50,7 @@
 			<!-- START DONUT CHART -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">달성률</h3>
+					<h3 class="panel-title">뭘더넣어볼까?</h3>
 				</div>
 				<div class="panel-body">
 					<div id="" style="height: 300px;"></div>

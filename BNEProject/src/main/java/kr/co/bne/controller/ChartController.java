@@ -8,8 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Response;
-
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.google.gson.Gson;
-
 import kr.co.bne.dto.DailyReportChart2DTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
 import kr.co.bne.dto.EmployeeDTO;
@@ -49,7 +44,6 @@ public class ChartController {
 				req.setAttribute("member", teamMember);
 			}
 		}
-	
 		return "chartPage";
 	}
 
@@ -85,7 +79,6 @@ public class ChartController {
 	public @ResponseBody HashMap<String,List<?>> getDailyReportChart(HttpServletResponse res, @RequestParam("employee_id") String employee_id,@RequestParam("department_id") int department_id)
 			throws JSONException, IOException {
 		
-		System.out.println("employeeid, departmentid"+employee_id+" : "+department_id);
 	return dailyReportService.searchDailyChartLine(employee_id,department_id);
 	}	
 

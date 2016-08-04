@@ -52,7 +52,6 @@ public class CounsellingRecordDAOImpl implements CounsellingRecordDAO {
 	public void updateSalesGoal(CounsellingSalesGoal csg) {
 		sqlSession.update("kr.co.bne.mapper.CounsellingRecord.updateSalesGoal",csg);
 		
-		
 	}
 	
 }
