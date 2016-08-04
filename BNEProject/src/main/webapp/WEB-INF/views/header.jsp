@@ -1,19 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 
 
 
 
 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
-
-
                     <!-- TOGGLE NAVIGATION -->
                     <li class="xn-icon-button">
                         <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
                     </li>
                     <!-- END TOGGLE NAVIGATION -->
                     <!-- SEARCH -->
-         
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="xn-search">
+<!--                         <form role="form"> -->
+<!--                         </form> -->
+                            <input type="text" id="empSearch" name="search" placeholder="Search...">
+                            
+                            
+                    </li>   
 
                    <li class="xn-search">
       			      	<input type="text" id="empSearch" name="search" placeholder="Search...">

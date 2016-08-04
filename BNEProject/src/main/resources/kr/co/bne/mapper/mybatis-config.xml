@@ -14,6 +14,7 @@
 		<typeAlias alias="SecondaryClient" type="kr.co.bne.dto.SecondaryClientDTO"/>
 		<typeAlias alias="WeeklyPlan" type="kr.co.bne.dto.WeeklyPlanDTO"/>
 		<typeAlias alias="WeeklyReport" type="kr.co.bne.dto.WeeklyReportDTO"/>
+		<typeAlias alias="PlanDetail" type ="kr.co.bne.dto.PlanDetailDTO"/>
 		<typeAlias alias="DailyReportListElement" type="kr.co.bne.common.DailyReportListElement"/>
 		<typeAlias alias="DailyReportTeamListElement" type="kr.co.bne.common.DailyReportTeamListElement"/>
 		<!--DailyReport 태우 추가-->

@@ -1,31 +1,28 @@
-
-			
-			<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div id="mCSB_1"
-   class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside"
-   tabindex="0">
+	class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside"
+	tabindex="0">
 
 
-   <div id="mCSB_1_container"
-      class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y"
-      style="position: relative; top: 0; left: 0;" dir="ltr">
+	<div id="mCSB_1_container"
+		class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y"
+		style="position: relative; top: 0; left: 0;" dir="ltr">
 
 
-      <!-- START X-NAVIGATION -->
+		<!-- START X-NAVIGATION -->
 
 
 
 
-      <ul class="x-navigation">
+		<ul class="x-navigation">
 
-         <li class="xn-logo"><a href="/main">BnE</a> <a href="#"
-            class="x-navigation-control"></a></li>
+			<li class="xn-logo"><a href="/main">BnE</a> <a href="#"
+				class="x-navigation-control"></a></li>
 
 
-		
 
          <li class="xn-profile active">
          
@@ -33,45 +30,28 @@
                src="/user/download/${sessionScope.user.file_position}/"></a>
 
 
-            <div class="profile">
-               <div class="profile-image">
-                              
-                  <a href="#" >
-                   <span class="fa fa-gear " style="position: absolute"> </span>
-                   <img src="/user/download/${sessionScope.fileName}/">
-                  </a>
-                  
-               </div>
-               <div class="profile-data">
-                  <div class="profile-data-name">${sessionScope.user.employee_name}</div>
-                  <div class="profile-data-title">${sessionScope.user.department_name}</div>
-               </div>
-               <div class="profile-controls">
-                  <a href="/user/changeProfile" class="profile-control-left">
-                  <span class="fa fa-gear"></span></a> 
-                  <a href="#"   class="profile-control-right" id="sockettest">
-                     <span class="fa fa-envelope"></span></a>
-               </div>
 
             </div>
 
          </li>
 
-         <li class="xn-title">Navigation</li>
-         <li class=""><a href="index.html"><span
-               class="fa fa-desktop"></span> <span class="xn-text">Home</span></a></li>
-         <li class=""><a href="index.html"><span
-               class="fa fa-desktop"></span> <span class="xn-text">주간 계획</span></a></li>
-		
-		<li class=""><a href="/chart/page"><span
-					class="fa fa-file-text-o"></span> <span class="xn-text">chart</span></a>
-			</li>
-		
-         <li class="xn-openable"><a href="#"><span
-               class="fa fa-file-text-o"></span> <span class="xn-text">일일
-                  업무 보고</span></a>
-            <ul>
-               <li><a href="layout-boxed.html">메인</a></li>
+ 	<li class="xn-title">Navigation</li>
+			<li class=""><a href="/main"><span
+					class="fa fa-desktop"></span> <span class="xn-text">Home</span></a></li>
+			<li class="xn-openable"><a href="#"><!-- weeklyReport/write --><span
+					class="fa fa-file-text-o"></span> <span class="xn-text">주간 계획</span></a>
+				<ul>
+					<li><a id="weeklyDetail" href="/weeklyReport/detail/${user.getEmployee_id() }">주간계획</a></li>			
+					<li><a href="/weeklyReport/writeForm">주간계획작성</a></li>	
+				</ul>
+				
+				</li>
+			
+			<li class="xn-openable"><a href="#"><span
+					class="fa fa-file-text-o"></span> <span class="xn-text">일일
+						업무 보고</span></a>
+				<ul>
+					<li><a href="layout-boxed.html">메인</a></li>
 
 
                
