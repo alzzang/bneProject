@@ -147,18 +147,17 @@
        m.MONTH=(select TO_CHAR(SYSDATE,'MM') from dual)]]>
 	</select>
 
-	<insert id="insertDailyReport" parameterType="DailyReport">
-		insert into daily_report
-		values(daily_report_seq.nextval,#{department_id},#{employee_id},#{title},#{reg_date},#{sales},#{before_gauge},#{after_gauge},#{content},'',0)
-		<selectKey keyProperty="daily_report_id" resultType="Integer"
-			order="AFTER">
-			select daily_report_seq.CURRVAL from dual
-		</selectKey>
-
-	</insert>
+<insert id="insertDailyReport" parameterType="DailyReport">
+    insert into daily_report values(daily_report_seq.nextval,#{department_id},#{employee_id},#{title},#{reg_date},#{sales},#{before_gauge},#{after_gauge},#{content},'',0)
+   <selectKey keyProperty="daily_report_id" resultType="Integer" order="AFTER">
+      select daily_report_seq.CURRVAL from dual
+   </selectKey>
+   
+   </insert>
 
 
-	<select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
+
+<select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
    <![CDATA[
    select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
 dr.AFTER_GAUGE,dr.CONTENT,dr.MANAGER_COMMENT, dr.APPROVAL_FLAG,e1.EMPLOYEE_NAME manager_name,e1.FILE_POSITION manager_file_position
@@ -167,7 +166,8 @@ where e.employee_id=dr.employee_id and
 d.department_id=dr.department_id and e1.EMPLOYEE_ID=d.MANAGER_ID
 and dr.daily_report_id=#{id}
    ]]>
-	</select>
+   </select>
+
 
 
 	<select id="selectDailySalesGoal" parameterType="hashmap" resultType="Integer">
@@ -238,7 +238,7 @@ and dr.daily_report_id=#{id}
 
 	<select id="selectMonthlyGoalManager" parameterType="String" resultType="Integer">
 		<![CDATA[
-		select sum(sales_goal) from(select sales_goal,employee_id from MONTHLY_GOAL where employee_id in (select employee_id from employee where department_id=(select department_id from employee where employee_id=#{value})) and year=(SELECT EXTRACT(YEAR FROM sysdate) FROM DUAL) and month=(SELECT EXTRACT(month FROM sysdate) FROM DUAL))
+		select nvl(sum(sales_goal),0) from(select sales_goal,employee_id from MONTHLY_GOAL where employee_id in (select employee_id from employee where department_id=(select department_id from employee where employee_id=#{value})) and year=(SELECT EXTRACT(YEAR FROM sysdate) FROM DUAL) and month=(SELECT EXTRACT(month FROM sysdate) FROM DUAL))
 		]]>
 	</select>
 
