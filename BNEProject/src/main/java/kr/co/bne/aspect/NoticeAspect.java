@@ -68,7 +68,7 @@ public class NoticeAspect {
 	
 	
 	
-	@AfterReturning("execution(public * kr.co.bne.dao.DailyReportDAO.*Comment(..))") //댓글 수정, 댓글 등록 모두다
+	@AfterReturning("!execution(public * kr.co.bne.dao.DailyReportDAO.deleteComment(..)) && execution(public * kr.co.bne.dao.DailyReportDAO.*Comment(..))") //댓글 수정, 댓글 등록 모두다
 	public void execInsertNotice_COMMENT(JoinPoint joinPoint) throws Throwable {
 		System.out.println("comment aop 실행!!");
 		
