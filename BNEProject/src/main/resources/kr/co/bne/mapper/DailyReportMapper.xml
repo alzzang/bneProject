@@ -41,36 +41,30 @@
 
 
 	<!-- 전체 리스트 페이징 -->
-	<select id="selectDailyReportList" parameterType="hashmap" resultMap="DailyReportListElement">
+	<select id="selectDailyReportList" parameterType="hashmap" resultMap="DailyReportListElement"> 
 
-		select daily_report_id idx, employee_id, employee_name, title,
-		reg_date, approval_flag
-		from (select ROW_NUMBER() OVER (order by
-		reg_date desc) idx,
-		d.daily_report_id, d.employee_id, e.employee_name,
-		d.title,
-		to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
-		from
-		daily_report d , employee e
-		where d.employee_id = e.employee_id
-		and
-		d.department_id = (select department_id from employee where
-		employee_id = #{user_id})
-		<if test="employee_id != null">
-			and d.employee_id = #{employee_id}
-		</if>
-		<if test="reg_date != null">
-			and to_char(d.reg_date, 'yyyy-mm-dd') = #{reg_date}
-		</if>
-		<if test="approval_flag != null">
-			and d.approval_flag = #{approval_flag}
-		</if>
-		) a
-		where idx between 1 + #{perContentNum}*(#{startIdx}-1) and
-		#{startIdx}*#{perContentNum}
-		order by idx asc
+	select daily_report_id idx, employee_id, employee_name, title, reg_date, approval_flag
+   from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.daily_report_id, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
+         from daily_report d , employee e
+         where d.employee_id = e.employee_id
+         and d.department_id = (select department_id from employee where employee_id = #{user_id})
+         <if test="employee_id != null">
+            and d.employee_id = #{employee_id}
+         </if>
+         <if test="reg_date != null">
+            and to_char(d.reg_date, 'yyyy-mm-dd') = #{reg_date}
+         </if>
+         <if test="approval_flag != null">
+            and d.approval_flag = #{approval_flag}
+         </if>
+         <if test="search_text != null">
+	  	 	and title like '%' || #{search_text} || '%'
+		</if> 	
+         ) a        
+   where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
+   order by idx asc  
 
-	</select>
+</select>
 
 
 
@@ -157,9 +151,9 @@
 
 
 
-<select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
-   <![CDATA[
-   select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
+	<select id="selectDailyReport" parameterType="String" resultType="DailyReportDetail">
+	<![CDATA[
+	select dr.daily_report_id,e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.FILE_POSITION, dr.TITLE,TO_CHAR(dr.REG_DATE,'YYYY-MM-DD') reg_date,dr.SALES as drsales,dr.BEFORE_GAUGE,
 dr.AFTER_GAUGE,dr.CONTENT,dr.MANAGER_COMMENT, dr.APPROVAL_FLAG,e1.EMPLOYEE_NAME manager_name,e1.FILE_POSITION manager_file_position
 from employee e, employee e1, daily_report dr, department d
 where e.employee_id=dr.employee_id and  

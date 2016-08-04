@@ -116,6 +116,8 @@
 	<script type="text/javascript" src="/js/plugins.js"></script>
 	<script type="text/javascript" src="/js/actions.js"></script>
 	<script type="text/javascript" src="/js/weekly.js"></script>
+	<script src="/js/notice_on_header.js"></script>
+
 	<script type="text/javascript" src="/js/usersettings.js"></script>
 	<script type="text/javascript" src="/js/dailysettings.js"></script>
 	
