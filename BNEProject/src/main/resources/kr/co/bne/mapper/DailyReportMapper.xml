@@ -121,15 +121,8 @@
       group by to_char(reg_date,'yyyy-mm'), EMPLOYEE_ID,department_id
       order by 3
    </select>
-
-
-	<!-- <select id="selectDailyChart2List" resultMap="DailyReportChart2ListElement">
-		select
-		to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
-
-	</select> -->
 	
-	   <select id="selectDailyChart2List" parameterType="Integer" resultMap="DailyReportChart2ListElement">
+   <select id="selectDailyChart2List" parameterType="Integer" resultMap="DailyReportChart2ListElement">
       select to_char(reg_date,'yyyy-mm') as reg_date, round(avg(sales))as sales
       from daily_report
       where reg_date between add_months(sysdate,-11) and add_months(sysdate,0) and department_id=#{value}
@@ -255,8 +248,7 @@ and dr.daily_report_id=#{id}
 		]]>
 	</select>
 
-	<select id="selectTeamMonthlyGoal" parameterType="String"
-		resultType="DailyReportEmployee">
+	<select id="selectTeamMonthlyGoal" parameterType="String" resultType="DailyReportEmployee">
 	<![CDATA[
 	  select employee_id, employee_name, sum(sales) sales_goal from 
 	  (select a.employee_id, a.employee_name, NVL2( b.sales, b.sales, 0) sales, NVL2( b.reg_date, to_char(b.reg_date, 'yyyymmdd'), '0') reg_date
@@ -275,8 +267,7 @@ and dr.daily_report_id=#{id}
 	]]>
 	</select>
 
-	<select id="selectCustomerSales" parameterType="Integer"
-		resultType="DailyReportChart2ListElement">
+	<select id="selectCustomerSales" parameterType="Integer" resultType="DailyReportChart2ListElement">
 	<![CDATA[
 	select nvl(b.sales,0) sales, c.client_name, nvl(round(sales/sum(sales)over()*100),0) as sales_rate from (select sum(a.sales) sales, s.client_id from (select c.SEC_CLIENT_ID, d.sales from daily_report d, COUNSEL_RECORD c where d.DAILY_REPORT_ID = c.DAILY_REPORT_ID and d.REG_DATE between (SELECT TRUNC (SYSDATE, 'month') FROM dual) and sysdate-1 and c.DEPARTMENT_ID=#{value})a, SECONDARY_CLIENT s where a.SEC_CLIENT_ID=s.SEC_CLIENT_ID group by s.client_id) b,client c where b.client_id (+)= c.client_id and department_id=#{value}]]>
 	</select>

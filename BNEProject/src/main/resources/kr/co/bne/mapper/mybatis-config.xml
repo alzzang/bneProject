@@ -6,8 +6,8 @@
 <configuration>
 	
 	<typeAliases>
-		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/>
 		<typeAlias alias="CounsellingRecord" type="kr.co.bne.dto.CounsellingRecordDTO"/>
+		<typeAlias alias="Client" type="kr.co.bne.dto.ClientDTO"/>
 		<typeAlias alias="DailyReport" type="kr.co.bne.dto.DailyReportDTO"/>
 		<typeAlias alias="Department" type="kr.co.bne.dto.DepartmentDTO"/>
 		<typeAlias alias="Employee" type="kr.co.bne.dto.EmployeeDTO"/>
@@ -16,45 +16,22 @@
 		<typeAlias alias="WeeklyReport" type="kr.co.bne.dto.WeeklyReportDTO"/>
 		<typeAlias alias="DailyReportListElement" type="kr.co.bne.common.DailyReportListElement"/>
 		<typeAlias alias="DailyReportTeamListElement" type="kr.co.bne.common.DailyReportTeamListElement"/>
-		
-		
 		<!--DailyReport 태우 추가-->
 		<typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>
 		<typeAlias alias="DailyReportDetail" type="kr.co.bne.dto.DailyReportDetailDTO"/>
 		<typeAlias alias="CounsellingDetail" type="kr.co.bne.dto.CounsellingDetailDTO"/>
-		
 		<typeAlias alias="DailyReportChartListElement" type="kr.co.bne.dto.DailyReportChartDTO"/>
 		<typeAlias alias="DailyReportChart2ListElement" type="kr.co.bne.dto.DailyReportChart2DTO"/> 
-
-
-
-
 		<typeAlias alias="CounsellingManageSalesList" type="kr.co.bne.dto.CounsellingManageSalesDTO"/>
 		<typeAlias alias="CounsellingManageSales" type="kr.co.bne.common.CounsellingManageSales"/>
 		<typeAlias alias="CounsellingSalesGoal" type="kr.co.bne.common.CounsellingSalesGoal"/>
-		
-
-		
 		<typeAlias alias="Gauge" type="kr.co.bne.dto.GaugeDTO"/>
-		
-
-
-
 		<typeAlias alias="Notice" type="kr.co.bne.common.NoticeDetail"/>
 		<typeAlias alias="Gauge" type="kr.co.bne.dto.GaugeDTO"/>
 		<typeAlias alias="NoticeHeader" type="kr.co.bne.common.NoticeHeader"/>
-
-
-
-		
-      	
-		
-		
-
 	</typeAliases>
 
 	<mappers>
-	
 		<mapper resource="kr/co/bne/mapper/CounsellingRecordMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/ClientMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/DailyReportMapper.xml"/>
