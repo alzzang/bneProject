@@ -14,17 +14,15 @@
 	border:0px solid black;
 	text-align: center;
 }
-</style>
-<script type="text/javascript">
-window.onload = function(){
+.fc-time-grid .fc-slats td {
+    height: 2.8em;
+}
 
-	
-	$('bbbb').on('click',function(){
-		var s = $(".salesInput");
-	});
-	
-};
-</script>
+.detailInfoTable th{
+	text-align: left;
+	width: 100px;
+}
+</style>
 
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -42,29 +40,30 @@ window.onload = function(){
 
 	<!-- START CONTENT FRAME LEFT --> 
 	<div class="content-frame-left" style="height: 1054px;">
-	
-		<div class="panel-body">
+	 <div class="panel panel-default" >
+		<div class="panel-heading">
 			<div class="page-title">
-				<h5>개인 정보</h5>
-			</div>
-			부서 ID : <input type="text" name="department_id" value="${user.department_id}" disabled><br>
-			로그인 ID : <input type="text" name="employee_id" value="${user.employee_id}" disabled>
-			
-			<table class="table">
+				<h3 class="panel-title">개인 정보</h3>
+			</div>	
+		</div>	
+			<input type="hidden" name="department_id" value="${user.department_id}" disabled><br>
+			<input type="hidden" name="employee_Id" value="${employee_Id}" disabled>
+			<div class="panel-body">
+			<table class="table table-bordered detailInfoTable">
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td><input type="text" value="${user.department_name}" disabled></td>
+						<td><span id="department_name">${user.department_name}</span></td>
 					</tr>
 
 					<tr>
 						<th>이름</th>
-						<td><input type="text" value="${user.employee_name}" disabled></td>
+						<td><span id="employee_name">${user.employee_name}</span></td>
 					</tr>
 
 					<tr>
 						<th>작성일</th>
-						<td>${currentDate}</td>
+						<td><span id="reg_date">${currentDate}</span></td>
 					</tr>
 					<tr>
 						<th>제목</th>
@@ -72,23 +71,30 @@ window.onload = function(){
 					</tr>
 				</thead>
 			</table>
-			<div class="page-title">
-				<h5>매출 현황</h5>
-			</div>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>목표</th>
-						<td><input type="text" name="salesGoal" value="${salesGoal}" disabled></td>
-					</tr>
-					<tr>
-						<th>매출액</th>
-						<td><input type="text" name="sales" value="${monthlySales}" disabled></td>
-					</tr>
-				</thead>
-			</table>
-
+	      </div>
 		</div>
+	     <!-- START DONUT CHART -->
+	     <div class="panel panel-default" >
+	         <div class="panel-heading">
+	             <h3 class="panel-title">매출 현황</h3>                          
+	         </div>
+	         <div class="panel-body">
+					<table class="table table-bordered detailInfoTable">
+						<thead>
+							<tr>
+								<th>매출목표 </th>
+								<td><span id="sales_goal">${salesGoal}</span>원</td>
+							</tr>
+		 					<tr>
+								<th>매출액</th>
+								<td><span id="sales">${monthlySales}</span>원</td>
+							</tr>
+						</thead>
+					</table>
+					<hr>
+	         </div>
+	     </div>
+	     <!-- END DONUT CHART -->      
 	</div>
 	<!-- END CONTENT FRAME LEFT -->
 
@@ -98,14 +104,16 @@ window.onload = function(){
 		<div class="row">
 			<div class="col-md-12">
 				<div id="alert_holder"></div>
-				<div class="calendar">
+				<div id="calandarDetail" class="calendar">
 					<div id="calendar" class="fc fc-ltr fc-unthemed">
 					</div>
 				</div>
+				<div id="buttonGroup">
+					<button id ="cancle" type="submit" class="btn btn-danger pull-right" style="margin-left:1%; margin-top:1%">취소</button>
+					<button id ="savePlan" type="button" class="btn btn-success pull-right" style="margin-left:1%; margin-top:1%">저장</button>
+				</div>
 			</div>
 		</div>
-	<button id='aaaa'> aa</button>
-	<button id='bbbb'> bb</button>
 	</div>
 	<!-- END CONTENT FRAME BODY -->
 
@@ -127,14 +135,13 @@ window.onload = function(){
 		'</tr>';
 		
 	$('#weeklyTableHeader>tbody').html(tbodyTag);
-	
 	var s = $('#weeklyTableHeader>thead>tr>th');
 	for(var i=2; i<7; i++){
 		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
 	} 
 	var date = $('#calendar').fullCalendar('getDate');	
 	
-$('#aaaa').on('click',function(){
+$('#savePlan').on('click',function(){
 	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
 	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
 	
@@ -161,8 +168,8 @@ $('#aaaa').on('click',function(){
 
 		sale = ($('#sales-'+dayOfWeek[i])[0].value);
 		regdate = ($('#sales-'+dayOfWeek[i])[0].attributes[3].textContent);
-		if(sales[i] == "")
-			sales[i] = 0;
+		if(sale == "")
+			sale = 0;
 		
 		var plan = {
 					sales : sale,
@@ -217,10 +224,8 @@ $('#aaaa').on('click',function(){
 		},
 
 		success : function(){
-			//alert("성공~");
 		},
 		error : function(){
-			alert("실패~");
 		}
 	})
 	

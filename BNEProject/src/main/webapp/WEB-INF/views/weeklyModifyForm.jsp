@@ -3,8 +3,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<style>
+ 
+ <style>
 .panel-body input{
 	background-color: transparent;
 	border:0px solid black;
@@ -16,21 +16,17 @@
 	border:0px solid black;
 	text-align: center;
 }
+.fc-time-grid .fc-slats td {
+    height: 2.8em;
+}
+
+.detailInfoTable th{
+	text-align: left;
+	width: 100px;
+}
 </style>
-
-
-     <!-- START DONUT CHART -->
-     <div class="panel panel-default">
-         <div class="panel-heading">
-             <h3 class="panel-title">달성률</h3>                                
-         </div>
-         <div class="panel-body">
-             <div id="weeklyDonut" style="height: 300px;"></div>
-         </div>
-     </div>
-     <!-- END DONUT CHART -->      
-     
-<form  action="/modifyWeeklyReport">
+    
+<form  action="/weeklyReport/detail/${employee_Id}">
 
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -46,17 +42,19 @@
 	</div>
 	<!-- END CONTENT FRAME TOP -->
 
-	<!-- START CONTENT FRAME LEFT --> 
 	<div class="content-frame-left" style="height: 1054px;">
-	
-		<div class="panel-body">
+	 <div class="panel panel-default" >
+		<div class="panel-heading">
 			<div class="page-title">
-				<h5>개인 정보</h5>
-			</div>
-			주간계획 ID : <span name = "weekly_report_id" id="weekly_report_id"></span><br>
-			부서 ID : <input type="text" name="department_id" value="${user.department_id}" disabled><br>
-			로그인 ID : <input type="text" name="employee_Id" value="${employee_Id}" disabled>
-			<table class="table">
+				<h3 class="panel-title">개인 정보</h3>
+			</div>	
+		</div>	
+			
+			<input type ="hidden" name = "weekly_report_id" id = "weekly_report_id" ><br>
+			<input type="hidden" name="department_id" value="${user.department_id}" disabled><br>
+			<input type="hidden" name="employee_Id" value="${employee_Id}" disabled>
+			<div class="panel-body">
+			<table class="table table-bordered detailInfoTable">
 				<thead>
 					<tr>
 						<th>소속</th>
@@ -78,31 +76,34 @@
 					</tr>
 				</thead>
 			</table>
-			<div class="page-title">
-				<h5>매출 현황</h5>
-			</div>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>목표</th>
-						<td><span id="sales_goal"></span></td>
-					</tr>
-					<tr>
-						<th>매출액</th>
-						<td><span id="sales"></span></td>
-					</tr>
-					<tr>
-						<th>달성률</th>
-						<td><span id="achievement_rate"></span></td>
-					</tr>
-				</thead>
-			</table>
-
+	      </div>
 		</div>
-		
+	     <!-- START DONUT CHART -->
+	     <div class="panel panel-default" >
+	         <div class="panel-heading">
+	             <h3 class="panel-title">매출 현황</h3>                          
+	         </div>
+	         <div class="panel-body">
+					<table class="table table-bordered detailInfoTable">
+						<thead>
+							<tr>
+								<th>매출목표 </th>
+								<td><span id="sales_goal"></span>원</td>
+							</tr>
+		 					<tr>
+								<th>매출액</th>
+								<td><span id="sales"></span>원</td>
+							</tr>
+						</thead>
+					</table>
+					<hr>
+	             <div id="weeklyDonut" style="height: 300px;"></div>
+	         </div>
+	     </div>
+	     <!-- END DONUT CHART -->      
 	</div>
 	<!-- END CONTENT FRAME LEFT -->
-
+	
 	<!-- START CONTENT FRAME BODY -->
 	<div class="content-frame-body padding-bottom-0" style="height: 887px;">
 
@@ -113,14 +114,37 @@
 					<div id="calendar" class="fc fc-ltr fc-unthemed">
 					</div>
 				</div>
+				<div id="buttonGroup">
+					<button id ="cancle" type="submit" class="btn btn-danger pull-right" style="margin-left:1%; margin-top:1%">취소</button>
+					<button id ="modify" type="button" class="btn btn-success pull-right" style="margin-left:1%; margin-top:1%">수정</button>
+				</div>
 			</div>
 		</div>
-			<button id='bbbbbbb' > 수정</button>
+			
 	</div>
+</div>
 	<!-- END CONTENT FRAME BODY -->
 </form>     
 <script>
-
+var makeSalesInput = function(){
+	var salesCell
+	= 	'<tr>' + 
+			'<td class="fc-axis">매출</td>' +
+			'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
+			'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
+		'</tr>';
+		
+	$('#weeklyTableHeader>tbody').html(salesCell);
+	
+	var s = $('#weeklyTableHeader>thead>tr>th');
+	
+	for(var i=2; i<7; i++){
+		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
+	}	
+};
 	var inputReportData = function(reportData) {
 
 		var weeklyReportDTO = reportData.weeklyReportDTO;
@@ -158,7 +182,7 @@
 		makeSalesInput();
 		
 		for(var i=0; i<weeklyPlanDTOList.length; i++){
-			$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
+			$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales});
 		}
 
 		//////////////////////////도넛 시작//////////////////////////
@@ -205,37 +229,17 @@
 	}
 
 	window.onload = function() {
-		var tbodyTag
-		= 	'<tr>' + 
-				'<td class="fc-axis">매출</td>' +
-				'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
-				'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
-				'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
-				'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
-				'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
-			'</tr>';
-			
-		$('#weeklyTableHeader>tbody').html(tbodyTag);
-		
-		var s = $('#weeklyTableHeader>thead>tr>th');
-		for(var i=2; i<7; i++){
-			$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
-		} 
+
 		
 		
 		var reportData = JSON.parse('${weeklyReportDetail}');
 		inputReportData(reportData);
 
+		$('#calendar').fullCalendar('getView').calendar.options.cellHeight = 200;
+		$('#calendar').fullCalendar('getView').calendar.options.contentHeight = "auto";	
 		
 		
-		$('#bbbbbbb').on('click',function(){
-			//insertDB();
-			//$('#calendarWeek').fullCalendar('next');
-		/*		var s = $('#calendarWeek').fullCalendar('clientEvents');
-			alert(s[0]);*/
-			//editable 속성 false;
-			//$('#calendarWeek').fullCalendar('getView').calendar.options.editable = false;
-			
+		$('#modify').on('click',function(){	
 			event.preventDefault();
 			
 			var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
@@ -321,11 +325,8 @@
 
 				success : function(data){
 					window.location.href="/weeklyReport/detail/"+employee_id;
-					alert("성공");
-					//inputReportData(data);
 				},
 				error : function(){
-					alert("실패~");
 					event.preventDefault();
 				}
 			})

@@ -691,6 +691,10 @@ function x_navigation() {
       $(this).find("input").focus();
    })
    /* END XN-SEARCH */
+   $(".x-navigation .profile-image").click(function(){
+	      $("#myModal1").modal('show');
+	   });
+	    
 }
 /* EOF X-NAVIGATION CONTROL FUNCTIONS */
 

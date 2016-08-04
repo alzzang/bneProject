@@ -14,7 +14,7 @@
 		<typeAlias alias="SecondaryClient" type="kr.co.bne.dto.SecondaryClientDTO"/>
 		<typeAlias alias="WeeklyPlan" type="kr.co.bne.dto.WeeklyPlanDTO"/>
 		<typeAlias alias="WeeklyReport" type="kr.co.bne.dto.WeeklyReportDTO"/>
-		
+		<typeAlias alias="PlanDetail" type ="kr.co.bne.dto.PlanDetailDTO"/>
 		<typeAlias alias="DailyReportListElement" type="kr.co.bne.common.DailyReportListElement"/>
 		<typeAlias alias="DailyReportTeamListElement" type="kr.co.bne.common.DailyReportTeamListElement"/>
 		
@@ -46,6 +46,7 @@
 		<mapper resource="kr/co/bne/mapper/SecondaryClientMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/WeeklyPlanMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/WeeklyReportMapper.xml"/>		
+		<mapper resource="kr/co/bne/mapper/PlanDetailMapper.xml"/>		
 
 	</mappers>
 </configuration>

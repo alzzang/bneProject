@@ -60,8 +60,6 @@ public class WeeklyController {
 		weeklyReportDetail.add("department_name", department_name);
 		weeklyReportDetail.add("employee_name", employee_name);
 		
-		System.out.println(weeklyReportDetail.get("weeklyReportDTO").isJsonNull());
-		
 		return weeklyReportDetail;
 	}
 	
@@ -69,8 +67,7 @@ public class WeeklyController {
 	@RequestMapping("/writeForm")
 	public String WeeklyWriteForm(Model model,HttpServletResponse response,HttpServletRequest request, HttpSession session) throws Exception{
 		EmployeeDTO loginEmployee = (EmployeeDTO) session.getAttribute("user");
-		
-		System.out.println("들어옴");
+
 		if(loginEmployee == null) 
 				return "main";
 		
@@ -91,9 +88,8 @@ public class WeeklyController {
 		int year = calendar.get(Calendar.YEAR);
 		String weekly_report_id = year+"_"+week_of_year+"_"+loginId;
 		
-		System.out.println(weekly_report_id);
 		WeeklyReportDetailDTO reportDetail = weeklyReportService.selectWeeklyReportDetail(weekly_report_id);
-		if(reportDetail != null){
+		if(reportDetail.getWeeklyReportDTO() != null){
 			String o = request.getHeader("ORIGIN");
 			String referer =  request.getHeader("referer");
 			String urlArr[] = referer.split("http://");
@@ -118,10 +114,7 @@ public class WeeklyController {
 	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request,@PathVariable("employeeId") String employeeId, String weeklyReportId) throws Exception {
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
 		EmployeeDTO eDTO = userService.selectEmployee(employeeId);
-		
-		System.out.println("넘어왔니?? " + weeklyReportId);
-		
-		
+
 		if(eDTO == null) {
 			mv.setViewName("main");
 			return mv;
@@ -129,17 +122,19 @@ public class WeeklyController {
 		List<String> reportId_list = weeklyReportService.selectAllReportId(eDTO.getEmployee_id());
 		
 		String weekly_report_id = "";
-		
-		if(weeklyReportId == null || "".equals(weeklyReportId))
-			weekly_report_id = reportId_list.get(reportId_list.size()-1);
-		else{
-			weekly_report_id = weeklyReportId;
+		if(reportId_list.size()!=0){
+			if(weeklyReportId == null || "".equals(weeklyReportId))
+				weekly_report_id = reportId_list.get(reportId_list.size()-1);
+			else{
+				weekly_report_id = weeklyReportId;
+			}
 		}
 		WeeklyReportDetailDTO result = weeklyReportService.selectWeeklyReportDetail(weekly_report_id);	
-
-		JsonObject weeklyReportDetail = parseWeeklyReportDetailDTO(result);
+		JsonObject weeklyReportDetail = null;
+		if(result.getWeeklyReportDTO()!=null)
+			weeklyReportDetail = parseWeeklyReportDetailDTO(result);
 		
-		System.out.println("주간계획 : " + weeklyReportDetail.toString());
+		//System.out.println("주간계획 : " + weeklyReportDetail.toString());
 		
 		mv.addObject("weeklyReportDetail", weeklyReportDetail);
 		mv.addObject("reportIdList", reportId_list);
@@ -199,11 +194,8 @@ public class WeeklyController {
 	@RequestMapping("/getPlan")
 	public @ResponseBody WeeklyReportDetailDTO getPlan(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam("ReportId")String reportId ){
 		WeeklyReportDetailDTO reportDetail = null;
-		System.out.println(reportId);
 		try {
 			reportDetail = weeklyReportService.selectWeeklyReportDetail(reportId);
-			
-			System.out.println(reportDetail.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -226,7 +218,6 @@ public class WeeklyController {
 	public ModelAndView modifyWeeklyReport(Model model,HttpServletRequest request,HttpServletResponse responsel)throws Exception {
 		ModelAndView mv = new ModelAndView("weeklyModify");
 		String weeklyReportId = (String)request.getParameter("weekly_report_id");
-		System.out.println("weeklyReportId"+weeklyReportId);
 		WeeklyReportDetailDTO result = weeklyReportService.selectWeeklyReportDetail(weeklyReportId);
 		
 		JsonObject weeklyReportDetail = parseWeeklyReportDetailDTO(result);
@@ -242,7 +233,6 @@ public class WeeklyController {
 		mv.addObject("department_name", department_name);
 		mv.addObject("employee_name", employee_name);
 		mv.addObject("employee_Id", employee_id);
-		System.out.println("여기까지옴");
 		return mv;
 	}
 	
@@ -286,8 +276,5 @@ public class WeeklyController {
 		weeklyReportDetail.setWeeklyPlanDTOList(weeklyPlanList);
 		// 작성 부분		
 		int result = weeklyReportService.modifyWeeklyReport(weeklyReportDetail);
-		
-		System.out.println("redirect:/weeklyReport/detail/"+weeklyReportDTO.getEmployee_id());
-		//return "redirect:/weeklyReport/detail/"+weeklyReportDTO.getEmployee_id()+"/";
 	}
 }

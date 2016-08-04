@@ -26,6 +26,7 @@ public class PlanDetailDAOImpl implements PlanDetailDAO {
 	@Override
 	public List<PlanDetailDTO> selectPlanDetailList(String weekly_report_id) throws Exception {
 		List<PlanDetailDTO> resultList = sqlSession.selectList(namespace + "selectPlanDetailList", weekly_report_id);
+		System.out.println(resultList.size());
 		return resultList;
 	}
 
