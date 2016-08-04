@@ -12,19 +12,6 @@
                     </li>
                     <!-- END TOGGLE NAVIGATION -->
                     <!-- SEARCH -->
-                    
-                    
-                    
-                    
-                    
-                    
-                    <li class="xn-search">
-<!--                         <form role="form"> -->
-<!--                         </form> -->
-                            <input type="text" id="empSearch" name="search" placeholder="Search...">
-                            
-                            
-                    </li>   
 
                    <li class="xn-search">
       			      	<input type="text" id="empSearch" name="search" placeholder="Search...">

@@ -123,8 +123,10 @@ public class WeeklyController {
 		
 		String weekly_report_id = "";
 		if(reportId_list.size()!=0){
-			if(weeklyReportId == null || "".equals(weeklyReportId))
+			if(weeklyReportId == null || "".equals(weeklyReportId)){
 				weekly_report_id = reportId_list.get(reportId_list.size()-1);
+				System.out.println(weekly_report_id);
+			}
 			else{
 				weekly_report_id = weeklyReportId;
 			}

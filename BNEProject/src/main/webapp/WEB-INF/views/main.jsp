@@ -9,7 +9,7 @@
 				</div>
 				<div class="panel-body">
 					<div id="calanderDetail" class="calendar" >
-						<div id="calendar" class="fc fc-ltr fc-unthemed" style="height: 430px;">
+						<div id="calendar" class="fc fc-ltr fc-unthemed "style="height: 430px;">
 						</div>
 					</div>
 				</div>

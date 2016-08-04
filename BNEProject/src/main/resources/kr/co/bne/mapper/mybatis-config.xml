@@ -42,5 +42,6 @@
 		<mapper resource="kr/co/bne/mapper/WeeklyPlanMapper.xml"/>
 		<mapper resource="kr/co/bne/mapper/WeeklyReportMapper.xml"/>		
 		<mapper resource="kr/co/bne/mapper/NoticeMapper.xml"/>
+		<mapper resource="kr/co/bne/mapper/PlanDetailMapper.xml"/>
 	</mappers>
 </configuration>

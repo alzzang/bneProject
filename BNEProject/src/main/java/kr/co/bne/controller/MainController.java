@@ -76,7 +76,7 @@ public class MainController {
 		
 		request.setAttribute("weeklyReportDetail", weeklyReportDetail);
 		request.setAttribute("employee_Id", loginEmployee.getEmployee_id());
-		return "main";
+		return "mainboard";
 	}
 		
 	@RequestMapping(value= "/editor")
