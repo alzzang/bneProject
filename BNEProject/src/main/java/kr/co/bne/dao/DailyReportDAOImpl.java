@@ -9,13 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
+import kr.co.bne.dto.DailyReportChart2DTO;
+import kr.co.bne.dto.DailyReportChartDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
 
 import kr.co.bne.common.DailyReportListElement;
 import kr.co.bne.common.DailyReportTeamListElement;
-import oracle.net.aso.s;
 
 @Repository
 public class DailyReportDAOImpl implements DailyReportDAO {
@@ -152,5 +153,50 @@ public class DailyReportDAOImpl implements DailyReportDAO {
       // TODO Auto-generated method stub
       sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteReport", id);
    }
+@Override
+public int selectMonthlyGoal(String id) {
+	// TODO Auto-generated method stub
+	return 0;
+}
+@Override
+public int selectSumofMonthlyGoal(String id) {
+	// TODO Auto-generated method stub
+	return 0;
+}
+@Override
+public int selectMonthlyGoalManager(String id) {
+	// TODO Auto-generated method stub
+	return 0;
+}
+@Override
+public int selectSumofMonthlyGoalManager(String id) {
+	// TODO Auto-generated method stub
+	return 0;
+}
+@Override
+public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String id) {
+	// TODO Auto-generated method stub
+	return null;
+}
+@Override
+public List<DailyReportChartDTO> selectDailyReportChartLineList(String id) {
+	// TODO Auto-generated method stub
+	return null;
+}
+@Override
+public List<DailyReportChart2DTO> selectDailyReportChartLine2List(int department_id) {
+	// TODO Auto-generated method stub
+	return null;
+}
+@Override
+public List<?> selectVehicleGauge(String id) {
+	// TODO Auto-generated method stub
+	return null;
+}
+@Override
+public List<DailyReportChart2DTO> selectCustomerSales(int departmentId) {
+	// TODO Auto-generated method stub
+	return null;
+}
 
 }

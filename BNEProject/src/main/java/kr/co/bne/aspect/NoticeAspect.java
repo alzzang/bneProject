@@ -66,10 +66,8 @@ public class NoticeAspect {
 	
 	
 	
-	@AfterReturning("!excution(public * kr.co.bne.dao.DailyReportDAO.deleteComment(String)) && execution(public * kr.co.bne.dao.DailyReportDAO.*Comment(..))") //댓글 수정, 댓글 등록 모두다
+	@AfterReturning("!execution(public * kr.co.bne.dao.DailyReportDAO.deleteComment(String)) && execution(public * kr.co.bne.dao.DailyReportDAO.*Comment(..))") //댓글 수정, 댓글 등록 모두다
 	public void execInsertNotice_COMMENT(JoinPoint joinPoint) throws Throwable {
-		
-		
 		HashMap<String, String> map = (HashMap<String, String>)joinPoint.getArgs()[0];
 		int daily_report_id = Integer.parseInt(map.get("daily_report_id"));
 		
