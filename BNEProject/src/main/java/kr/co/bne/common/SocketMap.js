@@ -15,8 +15,13 @@ SocketIdMap.prototype = {
 	get : function(socketId) {
 		return this.map[socketId];
 	},
-	
-	,
+	SocketIds : function() {
+		var socketIds = {};
+		for(var socket_id in this.map) {
+			socketIds.push(socket_id);
+		}
+		return socketIds;
+	},
 	getSocketIdList : function(empId) {
 		var socketIds = {};
 		for(var socket_id in this.map) {
@@ -24,7 +29,6 @@ SocketIdMap.prototype = {
 				socketIds.push(socket_id);
 			}
 		}
-		
 		return socketIds;
 	},
 	remove : function(socketId){    
