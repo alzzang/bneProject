@@ -66,7 +66,7 @@ public class NoticeAspect {
 	
 	
 	
-	@AfterReturning("execution(public * kr.co.bne.dao.DailyReportDAO.*Comment(..))") //댓글 수정, 댓글 등록 모두다
+	@AfterReturning("!excution(public * kr.co.bne.dao.DailyReportDAO.deleteComment(String)) && execution(public * kr.co.bne.dao.DailyReportDAO.*Comment(..))") //댓글 수정, 댓글 등록 모두다
 	public void execInsertNotice_COMMENT(JoinPoint joinPoint) throws Throwable {
 		
 		
@@ -85,7 +85,7 @@ public class NoticeAspect {
 	
 	@AfterReturning("execution(public * kr.co.bne.service.DailyReportService.updateDailyReport(..))")
 	public void execInsertNotice_DAILY_CORRECT(JoinPoint joinPoint) throws Throwable {
-		
+	
 		
 		
 		

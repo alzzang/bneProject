@@ -25,7 +25,7 @@
 </style>
 
 <script type="text/javascript" src="/js/dailysettings.js"></script>
-<script src="http://192.168.1.27:10000/socket.io/socket.io.js"></script>
+<script src="http://127.0.0.1:10000/socket.io/socket.io.js"></script>
 
 </head>
 
@@ -137,7 +137,7 @@
 
  <script type="text/javascript">
 	
-		var socket = io.connect('http://192.168.1.27:10000');
+		var socket = io.connect('http://127.0.0.1:10000');
 		socket.emit('getId', {
 			employeeId : '${sessionScope.user.employee_id}'
 		});
