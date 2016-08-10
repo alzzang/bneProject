@@ -190,6 +190,8 @@ public class DailyReportServiceImpl implements DailyReportService {
 		result.put("List2", dao.selectDailyReportChartLine2List(department_id));
 		return result;
 	}
+	
+	
 	@Override
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId) {
 		// TODO Auto-generated method stub

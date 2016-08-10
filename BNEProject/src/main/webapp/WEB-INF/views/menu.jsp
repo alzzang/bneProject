@@ -36,7 +36,7 @@
 										
 						<a href="#" >
 						 <span class="fa fa-gear " style="position: absolute"> </span>
-						 <img src="/user/download/${sessionScope.fileName}/">
+						 <img src="/user/download/${sessionScope.fileName}/" placeholder="noImage">
 						</a>
 						
 					</div>
