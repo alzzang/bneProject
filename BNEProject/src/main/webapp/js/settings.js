@@ -47,7 +47,7 @@ var settings_block = document.createElement('div');
     /*settings_block.innerHTML = site_settings;*/
     document.body.appendChild(settings_block);
 
-$(document).ready(function(){
+$(document).ready(function(){	
 
     /* Default settings */
     var theme_settings = {

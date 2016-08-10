@@ -98,14 +98,14 @@ public class CounsellingController {
 		//여기서 department user list를 받아오기
 		List<EmployeeDTO> manageSales=counsellingRecordService.getManageSales(employeeDTO.getDepartment_id());
 		model.addAttribute("manageSales", manageSales);
-		System.out.println("getDepartment_id : "+employeeDTO.getDepartment_id());
+	
 		
 		return "manageSales";
 	}
 	
 	@RequestMapping(value="/manageSalesList",method={RequestMethod.POST})
 	public @ResponseBody List<CounsellingManageSalesDTO> getManageSalesList(@RequestParam("department_id") int id,@RequestParam("year") int year,@RequestParam("month") int month,HttpServletResponse res, HttpServletRequest req){
-		System.out.println(id+"~~"+year+"~~"+month);
+	
 		CounsellingManageSales cm = new CounsellingManageSales();
 		cm.setDepartment_id(id);
 		cm.setYear(year);
@@ -118,13 +118,7 @@ public class CounsellingController {
 	
 	@RequestMapping(value="/insertSalesGoal",method={RequestMethod.POST})
 	public void insertSalesGoal(HttpServletResponse res, HttpServletRequest req, @ModelAttribute("csg") CounsellingSalesGoal csg){
-		System.out.println("csg !"+csg.getEmployee_id()+
-				"@ isEmpty : "+csg.getIs_empty()+
-				"@ sg"+csg.getSales_goal()+
-				"@ "+csg.getMonth()+
-				"@ "+csg.getYear()
-				);
-		
+	
 		counsellingRecordService.insertUpdateSalesGoal(csg);
 		
 	}

@@ -25,12 +25,14 @@ public interface DailyReportDAO {
 	public void insertCounsellingRecord(CounsellingRecordDTO counsellingRecordDTO);
 	public void updateCounsellingRecord(CounsellingRecordDTO counsellingRecordDTO);
 	public void deleteCounsellingRecord(int i);
+
 	public int selectMonthlyGoal(String id);
 	public int selectSumofMonthlyGoal(String id);
 	
 	public int selectMonthlyGoalManager(String id);
 	public int selectSumofMonthlyGoalManager(String id);
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String id);
+
 	
 	
 	List<DailyReportListElement> selectDailyReportList(String user_id, int startIdx, int perContentNum,
@@ -42,11 +44,17 @@ public interface DailyReportDAO {
 	List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException;
 
 	int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException;
-
 	int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException;
+
+
 	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id);
 	public List<DailyReportChart2DTO> selectDailyReportChartLine2List(int department_id);
 	public List<?> selectVehicleGauge(String id);
-	
-	
+	public List<DailyReportChart2DTO> selectCustomerSales(int departmentId);
+
+
+	public void insertComment(HashMap<String, String> map);
+	public void deleteComment(String daily_report_id);
+	public void deleteReport(String id);
+
 }

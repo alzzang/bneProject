@@ -4284,9 +4284,24 @@ td.dataTables_empty {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
+.tasksConfirmed .tasksConfirmed-item {
+  width: 100%;
+  float: left;
+  padding: 0px;
+  background: #FE6;
+  border-left: 3px solid #FFF;
+  margin-bottom: 10px;
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
 .tasks .task-item:hover {
   background: #F9F9F9;
   cursor: pointer;
+}
+.task-nowconfirmed{
+	background: #ff8040;
 }
 .tasks .task-item.task-complete {
   background: #FFF2C5;

@@ -45,13 +45,12 @@ public class CounsellingRecordDAOImpl implements CounsellingRecordDAO {
 	public void insertSalesGoal(CounsellingSalesGoal csg) {
 		sqlSession.insert("kr.co.bne.mapper.CounsellingRecord.insertSalesGoal",csg);
 		
-		System.out.println("here is InsertDAO ... getIsEmpty"+csg.getIs_empty());
+		
 	}
 
 	@Override
 	public void updateSalesGoal(CounsellingSalesGoal csg) {
 		sqlSession.update("kr.co.bne.mapper.CounsellingRecord.updateSalesGoal",csg);
-		
 		
 	}
 	

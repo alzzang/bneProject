@@ -14,9 +14,9 @@
 		<put-attribute name="body" value="/WEB-INF/views/dailyReportMain.jsp"/>
 	</definition>
 	
-	<definition name="main" extends="tilesbase">
+	<!-- <definition name="main" extends="tilesbase">
 	<put-attribute name="body" value="/WEB-INF/views/main.jsp" /> 
-	</definition>
+	</definition> -->
 	
 	<definition name="chartPage" extends="tilesbase">
 	<put-attribute name="body" value="/WEB-INF/views/chart.jsp" /> 
@@ -45,20 +45,28 @@
 		<put-attribute name="body" value="/WEB-INF/views/password.jsp"/>
 	</definition>
 	
-	
+	<definition name="redirectDetail" template="/WEB-INF/views/redirectDetail.jsp"/>
 	
 	<definition name="updateDailyReport" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/dailyReport_Modifyform.jsp"/>
 	 </definition>	
 	
-	<definition name="WeeklyWriteForm" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/WeeklyWriteForm.jsp"/>
+	<definition name="weeklyWrite" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/weeklyWriteForm.jsp"/>
 	</definition>
 
 	<definition name="aaa" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/SmartEditor2.jsp"/>
 	</definition>
-	<!-- <definition name="main" extends="bodybase">
+	
+	<definition name="alarmDetail" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/alarmDetail.jsp"/>
+	</definition>
+	
+	<definition name="mainboard" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/main.jsp"/>
+	</definition>
+<!-- <definition name="main" extends="bodybase">
 		<put-attribute name="nav" value="/WEB-INF/views/nav.jsp"/>
 		<put-attribute name="content" value="/WEB-INF/views/content.jsp"/>
 	</definition> -->
@@ -70,7 +78,9 @@
 	<definition name="searchUser" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/searchUserResult.jsp"/>
 	</definition>
-	
+		<definition name="weeklyDetail" extends="tilesbase">
+      <put-attribute name="body" value="/WEB-INF/views/weeklyDetail.jsp"/>
+   </definition>
 	
 	<definition name="searchUserList" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/searchUserResultList.jsp"/>
@@ -78,8 +88,12 @@
 	
 	
 	
-
-
+		<definition name="weeklyModify" extends="tilesbase">
+      <put-attribute name="body" value="/WEB-INF/views/weeklyModifyForm.jsp"/>
+   </definition>
+	<definition name="mainboard" extends="tilesbase">
+	<put-attribute name="body" value="/WEB-INF/views/main.jsp"/>
+	</definition>
 </tiles-definitions>
  
 

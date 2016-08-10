@@ -24,12 +24,14 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	@Override
+	
 	public DailyReportEmployeeDTO selectPreSales(String employee_id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectEmployee", employee_id);
 	}
 	@Override
 	public int insertDailyReport(DailyReportDTO dailyReportDTO) {
+
 		// TODO Auto-generated method stub
 		return sqlSession.insert("kr.co.bne.mapper.DailyReport.insertDailyReport", dailyReportDTO);
 		
@@ -142,10 +144,8 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Override
 	public int selectSumofMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
-		System.out.println("selectSumofMonthlyGoal : "+id);
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
 	}
-
 	@Override
 	public int selectMonthlyGoalManager(String id) {
 		// TODO Auto-generated method stub
@@ -178,6 +178,29 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectVehicleGauge", id);
 	}
-	
-	
+	@Override
+	public List<DailyReportChart2DTO> selectCustomerSales(int departmentId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectCustomerSales", departmentId);
+	}
+	@Override
+
+
+
+	public void deleteReport(String id) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteReport", id);
+	}
+	@Override
+	public void insertComment(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void deleteComment(String daily_report_id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

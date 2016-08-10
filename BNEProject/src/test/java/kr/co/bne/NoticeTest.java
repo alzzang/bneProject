@@ -9,24 +9,31 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import kr.co.bne.dao.DailyReportDAO;
-import kr.co.bne.dto.DailyReportChartDTO;
+import kr.co.bne.common.type.NoticeType;
+import kr.co.bne.dao.NoticeDAO;
+import kr.co.bne.dto.NoticeDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"file:src/test/resources/spring/applicationContext.xml"})
 @TransactionConfiguration(defaultRollback=true)
-public class ChartTest {
+public class NoticeTest {
 	
 	@Autowired
-	DailyReportDAO dao;
+	NoticeDAO dao;
 	
-/*	@Test
+	
 	public void test() throws Exception {
-		List<DailyReportChartDTO> list = dao.selectDailyReportChartLineList("1");
+		boolean ret = dao.insertNotice(NoticeType.DAILY_CORRECT, "3");
+		System.out.println(ret);
+	}
+	
+	@Test
+	public void test1() throws Exception {
+		List<NoticeDTO> list = dao.selectNoticeList("3", 5, 1);
 		
-		for(DailyReportChartDTO dto : list) {
-			System.out.println(dto.getEmployee_id() + ":" + dto.getReg_date());
+		for(NoticeDTO dto : list) { 
+			System.out.println(dto.getNotice_id());
 		}
-	}*/
+	}
 
 }

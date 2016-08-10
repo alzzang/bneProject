@@ -5,13 +5,11 @@
 <mapper namespace="kr.co.bne.mapper.Employee">
 
 	<select id="selectEmployee" parameterType="String" resultType="Employee">
-	<![CDATA[select e.*, d.department_name,
+   <![CDATA[select e.*, d.department_name,
         CASE WHEN employee_id in (select manager_id from department) THEN 'manager'
         ELSE 'employee' END position from employee e, department d where e.DEPARTMENT_ID = d.DEPARTMENT_ID
-  		and employee_id = #{value}]]>
-	</select>
-	
-	
+        and employee_id = #{value}]]>
+   </select>
 
 	<update id="updatePassword" parameterType="HashMap">
 	<![CDATA[update employee set password=#{password} where employee_id=#{id}]]>
@@ -20,16 +18,13 @@
 	<update id="updateFile" parameterType="HashMap">
 	<![CDATA[update employee set file_position=#{filePosition} where employee_id=#{id}]]>
 	</update>
+
 	<update id="defaultUpdateFile" parameterType="String">
 	<![CDATA[update employee set file_position='default.png' where employee_id=#{value}]]>
 	</update>
 
-	
-
 	<select id="selectImage" resultType="Employee">
-	<![CDATA[
-	select employee_name,file_position from employee where employee_id='1'
-	]]>
+	<![CDATA[select employee_name,file_position from employee where employee_id='1'	]]>
 	</select>
 	
 	<select id="empSearch" parameterType="String" resultType="Employee">
@@ -37,16 +32,11 @@
 		    select EMPLOYEE_ID,EMPLOYEE_NAME,DEPARTMENT_ID,mobile_phone,email,file_position
 			from employee
 			where EMPLOYEE_NAME like #{value}
-			order by 2
-	  	]]>
+			order by 2	]]>
 	</select>
-	
-	
 
 	<select id="selectTeamMember" resultType="Employee" parameterType="Integer">
 	<![CDATA[select employee_name,employee_id from employee where department_id=#{values}]]>
 	</select>
-
-
 
 </mapper>

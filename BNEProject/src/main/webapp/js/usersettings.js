@@ -57,9 +57,6 @@ function selectSecontClient(value) {
 }
 
 $(function() {
-	$('#sockettest').on('click',function(){
-		socket.emit('notice',{fromId:($("#employee_id").val()), toId:'2', message:'새로운 메세지'});
-	});	
 	
 	$('#myModal1').on('shown.bs.modal',	function() {
 		var myDropzone = Dropzone.forElement("#myDropzone");
@@ -76,25 +73,23 @@ $(function() {
 		myDropzone.files.push(mockFile);
 	});
 		
-		
 	$('#myModal1,#myModal2').on('hidden.bs.modal', function() {
 		$(this).find('form')[0].reset();
 		$(this).find('.note-editable').empty();
 		var myDropzone = Dropzone.forElement("#myDropzone");
 		myDropzone.removeAllFiles();
 	});
-	$("#counsel_id").change(function() {
-		$("#sec_client_id").val('');
-	    $(this).find('form')[0].reset();
-	    $(this).find('.note-editable').empty();
-	    //$(this).find('#myDropzone').filter($('.dz-preview').remove());
-	});
 	$('#myModal4').on('hidden.bs.modal', function() {
 		$("#sec_client_id").val('');
 	    $(this).find('form')[0].reset();
 	    $(this).find('.note-editable').empty();
 	});
-
+	$("#counsel_id").change(function() {
+		$("#sec_client_id").val('');
+	    $(this).find('form')[0].reset();
+	    $(this).find('.note-editable').empty();
+	
+	});
 	$("#counselling_id").change(function() {
 		$("#sec_client_id").empty();
 		$("#address").val("");
@@ -103,7 +98,7 @@ $(function() {
 	});
 
 	$('#modalAdd').on('click',function(){
-		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="testJSON1()">Submit</button>');
+		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="localSave()">Submit</button>');
 	});
 	
 	
@@ -124,8 +119,6 @@ $(function() {
 
 		
 	Dropzone.options.myDropzone = {
-	//	paramName : 'NewImages',
-	//	url : "/user/upload",
 		acceptedFiles : 'image/*',
 		autoDiscover : false,
 		autoProcessQueue : false,
@@ -149,13 +142,7 @@ $(function() {
 			});
 		}
 	};
-	
-/*	$('.sub-menu ul').hide();
-	$(".sub-menu a").click(function () {
-		$(this).parent(".sub-menu").children("ul").slideToggle("200");
-		$(this).find("i.fa").toggleClass("fa-angle-up fa-angle-down");
-	});
-*/	
+
 	$("#empSearch").on("keyup",function(e){
 		/* db에 보낼 str*/
 		
@@ -199,9 +186,6 @@ $(function() {
 	                    '<div id="empSGJ" class="panel-body list-group list-group-contacts scroll" style="">'+
 	                    
 	                    '</div>     '+
-//	                    '<div class="panel-footer text-center">'+
-//	                    '    <a href="pages-messages.html">Show all messages</a>'+
-//	                    '</div>'+                            
 	                '</div>';
 				$("#empSearch").parent().append(html);
 
@@ -217,9 +201,6 @@ $(function() {
 					
 					
 				}else{
-//					var more='<div class="panel-footer text-center">'+
-//                    '    <a class="showUserList" href="#">List로 보기</a>'+
-//                    '</div>';
 					var more='<a href="#" id="iii" class="list-group-item showUserList text-center panel-footer">'+
                     '        <span class="contacts-title">List로 보기</span>'+
                     '    </a>';
@@ -251,28 +232,15 @@ $(function() {
 						console.log('str:'+str);
 						location.href='/user/empSearch2?empSearch='+str;
 					}
-					
-					
-					/* problem */
 					$(".showUserList").on("click",function(e){
-//						e.stopPropagation();
 						location.href='/user/empSearch2?empSearch='+str;
 					});
-					
-				}// end else
-				
-				//alert(data[0].employee_id+data[0].employee_name);
-				
-				
-				
+				}
 			},
 			error:function(){
 				console.log('error');
 			}
-			
-			
 		});//end ajax
-		
 	};
 	
 	$(".aabbcc").on("click",function(){

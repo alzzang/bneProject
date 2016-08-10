@@ -3,10 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<!-- 
-morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascript" src="js/demo_dashboard.js"></script>
-							<script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>
- -->
 <html>
 
 <head>
@@ -28,7 +24,9 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 }
 </style>
 
-<!-- <script src="http://192.168.1.27:3000/socket.io/socket.io.js"></script> -->
+<script type="text/javascript" src="/js/dailysettings.js"></script>
+<script src="http://192.168.1.27:10000/socket.io/socket.io.js"></script>
+
 </head>
 
 <body>
@@ -126,6 +124,7 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
     <script type='text/javascript' src='/js/plugins/noty/layouts/topLeft.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topRight.js'></script>            
     <script type='text/javascript' src='/js/plugins/noty/themes/default.js'></script>
+    <script type='text/javascript' src='/js/notice_on_header.js'></script>
 
 	
 	
@@ -133,6 +132,75 @@ morris 차트 사용 시 포함해야할 js 파일 : <script type="text/javascri
 	<!-- END SCRIPTS -->
 
 
+
+
+
+ <script type="text/javascript">
+	
+		var socket = io.connect('http://192.168.1.27:10000');
+		socket.emit('getId', {
+			employeeId : '${sessionScope.user.employee_id}'
+		});
+		
+		socket.on('newmessage', function(data) {
+			var message = createNoticeString(data.fromName, data.notice_type);
+			var path = '/dailyReport/main';
+			
+			$.ajax({
+				url : "/alarm/unReadCount/" + $("#employee_id").val(),
+				success : function(data) {
+					$("#newMessageCount_title").html(data);
+				}
+			});
+			
+			if($('#noticeButton').hasClass('active')) {
+				getNoticeList(1, 5);	
+			}	
+			
+			
+			
+			$.notify({
+				// options
+				message: message,
+				url: path,
+				target: '_self'
+			},{
+				// settings
+				element: '#popup',
+				position: 'absolute',
+				type: "customNoticeForm-danger",
+				allow_dismiss: true,
+				newest_on_top: false,
+				showProgressbar: false,
+				placement: {
+					from: "top",
+					align: "right"
+				},
+				offset: 20,
+				spacing: 10,
+				z_index: 1,
+				delay: 5000,
+				timer: 1000,
+				mouse_over: null,
+				animate: {
+					enter: 'animated lightSpeedIn',
+					exit: 'animated lightSpeedOut'
+				},
+				onShow: null,
+				onShown: null,
+				onClose: null,
+				onClosed: null,
+				icon_type: 'class',
+				template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+				'<span data-notify="title">{1}</span>' +
+				'<span data-notify="message">{2}</span>' +
+			'</div>'
+			});
+				
+		});
+
+		
+	</script>
 
 </body>
 </html>

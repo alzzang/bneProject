@@ -25,8 +25,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+
+
 import kr.co.bne.dao.EmployeeDAO;
+
+
+
+
+import kr.co.bne.dto.DailyReportEmployeeDTO;
+
+
+
+
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.service.DailyReportService;
 import kr.co.bne.service.UserService;
 
 @Controller
@@ -38,6 +50,12 @@ public class UserController {
 	
 	@Autowired
 	EmployeeDAO employeeDAO;
+
+	@Autowired
+	private DailyReportService dailyReportService;
+
+
+
 
 	
 	public void setFileName(String fileName, HttpServletRequest req){
@@ -136,11 +154,15 @@ public class UserController {
 		employeeDTO = userService.validCheck(id, rawPassword);
 		String newpassword = req.getParameter("newpassword");
 		
+		
+		
 		if (newpassword == null) {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
 				session.setAttribute("fileName", employeeDTO.getFile_position());
-				
+
+				DailyReportEmployeeDTO employee= dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
+				session.setAttribute("employee", employee);
 				return "redirect:/main";
 			}
 			return "redirect:/user/login";
@@ -159,9 +181,13 @@ public class UserController {
 	/* javascript에서 필요한 정보를 json 으로 변환 return */
 	@RequestMapping(value = "/empSearch", method = { RequestMethod.POST })
 	public @ResponseBody List<EmployeeDTO> getEmpSearch(@RequestParam("empSearch") String empSearch ,HttpServletRequest req) {
+
+		
+		
+
+
 			String temp="%"+empSearch+"%";
 			List<EmployeeDTO> list =userService.getEmpSearch(temp);
-			System.out.println(list);
 			return list;
 	}
 
@@ -173,9 +199,12 @@ public class UserController {
 				
 		EmployeeDTO ed = employeeDAO.selectEmployee(empId);
 		model.addAttribute("emp",ed);
-		System.out.println("where ? : ");
+
+
+
 		
 		
+
 		return "searchUser";
 	}
 	
