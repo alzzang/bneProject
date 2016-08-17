@@ -23,7 +23,7 @@
 		
 		<!-- WeeklyReport 우동이 추가 -->
 		<typeAlias alias="WeeklyReportSearchElement" type="kr.co.bne.common.WeeklyReportSearchElement"/>
-		
+		<typeAlias alias="WeeklyReportMemberInfo" type="kr.co.bne.common.WeeklyReportMemberInfo"/>
 		
 		<!--DailyReport 태우 추가-->
 		<typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>

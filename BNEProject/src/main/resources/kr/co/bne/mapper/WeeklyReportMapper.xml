@@ -4,55 +4,57 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.WeeklyReport">
 
-<!-- 	<select id="selectWeeklyReportList" parameterType="map" resultType="WeeklyReportSearchElement" >
-		SELECT WR.WEEKLY_REPORT_ID, WR.EMPLOYEE_ID, WR.TITLE, D.DEPARTMENT_NAME, E.EMPLOYEE_NAME, TO_CHAR(DATE_CHAR.START_DATE, 'MM-DD') ||' ~ '|| TO_CHAR(DATE_CHAR.END_DATE, 'MM-DD') AS DATE_PERIOD
-		FROM   WEEKLY_REPORT WR, EMPLOYEE E, DEPARTMENT D, (SELECT  WP.WEEKLY_REPORT_ID, MIN(WP.REG_DATE) AS START_DATE, MAX(WP.REG_DATE) AS END_DATE
-		                                                    FROM    WEEKLY_REPORT WR, WEEKLY_PLAN WP
-		                                                    WHERE   WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID
-		                                                    GROUP BY WP.WEEKLY_REPORT_ID) DATE_CHAR
-		WHERE   WR.WEEKLY_REPORT_ID = DATE_CHAR.WEEKLY_REPORT_ID
-		    AND   E.EMPLOYEE_ID = WR.EMPLOYEE_ID
-		    AND   D.DEPARTMENT_ID = E.DEPARTMENT_ID
-		 <choose>
-		 	<when test="employee_id != null">
-	  		AND E.EMPLOYEE_ID = #{employee_id}
-		 	</when>
-		 	<when test="department_id != null">
-	  		AND E.DEPARTMENT_ID = #{department_id}
-		 	</when>
-			<otherwise>
-			</otherwise>		 
-		 </choose>   
-	    ORDER BY WR.WEEKLY_REPORT_ID
-	</select> -->
  	<select id="selectWeeklyReportList" parameterType="map" resultType="WeeklyReportSearchElement" >
-	SELECT *
-	FROM  (
-	      SELECT ROW_NUMBER() OVER (ORDER BY WR.WEEKLY_REPORT_ID) IDX, WR.*, D.DEPARTMENT_NAME, E.EMPLOYEE_NAME, TO_CHAR(DATE_CHAR.START_DATE, 'MM-DD') ||' ~ '|| TO_CHAR(DATE_CHAR.END_DATE, 'MM-DD') AS DATE_PERIOD
-	      FROM   WEEKLY_REPORT WR, EMPLOYEE E, DEPARTMENT D, (SELECT  WP.WEEKLY_REPORT_ID, MIN(WP.REG_DATE) AS START_DATE, MAX(WP.REG_DATE) AS END_DATE
-	                                                          FROM    WEEKLY_REPORT WR, WEEKLY_PLAN WP
-	                                                          WHERE   WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID
-	                                                          GROUP BY WP.WEEKLY_REPORT_ID) DATE_CHAR
-	      WHERE   WR.WEEKLY_REPORT_ID = DATE_CHAR.WEEKLY_REPORT_ID
-	        AND   E.EMPLOYEE_ID = WR.EMPLOYEE_ID
-	        AND   D.DEPARTMENT_ID = E.DEPARTMENT_ID
+		SELECT *
+		FROM  (
+		        SELECT  ROW_NUMBER() OVER (ORDER BY WR.WEEKLY_REPORT_ID) IDX, WR.*, D.DEPARTMENT_NAME, E.EMPLOYEE_NAME, TO_CHAR(DATE_CHAR.START_DATE, 'YYYY-MM-DD') AS START_DATE, TO_CHAR(DATE_CHAR.END_DATE, 'YYYY-MM-DD') AS END_DATE
+		        FROM    WEEKLY_REPORT WR, EMPLOYEE E, DEPARTMENT D, (SELECT  WP.WEEKLY_REPORT_ID, MIN(WP.REG_DATE) AS START_DATE, MAX(WP.REG_DATE) AS END_DATE
+		                                                          FROM    WEEKLY_REPORT WR, WEEKLY_PLAN WP
+		                                                          WHERE   WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID
+		                                                          GROUP BY WP.WEEKLY_REPORT_ID) DATE_CHAR
+		        WHERE   WR.WEEKLY_REPORT_ID = DATE_CHAR.WEEKLY_REPORT_ID
+			        AND   E.EMPLOYEE_ID = WR.EMPLOYEE_ID
+			        AND   D.DEPARTMENT_ID = E.DEPARTMENT_ID
+		      	<if test="employee_id != null">
+			      	AND   E.EMPLOYEE_ID = #{employee_id}
+		      	</if>
+		      	<if test="department_id != null">
+			      	AND   D.DEPARTMENT_ID = #{department_id}
+		      	</if>
+		      	 <if test="keyword != null and keyword != ''"> 
+		      	   	AND   WR.TITLE LIKE  '%'||#{keyword}||'%'  
+		      	</if>
+		      )
+		WHERE IDX BETWEEN 1 + (#{pageSize} * (#{page}-1)) AND #{pageSize} + (#{pageSize} * (#{page}-1))
+		<if test="plan_date != null and plan_date != ''">
+			AND TO_DATE(#{plan_date}, 'YYYY-MM-DD') BETWEEN START_DATE AND END_DATE
+		</if>
+		ORDER BY WEEKLY_REPORT_ID
+	</select>
+	
+	<select id = "selectTotalRecordNum" parameterType="map" resultType="Integer">
+		SELECT   COUNT(*)
+		FROM     WEEKLY_REPORT WR, EMPLOYEE E, DEPARTMENT D
+		WHERE   E.EMPLOYEE_ID = WR.EMPLOYEE_ID
+			AND   D.DEPARTMENT_ID = E.DEPARTMENT_ID
 	      	<if test="employee_id != null">
 	      	AND   E.EMPLOYEE_ID = #{employee_id}
 	      	</if>
 	      	<if test="department_id != null">
 	      	AND   D.DEPARTMENT_ID = #{department_id}
 	      	</if>
-	      )
-	<!-- WHERE IDX BETWEEN 1 AND 1+5 -->
-	ORDER BY WEEKLY_REPORT_ID
-	</select>
-	<!-- 새로 작성 시 지난 주 까지의 매출액 -->
+		     <if test="keyword != null and keyword != ''"> 
+	      	AND   WR.TITLE LIKE  '%'||#{keyword}||'%'  
+	      	</if>
+	</select>	
+	
 	<select id="selectAllReportId" parameterType ="String" resultType = "String">
 	<![CDATA[
 		SELECT WEEKLY_REPORT_ID FROM WEEKLY_REPORT WHERE EMPLOYEE_ID = #{value} ORDER BY REG_DATE
 	]]>
 	</select>
 	
+	<!-- 새로 작성 시 지난 주 까지의 매출액 -->
 	<select id="selectThisMonthlySales" parameterType="String" resultType="Integer">
 		<![CDATA[
 		SELECT CASE WHEN SUM(RESULT) IS NULL THEN 0
@@ -113,7 +115,16 @@
 			WHERE     RK <= 5  
 		]]>
 	</select> -->
-	
+	<select id="selectDeptMember" parameterType="String" resultType="WeeklyReportMemberInfo">
+		SELECT  E.EMPLOYEE_ID, E.EMPLOYEE_NAME, E.FILE_POSITION, POST_NUM
+		FROM    EMPLOYEE E, DEPARTMENT D, (SELECT    COUNT(*) AS POST_NUM, WR.EMPLOYEE_ID
+								                                   FROM      EMPLOYEE E, WEEKLY_REPORT WR
+								                                   WHERE     E.EMPLOYEE_ID = WR.EMPLOYEE_ID
+								                                   GROUP BY  WR.EMPLOYEE_ID) CNT
+		WHERE   E.DEPARTMENT_ID = D.DEPARTMENT_ID
+		        AND CNT.EMPLOYEE_ID = E.EMPLOYEE_ID
+        		AND E.DEPARTMENT_ID = #{value}
+	</select>
 	
 	<select id="selectWeeklyReport" parameterType="String" resultType="WeeklyReport">
 		SELECT WR.*

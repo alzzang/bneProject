@@ -69,7 +69,7 @@
 				<ul>
 					<li><a id="weeklyDetail" href="/weeklyReport/detail/${user.getEmployee_id() }">주간계획</a></li>			
 					<li><a href="/weeklyReport/writeForm">주간계획작성</a></li>	
-					<li><a href="/weeklyReport/search">주간 계획 목록</a></li>	
+					<li><a href="/weeklyReport/list">주간 계획 목록</a></li>	
 				</ul>
 				
 				</li>

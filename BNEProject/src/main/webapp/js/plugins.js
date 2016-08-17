@@ -540,7 +540,7 @@ $(function() {
                     contentHeight : "auto",
                     businessHours:true,
                     weekNumbers:true,
-                    eventColor:'#1CAF9A',
+                    eventColor:'#83ACEC',
                     select: function(start, end, allDay) {
                         var title = prompt('Event Title:');
                         if(!end.isAfter(start,'day')){

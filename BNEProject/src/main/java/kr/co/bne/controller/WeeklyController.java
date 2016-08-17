@@ -26,6 +26,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import kr.co.bne.common.WeeklyReportMemberInfo;
 import kr.co.bne.common.WeeklyReportSearchElement;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.PlanDetailDTO;
@@ -273,29 +274,94 @@ public class WeeklyController {
 		//return "redirect:/weeklyReport/detail/"+weeklyReportDTO.getEmployee_id()+"/";
 	}
 	
-	@RequestMapping("/search")
-	public ModelAndView searchWeeklyReport(HttpSession session, HttpServletRequest request,HttpServletResponse response)throws Exception {
-		ModelAndView mv = new ModelAndView("weeklySearch");
-		
-		EmployeeDTO loginUser = (EmployeeDTO) session.getAttribute("user");
-		
-		String employee_id = loginUser.getEmployee_id();
-		String department_id = loginUser.getDepartment_id() + "";
-		
-		Map<String, String> parameterMap = new HashMap<String, String>();
-		
-		parameterMap.put("employee_id", employee_id);
-		parameterMap.put("department_id", department_id);
-		
-		System.out.println(loginUser.toString());
-
-		// 내 부서의 주간계획 목록
-		parameterMap.replace("employee_id", null);
-		List<WeeklyReportSearchElement> myDeptWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
-		mv.addObject("myDeptWeeklyReportList", myDeptWeeklyReportList);
-		
+	@RequestMapping("/list")
+	public ModelAndView getFirstWeeklyList(HttpServletRequest request) throws Exception {
+		ModelAndView mv = getWeeklyList(null, request);
 		return mv;
 	}
 	
+	@RequestMapping("/list/{employee_id}")
+	public ModelAndView getWeeklyList(@PathVariable String employee_id, HttpServletRequest request) throws Exception {
+		System.out.println("===========================================================");
+		
+		ModelAndView mv = new ModelAndView("weeklyList");
+		HttpSession session = request.getSession();
+		EmployeeDTO loginUser = (EmployeeDTO) session.getAttribute("user");
+		
+		if(loginUser == null){
+			mv.setViewName("weeklyList");
+			return mv;
+		}
+		System.out.println("employee_id : " + employee_id);
+
+		// keyword
+		String keyword = request.getParameter("keyword");
+		System.out.println("keyword : " + keyword);
+		
+		// plan_date
+		String planDate = request.getParameter("planDate");
+		System.out.println("planDate : " + planDate);
+		
+		// department_id
+		String department_id = loginUser.getDepartment_id() + "";
+		System.out.println("department_id : " + department_id);
+		
+		// pageSize
+		int pageSize = 5;
+
+		// page
+		String pageStr = request.getParameter("pageStr");
+		System.out.println("pageStr : " + pageStr);
+		int page = 0;
+		if("".equals(pageStr) || pageStr == null)
+			page = 1;
+		else								
+			page = Integer.parseInt(pageStr);
+		System.out.println("page : " + page);
+		
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("employee_id", employee_id);
+		parameterMap.put("department_id", department_id);
+		parameterMap.put("keyword", keyword);
+		parameterMap.put("pageSize", pageSize);
+		parameterMap.put("page", page);
+		parameterMap.put("plan_date", planDate);
+		
+//		Map<String, Object> parameterMap2 = new HashMap<String, Object>();
+//		parameterMap2.put("employee_id", employee_id);
+//		parameterMap2.put("pageSize", 3);
+//		parameterMap2.put("page", 1);
+		
+		
+		// 내 부서의 주간계획 목록
+		List<WeeklyReportSearchElement> myDeptWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
+		System.out.println("weeklyReportListSize : " + myDeptWeeklyReportList.size());
+		for (WeeklyReportSearchElement weeklyReportSearchElement : myDeptWeeklyReportList) {
+			System.out.println(weeklyReportSearchElement);
+		}
+		
+		List<WeeklyReportMemberInfo> myDeptMemberList = weeklyReportService.selectDeptMember(department_id);
+//		System.out.println("myDeptMemberList : " + myDeptMemberList.size());
+		
+		int allReportNum = 0;
+		for (WeeklyReportMemberInfo weeklyReportMemberInfo : myDeptMemberList) {
+			allReportNum += weeklyReportMemberInfo.getPost_num();
+		}
+		
+		int totalRecordNum = weeklyReportService.selectTotalRecordNum(parameterMap);
+		System.out.println("totalRecordNum : " + totalRecordNum);
+
+		mv.addObject("myDeptWeeklyReportList", myDeptWeeklyReportList);
+		mv.addObject("selectedMemberId", employee_id);
+		mv.addObject("myDeptMemberList", myDeptMemberList);
+		mv.addObject("totalRecordNum", totalRecordNum);
+		mv.addObject("allReportNum", allReportNum);
+		mv.addObject("keyword", keyword);
+		mv.addObject("pageSize", pageSize);
+		mv.addObject("page", page);
+		mv.addObject("planDate", planDate);
+		
+		return mv;
+	}
 	
 }

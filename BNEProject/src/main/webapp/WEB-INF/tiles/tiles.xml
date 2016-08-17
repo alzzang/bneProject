@@ -49,8 +49,8 @@
 		<put-attribute name="body" value="/WEB-INF/views/weeklyDetail.jsp"/>
 	</definition>
 	
-	<definition name="weeklySearch" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/weeklySearch.jsp"/>
+	<definition name="weeklyList" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/weeklyList.jsp"/>
 	</definition>
 	
 	<definition name="weeklyModify" extends="tilesbase">

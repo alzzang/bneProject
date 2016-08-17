@@ -243,7 +243,7 @@
 	            			formatted: lack_rate + '%'
 	            		}
 	            	],
-	        colors: ['#95B75D', '#1caf9a'],
+	        colors: ['#83ACEC', '#F9A61A'],
 	        formatter: function(x, data){
 	        	return data.formatted;	
 	        },
@@ -261,7 +261,7 @@
 
 		
 		// 처음에 받아온 주간계획 정보 삽입 
-		var reportData = JSON.parse('${weeklyReportDetail}') 
+		var reportData = JSON.parse('${weeklyReportDetail}') ;
 		inputReportData(reportData);
 		
 		// 이 주간계획서의 작성자 ID

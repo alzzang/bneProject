@@ -7,11 +7,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.bne.common.WeeklyReportMemberInfo;
 import kr.co.bne.common.WeeklyReportSearchElement;
 import kr.co.bne.dao.PlanDetailDAO;
 import kr.co.bne.dao.WeeklyPlanDAO;
 import kr.co.bne.dao.WeeklyReportDAO;
-import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.PlanDetailDTO;
 import kr.co.bne.dto.WeeklyPlanDTO;
 import kr.co.bne.dto.WeeklyReportDTO;
@@ -112,6 +112,19 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 	public List<WeeklyReportSearchElement> selectWeeklyReportSearch(Map parameterMap) throws Exception {
 		List<WeeklyReportSearchElement> result = null; 
 		result = weeklyReportDAO.selectWeeklyReportList(parameterMap);
+		return result;
+	}
+
+	@Override
+	public List<WeeklyReportMemberInfo> selectDeptMember(String department_id) throws Exception {
+		List<WeeklyReportMemberInfo> result = weeklyReportDAO.selectDeptMember(department_id);
+		return result;
+	}
+
+	@Override
+	public int selectTotalRecordNum(Map<String, Object> parameterMap) throws Exception {
+		int result = 0;
+		result = weeklyReportDAO.selectTotalRecordNum(parameterMap);
 		return result;
 	}
 	

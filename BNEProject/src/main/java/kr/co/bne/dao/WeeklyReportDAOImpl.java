@@ -7,8 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.bne.common.WeeklyReportMemberInfo;
 import kr.co.bne.common.WeeklyReportSearchElement;
-import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.WeeklyReportDTO;
 
 @Repository
@@ -61,9 +61,23 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 	}
 
 	@Override
-	public  List<WeeklyReportSearchElement> selectWeeklyReportList(Map parameterMap) throws Exception {
+	public  List<WeeklyReportSearchElement> selectWeeklyReportList(Map<String, Object> parameterMap) throws Exception {
 		 List<WeeklyReportSearchElement> result = null;
 		result = sqlSession.selectList(namespace+"selectWeeklyReportList", parameterMap);
+		return result;
+	}
+
+	@Override
+	public List<WeeklyReportMemberInfo> selectDeptMember(String department_id) throws Exception {
+		List<WeeklyReportMemberInfo> result = null;
+		result = sqlSession.selectList(namespace+"selectDeptMember", department_id);
+		return result;
+	}
+
+	@Override
+	public int selectTotalRecordNum(Map<String, Object> parameterMap) throws Exception {
+		int result = 0;
+		result = sqlSession.selectOne(namespace + "selectTotalRecordNum", parameterMap);
 		return result;
 	}
 
