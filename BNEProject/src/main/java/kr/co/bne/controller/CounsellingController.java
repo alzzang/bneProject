@@ -89,6 +89,8 @@ public class CounsellingController {
 
 	}
 	
+	
+	/* 매출목표관리 에서 department 에 맞는 사원 list를 뿌려주기 위한 method */
 	@RequestMapping(value="/manageSales", method={RequestMethod.GET})
 	public String manageSales(Model model, HttpServletResponse res, HttpServletRequest req){
 		
@@ -98,11 +100,12 @@ public class CounsellingController {
 		//여기서 department user list를 받아오기
 		List<EmployeeDTO> manageSales=counsellingRecordService.getManageSales(employeeDTO.getDepartment_id());
 		model.addAttribute("manageSales", manageSales);
-	
+		
 		
 		return "manageSales";
 	}
 	
+	/*  */
 	@RequestMapping(value="/manageSalesList",method={RequestMethod.POST})
 	public @ResponseBody List<CounsellingManageSalesDTO> getManageSalesList(@RequestParam("department_id") int id,@RequestParam("year") int year,@RequestParam("month") int month,HttpServletResponse res, HttpServletRequest req){
 	

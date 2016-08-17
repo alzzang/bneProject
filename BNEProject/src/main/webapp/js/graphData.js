@@ -64,7 +64,7 @@ var mainpageMorrisCharts = function() {
 				ykeys : [ 'a' ],
 				labels : [ 'monthly Sales' ],
 				barColors : [ '#33414E' ],
-				gridTextSize : 2,
+				
 				resize : true				
 				
 			});

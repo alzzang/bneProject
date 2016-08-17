@@ -194,11 +194,15 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Override
 	public void insertComment(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
-		
+		sqlSession.insert("kr.co.bne.mapper.DailyReport.insertComment",map);
 	}
 	@Override
 	public void deleteComment(String daily_report_id) {
+		
+		sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteComment",daily_report_id);
+		
 		// TODO Auto-generated method stub
+		
 		
 	}
 

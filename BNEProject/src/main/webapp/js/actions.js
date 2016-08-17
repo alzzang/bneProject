@@ -1,4 +1,4 @@
-$(document).ready(function(){        
+	$(document).ready(function(){        
     
     /* PROGGRESS START */
     $.mpb("show",{value: [0,50],speed: 5});        
