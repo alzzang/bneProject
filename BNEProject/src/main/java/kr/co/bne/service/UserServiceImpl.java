@@ -1,6 +1,7 @@
 package kr.co.bne.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,5 +52,31 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		employeeDAO.updateFile(id);
 	}
+	@Override
+	public EmployeeDTO selectEmployee(String employee_id) {
+		EmployeeDTO result = employeeDAO.selectEmployee(employee_id);
+		return result;
+	}
 
+	@Override
+	public List<EmployeeDTO> getTeamMember(String position,int departmentId) {
+		// TODO Auto-generated method stub
+		
+		if(position.equals("manager")){
+			return employeeDAO.selectTeamMember(departmentId);	
+		}
+		
+	return null;
+	}
+
+	@Override
+	public List<EmployeeDTO> getEmpSearch(String empSearch) {
+		
+		return employeeDAO.getEmpSearch(empSearch);
+	}
+	
+	@Override
+	public List<EmployeeDTO> selectTeamMember_menu(String employee_id) {
+		return employeeDAO.selectTeamMember_menu(employee_id);
+	}
 }

@@ -384,8 +384,10 @@ function insertComment(){
                       +'<a href="#" class="pull-right" onclick="deleteComment()">삭제</a><span class="pull-right">&nbsp;|&nbsp;</span>'+
                       '<a href="#" class="pull-right" onclick="modifyComment('+'\''+$('#managerComment').val()+'\''+')">수정</a></p>'+$('#managerComment').val()+'</div></div>' ;                   
 			$('#commentDiv').html(html);
+		},
+		error:function(){
+			alert("수정오류");
 		}
-
 	})
 }
 function modifyComment(val){

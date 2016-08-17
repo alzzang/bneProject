@@ -101,7 +101,7 @@ var morrisCharts = function() {
 		ykeys : [ 'a', 'b' ],
 		labels : [ 'Series A', 'Series B' ],
 		resize : true,
-		lineColors : [ '#1caf9a', '#FEA223' ]
+		lineColors : [ '#D80647', '#FEA223' ]
 	});
 
 	Morris.Bar({
@@ -153,7 +153,7 @@ var morrisCharts = function() {
 			label : "Mail-Order Sales",
 			value : 20
 		} ],
-		colors : [ '#95B75D', '#1caf9a', '#FEA223' ]
+		colors : [ '#95B75D', '#D80647', '#FEA223' ]
 	});
 
 }();

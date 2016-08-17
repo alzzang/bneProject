@@ -231,7 +231,7 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
                                 <option>Home</option>
                                 <option>Friends</option>
                                 <option>Closed</option>
-                            </select><!-- <div class="btn-group bootstrap-select form-control select"><button type="button" class="btn dropdown-toggle selectpicker btn-default" data-toggle="dropdown" title="All"><span class="filter-option pull-left">All</span>&nbsp;<span class="caret"></span></button><div class="dropdown-menu open"><ul class="dropdown-menu inner selectpicker" role="menu"><li rel="0" class="selected"><a tabindex="0" class="" style=""><span class="text">All</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="1"><a tabindex="0" class="" style=""><span class="text">Work</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="2"><a tabindex="0" class="" style=""><span class="text">Home</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="3"><a tabindex="0" class="" style=""><span class="text">Friends</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li><li rel="4"><a tabindex="0" class="" style=""><span class="text">Closed</span><i class="glyphicon glyphicon-ok icon-ok check-mark"></i></a></li></ul></div></div> -->
+                            </select>
                         </div>
                         
                     </div>                    

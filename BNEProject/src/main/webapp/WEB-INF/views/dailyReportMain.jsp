@@ -5,7 +5,7 @@
 <%@page import="kr.co.bne.dto.EmployeeDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
     
 
@@ -66,6 +66,11 @@ for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
 	}
 }
 
+String text=(String)request.getAttribute("search_text");
+
+/* 
+ */
+ //String search=(String) request.geta
 %>    
 
 <input type="hidden" value=<%=url %> id="url">
@@ -138,32 +143,61 @@ for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
                                         <input class="form-control datepicker" type="text" data-orientation="left" onchange="viewList('reg_date', this.value)" value=<%=currentReg_date %>>                                    
                                     </div>
                                 </div>
-                                
-                                <div class="pull-right" style="width: 600px;">
-                                	<div class="col-md-12">
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <span class="fa fa-search"></span>
-                                                    </div>
-                                                    <input type="text" class="form-control" placeholder="Who are you looking for?">
-                                                    <div class="input-group-btn">
-                                                        <button class="btn btn-primary">Search</button>
-                                                    </div>
-                                                </div>
-                                      </div>
-                                </div>                                                                                               
-                                
-                            </div>
+
+
+
+				<div class="pull-right" style="width: 600px;">
+					<div class="col-md-12">
+					<div class="input-group" style="display: inline-block;">
+								<select class="form-control" >
+								  <option>1</option>
+								  <option>2</option>
+								  <option>3</option>
+								  <option>4</option>
+								  <option>5</option>
+								</select>
+							</div>
+						<div class="input-group">
+							
+
+							<c:if test="${search_text eq null}">
+								<input type="text" class="form-control"
+									placeholder="Who are you looking for?" id="searchText">
+							</c:if>
+
+							<c:if test="${search_text ne null}">
+								<input type="text" class="form-control" id="searchText"
+									value=<%=text%>>
+							</c:if>
+
+							<div class="input-group-btn">
+								<button class="btn btn-primary"
+									onclick="viewList('search', undefined)">Search</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+			</div>
                             
                             
                             
                             
                             <div class="panel-body mail">
-                                <%for(DailyReportListElement report : dailyReportList) { %>
-                                	<%	String className = report.getApproval_flag() == 1 ? "mail-star" : "mail-star starred";	%>
+                                <%
+                                	for (DailyReportListElement report : dailyReportList) {
+                                %>
+                                	<%
+                                		String className = report.getApproval_flag() == 1 ? "mail-star" : "mail-star starred";
+                                	%>
                                 	<div class="mail-item mail-read mail-info">                                    
 	                                    <div class="<%=className%>">
-	                                    	<%className = report.getApproval_flag() == 1 ? "fa fa-check-circle-o" : "fa fa-circle-o";	%>
+	                                    	<%
+	                                    		className = report.getApproval_flag() == 1 ? "fa fa-check-circle-o" : "fa fa-circle-o";
+	                                    	%>
 	                                        <span class="<%=className%>"></span>
 	                                    </div>
 	                                    <div class="mail-user"><%=report.getEmployee_name() %></div>                                    

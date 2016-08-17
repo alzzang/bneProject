@@ -17,7 +17,7 @@ $(function(){
         max: 1.2,
         padding: { top: 0.1 },
         series: [{data: sin,color: '#33414E',name: "sin"}, 
-                 {data: sin2,color: '#1caf9a',name: "sin2"},
+                 {data: sin2,color: '#D80647',name: "sin2"},
                  {data: cos,color: '#B64645',name: "cos"}]
     });
 
@@ -51,7 +51,7 @@ $(function(){
             renderer: 'line',
             min: 50,
             series: [{color: "#33414E",data: seriesData[0],name: 'New York'}, 
-                     {color: "#1caf9a",data: seriesData[1],name: 'London'}, 
+                     {color: "#D80647",data: seriesData[1],name: 'London'}, 
                      {color: "#B64645",data: seriesData[2],name: 'Tokyo'}]
     });
 
@@ -83,7 +83,7 @@ $(function(){
                         color: '#33414E',
                         data: [{ x: 0, y: 50 }, { x: 1, y: 52 }, { x: 2, y: 36 }, { x: 3, y: 42 }, { x: 4, y: 36 }, { x: 5, y: 50 }]
                 },{
-                        color: '#1caf9a',
+                        color: '#D80647',
                         data: [{ x: 0, y: 48 }, { x: 1, y: 40 }, { x: 2, y: 45 }, { x: 3, y: 32 }, { x: 4, y: 33 }, { x: 5, y: 45 }]
                 },{
                         color: '#B64645',
@@ -120,7 +120,7 @@ $(function(){
                 renderer: 'area',
                 width: $("#charts-legend").width(),
                 series: [{color: "#33414E",data: seriesData[0],name: 'Total'}, 
-                         {color: "#1caf9a",data: seriesData[1],name: 'New'}, 
+                         {color: "#D80647",data: seriesData[1],name: 'New'}, 
                          {color: "#B64645",data: seriesData[2],name: 'Returned'}]
         } );
 

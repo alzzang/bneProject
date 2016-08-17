@@ -7,14 +7,31 @@
 <script src="/js/dailysettings.js"></script>
 
  <script>
-
 $(document).ready(function(){
+	checkForHash();
+	
 	var a = ${dailyReport.drsales};
 	var b = ${dailyReport.wpsales}
 	changeProgress(a,b);
+
+	
 });
+$("#link").bind("click", function(e) {
+    document.location.hash = "#" + currentPage;
+});
+function checkForHash() {
+	if(document.location.hash){
+	var HashLocationName = document.location.hash;
+	HashLocationName = HashLocationName.replace("#","");
+	$("#display").html(HashLocationName)
+	} else {
+	$("#display").html($("#btn1").val())
+	}
+	}
 
-
+	function showPage(value) {
+	$("#display").html(value)
+	}
 </script> 
 
 <div class="content-frame">
@@ -231,6 +248,7 @@ $(document).ready(function(){
 "${0 eq dailyReport.approval_flag && user.position eq 'manager'}"
 						 -->
 						 <div id="commentDiv">
+						 
 						 <c:choose>
 						 <c:when test="${dailyReport.manager_comment eq null && user.position eq 'employee'}">
 						 </c:when>

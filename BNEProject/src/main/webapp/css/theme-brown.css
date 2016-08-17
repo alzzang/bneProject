@@ -4284,9 +4284,6 @@ background: #1caf9a !important;
   background: #F9F9F9;
   cursor: pointer;
 }
-.task-nowconfirmed{
-	background: #ff8040;;
-}
 .tasks .task-item.task-complete {
   background: #FFF2C5;
 }

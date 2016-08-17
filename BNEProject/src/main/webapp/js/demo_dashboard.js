@@ -40,7 +40,7 @@ $(function(){
             // width: $("#dashboard-chart").width(),
             // height: 250,
             // series: [{color: "#33414E",data: seriesData[0],name: 'New'}, 
-                     // {color: "#1caf9a",data: seriesData[1],name: 'Returned'}]
+                     // {color: "#D80647",data: seriesData[1],name: 'Returned'}]
     // } );
 
     // rdc.render();
@@ -73,7 +73,7 @@ $(function(){
             {label: "New", value: 764},
             {label: "Registred", value: 311}
         ],
-        colors: ['#33414E', '#1caf9a', '#FEA223'],
+        colors: ['#33414E', '#D80647', '#FEA223'],
         resize: true
     });
     /* END Donut dashboard chart */
@@ -94,7 +94,7 @@ $(function(){
         xkey: 'y',
         ykeys: ['a', 'b'],
         labels: ['New Users', 'Returned'],
-        barColors: ['#33414E', '#1caf9a'],
+        barColors: ['#33414E', '#D80647'],
         gridTextSize: '10px',
         hideHover: true,
         resize: true,
@@ -121,7 +121,7 @@ $(function(){
       hideHover: true,
       xLabels: 'day',
       gridTextSize: '10px',
-      lineColors: ['#1caf9a','#33414E'],
+      lineColors: ['#D80647','#33414E'],
       gridLineColor: '#E5E5E5'
     });   
     /* EMD Line dashboard chart */
@@ -144,7 +144,7 @@ $(function(){
       hideHover: true,
       xLabels: 'day',
       gridTextSize: '10px',
-      lineColors: ['#1caf9a','#33414E'],
+      lineColors: ['#D80647','#33414E'],
       gridLineColor: '#E5E5E5'
     });
     /* End Moris Area Chart */
@@ -155,8 +155,8 @@ $(function(){
                                     regionsSelectable: true,
                                     regionStyle: {selected: {fill: '#B64645'},
                                                     initial: {fill: '#33414E'}},
-                                    markerStyle: {initial: {fill: '#1caf9a',
-                                                   stroke: '#1caf9a'}},
+                                    markerStyle: {initial: {fill: '#D80647',
+                                                   stroke: '#D80647'}},
                                     markers: [{latLng: [50.27, 30.31], name: 'Kyiv - 1'},                                              
                                               {latLng: [52.52, 13.40], name: 'Berlin - 2'},
                                               {latLng: [48.85, 2.35], name: 'Paris - 1'},                                            

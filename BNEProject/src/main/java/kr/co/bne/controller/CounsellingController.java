@@ -2,25 +2,31 @@ package kr.co.bne.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.bne.common.CounsellingManageSales;
+import kr.co.bne.common.CounsellingSalesGoal;
+import kr.co.bne.dto.CounsellingManageSalesDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
+import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.SecondaryClientDTO;
 import kr.co.bne.service.CounsellingRecordService;
 import kr.co.bne.service.SecondaryClientService;
@@ -63,7 +69,7 @@ public class CounsellingController {
 
 		List<SecondaryClientDTO> secondaryClient = secondaryClientService.getSecondaryClient(clientId);
 
-		System.out.println(secondaryClient);
+		
 		for (SecondaryClientDTO temp : secondaryClient) {
 			jobj = new JSONObject();
 			jobj.put("client_id", temp.getClient_id());
@@ -82,4 +88,40 @@ public class CounsellingController {
 		pw.close();
 
 	}
+	
+	@RequestMapping(value="/manageSales", method={RequestMethod.GET})
+	public String manageSales(Model model, HttpServletResponse res, HttpServletRequest req){
+		
+		HttpSession session = req.getSession();
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("user");
+		
+		//여기서 department user list를 받아오기
+		List<EmployeeDTO> manageSales=counsellingRecordService.getManageSales(employeeDTO.getDepartment_id());
+		model.addAttribute("manageSales", manageSales);
+	
+		
+		return "manageSales";
+	}
+	
+	@RequestMapping(value="/manageSalesList",method={RequestMethod.POST})
+	public @ResponseBody List<CounsellingManageSalesDTO> getManageSalesList(@RequestParam("department_id") int id,@RequestParam("year") int year,@RequestParam("month") int month,HttpServletResponse res, HttpServletRequest req){
+	
+		CounsellingManageSales cm = new CounsellingManageSales();
+		cm.setDepartment_id(id);
+		cm.setYear(year);
+		cm.setMonth(month);
+		
+		List<CounsellingManageSalesDTO> list =counsellingRecordService.getManageSalesList(cm);
+		
+		return list;
+	}
+	
+	@RequestMapping(value="/insertSalesGoal",method={RequestMethod.POST})
+	public void insertSalesGoal(HttpServletResponse res, HttpServletRequest req, @ModelAttribute("csg") CounsellingSalesGoal csg){
+	
+		counsellingRecordService.insertUpdateSalesGoal(csg);
+		
+	}
+	
+	
 }
