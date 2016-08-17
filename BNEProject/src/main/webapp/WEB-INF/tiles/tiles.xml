@@ -54,6 +54,22 @@
 	<definition name="weeklyWrite" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/weeklyWriteForm.jsp"/>
 	</definition>
+<<<<<<< HEAD
+=======
+	<definition name="weeklyDetail" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/weeklyDetail.jsp"/>
+	</definition>
+	
+	<definition name="weeklyList" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/weeklyList.jsp"/>
+	</definition>
+	
+	<definition name="weeklyModify" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/weeklyModifyForm.jsp"/>
+	</definition>
+	
+	<definition name="login" template="/WEB-INF/views/pages-login.jsp" />
+>>>>>>> refs/remotes/origin/udongi
 
 	<definition name="aaa" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/SmartEditor2.jsp"/>
