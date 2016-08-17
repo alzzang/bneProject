@@ -34,6 +34,7 @@ public class NoticeAspect {
    
    public NoticeAspect() {
       System.out.println("aspect 생성!!");
+      
    }
    
    

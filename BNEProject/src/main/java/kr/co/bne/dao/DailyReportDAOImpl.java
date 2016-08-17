@@ -206,5 +206,10 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		
 	}
 
+	@Override
+	public int selectDailyCount(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectDailyCount", map);
+	}
 
 }

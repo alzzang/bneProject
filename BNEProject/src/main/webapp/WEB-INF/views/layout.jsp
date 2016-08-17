@@ -124,14 +124,14 @@
 	<script type="text/javascript" src="/js/plugins.js"></script>
 	<script type="text/javascript" src="/js/actions.js"></script>
 	<script type="text/javascript" src="/js/weekly.js"></script>
-
+<script type='text/javascript' src='/js/notice_on_header.js'></script>
 	<script type="text/javascript" src="/js/usersettings.js"></script>
 	
     <script type='text/javascript' src='/js/plugins/noty/layouts/topCenter.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topLeft.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topRight.js'></script>            
     <script type='text/javascript' src='/js/plugins/noty/themes/default.js'></script> 
-    <script type='text/javascript' src='/js/notice_on_header.js'></script>
+    
     
     <script type='text/javascript' src='/assets/plugins/bootstrap-notify-master/bootstrap-notify.js'></script>
 	

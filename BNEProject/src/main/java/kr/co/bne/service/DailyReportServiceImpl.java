@@ -275,7 +275,10 @@ public class DailyReportServiceImpl implements DailyReportService {
 	      return result;
 	   }
 
+	@Override
+	public int confirmDuplicate(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyCount(map);
+	}
 
-
-	
 }

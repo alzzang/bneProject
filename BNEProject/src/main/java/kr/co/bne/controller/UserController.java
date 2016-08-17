@@ -164,8 +164,6 @@ public class UserController {
 
 				DailyReportEmployeeDTO employee= dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
 
-				
-			
 				session.setAttribute("employee", employee);
 				return "redirect:/main";
 			}
