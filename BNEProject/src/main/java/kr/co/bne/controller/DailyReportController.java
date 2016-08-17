@@ -126,9 +126,13 @@ public class DailyReportController {
                model.addAttribute("currentApproval_flag", "승인 목록");
             }
          }else if("search_text".equals(parameterName)) {
+        	
              serviceParams.put("search_text", request.getParameter(parameterName));
              model.addAttribute("search_text", (String)serviceParams.get("search_text"));
-          }
+          }else if("search_type".equals(parameterName)) {
+              serviceParams.put("search_type", request.getParameter("search_type"));
+              model.addAttribute("search_type", (String)serviceParams.get("search_type"));
+           }
       }
       System.out.println(serviceParams.toString());
       Gson gson = new Gson();
@@ -202,7 +206,7 @@ public class DailyReportController {
       model.addAttribute("employee_id", (String)serviceParams.get("employee_id"));
       
       
-      
+   
       Enumeration parameterNames = request.getParameterNames();
       
       while(parameterNames.hasMoreElements()) {
@@ -219,12 +223,19 @@ public class DailyReportController {
             }else if((Integer)serviceParams.get("approval_flag") == 1) {
                model.addAttribute("currentApproval_flag", "승인 목록");
             }
-         }
+         }else if("search_text".equals(parameterName)) {
+        	
+             serviceParams.put("search_text", request.getParameter(parameterName));
+             model.addAttribute("search_text", (String)serviceParams.get("search_text"));
+          }else if("search_type".equals(parameterName)) {
+              serviceParams.put("search_type", request.getParameter("search_type"));
+              model.addAttribute("search_type", (String)serviceParams.get("search_type"));
+           }
       }
       System.out.println(serviceParams.toString());
       Gson gson = new Gson();
       String serviceParamsStr = gson.toJson(serviceParams);
-      
+    
       
       dailyReportListMap = dailyReportService.selectDailyReportList("employee", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
       totalUnapprovalNum = dailyReportService.getgetTotalUnapprovalNum("member", employee_id);
@@ -240,71 +251,6 @@ public class DailyReportController {
    }
    
    
-/*   @RequestMapping(value="/main/all/{page}") 
-   public String goSearch_Manager(Model model, HttpServletRequest request, HttpSession session, @PathVariable("page") int page){
-      EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");      
-      
-      if(user == null) {
-         return "redirect:/user/login";
-      }
-      
-      HashMap<String, Object> dailyReportListMap = null;      
-      HashMap<String, Object> serviceParams = new HashMap<String, Object>();
-      int totalUnapprovalNum = 0;
-      List<DailyReportTeamListElement> memberList = null;
-      
-      //employee인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
-      if(!"manager".equals(user.getPosition())) {
-         return "redirect:/dailyReport/main/employee/" + user.getEmployee_id();
-      }
-      
-      Enumeration parameterNames = request.getParameterNames();
-            
-      while(parameterNames.hasMoreElements()) {
-         String parameterName = (String)parameterNames.nextElement();
-         
-         if("employee_id".equals(parameterName)) {
-            serviceParams.put("employee_id", request.getParameter(parameterName));
-            model.addAttribute("currentEmployee_id", (String)serviceParams.get("employee_id"));
-         }else if("reg_date".equals(parameterName)) {
-            serviceParams.put("reg_date", request.getParameter(parameterName));
-            model.addAttribute("currentReg_date", (String)serviceParams.get("reg_date"));
-         }else if("approval_flag".equals(parameterName)) {
-            serviceParams.put("approval_flag", Integer.parseInt(request.getParameter(parameterName)));
-            
-            if((Integer)serviceParams.get("approval_flag") == 0) {
-               model.addAttribute("currentApproval_flag", "미승인 목록");
-            }else if((Integer)serviceParams.get("approval_flag") == 1) {
-               model.addAttribute("currentApproval_flag", "승인 목록");
-            }
-         }
-      }
-      System.out.println(serviceParams.toString());
-      Gson gson = new Gson();
-      String serviceParamsStr = gson.toJson(serviceParams);
-      
-      
-      dailyReportListMap = dailyReportService.selectDailyReportList("manager", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
-      
-      
-      HashMap<String, Object> TeamMemeberMenuList = dailyReportService.selectTeamMemberList(user.getEmployee_id());
-      totalUnapprovalNum = (Integer) TeamMemeberMenuList.get("totalUnapprovalNum");
-      memberList = (List<DailyReportTeamListElement>) TeamMemeberMenuList.get("memberList");
-      
-      
-      model.addAttribute("dailyReportList", dailyReportListMap.get("dailyReportList"));
-      model.addAttribute("totalPageNum", dailyReportListMap.get("totalPageNum"));
-      model.addAttribute("totalUnapprovalNum", totalUnapprovalNum);
-      model.addAttribute("memberList", memberList);
-      model.addAttribute("serviceParamsStr", serviceParamsStr);
-      
-      model.addAttribute("currentPage", page);      
-      
-      
-      model.addAttribute("url", "/dailyReport/main/all");
-      
-      return "dailyReportMain";
-   }*/
    
 	@RequestMapping(value="/update" ,method = RequestMethod.POST)
 	public ModelAndView goUpdate(@RequestParam("daily_report_id")String id,HttpServletRequest req,HttpServletResponse res){
@@ -374,12 +320,22 @@ public class DailyReportController {
 		
 		HttpSession session=req.getSession();
 		EmployeeDTO user=(EmployeeDTO) session.getAttribute("user");
-		//if(user.getPosition().equals("manager")){
-			DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(dailyReport.getEmployee_id());
-			session.setAttribute("employee", employee);
-		
-			System.out.println("aaa");
-			
+		DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(dailyReport.getEmployee_id());
+		session.setAttribute("employee", employee);
+
+		 Enumeration parameterNames = req.getParameterNames();
+	      
+	      while(parameterNames.hasMoreElements()) {
+	         String parameterName = (String)parameterNames.nextElement();
+	         
+	         if("params".equals(parameterName)) {
+	            model.addObject("params", req.getParameter("params"));
+	         }else if("page".equals(parameterName)){
+	        	 model.addObject("page", req.getParameter("page"));
+	         }else if("url".equals(parameterName)){
+	        	 model.addObject("url", req.getParameter("url"));
+	         }
+	      }
 		return model;
 	}
 	@RequestMapping(value="/delete", method = RequestMethod.POST)
@@ -395,7 +351,7 @@ public class DailyReportController {
 	
 	@RequestMapping("/updateform")
 	public  ModelAndView  goUpdateForm(@ModelAttribute DailyReportDTO dailyReportDTO ,HttpServletRequest req,HttpServletResponse res){
-		ModelAndView model=new ModelAndView("dailyReport_Writeform");
+		ModelAndView model=new ModelAndView("redirectDetail");
 		JsonParser parser=new JsonParser();
 		JsonArray json=(JsonArray) parser.parse(req.getParameter("counsellingJSON"));
 		
@@ -405,7 +361,7 @@ public class DailyReportController {
 			list.add(dto);
 		}
 		dailyReportService.updateDailyReport(dailyReportDTO,list);
-		
+		model.addObject("dailyReportId", dailyReportDTO.getDaily_report_id());
 		return model;
 	}
 	
@@ -420,16 +376,35 @@ public class DailyReportController {
 		map.put("reg_date", reg_date);
 		map.put("employee_id", employee_id);
 		int daily_sales=0;
+
+		HashMap<String, Integer> salesMap=new HashMap<String, Integer>();
+		daily_sales=dailyReportService.confirmDuplicate(map);
+		Gson gson=new Gson();
+		if(daily_sales>=1){
+			salesMap.put("flag", -2);
+			salesMap.put("daily_report_id", daily_sales);
+			String salesParam=gson.toJson(salesMap);
+			PrintWriter pw = res.getWriter();
+			pw.print(salesParam);
+			pw.flush();
+			pw.close();
+			return;
+		}
 		try{
 			daily_sales=dailyReportService.searchDailySales(map);
+			salesMap.put("flag", 0);
+			salesMap.put("daily_sales", daily_sales);
+			String salesParam=gson.toJson(salesMap);
 			PrintWriter pw = res.getWriter();
-			pw.print(daily_sales);
+			pw.print(salesParam);
 			pw.flush();
 			pw.close();
 		}catch(Exception e){
-			daily_sales=-1;
+			salesMap.put("flag", -1);
+			salesMap.put("daily_sales", 0);
+			String salesParam=gson.toJson(salesMap);
 			PrintWriter pw = res.getWriter();
-			pw.print(daily_sales);
+			pw.print(salesParam);
 			pw.flush();
 			pw.close();
 		}

@@ -198,4 +198,11 @@ public class DailyReportServiceImpl implements DailyReportService {
 		dao.deleteReport(id);
 	}
 
+
+	@Override
+	public int confirmDuplicate(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyCount(map);
+	}
+
 }

@@ -1003,6 +1003,7 @@
 						break;
 					case 'td':
 						if (target.is('.day') && !target.is('.disabled')){
+							
 							day = parseInt(target.text(), 10)||1;
 							year = this.viewDate.getUTCFullYear();
 							month = this.viewDate.getUTCMonth();
@@ -1025,6 +1026,7 @@
 								}
 							}
 							this._setDate(UTCDate(year, month, day));
+							this.hide();
 						}
 						break;
 				}

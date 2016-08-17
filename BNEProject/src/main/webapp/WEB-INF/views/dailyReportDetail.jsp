@@ -8,32 +8,12 @@
 
  <script>
 $(document).ready(function(){
-	checkForHash();
-	
 	var a = ${dailyReport.drsales};
-	var b = ${dailyReport.wpsales}
+	var b = ${dailyReport.wpsales};
 	changeProgress(a,b);
-
-	
 });
-$("#link").bind("click", function(e) {
-    document.location.hash = "#" + currentPage;
-});
-function checkForHash() {
-	if(document.location.hash){
-	var HashLocationName = document.location.hash;
-	HashLocationName = HashLocationName.replace("#","");
-	$("#display").html(HashLocationName)
-	} else {
-	$("#display").html($("#btn1").val())
-	}
-	}
-
-	function showPage(value) {
-	$("#display").html(value)
-	}
 </script> 
-
+<script src="/js/dailyReportMain.js"></script>
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -86,8 +66,15 @@ function checkForHash() {
 
 	<!-- START CONTENT FRAME BODY -->
 	<div class="content-frame-body" style="height: 897px;">
-
-		<form class="form-horizontal">
+		<c:if test="${url ne null}">
+		<input type="hidden" value=${params } id="params">
+		<input type="hidden" value="${url }" id="url">
+		</c:if>
+		<c:if test="${url eq null}">
+		<input type="hidden" value="{}" id="params">
+		<input type="hidden" value="/dailyReport/main/employee/${sessionScope.employee.employee_id}" id="url">
+		</c:if>
+		<div class="form-horizontal" >
 			<div class="panel panel-default">
 				<div class="panel-heading ui-draggable-handle">
 					<div class="pull-left">
@@ -129,7 +116,20 @@ function checkForHash() {
 					
 					
 					</c:if>
+					<div class="pull-right">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+					<div class="pull-right">
+						<c:if test="${page eq null}">
+						<button class="btn btn-success pull-right" onclick="viewList('list',1)" >
+						</c:if>
+						<c:if test="${page ne null}">
+						<button class="btn btn-success pull-right" onclick="viewList('list',${page})" >
+						</c:if>
+					<span class="fa fa-check" ></span> 목록
+					</button>
 					
+					</div>
 					<%-- 
 	
 						 <div class="pull-right">
@@ -299,7 +299,7 @@ function checkForHash() {
 
 	
 
-		</form>
+		</div>
 		
 		<input type="hidden" value="${dailyReport.daily_report_id }" id="report_id">
 		<input type="hidden" value="${dailyReport.manager_name }" id="manager_name">

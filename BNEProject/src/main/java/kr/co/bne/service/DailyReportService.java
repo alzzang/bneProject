@@ -24,6 +24,7 @@ public interface DailyReportService {
 	public void writeDailyReport(DailyReportDTO dailyReportDTO, List<CounsellingRecordDTO> list);
 	public DailyReportDetailDTO viewReport(String id);
 	public int searchDailySales(HashMap<String, String> map);
+	public int confirmDuplicate(HashMap<String,String> map);
 	public EmployeeDTO searchImage(String employee_id);
 	public List<CounsellingDetailDTO> searchCounselRecord(String id);
 	public void approvalDailyReport(String daily_report_id);

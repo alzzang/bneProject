@@ -4,7 +4,7 @@
 <script type="text/javascript" src="/../js/HuskyEZCreator.js" charset="utf-8"></script>
 </head>
 <div class="form-group" >
-	<textarea name="content" id="ir1" rows="10" cols="100" style="width:700px; height:412px; display:none;"></textarea>
+	<textarea name="content" id="ir1" rows="10" cols="100" style="width:650px; height:412px; display:none;"></textarea>
 </div>
 <script type="text/javascript">
 var oEditors = [];

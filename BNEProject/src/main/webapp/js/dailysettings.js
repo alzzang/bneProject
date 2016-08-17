@@ -85,7 +85,29 @@ function detailDaily(id){
 	input_id.setAttribute("name", "dailyReportId");                        
 	input_id.setAttribute("value", id);                          
 	form.appendChild(input_id);
-	 
+	
+	//정의되어있지 않으면 아래항목들도 보내기
+	if(typeof $('#params').val() != "undefined")
+	{	
+		var input_param=document.createElement("input");
+		input_param.setAttribute("type","hidden");
+		input_param.setAttribute("name","params");
+		input_param.setAttribute("value",$('#params').val());
+		form.appendChild(input_param);
+		
+		var input_page=document.createElement("input");
+		input_page.setAttribute("type","hidden");
+		input_page.setAttribute("name","page");
+		input_page.setAttribute("value",$('#currentPage').val());
+		form.appendChild(input_page);
+		
+		var input_path=document.createElement("input");
+		input_path.setAttribute("type","hidden");
+		input_path.setAttribute("name","url");
+		input_path.setAttribute("value",$('#url').val());
+		form.appendChild(input_path); 
+	}
+	
 	//폼전송
 	form.submit();  
 }
@@ -344,7 +366,10 @@ function approvalDaily() {
     		},
     		success : function(data) {
     			$('#approvalDiv').remove();
-    			alert('승인되었습니다.');
+    			/*document.location.hash = "approval";*/
+    			alert('승인되었습니다.');    
+    			//location.reload();
+
     			/*event.preventDefault();*/
     		},
     		error : function(data)
@@ -379,11 +404,13 @@ function insertComment(){
 			comment : $('#managerComment').val()
 		},
 		success : function(data) {
-			var html='<div class="timeline-body comments">'+'<div class="comment-item">'+' <img src="/user/download/'+$('#manager_file_position').val()+'/">'+                               
+		/*	var html='<div class="timeline-body comments">'+'<div class="comment-item">'+' <img src="/user/download/'+$('#manager_file_position').val()+'/">'+                               
                      '<p class="comment-head">'+' <a href="#">'+$('#manager_name').val()+'</a>'
                       +'<a href="#" class="pull-right" onclick="deleteComment()">삭제</a><span class="pull-right">&nbsp;|&nbsp;</span>'+
                       '<a href="#" class="pull-right" onclick="modifyComment('+'\''+$('#managerComment').val()+'\''+')">수정</a></p>'+$('#managerComment').val()+'</div></div>' ;                   
-			$('#commentDiv').html(html);
+			$('#commentDiv').html(html);*/
+		   location.reload();
+
 		}
 
 	})
@@ -395,6 +422,8 @@ function modifyComment(val){
 		+'<span class="input-group-addon"><a href="#" onclick="insertComment()">'+
 		 '<span	class="fa fa-pencil"></span></a></span></div></div></div>';			
 	$('#commentDiv').html(html);
+    
+
 		
 
 }
@@ -407,11 +436,13 @@ function deleteComment(){
 			report_id: $('#report_id').val()
 		},
 		success : function(data) {
-			var html='<div class="form-group push-up-20"><div class="col-md-12"><div class="input-group">'+
+			/*var html='<div class="form-group push-up-20"><div class="col-md-12"><div class="input-group">'+
 				'<input class="form-control" placeholder="팀장 의견" id="managerComment">'
 				+'<span class="input-group-addon"><a href="#" onclick="insertComment()">'+
 				 '<span	class="fa fa-pencil"></span></a></span></div></div></div>';			
-			$('#commentDiv').html(html);
+			$('#commentDiv').html(html);*/
+		    location.reload();
+
 		}
 
 	})
@@ -424,19 +455,30 @@ function searchSalesGoal(reg_date) {
 	$.ajax({
 		type : "POST",
 		url : "/dailyReport/dailysales",
-		data : {
-		 
+		data : {		
 			reg_date : $('#reg_date').val()
 		},
 		success : function(data) {
-			var result=parseInt(data);
-			if(result==-1){
+			var result=jQuery.parseJSON(data);
+			alert(result.flag);
+			if(result.flag===-1){
 				alert('해당 목표액이 존재하지 않습니다');
 				$('#dailyGoal').attr('value',0);
 				$('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+0+')');
-			}else{
-				$('#dailyGoal').attr('value',result);
-				  $('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+result+')'); 
+			}else if(result.flag===-2){
+				var r = confirm('해당일에 일일업무가 등록되어있습니다. 이동하시겠습니까?');
+			    if (r == true) {
+			    	detailDaily(result.daily_report_id);
+			    } else {
+			    	alert('취소되었습니다.');
+			    	$('#reg_date').val('');
+			    }
+				
+			}
+			
+			else{
+				$('#dailyGoal').attr('value',result.daily_sales);
+				  $('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+result.daily_sales+')'); 
 			}
 
 		}

@@ -71,7 +71,7 @@ public class NoticeAspect {
    @AfterReturning("execution(public * kr.co.bne.dao.DailyReportDAO.*Comment(..))") //댓글 수정, 댓글 등록 모두다
    public void execInsertNotice_COMMENT(JoinPoint joinPoint) throws Throwable {
       System.out.println("comment aop 실행!!");
-      
+  
       HashMap<String, String> map = (HashMap<String, String>)joinPoint.getArgs()[0];
       int daily_report_id = Integer.parseInt(map.get("daily_report_id"));
       
