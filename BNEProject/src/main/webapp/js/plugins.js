@@ -528,10 +528,10 @@ $(function() {
                         center: 'title',
                         right: ''
                     },
-                    editable: true,
+                    editable: false,
                     eventSources: {url: "/assets/ajax_fullcalendar.php"},
                     droppable: true,
-                    selectable: true,
+                    selectable: false,
                     selectHelper: true,
                     weekends : false,
                     allDaySlot: false,

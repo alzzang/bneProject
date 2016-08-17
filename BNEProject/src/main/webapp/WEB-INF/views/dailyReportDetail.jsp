@@ -5,31 +5,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="/js/dailysettings.js"></script>
+
  <script>
-/* $( window ).load(function innerContent(){
-	var content='${dailyReport.content}';
-	$('#dailyReportContent').prepend(content);
-}); */
+
 $(document).ready(function(){
 	var a = ${dailyReport.drsales};
 	var b = ${dailyReport.wpsales}
-    aa(a,b);
+	changeProgress(a,b);
 });
 
-$('#drivingDistance').bind('load', function() {
-	alert('abc');
-	var result=${dailyReport.after_gauge}-${dailyReport.before_gauge};
-	$( "#drivingDistance" ).attr( "value", result );
-  });
-  $('#drivingDistance').trigger('load');
-/* function drivingDistance(){
-	
-	alert(result);
-	return result;
-} */
-/* var result=${dailyReport.after_gauge}-${dailyReport.before_gauge};
-alert(result);
-$( "#drivingDistance" ).attr( "value", result ); */
+
 </script> 
 
 <div class="content-frame">
@@ -60,15 +45,15 @@ $( "#drivingDistance" ).attr( "value", result ); */
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td>남부 지점</td>
+						<td>${sessionScope.employee.department_name}</td>
 					</tr>
 					<tr>
 						<th>성명</th>
-						<td>이태우</td>
+						<td>${sessionScope.employee.employee_name}</td>
 					</tr>
 					<tr>
 						<th>매출목표</th>
-						<td>100,000,000</td>
+						<td id="goalValue">${sessionScope.employee.sales_goal}</td>
 					</tr>
 				</thead>
 			</table>
@@ -76,6 +61,10 @@ $( "#drivingDistance" ).attr( "value", result ); */
 
 		</div>
 	</div>
+	
+	<script>
+	$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
+	</script>
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->
@@ -102,13 +91,26 @@ $( "#drivingDistance" ).attr( "value", result ); */
 					</div>
 					</c:if>
 					
-					<c:if test="${user.employee_id eq dailyReport.employee_id}">
-					<div class="pull-right" id="approvalDiv">
-						<button class="btn btn-success pull-right" onclick="approvalDaily()">
-					<span class="fa fa-check" ></span> 수정
-					
+					<c:if test="${user.employee_id eq dailyReport.employee_id &&dailyReport.approval_flag eq 0}">
+					<div class="pull-right">
+						<button class="btn btn-success pull-right" onclick="deleteDaily(${dailyReport.daily_report_id})" >
+					<span class="fa fa-check" ></span> 삭제
 					</button>
 					</div>
+					
+					<div class="pull-right">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+					
+					
+					<div class="pull-right">
+						<button class="btn btn-success pull-right" onclick="updateDaily(${dailyReport.daily_report_id})" >
+					<span class="fa fa-check" ></span> 수정
+					</button>
+					
+					</div>
+					
+					
 					</c:if>
 					
 					<%-- 
@@ -121,7 +123,7 @@ $( "#drivingDistance" ).attr( "value", result ); */
 					
 				</div>
 
-			<div>${user.employee_id} , ${dailyReport.employee_id}</div> 
+			<div></div> 
 				<div class="panel-body">
 					<div class="form-group">
 						<label class="col-md-3 col-xs-12 control-label">제목</label>
@@ -200,7 +202,7 @@ $( "#drivingDistance" ).attr( "value", result ); */
 							<div class="input-group">
 								<ul class="list-tags">
 								<c:forEach var="result" items="${counselList}">
-								<li><a href="#" ><span class="fa fa-tag"></span>${result.title }</a></li>
+								<li><a href="#" data-toggle="modal" data-target="#myModal3" onclick="tagDetail('${result.department_name}','${result.employee_name }','${result.reg_date}','${result.title}','${result.client_id}','${result.client_name}','${result.representative}','${result.sec_client_name}','${result.address}','${result.content}')"><span class="fa fa-tag"></span>${result.title }</a></li>
 								
 								</c:forEach>
  
@@ -228,6 +230,7 @@ $( "#drivingDistance" ).attr( "value", result ); */
 
 "${0 eq dailyReport.approval_flag && user.position eq 'manager'}"
 						 -->
+						 <div id="commentDiv">
 						 <c:choose>
 						 <c:when test="${dailyReport.manager_comment eq null && user.position eq 'employee'}">
 						 </c:when>
@@ -236,10 +239,9 @@ $( "#drivingDistance" ).attr( "value", result ); */
                                  <div class="comment-item">
                                           <img src="/user/download/${dailyReport.manager_file_position}/">
                                              <p class="comment-head">
-                                                  <a href="#">${dailyReport.manager_name}</a> <!-- <span class="text-muted">@bradpitt</span> -->
+                                                  <a href="#">${dailyReport.manager_name}</a>
                                              </p>
                                              ${dailyReport.manager_comment}
-                                               <!--  <small class="text-muted">10h ago</small> -->
                                  </div>                                            
                          </div>
 						 </c:when>
@@ -247,9 +249,9 @@ $( "#drivingDistance" ).attr( "value", result ); */
 						 <div class="form-group push-up-20">
 							<div class="col-md-12">
 								<div class="input-group">
-									<input class="form-control" placeholder="팀장 의견">
-									<span class="input-group-addon"><span
-										class="fa fa-pencil"></span></span>
+									<input class="form-control" placeholder="팀장 의견" id="managerComment">
+									<span class="input-group-addon"><a href="#" onclick="insertComment()"><span
+										class="fa fa-pencil"></span></a></span>
 								</div>
 							</div>
 						 </div>
@@ -259,7 +261,8 @@ $( "#drivingDistance" ).attr( "value", result ); */
                                  <div class="comment-item">
                                           <img src="/user/download/${dailyReport.manager_file_position}/">
                                              <p class="comment-head">
-                                                  <a href="#">${dailyReport.manager_name}</a> <!-- <span class="text-muted">@bradpitt</span> -->
+                                                  <a href="#">${dailyReport.manager_name}</a> <a href="#" class="pull-right" onclick="deleteComment()">삭제</a><span class="pull-right">&nbsp;|&nbsp;</span><a href="#" class="pull-right" onclick="modifyComment('${dailyReport.manager_comment}')">수정</a> 
+                                                  <!-- <span class="text-muted">@bradpitt</span> -->
                                              </p>
                                              ${dailyReport.manager_comment}
                                                <!--  <small class="text-muted">10h ago</small> -->
@@ -267,27 +270,8 @@ $( "#drivingDistance" ).attr( "value", result ); */
                          </div>
                          </c:when>
 						 </c:choose>
-					<%-- 	<%if(true) { %> <!-- 팀원일 때 -->
-						<div class="timeline-body comments">
-                                            <div class="comment-item">
-                                                <img src="/user/download/${dailyReport.manager_file_position}/">
-                                                <p class="comment-head">
-                                                    <a href="#">${dailyReport.manager_name}</a> <!-- <span class="text-muted">@bradpitt</span> -->
-                                                </p>
-                                                <p>Awesome, man, that is awesome...</p>
-                                                <small class="text-muted">10h ago</small>
-                                            </div>                                            
-                                        </div>
-						<%}else if(false) { %> <!-- 팀장일 때 -->
-						<div class="form-group push-up-20">
-							<div class="col-md-12">
-								<div class="input-group">
-									<input class="form-control" placeholder="팀장 의견">
-									<span class="input-group-addon"><span
-										class="fa fa-pencil"></span></span>
-								</div>
-							</div>
-						<%} %> --%>
+						 </div>
+						 
 						</div>
 						
 						
@@ -295,15 +279,94 @@ $( "#drivingDistance" ).attr( "value", result ); */
 				</div>
 
 
-			</div>
+	
 
 		</form>
-
+		
 		<input type="hidden" value="${dailyReport.daily_report_id }" id="report_id">
+		<input type="hidden" value="${dailyReport.manager_name }" id="manager_name">
+		<input type="hidden" value="${dailyReport.manager_file_position }" id="manager_file_position">
 	</div>
 
 </div>
 
 
 <!-- END CONTENT FRAME BODY -->
+<div id="myModal3"  class="modal fade" role="dialog">
+	<div class="modal-dialog modal-admin">
 
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+			
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"><span class="fa fa-arrow-circle-o-left"></span> 상담일지 작성</h4>
+				
+			</div>
+			<div class="modal-body">
+			<div class="page-title">
+	 <h2>
+		
+	</h2>  
+</div> 
+<!-- END PAGE TITLE -->
+
+<!-- PAGE CONTENT WRAPPER -->
+
+<div class="page-content-wrap">
+	<div class="row">
+		<div class="col-md-12">
+			
+<div class="panel-body">
+	<p>
+		<code>상담일지</code>
+	
+	</p>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>소속</th>
+				<td id="counsel_department"></td>
+				<th>성명</th>
+				<td id="counsel_empname"></td>
+				<th>작성일</th>
+				<td id="counsel_regdate"></td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td id="counsel_title"></td>
+			</tr>
+			<tr>
+				<th>고객코드</th>
+				<td id="counsel_code"></td>
+				<th>고객명</th>
+				<td id="counsel_departmentname"></td>
+				<th>대표자</th>
+				<td id="counsel_representative"></td>
+			</tr>
+			<tr>
+				<th>2차거래선</th>
+				<td id="counsel_sec_client"></td>
+				<th>주소</th>
+				<td id="counsel_address"></td>
+			</tr>
+			<tr>
+			<th class="col-md-1">상담내역</th>
+	<td colspan="5" ><div id="counsel_content"></div></td>
+	</tr>
+	
+		</thead>
+	</table>
+</div>
+		</div>
+	</div>
+</div>
+			</div>
+			<div class="modal-footer">
+
+			</div>
+		</div>
+
+	</div>
+	
+</div>

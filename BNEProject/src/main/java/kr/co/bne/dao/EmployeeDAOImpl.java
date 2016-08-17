@@ -1,6 +1,7 @@
 package kr.co.bne.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		sqlSession.update("kr.co.bne.mapper.Employee.defaultUpdateFile",id);
 		
 	}
+	@Override
+	public List<EmployeeDTO> selectTeamMember(int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.Employee.selectTeamMember",id);
+	}
+	@Override
+	public List<EmployeeDTO> getEmpSearch(String empSearch) {
+
+		return sqlSession.selectList("kr.co.bne.mapper.Employee.empSearch", empSearch);
+	}
+	
 
 }

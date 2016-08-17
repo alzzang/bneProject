@@ -1,23 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>네이버 :: Smart Editor 2 &#8482;</title>
-<script type="text/javascript" src="/../js/HuskyEZCreator.js" charset="utf-8"></script>
-</head>
-<body>
-<form action="sample.php" method="post">
-	<textarea name="ir1" id="ir1" rows="10" cols="100" style="width:766px; height:412px; display:none;"></textarea>
-	<!--textarea name="ir1" id="ir1" rows="10" cols="100" style="width:100%; height:412px; min-width:610px; display:none;"></textarea-->
-	<!-- <p>
-		<input type="button" onclick="pasteHTML();" value="본문에 내용 넣기" />
-		<input type="button" onclick="showHTML();" value="본문 내용 가져오기" />
-		<input type="button" onclick="submitContents(this);" value="서버로 내용 전송" />
-		<input type="button" onclick="setDefaultFont();" value="기본 폰트 지정하기 (궁서_24)" />
-	</p> -->
-</form>
-
-<script type="text/javascript">
+/**
+ * 
+ */
 var oEditors = [];
 
 // 추가 글꼴 목록
@@ -26,7 +9,7 @@ var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({
 	oAppRef: oEditors,
 	elPlaceHolder: "ir1",
-	sSkinURI: "SmartEditor2Skin.html",	
+	sSkinURI: "/smarteditor",	
 	htParams : {
 		bUseToolbar : true,				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
 		bUseVerticalResizer : true,		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
@@ -57,7 +40,10 @@ function submitContents(elClickedObj) {
 	oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
 	
 	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
-	
+	//alert('여기는 submitContents'+localStorage.getItem("tt"));
+	var jsonValue=localStorage.getItem("tt");
+	alert(jsonValue);
+	$('#counsellingJSON').val(jsonValue);
 	try {
 		elClickedObj.form.submit();
 	} catch(e) {}
@@ -68,7 +54,7 @@ function setDefaultFont() {
 	var nFontSize = 24;
 	oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
 }
-</script>
 
-</body>
-</html>
+function setUpdateContents(content){
+	oEditors.getById["ir1"].exec("UPDATE_CONTENTSS_FIELD", [content]);
+}

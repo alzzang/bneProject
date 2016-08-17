@@ -10,97 +10,13 @@
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="/js/dailysettings.js"></script>
+<!-- 111 -->
+
 <script>
-/* function comma(str) {
-    str = String(str);
-    alert(str);
-    document.getElementById('a').innerHTML = str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-} */
 
-
-
-/* $( "#dailyReportSubmit" ).click(function() {
-	  $( "#dailyform" ).submit();
-}); */
 var jsonArray=new Array();
-/* function test1(){
-	str++;
-	alert(str);
-	
-} */
-$.fn.serializeObject = function()
-{
-   var o = {};
-/*    var a = this.serializeArray(); */
-   $.each(a, function() {
-       if (o[this.name]) {
-           if (!o[this.name].push) {
-               o[this.name] = [o[this.name]];
-           }
-          o[this.name].push(this.value || '');
-       } else {
-           o[this.name] = this.value || '';
-       }
-   });
-   return o;
-};
+var removeId=0;
 
-function testJSON1(){
-	/* alert(this); */
-	  var o = {};
-	   var a = $( "#dailyform" ).serializeArray();
-	   $.each(a, function() {
-		     if (o[this.name]) {
-	           if (!o[this.name].push) {
-	               o[this.name] = [o[this.name]];
-	           }
-	          o[this.name].push(this.value || '');
-	       } else {
-	           o[this.name] = this.value || '';
-	       } 
-		  /*  alert(JSON.stringify(o)); */
-	   });
-	   jsonArray.push(o);
-	   /* alert('배열'+JSON.stringify(jsonArray));
-	    */
-	    var t=JSON.stringify(jsonArray);
-	   localStorage.setItem("tt", t);
-	   alert(localStorage.getItem("tt"));
-	  /*  var t=JSON.stringify(a); */
-	/*    $.ajax({
-			type : "POST",
-			url : "/dailyReport/jsontest",
-			data : {
-			 
-				dd : t
-			},
-			success : function(data) {
-				alert(data);
-				
-				
-			} */
-			/* error : function(){
-				alert('실패했습니다.');
-			} */
-	//	})
-	  /*  alert(t);
-	   $.each(a, function() {
-	       if (o[$( this).name]) {
-	           if (!o[$( this ).name].push) {
-	               o[$( this ).name] = [o[$( this).name]];
-	           }
-	          o[$( this ).name].push($( this ).value || '');
-	       } else {
-	           o[$( this ).name] = $( this ).value || '';
-	       }
-	   });
-	   alert(JSON.stringify(o));
-	   return o; */
-}
-
-
- 
 </script>
 
 <div class="content-frame">
@@ -131,22 +47,26 @@ function testJSON1(){
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td>${employee.department_name}</td>
+						<td>${sessionScope.employee.department_name}</td>
 					</tr>
 					<tr>
 						<th>성명</th>
-						<td>${employee.employee_name}</td>
+						<td>${sessionScope.employee.employee_name}</td>
 					</tr>
 					<tr>
 						<th>매출목표</th>
-						<td>${employee.sales_goal}</td>
+						<td id="goalValue">${sessionScope.employee.sales_goal}</td>
 					</tr>
 				</thead>
 			</table>
 
-
 		</div>
 	</div>
+	
+	<script>
+	$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
+	</script>
+	
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->
@@ -157,13 +77,12 @@ function testJSON1(){
 			<div class="col-md-12">
 
 				<form class="form-horizontal" action="/dailyReport/writeform"
-					id="dailyform" >
+					id="dailyform" method="post">
 					<div class="panel panel-default">
 						<div class="panel-heading ui-draggable-handle">
 							<h3 class="panel-title">일일 업무 보고 작성</h3>
 							<ul class="panel-controls">
-								<li><a href="#" class="panel-remove"><span
-										class="fa fa-times"></span></a></li>
+								<li></li>
 							</ul>
 						</div>
 						<div class="panel-body">
@@ -202,7 +121,7 @@ function testJSON1(){
 										<span class="input-group-addon" style="padding-bottom: 10px;"><span
 											class="fa fa-won"></span></span> <input type="text"
 											class="form-control"
-											id="aaaa" 
+											id="inputSales" 
 											name="sales"  pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" required="required">
 										<span class="progress"> <span
 											class="progress-bar progress-bar-danger" role="progressbar"
@@ -256,35 +175,16 @@ function testJSON1(){
 										<span class="input-group-addon" style="cursor: pointer;"><span
 											class="fa fa-plus"></span></span> -->
 										<ul class="list-tags">
-
-											<%
-												
-											%>
-											<li><a href="#"><span class="fa fa-tag"></span> amet</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													rutrum</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span> nunc</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													tempor</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span> eros</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													suspendisse</a></li>
-											<li><a href="#"><span class="fa fa-tag"></span>
-													dolor</a></li>
-											<%
-												
-											%>
-
-											<li><a href="#" data-toggle="modal" data-target="#myModal2"><span class="fa fa-plus"></span>추가</a></li>
+											<li><a href="#" data-toggle="modal" data-target="#myModal2" id="modalAdd"><span class="fa fa-plus"></span>추가</a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
+
 							<jsp:include page="SmartEditor2.jsp"></jsp:include>
-							<%-- <jsp:include page="../../SmartEditor2.jsp"></jsp:include> --%>
-							<div class="panel-footer">
-								<button class="btn btn-primary pull-right"
-									id="dailyReportSubmit" onclick="submitContents()">Submit</button>
+							<div class="panel-footer" >
+								 <button class="btn btn-primary pull-right"
+									id="dailyReportSubmit" onclick="submitContents()">Submit</button> 
 							</div>
 
 						</div>
@@ -304,6 +204,8 @@ function testJSON1(){
 	<!-- END CONTENT FRAME BODY -->
 
 </div>
+
+
 <div id="myModal2"  class="modal fade" role="dialog">
 	<div class="modal-dialog modal-admin">
 
@@ -328,31 +230,16 @@ function testJSON1(){
 <div class="page-content-wrap">
 	<div class="row">
 		<div class="col-md-12">
-			<form action="#" method="POST" class="form-horizontal" >
+			<form action="#" onsubmit="event.preventDefault();" method="POST" class="form-horizontal" id="dailyModalForm">
 				<div class="panel panel-default">
-					<div class="panel-body">
-						<!-- <div class="form-group">
-							<label class="col-md-3 col-xs-12 control-label">제목</label>
-							<div class="col-md-6 col-xs-12">
-								<div class="input-group">
-									<span class="input-group-addon"><span
-										class="fa fa-pencil"></span></span> <input type="text"
-										class="form-control" name="title">
-								</div>
-								<span class="help-block">This is sample of text field</span>
-							</div>
-						</div> -->
-						
-						
-						
-						
+					<div class="panel-body">										
 						<div class="form-group">
 							<label class="col-md-2 col-xs-12 control-label">제목</label>
 							<div class="col-md-8 col-xs-12">
 								<div class="input-group">
 									<span class="input-group-addon"><span
 										class="fa fa-pencil"></span></span> 
-										<input type="text" class="form-control" name="title">
+										<input type="text" class="form-control" name="title" id="modalTitle">
 								</div>
 								<span class="help-block">This is text field</span>
 							</div>
@@ -363,29 +250,28 @@ function testJSON1(){
 								Field</label>
 							<div class="col-md-8 col-xs-12">
 								<textarea class="form-control summernote" name="content"
-									rows="5"></textarea>
+									rows="5" id="modalContent"></textarea>
 
 								<span class="help-block">This is text field</span>
 							</div>
 						</div>
 
-
-
 						<div class="form-group">
 							<label class="col-md-2 col-xs-12 control-label">고객명</label> <span
 								class="col-md-4 col-xs-12"> <select class="form-control"
-								name="counsel_id" id="counsel_id" required>
+								name="counselling_id" id="counselling_id" required>
 									<option value="" disabled selected hidden="true">선택하세요!</option>
-									<option value="1">동작대리점</option>
-									<option value="2">검암대리점</option>
+									<c:forEach var="client" items="${clients}" >
+										<option value="${client.client_id }">${client.client_name}</option>
+									</c:forEach>
 							</select> <span class="help-block">Select box </span>
 							</span> 
 							<span class="col-md-2 col-xs-12"> 
-							<input type="text" class="form-control" placeholder="고객코드" readonly id="client_id">
+							<input type="text" class="form-control" placeholder="고객코드" readonly id="client_id" name="client_id">
 							</span>
 							 
 							 <span class="col-md-2 col-xs-12"> 
-							 <input type="text" class="form-control" placeholder="대표자" readonly id="representative">
+							 <input type="text" class="form-control" placeholder="대표자" readonly id="representative" name="representative">
 							</span>
 
 						</div>
@@ -399,18 +285,19 @@ function testJSON1(){
 							</span>
 							<span class="col-md-3 col-xs-12"> <input type="text"
 								class="form-control" placeholder="주소" readonly
-								id="address">
+								id="address" name="address">
 							</span>
 						
 						</div>
 					</div>
 
-					<div class="panel-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary pull-right">Submit</button>
+					<div class="panel-footer" id="counselling-footer">
+					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="localSave()">Submit</button>
 					</div> 
 				</div>
-				</form>
+				<input type="hidden" value="${sessionScope.user.department_id }" name="department_id">
+				<input type="hidden" value="" id="temp_scId">
+			</form>
 			
 			
 		</div>
@@ -418,8 +305,6 @@ function testJSON1(){
 </div>
 			</div>
 			<div class="modal-footer">
-				<!-- 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary pull-right">Submit</button>	 -->
 			</div>
 		</div>
 
@@ -427,75 +312,3 @@ function testJSON1(){
 	
 </div>
 
-
-
-<script type="text/javascript">
-
-//function aa(money,goal){
-	
-	/* var achievementRate=money/goal*100;
-	achievementRate=Math.round(achievementRate);
-	achievementRate=achievementRate/100;
-	
-	 *//*achievementRate=Math.round10(achievementRate,-3); */
-	
-	/* if(achievementRate>100){
-		achievementRate=100;
-	}
-	
-	if(achievementRate == 0) {
-		var rate=achievementRate.toString()+'%';
-		$("#progressCondition").html(rate);
-		$("#progressCondition").css('width',0.1);
-	}
-	else{
-		var rate=achievementRate.toString()+'%';
-		$("#progressCondition").html(rate);
-		  $("#progressCondition").css('width',rate);
-	} */
-	
-	
-//}
-
-
-
-
-function computeGuage(){
-	  var before=$('#before_gauge').val();
-	  var after=$('#after_gauge').val();
-	  var result=after-before;
-	  $('#result_guage').val(result);
-}
-
-
-function searchSalesGoal(reg_date) {
-
-	$.ajax({
-		type : "POST",
-		url : "/dailyReport/dailysales",
-		data : {
-		 
-			reg_date : $('#reg_date').val()
-		},
-		success : function(data) {
-			var result=parseInt(data);
-			if(result==-1){
-				alert('해당 목표액이 존재하지 않습니다');
-				$('#dailyGoal').attr('value',0);
-				$('#aaaa').attr('onKeyUp', 'aa(this.value,'+0+')');
-				/* $( '#dailyGoal' ).removeData() */;
-			}else{
-				$('#dailyGoal').attr('value',result);
-				  $('#aaaa').attr('onKeyUp', 'aa(this.value,'+result+')'); 
-			}
-			
-			/* $('#aaaa').attr('onKeyUp', 'alert("aa")'); */
-		}
-		/* error : function(){
-			alert('실패했습니다.');
-		} */
-	})
-}
-
-
-</script>

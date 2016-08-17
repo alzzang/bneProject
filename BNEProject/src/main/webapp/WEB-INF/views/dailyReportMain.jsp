@@ -91,7 +91,7 @@ for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
                         
                         <%if(!managerFlag) {%>
                         <div class="block">
-                            <a href="pages-mailbox-compose.html" class="btn btn-danger btn-block btn-lg"><span class="fa fa-edit"></span> COMPOSE</a>
+                            <a href="/dailyReport/write" class="btn btn-danger btn-block btn-lg"><span class="fa fa-edit"></span> COMPOSE</a>
                         </div>
                         <%}else { %>
                         
@@ -167,7 +167,7 @@ for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
 	                                        <span class="<%=className%>"></span>
 	                                    </div>
 	                                    <div class="mail-user"><%=report.getEmployee_name() %></div>                                    
-	                                    <a href="/dailyReport/detail" class="mail-text"><%=report.getTitle() %></a>                                    
+	                                    <a onclick="detailDaily('<%=report.getIdx()%>')"class="mail-text"><%=report.getTitle() %></a>                                    
 	                                    <div class="mail-date"><%=report.getReg_date() %></div>
                                 	</div>
                                 

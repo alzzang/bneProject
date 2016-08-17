@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
@@ -14,17 +13,35 @@
 	border:0px solid black;
 	text-align: center;
 }
-</style>
-<script type="text/javascript">
-window.onload = function(){
+.fc-time-grid .fc-slats td {
+    height: 2.8em;
+}
 
-	
-	$('bbbb').on('click',function(){
-		var s = $(".salesInput");
-	});
-	
-};
-</script>
+.detailInfoTable th{
+	text-align: left;
+	width: 100px;
+}
+#mb-alreadyWrittenReport .mb-container{
+	width: 440px;
+	left:50%;
+}
+#mb-alreadyWrittenReport .mb-container .mb-middle {
+    width: 400px;
+    left:0%;
+    position: relative;
+    color: #FFF;
+}
+#mb-SavePlan .mb-container{
+	width: 440px;
+	left:50%;
+}
+#mb-SavePlan .mb-container .mb-middle {
+    width: 400px;
+    left:0%;
+    position: relative;
+    color: #FFF;
+}
+</style>
 
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -42,29 +59,30 @@ window.onload = function(){
 
 	<!-- START CONTENT FRAME LEFT --> 
 	<div class="content-frame-left" style="height: 1054px;">
-	
-		<div class="panel-body">
+	 <div class="panel panel-default" >
+		<div class="panel-heading">
 			<div class="page-title">
-				<h5>개인 정보</h5>
-			</div>
-			부서 ID : <input type="text" name="department_id" value="${user.department_id}" disabled><br>
-			로그인 ID : <input type="text" name="employee_id" value="${user.employee_id}" disabled>
-			
-			<table class="table">
+				<h3 class="panel-title">개인 정보</h3>
+			</div>	
+		</div>	
+			<input type="hidden" name="department_id" value="${user.department_id}" disabled><br>
+			<input type="hidden" name="employee_Id" value="${employee_Id}"disabled>
+			<div class="panel-body">
+			<table class="table table-bordered detailInfoTable">
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td><input type="text" value="${user.department_name}" disabled></td>
+						<td><span id="department_name">${user.department_name}</span></td>
 					</tr>
 
 					<tr>
 						<th>이름</th>
-						<td><input type="text" value="${user.employee_name}" disabled></td>
+						<td><span id="employee_name">${user.employee_name}</span></td>
 					</tr>
 
 					<tr>
 						<th>작성일</th>
-						<td>${currentDate}</td>
+						<td><span id="reg_date">${currentDate}</span></td>
 					</tr>
 					<tr>
 						<th>제목</th>
@@ -72,23 +90,30 @@ window.onload = function(){
 					</tr>
 				</thead>
 			</table>
-			<div class="page-title">
-				<h5>매출 현황</h5>
-			</div>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>목표</th>
-						<td><input type="text" name="salesGoal" value="${salesGoal}" disabled></td>
-					</tr>
-					<tr>
-						<th>매출액</th>
-						<td><input type="text" name="sales" value="${monthlySales}" disabled></td>
-					</tr>
-				</thead>
-			</table>
-
+	      </div>
 		</div>
+	     <!-- START DONUT CHART -->
+	     <div class="panel panel-default" >
+	         <div class="panel-heading">
+	             <h3 class="panel-title">매출 현황</h3>                          
+	         </div>
+	         <div class="panel-body">
+					<table class="table table-bordered detailInfoTable">
+						<thead>
+							<tr>
+								<th>매출목표 </th>
+								<td><span id="sales_goal">${salesGoal}</span>원</td>
+							</tr>
+		 					<tr>
+								<th>매출액</th>
+								<td><span id="sales">${monthlySales}</span>원</td>
+							</tr>
+						</thead>
+					</table>
+					<hr>
+	         </div>
+	     </div>
+	     <!-- END DONUT CHART -->      
 	</div>
 	<!-- END CONTENT FRAME LEFT -->
 
@@ -98,53 +123,104 @@ window.onload = function(){
 		<div class="row">
 			<div class="col-md-12">
 				<div id="alert_holder"></div>
-				<div class="calendar">
+				<div id="calandarDetail" class="calendar">
 					<div id="calendar" class="fc fc-ltr fc-unthemed">
+					</div>
+				</div>
+				<div id="buttonGroup">
+					<button id ="cancle" type="submit" class="btn btn-danger pull-right"  style="margin-left:1%; margin-top:1%">취소</button>
+					<button id ="savePlan" type="button" class="btn btn-success pull-right mb-control"style="margin-left:1%; margin-top:1%">저장</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END CONTENT FRAME BODY -->
+
+	<!-- MESSAGE BOX-->
+	<div class="message-box animated fadeIn" data-sound="alert"	id="mb-SavePlan">
+		<div class="mb-container">
+			<div class="mb-middle">
+				
+				<div class="mb-title">
+					<span class="fa fa-exclamation"></span><strong>계획을 저장하시겠습니다.</strong>
+				</div>
+				
+				<div class="mb-content">
+					<p></p>
+					<p>확인시 계획확인 화면으로 이동합니다</p>
+				</div>
+				
+				<div class="mb-footer">
+					<div class="pull-right">
+						<a id = "confirm"  class="btn btn-success btn-lg">확인</a>
+						<button class="btn btn-default btn-lg mb-control-close">취소</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	<button id='aaaa'> aa</button>
-	<button id='bbbb'> bb</button>
 	</div>
-	<!-- END CONTENT FRAME BODY -->
+	<!-- END MESSAGE BOX-->
+
+
+	<!-- MESSAGE BOX-->
+	<div class="message-box animated fadeIn" data-sound="alert"	id="mb-alreadyWrittenReport">
+		<div class="mb-container">
+			<div class="mb-middle">
+				
+				<div class="mb-title">
+					<span class="fa fa-exclamation"></span><strong>작성된 계획이 존재합니다.</strong>
+				
+				</div>
+				
+				<div class="mb-content">
+					<p>계획을 보시겠습니까?</p>
+					<p>취소시 전에 있던 페이지로 이동합니다.</p>
+				</div>
+				
+				<div class="mb-footer">
+					<div class="pull-right">
+						<a href="/weeklyReport/detail/${employee_Id}" class="btn btn-success btn-lg">확인</a>
+						<a href= "${beforeUrl}" class="btn btn-default btn-lg">취소</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MESSAGE BOX-->
+
 
 </div>
 
 
 <script>
 window.onload = function(){
+	$('#calendar').fullCalendar('getView').calendar.options.editable = true;
+	$('#calendar').fullCalendar('getView').calendar.options.selectable = true;
+	
 	$('#calendar').fullCalendar('next');
-	
-	var tbodyTag
-	= 	'<tr>' + 
-			'<td class="fc-axis">매출</td>' +
-			'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
-		'</tr>';
-		
-	$('#weeklyTableHeader>tbody').html(tbodyTag);
-	
-	var s = $('#weeklyTableHeader>thead>tr>th');
-	for(var i=2; i<7; i++){
-		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
-	} 
-	var date = $('#calendar').fullCalendar('getDate');
+
+	var result = ${result};	
+	if(result == false)
+		openMessageBox('#mb-alreadyWrittenReport');
 	
 	
-$('#aaaa').on('click',function(){
+	makeSalesInput();	
+	var date = $('#calendar').fullCalendar('getDate');	
+	
+	$('#savePlan').on('click',function(){
+		openMessageBox('#mb-SavePlan');
+	});
+
+$('#confirm').on('click',function(){
 	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
 	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
 	
 	var date = $('#calendar').fullCalendar('getDate');
 	var year = date._d.getFullYear();
 	
-	
-	
 	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
+	
+	
 	var report_title = $('#weeklyReportId')[0].value;
 	if(report_title == ""){
 		report_title = weeklyNumber+"주의 계획";
@@ -188,8 +264,8 @@ $('#aaaa').on('click',function(){
 	for(var i = 0; i<s.length; i++){
 		var plan;
 		
-		var title = s[i].title;
-		
+		var title = s[i].title;//.replace(/\'/g,"'");
+		 
 		var startTimeOrigin = s[i].start.format().split('T');
 		var startTime = startTimeOrigin[0]+" "+startTimeOrigin[1];
 		var endTimeOrigin = s[i].end.format().split('T');
@@ -206,7 +282,6 @@ $('#aaaa').on('click',function(){
 	var jPlan = JSON.stringify(allPlan);
 	var jPlan2 = JSON.stringify(weeklyReport);
 	var jPlan3 = JSON.stringify(sales);
-	$('.fc-row .fc-widget-header');
 	
 	$.ajax({
 		type : "POST",
@@ -216,16 +291,29 @@ $('#aaaa').on('click',function(){
 			report : jPlan2,
 			weeklyPlan : jPlan
 		},
-
 		success : function(){
-			//alert("성공~");
+			alert("성송");
+			window.location.href="/weeklyReport/detail/"+employee_id;
 		},
 		error : function(){
-			alert("실패~");
+			alert("실패");
 		}
 	})
-	
 });
+
+$('#sales-mon ,#sales-tue,#sales-wed,#sales-thu,#sales-fri').keydown(function(e){
+	var range = this.selectionStart;
+	if(range == 0 && e.keyCode==48 || e.keyCode==96)
+		e.preventDefault();
+	
+    if (e.keyCode!=37&&e.keyCode!=38&&e.keyCode!=39&&e.keyCode!=40&&e.keyCode!=9&&e.keyCode!=8&&(e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+    }
+});
+
+
 }
 
 </script>
+
+<script type="text/javascript" src="/js/weekly.js"></script>

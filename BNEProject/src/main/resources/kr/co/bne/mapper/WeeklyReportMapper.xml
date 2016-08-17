@@ -50,7 +50,7 @@
 	
 	<select id="selectAllReportId" parameterType ="String" resultType = "String">
 	<![CDATA[
-		SELECT WEEKLY_REPORT_ID FROM WEEKLY_REPORT WHERE EMPLOYEE_ID = #{value} ORDER BY REG_DATE
+		SELECT WEEKLY_REPORT_ID FROM WEEKLY_REPORT WHERE EMPLOYEE_ID = #{value} ORDER BY 1 asc
 	]]>
 	</select>
 	

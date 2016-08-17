@@ -1571,7 +1571,7 @@ pre code {
 }
 
 .pre-scrollable {
-    max-height: 340px;
+    height: 640px;
     overflow-y: scroll
 }
 
@@ -5138,7 +5138,7 @@ a.thumbnail:hover,a.thumbnail:focus,a.thumbnail.active {
     height: 100%;
     font-size: 12px;
     line-height: 20px;
-    color: #fff;
+    color: #22262e;
     text-align: center;
     background-color: #428bca;
     -webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);

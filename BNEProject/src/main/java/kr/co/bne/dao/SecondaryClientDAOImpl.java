@@ -17,7 +17,6 @@ public class SecondaryClientDAOImpl implements SecondaryClientDAO {
 	@Override
 	public List<SecondaryClientDTO> selectSecondaryClient(int clientId) {
 		// TODO Auto-generated method stub
-
 		return sqlSession.selectList("kr.co.bne.mapper.SecondaryClient.selectSecondClient", clientId);
 	}
 
