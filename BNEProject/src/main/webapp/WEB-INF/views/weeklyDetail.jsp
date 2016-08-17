@@ -200,8 +200,6 @@
 		var lastDayWeek = $('#calendar').fullCalendar('getView').end;
 		lastDayWeek._d.setDate(lastDayWeek._d.getDate() +1)
 		var getDate = lastDayWeek._d.getDate();
-		console.log(lastDayWeek);
-		console.log(now);
 		//console.log(now<lastDayWeek);
 /* 		lastDayWeek._d.setDate(lastDayWeek._d.getDate() +1);
 		lastDayWeek._d.setHours(24); */
@@ -281,7 +279,7 @@
 	            			formatted: lack_rate + '%'
 	            		}
 	            	],
-	       colors: ['#83ACEC', '#F9A61A'],
+	        colors: ['#95B75D', '#1caf9a'],
 	        formatter: function(x, data){
 	        	return data.formatted;	
 	        },
@@ -297,14 +295,32 @@
 	window.onload = function() {
 		var isModifyButton = true;
 
+		
 		// 처음에 받아온 주간계획 정보 삽입 
-		var reportData = JSON.parse('${weeklyReportDetail}') ;
-		inputReportData(reportData);
+		if('${weeklyReportDetail}'!=''){
+			var reportData = JSON.parse('${weeklyReportDetail}') 
+			inputReportData(reportData);
+		}else{
+			var day = ['mon','tue','wed','thu','fri'];
+			makeSalesInput();
+			for(var i=0; i<5; i++){
+				$('input[id="sales-'+day[i]+'"]').attr({'value': '', 'disabled':'disabled'});
+			}
+			var box = $('#mb-NoWeeklyPlan');
+			if(box.length>0){
+				box.toggleClass("open");
+
+                var sound = box.data("sound");
+
+                if (sound === 'alert')
+                   playAudio('alert');
+
+                if (sound === 'fail')
+                   playAudio('fail');
+			}
+		}
 		
 		// 이 주간계획서의 작성자 ID
-		var employee_id = reportData.weeklyReportDTO.employee_id;
-		var weekly_report_id = reportData.weeklyReportDTO.weekly_report_id;
-		
 		$('#calendar').fullCalendar('getView').calendar.options.editable = false;
 		$('#calendar').fullCalendar('getView').calendar.options.selectable = false;
 		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
@@ -399,9 +415,9 @@
 				}
 			})
 		});
-
-		var reportData = JSON.parse('${weeklyReportDetail}');
-		inputReportData(reportData);
+		
+/* 		var reportData = JSON.parse('${weeklyReportDetail}');
+		inputReportData(reportData); */
 
 	}
 </script>

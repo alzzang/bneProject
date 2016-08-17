@@ -9,7 +9,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
 
 <!-- END META SECTION -->
@@ -136,8 +135,6 @@
     <script type='text/javascript' src='/js/notice_on_header.js'></script>
     
     <script type='text/javascript' src='/assets/plugins/bootstrap-notify-master/bootstrap-notify.js'></script>
-	<script type="text/javascript" src="/js/dailysettings.js"></script>
-	     <script type="text/javascript" src="/js/plugins/datatables/jquery.dataTables.min.js"></script>    
 	
 	
 	
