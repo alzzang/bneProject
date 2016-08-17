@@ -2,11 +2,14 @@ package kr.co.bne.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.bne.common.DailyReportListElement;
+import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
 import kr.co.bne.dto.DailyReportChart2DTO;
@@ -14,10 +17,6 @@ import kr.co.bne.dto.DailyReportChartDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
-
-import kr.co.bne.common.DailyReportListElement;
-import kr.co.bne.common.DailyReportTeamListElement;
-import oracle.net.aso.s;
 
 @Repository
 public class DailyReportDAOImpl implements DailyReportDAO {
@@ -201,6 +200,19 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public int checkDailyReport(String date,String employeeId) {
+		Map<String,String> parameterMap = new HashMap();
+		System.out.println(date);
+		System.out.println(employeeId);
+		parameterMap.put("date", date);
+		parameterMap.put("employeeId", employeeId);
+		Integer result = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.checkDailyReport", parameterMap);
+		if(result == null)
+			return 0;
+		return result;
+	}
+	
 
 
 }

@@ -230,7 +230,8 @@ var makeSalesInput = function(){
 
 	window.onload = function() {
 
-		
+		$('#calendar').fullCalendar('getView').calendar.options.editable = true;
+		$('#calendar').fullCalendar('getView').calendar.options.selectable = true;
 		
 		var reportData = JSON.parse('${weeklyReportDetail}');
 		inputReportData(reportData);

@@ -91,9 +91,6 @@
 		<definition name="weeklyModify" extends="tilesbase">
       <put-attribute name="body" value="/WEB-INF/views/weeklyModifyForm.jsp"/>
    </definition>
-	<definition name="mainboard" extends="tilesbase">
-	<put-attribute name="body" value="/WEB-INF/views/main.jsp"/>
-	</definition>
 </tiles-definitions>
  
 

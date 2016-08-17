@@ -238,7 +238,7 @@ and dr.daily_report_id=#{id}
 
 	<select id="selectMonthlyGoalManager" parameterType="String" resultType="Integer">
 		<![CDATA[
-		select sum(sales_goal) from(select sales_goal,employee_id from MONTHLY_GOAL where employee_id in (select employee_id from employee where department_id=(select department_id from employee where employee_id=#{value})) and year=(SELECT EXTRACT(YEAR FROM sysdate) FROM DUAL) and month=(SELECT EXTRACT(month FROM sysdate) FROM DUAL))
+		select nvl(sum(sales_goal),0) sales_goal from(select sales_goal,employee_id from MONTHLY_GOAL where employee_id in (select employee_id from employee where department_id=(select department_id from employee where employee_id=#{value})) and year=(SELECT EXTRACT(YEAR FROM sysdate) FROM DUAL) and month=(SELECT EXTRACT(month FROM sysdate) FROM DUAL))
 		]]>
 	</select>
 
@@ -283,7 +283,9 @@ and dr.daily_report_id=#{id}
 	<delete id="deleteReport" parameterType="String">
 		delete daily_report	where daily_report_id=#{id}
 	</delete>
-
+	<select id="checkDailyReport" parameterType="map" resultType="Integer">
+		SELECT DAILY_REPORT_ID FROM DAILY_REPORT WHERE REG_DATE=#{date} AND EMPLOYEE_ID=#{employeeId}
+	</select>
 
 </mapper>
 

@@ -1,8 +1,10 @@
 package kr.co.bne.controller;
 
 import java.io.IOException;
-
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import kr.co.bne.common.NoticeDetail;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
 import kr.co.bne.service.DailyReportService;
@@ -64,17 +67,18 @@ public class MainController {
 			return "redirect:/user/goLoginForm";
 		}
 		
-		Calendar calendar = Calendar.getInstance();
-		int week_of_year = calendar.get(Calendar.WEEK_OF_YEAR); 
-		int year = calendar.get(Calendar.YEAR);
-		String weekly_report_id = year+"_"+week_of_year+"_"+loginEmployee.getEmployee_id();
-		System.out.println("weeklyReportId:"+weekly_report_id);
-		WeeklyReportDetailDTO reportDetail = weeklyReportService.selectWeeklyReportDetail(weekly_report_id);
-		JsonObject weeklyReportDetail = null;
-		if(reportDetail.getWeeklyReportDTO() != null)
-			weeklyReportDetail = parseWeeklyReportDetailDTO(reportDetail);
+		JsonObject weeklyReportDetail = getWekelyTable(loginEmployee);
+		getNoticeInfo(loginEmployee);
 		
-		request.setAttribute("weeklyReportDetail", weeklyReportDetail);
+		
+		
+		
+		if(weeklyReportDetail != null)
+			request.setAttribute("weeklyReportDetail", weeklyReportDetail);
+		else{
+			boolean result = false;
+			request.setAttribute("weeklyReportDetail",result);
+		}
 		request.setAttribute("employee_Id", loginEmployee.getEmployee_id());
 		return "mainboard";
 	}
@@ -95,7 +99,21 @@ public class MainController {
 		return "WeeklyWriteForm";
 	}
 
+	public JsonObject getWekelyTable(EmployeeDTO loginEmployee) throws Exception{
+		Calendar calendar = Calendar.getInstance();
+		int week_of_year = calendar.get(Calendar.WEEK_OF_YEAR); 
+		int year = calendar.get(Calendar.YEAR);
+		String weekly_report_id = year+"_"+week_of_year+"_"+loginEmployee.getEmployee_id();
+		WeeklyReportDetailDTO reportDetail = weeklyReportService.selectWeeklyReportDetail(weekly_report_id);
+		JsonObject weeklyReportDetail = null;
+		if(reportDetail.getWeeklyReportDTO() != null)
+			weeklyReportDetail = parseWeeklyReportDetailDTO(reportDetail);
+		return weeklyReportDetail;
+	}
 	
+	public void getNoticeInfo(EmployeeDTO employee){
+		
+	}
 
 	
 	

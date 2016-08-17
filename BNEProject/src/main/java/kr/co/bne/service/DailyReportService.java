@@ -44,7 +44,7 @@ public interface DailyReportService {
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId);
 	public List<?> selectVehicleGauge(String id);
 	public List<DailyReportChart2DTO> selectCustomersSales(int departmentid);
-
+	public int checkReport(String date,String employeeId);
 
 
 

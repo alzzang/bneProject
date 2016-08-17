@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -275,6 +276,7 @@ public class DailyReportController {
 	
 	@RequestMapping("/detail")
 	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id) {
+		System.out.println(id);
 		DailyReportDetailDTO dailyReport=dailyReportService.viewReport(id);
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
 		ModelAndView model=new ModelAndView("dailyReportDetail");
@@ -347,5 +349,12 @@ public class DailyReportController {
 	public void goJSON(HttpServletRequest req,HttpServletResponse res){
 		String aa=req.getParameter("dd");
 	}*/
-
+	
+	@RequestMapping("/checkReport")
+	public @ResponseBody int checkReport(@RequestParam("date")String date,HttpServletRequest req,HttpServletRequest res){
+		HttpSession session=req.getSession();
+		EmployeeDTO employeeDto = (EmployeeDTO)session.getAttribute("user");
+		
+		return dailyReportService.checkReport(date,employeeDto.getEmployee_id());
+	}
 }

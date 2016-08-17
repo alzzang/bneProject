@@ -33,7 +33,6 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		// 1. WeeklyReportDAO insert
 		//weeklyReportDAO.
 		int WeeklyReportResult = weeklyReportDAO.insertWeeklyReport(weeklyReportDetail.getWeeklyReportDTO());
-		System.out.println(WeeklyReportResult);
 		// 2. WeeklyPlanDAO insert * (mon, tue, wed, thu, fri)
 		for (WeeklyPlanDTO weeklyPlan : weeklyReportDetail.getWeeklyPlanDTOList()) {
 			weeklyPlanResult = weeklyPlanDAO.insertWeeklyPlan(weeklyPlan);

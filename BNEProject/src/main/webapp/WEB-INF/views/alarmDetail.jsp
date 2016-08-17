@@ -103,31 +103,6 @@ function unconfirmedData(){
 					}
 		});
 }
-/* function moveLink(noticeId,type,linkId,subject){
-	$.ajax({
-		type : "POST",
-		url : '/alarm/click',
-		data : {
-			"noticeId" : noticeId
-		},
-		success : function(data) {
-			if(type=="DAILY_POST"){
-				detailDaily(linkId);
-			}else if(type=="WEEKLY_POST"){
-				detailWeekly(linkId,subject);
-			}else if(type=="DAILY_CORRECT"){
-				detailDaily(linkId);
-			}else if(type=="WEEKLY_CORRECT"){
-				detailWeekly(linkId,subject);
-			}else if(type=="APPROVAL"){
-				detailDaily(linkId);
-			}else if(type=="COMMENT"){
-				detailDaily(linkId);
-			}
-		}
-	});
-	
-} */
 function confirmedData(){
 	
 	timer1 = false;
