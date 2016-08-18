@@ -63,19 +63,6 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 	}
 
 	@Override
-	public HashMap<String, String> getDayList(String employee_id) throws Exception {
-		List<Map<String, String>> resultList = weeklyReportDAO.selectDayList(employee_id);
-		HashMap<String, String> result = new HashMap<String, String>();
-		
-		for (Map<String, String> map : resultList) {
-			String weekDayName = map.get("WEEKDAYNAME");
-			String reportPlanDays = map.get("REPORT_PLAN_DAYS");
-			result.put(weekDayName, reportPlanDays);
-		}
-		return result;
-	}
-	
-	@Override
 	public List<String> selectAllReportId(String employee_id) throws Exception{
 		List<String> result = weeklyReportDAO.selectAllWeeklyReportId(employee_id);
 		return result;

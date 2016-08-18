@@ -36,11 +36,6 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 		return result;
 	}
 
-	@Override
-	public List<Map<String, String>> selectDayList(String employee_id) throws Exception {
-		List<Map<String, String>> result = sqlSession.selectList(namespace + "selectDayList", employee_id);
-		return result;
-	}
 
 	@Override
 	public List<String> selectAllWeeklyReportId(String employee_id) throws Exception {
