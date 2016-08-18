@@ -25,6 +25,8 @@
       in the /WEB-INF/views directory -->
    
    <context:component-scan base-package="kr.co.bne.controller" />
+   
+   <beans:bean class="kr.co.bne.aspect.LoginAspect"/>
 
 
    <beans:bean
@@ -38,7 +40,5 @@
          </beans:list>
       </beans:property>
    </beans:bean>
-   <!-- <beans:bean id="passwordEncoder"
-      class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" /> -->
 
 </beans:beans>
