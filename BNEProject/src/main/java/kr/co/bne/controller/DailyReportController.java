@@ -18,15 +18,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import kr.co.bne.dto.ClientDTO;
 import kr.co.bne.dto.CounsellingDetailDTO;
 
 import kr.co.bne.common.DailyReportTeamListElement;
@@ -35,6 +38,7 @@ import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.service.ClientService;
 import kr.co.bne.service.DailyReportService;
 
 @Controller
@@ -43,8 +47,11 @@ public class DailyReportController {
 
 	private static final int PER_CONTENT_NUM = 15;
 	
-	@Autowired
-	private DailyReportService dailyReportService;
+	 @Autowired
+	   private DailyReportService dailyReportService;
+	   
+	   @Autowired
+	   ClientService clientService;
 	
 	@RequestMapping(value="/main") 
 	public String goMain(Model model, HttpServletRequest request, HttpSession session){
@@ -71,6 +78,7 @@ public class DailyReportController {
 		if(user == null) {
 			return "redirect:/user/login";
 		}
+
 
 		//employee인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
 		if(!"manager".equals(user.getPosition())) {
@@ -123,9 +131,6 @@ public class DailyReportController {
 		
 		Gson gson = new Gson();
 		String serviceParamsStr = gson.toJson(serviceParams);
-		
-		
-		dailyReportListMap = dailyReportService.selectDailyReportList("manager", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
 		
 		
 		HashMap<String, Object> TeamMemeberMenuList = dailyReportService.selectTeamMemberList(user.getEmployee_id());
@@ -216,7 +221,6 @@ public class DailyReportController {
 		String serviceParamsStr = gson.toJson(serviceParams);
 		
 		
-		dailyReportListMap = dailyReportService.selectDailyReportList("employee", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
 		totalUnapprovalNum = dailyReportService.getgetTotalUnapprovalNum("member", employee_id);
 		
 		model.addAttribute("dailyReportList", dailyReportListMap.get("dailyReportList"));
@@ -274,15 +278,19 @@ public class DailyReportController {
 	}
 	
 	
-	@RequestMapping("/detail")
-	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id) {
-		System.out.println(id);
+	@RequestMapping("/detail", method = RequestMethod.POST)
+	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id, HttpServletRequest req,HttpServletResponse res) {
 		DailyReportDetailDTO dailyReport=dailyReportService.viewReport(id);
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);
 		ModelAndView model=new ModelAndView("dailyReportDetail");
 		model.addObject("dailyReport", dailyReport);
 		model.addObject("counselList",counsellingRecord);
 		
+		HttpSession session=req.getSession();
+	    EmployeeDTO user=(EmployeeDTO) session.getAttribute("user");
+	    
+	   	DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(dailyReport.getEmployee_id());
+	    session.setAttribute("employee", employee);
 		return model;
 	}
 	
@@ -340,11 +348,26 @@ public class DailyReportController {
 		pw.close();*/
 	}
 	
-	@RequestMapping("/approval")
-	public void goApproval(@RequestParam("report_id")String daily_report_id,HttpServletRequest req,HttpServletRequest res){
-		dailyReportService.approvalDailyReport(daily_report_id);
-	}
-	
+	 @RequestMapping(value="/approval", method = RequestMethod.POST)
+	   public void goApproval(@RequestParam("report_id")String daily_report_id,HttpServletRequest req,HttpServletResponse res){
+	      dailyReportService.approvalDailyReport(daily_report_id);
+
+	   }
+		   @RequestMapping(value="/writecomment", method = RequestMethod.POST)
+	   public void writeComment(@RequestParam("report_id")String daily_report_id,@RequestParam("comment")String comment,HttpServletRequest req,HttpServletResponse res){
+	      HashMap<String, String> map=new HashMap<String, String>();
+	      map.put("daily_report_id", daily_report_id);
+	      map.put("comment", comment);
+	      dailyReportService.writeComment(map);
+
+	   }
+	   
+	   @RequestMapping(value="/deletecomment", method = RequestMethod.POST)
+	   public void writeComment(@RequestParam("report_id")String daily_report_id,HttpServletRequest req,HttpServletResponse res){
+
+	      dailyReportService.removeComment(daily_report_id);
+
+	   }
 /*	@RequestMapping("/jsontest")
 	public void goJSON(HttpServletRequest req,HttpServletResponse res){
 		String aa=req.getParameter("dd");

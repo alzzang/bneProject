@@ -17,11 +17,9 @@
 		<typeAlias alias="PlanDetail" type ="kr.co.bne.dto.PlanDetailDTO"/>
 		<typeAlias alias="DailyReportListElement" type="kr.co.bne.common.DailyReportListElement"/>
 		<typeAlias alias="DailyReportTeamListElement" type="kr.co.bne.common.DailyReportTeamListElement"/>
-		
 		<!-- WeeklyReport 우동이 추가 -->
 		<typeAlias alias="WeeklyReportSearchElement" type="kr.co.bne.common.WeeklyReportSearchElement"/>
 		<typeAlias alias="WeeklyReportMemberInfo" type="kr.co.bne.common.WeeklyReportMemberInfo"/>
-		
 		<!--DailyReport 태우 추가-->
 		<typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>
 		<typeAlias alias="DailyReportDetail" type="kr.co.bne.dto.DailyReportDetailDTO"/>

@@ -141,7 +141,7 @@
 					
 					
 					$('#bbb'+a).on("change",function(){
-						alert('hello');
+						
 						var tempStr=$('#demo-2').val().split("-");
 						
 						/* 정규식 패턴검사 */
@@ -149,9 +149,7 @@
 						var tt = $('#bbb'+a).val();
 						var true_false=pattern.test(tt);
 						
-						
 						if(true_false){
-							alert('true');
 							th.html($('#bbb'+a).val());
 						}else{
 							alert('숫자만 입력 가능합니다.');

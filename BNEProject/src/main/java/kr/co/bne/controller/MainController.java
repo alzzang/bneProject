@@ -1,6 +1,7 @@
 package kr.co.bne.controller;
 
 import java.io.IOException;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -32,8 +34,10 @@ import kr.co.bne.service.WeeklyReportService;
 public class MainController {
 	@Autowired
 	WeeklyReportService weeklyReportService;
+	
 	@Autowired
 	DailyReportService dailyReportService;
+	
 	@Autowired
 	UserService userService;
 	
@@ -59,8 +63,9 @@ public class MainController {
 	}
 	
 	
+	
 	@RequestMapping("/main")
-	public String goMain(HttpServletRequest request,HttpSession session) throws Exception {
+	public String goMain(HttpServletRequest request,HttpServletResponse res,HttpSession session) throws Exception {
 		//주간테이블
 		EmployeeDTO loginEmployee = (EmployeeDTO)session.getAttribute("user");
 		if(loginEmployee == null) {
@@ -80,8 +85,11 @@ public class MainController {
 			request.setAttribute("weeklyReportDetail",result);
 		}
 		request.setAttribute("employee_Id", loginEmployee.getEmployee_id());
+		request.setAttribute("unapproval", unapproval(request,res));
 		return "mainboard";
 	}
+	
+	
 		
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){

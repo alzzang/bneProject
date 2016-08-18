@@ -100,7 +100,7 @@ public class NoticeController {
 		}
 		
 		ModelAndView model=new ModelAndView("alarmDetail");
-		model.addObject("unList", unList);
+			model.addObject("unList", unList);
 		model.addObject("cnList", cnList);
 		model.addObject("position",position);
 		model.addObject("type", type);
