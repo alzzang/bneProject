@@ -46,7 +46,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public void updateFile(String id) {
 		// TODO Auto-generated method stub
 		sqlSession.update("kr.co.bne.mapper.Employee.defaultUpdateFile",id);
-		
 	}
 	@Override
 	public List<EmployeeDTO> selectTeamMember(int id) {

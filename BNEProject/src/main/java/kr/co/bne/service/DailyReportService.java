@@ -25,10 +25,6 @@ public interface DailyReportService {
 	public void updateDailyReport(DailyReportDTO dailyReportDTO);
 	public void writeCounsellingRecord(List<CounsellingRecordDTO> result);
 	public void updateDailyReport(DailyReportDTO dailyReportDTO, List<CounsellingRecordDTO> list);
-		HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum,
-			HashMap<String, Object> params);
-
-	HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum);
 
 	int getgetTotalUnapprovalNum(String position, String user_id);
 
@@ -37,16 +33,13 @@ public interface DailyReportService {
 	public void writeComment(HashMap<String, String> map);
 	public void removeComment(String daily_report_id);
 	public void delete(String id);
-	
-
 	public HashMap<String, List<?>> searchDailyChartLine(String employee_id,int department_id);
 	public HashMap<String,Integer> selectMonthlyGoal(String id, String position);
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId);
 	public List<?> selectVehicleGauge(String id);
 	public List<DailyReportChart2DTO> selectCustomersSales(int departmentid);
-
-
-
-
+	HashMap<String, Object> selectDailyReportList(String user_id, int startIdx, int perContentNum);
+	HashMap<String, Object> selectDailyReportList(String user_id, int startIdx, int perContentNum,
+			HashMap<String, Object> params);
 
 }

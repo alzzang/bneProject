@@ -31,7 +31,7 @@ var mainpageMorrisCharts = function() {
 					value : 100-achievermentLimit,
 					formatted : 100-achievermentLimit+'%'
 				} ],
-				colors : [ '#95B75D', '#1caf9a'],
+				colors : [  '#1caf9a','#95B75D'],
 				formatter : function(x, data) {
 					return data.formatted;
 				}
@@ -63,7 +63,7 @@ var mainpageMorrisCharts = function() {
 				xkey : 'y',
 				ykeys : [ 'a' ],
 				labels : [ 'monthly Sales' ],
-				barColors : [ '#33414E' ],
+				barColors : [ '#1caf9a' ],
 				
 				resize : true				
 				
@@ -132,7 +132,7 @@ var mainpageMorrisCharts = function() {
 				ykeys : [ 'a', 'b' ],
 				labels : [ 'My Sales', 'Team Sales Avg' ],
 				resize : true,
-				lineColors : [ '#33414E', '#95B75D' ]
+				lineColors : [ '#1caf9a','#95B75D' ]
 			});
 		},
 		error : function() {

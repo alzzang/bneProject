@@ -60,22 +60,21 @@ public class DailyReportServiceImpl implements DailyReportService {
 	
 	
 	@Override
-	public HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum) {
+	public HashMap<String, Object> selectDailyReportList(String user_id, int startIdx, int perContentNum) {
 		HashMap<String, Object> map = new HashMap<String, Object>();		
-		return selectDailyReportList(position, user_id, startIdx, perContentNum, map);
+		return selectDailyReportList(user_id, startIdx, perContentNum, map);
 	}
 	
 	
 	@Override
-	public HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum, HashMap<String, Object> params) {
+	public HashMap<String, Object> selectDailyReportList(String user_id, int startIdx, int perContentNum, HashMap<String, Object> params) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		List<DailyReportListElement> dailyReportList = null;
 		int totalPageNum = 0;
 		
 		dailyReportList = dao.selectDailyReportList(user_id, startIdx, perContentNum, params);
 		totalPageNum = dao.getPagingNum_DailyReportList(user_id, perContentNum, params);
-		
-		
+			
 		result.put("dailyReportList", dailyReportList);
 		result.put("totalPageNum", totalPageNum);
 		

@@ -57,13 +57,11 @@ function selectSecontClient(value) {
 }
 
 $(function() {
-	
 	$('#myModal1').on('shown.bs.modal',	function() {
 		var myDropzone = Dropzone.forElement("#myDropzone");
 		var mockFile = {
 						name : $('#fileName').val(),
 						accepted : true,
-						size : 12345,
 						status : Dropzone.ACCEPTED
 					};
 		myDropzone.options.addedfile.call(myDropzone, mockFile);
