@@ -25,10 +25,8 @@ public interface DailyReportService {
 	public void updateDailyReport(DailyReportDTO dailyReportDTO);
 	public void writeCounsellingRecord(List<CounsellingRecordDTO> result);
 	public void updateDailyReport(DailyReportDTO dailyReportDTO, List<CounsellingRecordDTO> list);
-		HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum,
-			HashMap<String, Object> params);
 
-	HashMap<String, Object> selectDailyReportList(String position, String user_id, int startIdx, int perContentNum);
+
 
 	int getgetTotalUnapprovalNum(String position, String user_id);
 

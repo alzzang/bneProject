@@ -29,6 +29,7 @@ import kr.co.bne.dto.EmployeeDTO;
 @Service
 public class DailyReportServiceImpl implements DailyReportService {
 
+
 	@Autowired
 	private DailyReportDAO dao;
 	@Autowired
@@ -276,7 +277,7 @@ public class DailyReportServiceImpl implements DailyReportService {
 	   }
 
 
-	
+
 
 
 

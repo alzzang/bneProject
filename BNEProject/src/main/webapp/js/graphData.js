@@ -63,11 +63,8 @@ var mainpageMorrisCharts = function() {
 				xkey : 'y',
 				ykeys : [ 'a' ],
 				labels : [ 'monthly Sales' ],
-<<<<<<< HEAD
 				barColors : [ '#1caf9a' ],
-=======
-				barColors : [ '#33414E' ],
->>>>>>> refs/remotes/origin/develop
+
 				
 				resize : true				
 				
