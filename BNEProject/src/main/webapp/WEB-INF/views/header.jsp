@@ -14,8 +14,8 @@
       			   </li>
    <!-- END SEARCH -->
    <!-- SIGN OUT -->
-   <li class="xn-icon-button pull-right"><a href="#" class="mb-control" data-box="#mb-signout"><span
-         class="fa fa-sign-out"></span></a></li>
+   <li class="xn-icon-button pull-right"><a href="#" class="mb-control" data-box="#mb-signout">
+   <span class="fa fa-sign-out"></span></a></li>
    <!-- END SIGN OUT -->
    <!-- MESSAGES -->
    <li class="xn-icon-button pull-right" id="noticeButton" onclick='getNoticeList(1, 5)'><a href="#"><span

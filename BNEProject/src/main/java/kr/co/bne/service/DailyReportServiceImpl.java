@@ -281,5 +281,9 @@ public class DailyReportServiceImpl implements DailyReportService {
 
 
 
-	
+	@Override
+	public int checkReport(String date,String employeeId) {
+		int result = dao.checkDailyReport(date,employeeId);
+		return result;
+	}
 }

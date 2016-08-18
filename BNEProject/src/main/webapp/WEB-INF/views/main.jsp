@@ -129,66 +129,30 @@
 	text-align: center;
 }
 </style>
+
 <script>
-var makeSalesInput = function(){
-	var salesCell
-	= 	'<tr>' + 
-			'<td class="fc-axis">매출</td>' +
-			'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
-		'</tr>';
-		
-	$('#weeklyTableHeader>tbody').html(salesCell);
-	
-	var s = $('#weeklyTableHeader>thead>tr>th');
-	
-	for(var i=2; i<7; i++){
-		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
-	}	
-};
-
-
-var inputReportData = function(reportData) {
-
-	var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
-	var planDetailDTOList = reportData.planDetailDTOList;
-
-	for (var i = 0; i < planDetailDTOList.length; i++) {
-		$('#calendar').fullCalendar('renderEvent', {
-			"title" : planDetailDTOList[i].content,
-			"allDay" : false,
-			"start" : planDetailDTOList[i].start_time,
-			"end" : planDetailDTOList[i].end_time
-		}, true);
-	}
-
-	//$('#calendar').fullCalendar( 'gotoDate', weeklyPlanDTOList[0].reg_date );
-
-	// 매출액 정보 행 삽입
-	makeSalesInput();
-	console.log("dfdf="+weeklyPlanDTOList[0].reg_date);
-	for(var i=0; i<weeklyPlanDTOList.length; i++){
-		$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
-	}
-};
-
-
 window.onload = function(){
-
+	weeklyReportDetail = ${weeklyReportDetail};
 	
 	// 처음에 받아온 주간계획 정보 삽입 
-	if('${weeklyReportDetail}'!=''){
-		var reportData = JSON.parse('${weeklyReportDetail}') 
-		inputReportData(reportData);
+	if(weeklyReportDetail !== false){
+		var parseToWeeklyReportDetail = JSON.stringify(weeklyReportDetail);
+		var reportData = JSON.parse(parseToWeeklyReportDetail); 
+		mainInputReportData(reportData);
 	}else{
-		var day = ['mon','tue','wed','thu','fri'];
+		var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+		var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
+		//$('#weekly_report_id')[0].value = weeklyReportDTO.weekly_report_id;
+		$('#title').html(weeklyNumber+'주의 계획');
+		$('#employee_name').html('${user.employee_name}');
+		$('#department_name').html('${user.department_name}');
+		
 		makeSalesInput();
+		var day = ['mon','tue','wed','thu','fri'];
 		for(var i=0; i<5; i++){
-			$('input[id="sales-'+day[i]+'"]').attr({'value': '', 'disabled':'disabled'});
+			$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
 		}
+		openMessageBox('#mb-NoWeeklyPlan');
 	}
 	
 	// 이 주간계획서의 작성자 ID

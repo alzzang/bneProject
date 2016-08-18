@@ -56,5 +56,5 @@ public interface DailyReportDAO {
 	public void insertComment(HashMap<String, String> map);
 	public void deleteComment(String daily_report_id);
 	public void deleteReport(String id);
-
+	public int checkDailyReport(String date,String employeeId);
 }

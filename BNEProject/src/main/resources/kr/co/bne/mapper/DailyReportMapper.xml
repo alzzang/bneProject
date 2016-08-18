@@ -281,6 +281,9 @@ and dr.daily_report_id=#{id}
 	<delete id="deleteReport" parameterType="String">
 		delete daily_report	where daily_report_id=#{id}
 	</delete>
+	<select id="checkDailyReport" parameterType="map" resultType="Integer">
+		SELECT DAILY_REPORT_ID FROM DAILY_REPORT WHERE REG_DATE=#{date} AND EMPLOYEE_ID=#{employeeId}
+	</select>
 
 
 </mapper>

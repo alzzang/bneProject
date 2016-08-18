@@ -187,16 +187,10 @@
 					th.html(t);
 					modifyFlag=true;
 				}
-			
-			
 		});
-		})(i);
-    	
-    	
+		})(i);	
     }
    	
-   	
-    	
    	$('#demo-2').val('<%=cal.get(Calendar.YEAR)%>'+'-'+'<%=cal.get(Calendar.MONTH)+1%>');
     
 

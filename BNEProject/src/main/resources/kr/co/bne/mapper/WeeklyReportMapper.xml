@@ -3,92 +3,115 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.WeeklyReport">
-
-  	<resultMap type="java.util.HashMap" id="dayList">
-	   <result javaType="java.lang.String" column="WEEKDAYNAME" property="WEEKDAYNAME"/>
-        <result javaType="java.lang.String" column="REPORT_PLAN_DAYS" property="REPORT_PLAN_DAYS"/>	
-	</resultMap>
-
-	
-	<select id="selectAllReportId" parameterType ="String" resultType = "String">
-	<![CDATA[
-		SELECT WEEKLY_REPORT_ID FROM WEEKLY_REPORT WHERE EMPLOYEE_ID = #{value} ORDER BY 1 asc
-	]]>
-	 
-	</select>
-	<!-- 새로 작성 시 지난 주 까지의 매출액 -->
-	<select id="selectThisMonthlySales" parameterType="String" resultType="Integer">
-		<![CDATA[
-SELECT CASE WHEN SUM(RESULT) IS NULL THEN 0
-    		ELSE SUM(RESULT)
-        	END AS RECENT_SALES_SUM 
-FROM    (SELECT CASE WHEN TO_CHAR(NEXT_DAY(LPD.LAST_PLAN_DATE, 2), 'YYYYMM') = TO_CHAR(LPD.LAST_PLAN_DATE, 'YYYYMM')
-              	        THEN DR.SALES ELSE 0
-                        END AS RESULT, DR.REG_DATE
-          	FROM   DAILY_REPORT DR,(SELECT  TRUNC(MAX(WP.REG_DATE),'DD') AS LAST_PLAN_DATE
-                                  FROM    WEEKLY_REPORT WR, WEEKLY_PLAN WP
-                                  WHERE   WR.EMPLOYEE_ID = #{value} AND
-                                          WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID) LPD 
-          WHERE  DR.REG_DATE < LPD.LAST_PLAN_DATE + 1 AND 
-                 TO_CHAR(DR.REG_DATE, 'YYYYMM') = TO_CHAR(LPD.LAST_PLAN_DATE, 'YYYYMM') AND
-                 DR.EMPLOYEE_ID = #{value})
-		]]>
-	</select>
-	
-	
-	
-	<!-- 새로 작성시 이번주에 필요한 매출 목표 -->
-	<select id="selectSalesGoal" parameterType="String" resultType="Integer">
-		<![CDATA[
-		SELECT  MG.SALES_GOAL AS MONTHLY_SALES_GOAL
-		FROM    MONTHLY_GOAL MG, (SELECT  LAST_PLAN_DATE AS DATE1, NEXT_DAY(LAST_PLAN_DATE, 2) AS DATE2
-		             					             FROM    (SELECT  TRUNC(MAX(WP.REG_DATE),'DD') AS LAST_PLAN_DATE
-		                                						    FROM   WEEKLY_REPORT WR, WEEKLY_PLAN WP
-		                                    						WHERE  WR.EMPLOYEE_ID = #{value} AND
-		                                           								WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID)) LPD
-		WHERE   MG.EMPLOYEE_ID = #{value} AND
-			          MG.YEAR = TO_NUMBER(TO_CHAR(LPD.DATE2, 'YYYY')) AND
-			         MG.MONTH = TO_NUMBER(TO_CHAR(LPD.DATE2, 'MM'))
-		]]>
-	</select>
-	
-	<!-- 새로 작성시 필요한 날짜 리스트 -->
-<!-- 	<select id="selectDayList" parameterType="String" resultMap="dayList">
-		<![CDATA[
-			SELECT    CASE TO_CHAR(REPORT_PLAN_DAYS,'D')
-			          WHEN '1' THEN 'sun' 
-			          WHEN '2' THEN 'mon'
-			          WHEN '3' THEN 'tue'
-			          WHEN '4' THEN 'wed'
-			          WHEN '5' THEN 'thu'
-			          WHEN '6' THEN 'fri'
-			          WHEN '7' THEN 'sat'
-			          END AS WEEKDAYNAME,
-			          TO_CHAR(REPORT_PLAN_DAYS, 'YYYY.MM.DD') AS REPORT_PLAN_DAYS
-			FROM     (SELECT   TRUNC(WP.REG_DATE+7, 'DD') AS REPORT_PLAN_DAYS, RANK() OVER (ORDER BY WP.REG_DATE DESC ) AS RK
-			          FROM     WEEKLY_REPORT WR, WEEKLY_PLAN WP
-			          WHERE    WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID AND
-			                   WR.EMPLOYEE_ID = '1'
-			          ORDER BY 1)
-			WHERE     RK <= 5  
-		]]>
-	</select> -->
-	
-	
-	<select id="selectWeeklyReport" parameterType="String" resultType="WeeklyReport">
-		SELECT WR.*
-		FROM	WEEKLY_REPORT WR, DEPARTMENT D, EMPLOYEE E
-		WHERE	WR.EMPLOYEE_ID = E.EMPLOYEE_ID AND
-		            E.DEPARTMENT_ID = D.DEPARTMENT_ID AND
-		            WR.WEEKLY_REPORT_ID = #{value}
-	</select>
-	
-	<insert id="insertWeeklyReport" parameterType="WeeklyReport">
-		INSERT INTO WEEKLY_REPORT(WEEKLY_REPORT_ID, EMPLOYEE_ID, TITLE, SALES_GOAL, SALES, REG_DATE) 
-		VALUES(#{weekly_report_id}, #{employee_id}, #{title}, #{sales_goal}, #{sales},SYSDATE)
-	</insert>
-	
-	<delete id="deleteWeeklyReport" parameterType="String">
-		DELETE FROM WEEKLY_REPORT WHERE WEEKLY_REPORT_ID = #{value}
-	</delete>
+    <select id="selectWeeklyReportList" parameterType="map" resultType="WeeklyReportSearchElement" >
+      SELECT *
+      FROM  (
+              SELECT  ROW_NUMBER() OVER (ORDER BY WR.WEEKLY_REPORT_ID) IDX, WR.*, D.DEPARTMENT_NAME, E.EMPLOYEE_NAME, TO_CHAR(DATE_CHAR.START_DATE, 'YYYY-MM-DD') AS START_DATE, TO_CHAR(DATE_CHAR.END_DATE, 'YYYY-MM-DD') AS END_DATE
+              FROM    WEEKLY_REPORT WR, EMPLOYEE E, DEPARTMENT D, (SELECT  WP.WEEKLY_REPORT_ID, MIN(WP.REG_DATE) AS START_DATE, MAX(WP.REG_DATE) AS END_DATE
+                                                                FROM    WEEKLY_REPORT WR, WEEKLY_PLAN WP
+                                                                WHERE   WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID
+                                                                GROUP BY WP.WEEKLY_REPORT_ID) DATE_CHAR
+              WHERE   WR.WEEKLY_REPORT_ID = DATE_CHAR.WEEKLY_REPORT_ID
+                 AND   E.EMPLOYEE_ID = WR.EMPLOYEE_ID
+                 AND   D.DEPARTMENT_ID = E.DEPARTMENT_ID
+               <if test="employee_id != null">
+                  AND   E.EMPLOYEE_ID = #{employee_id}
+               </if>
+               <if test="department_id != null">
+                  AND   D.DEPARTMENT_ID = #{department_id}
+               </if>
+                <if test="keyword != null and keyword != ''"> 
+                     AND   WR.TITLE LIKE  '%'||#{keyword}||'%'  
+               </if>
+            )
+      WHERE IDX BETWEEN 1 + (#{pageSize} * (#{page}-1)) AND #{pageSize} + (#{pageSize} * (#{page}-1))
+      <if test="plan_date != null and plan_date != ''">
+         AND TO_DATE(#{plan_date}, 'YYYY-MM-DD') BETWEEN START_DATE AND END_DATE
+      </if>
+      ORDER BY WEEKLY_REPORT_ID
+   </select>
+   
+   <select id = "selectTotalRecordNum" parameterType="map" resultType="Integer">
+      SELECT   COUNT(*)
+      FROM     WEEKLY_REPORT WR, EMPLOYEE E, DEPARTMENT D
+      WHERE   E.EMPLOYEE_ID = WR.EMPLOYEE_ID
+         AND   D.DEPARTMENT_ID = E.DEPARTMENT_ID
+            <if test="employee_id != null">
+            AND   E.EMPLOYEE_ID = #{employee_id}
+            </if>
+            <if test="department_id != null">
+            AND   D.DEPARTMENT_ID = #{department_id}
+            </if>
+           <if test="keyword != null and keyword != ''"> 
+            AND   WR.TITLE LIKE  '%'||#{keyword}||'%'  
+            </if>
+   </select>   
+   
+   <select id="selectAllReportId" parameterType ="String" resultType = "String">
+   <![CDATA[
+      SELECT WEEKLY_REPORT_ID FROM WEEKLY_REPORT WHERE EMPLOYEE_ID = #{value} ORDER BY 1 asc
+   ]]>
+   </select>
+   
+   <!-- 새로 작성 시 지난 주 까지의 매출액 -->
+   <select id="selectThisMonthlySales" parameterType="String" resultType="Integer">
+      <![CDATA[
+      SELECT CASE WHEN SUM(RESULT) IS NULL THEN 0
+                ELSE SUM(RESULT)
+                 END AS RECENT_SALES_SUM 
+      FROM    (SELECT CASE WHEN TO_CHAR(NEXT_DAY(LPD.LAST_PLAN_DATE, 2), 'YYYYMM') = TO_CHAR(LPD.LAST_PLAN_DATE, 'YYYYMM')
+                               THEN DR.SALES ELSE 0
+                              END AS RESULT, DR.REG_DATE
+                   FROM   DAILY_REPORT DR,(SELECT  TRUNC(MAX(WP.REG_DATE),'DD') AS LAST_PLAN_DATE
+                                        FROM    WEEKLY_REPORT WR, WEEKLY_PLAN WP
+                                        WHERE   WR.EMPLOYEE_ID = #{value} AND
+                                                WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID) LPD 
+                WHERE  DR.REG_DATE < LPD.LAST_PLAN_DATE + 1 AND 
+                       TO_CHAR(DR.REG_DATE, 'YYYYMM') = TO_CHAR(LPD.LAST_PLAN_DATE, 'YYYYMM') AND
+                       DR.EMPLOYEE_ID = #{value})
+      ]]>
+   </select>
+   
+   <!-- 새로 작성시 이번주에 필요한 매출 목표 -->
+   <select id="selectSalesGoal" parameterType="String" resultType="Integer">
+      <![CDATA[
+      SELECT  MG.SALES_GOAL AS MONTHLY_SALES_GOAL
+      FROM    MONTHLY_GOAL MG, (SELECT  LAST_PLAN_DATE AS DATE1, NEXT_DAY(LAST_PLAN_DATE, 2) AS DATE2
+                                               FROM    (SELECT  TRUNC(MAX(WP.REG_DATE),'DD') AS LAST_PLAN_DATE
+                                                            FROM   WEEKLY_REPORT WR, WEEKLY_PLAN WP
+                                                            WHERE  WR.EMPLOYEE_ID = #{value} AND
+                                                                         WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID)) LPD
+      WHERE   MG.EMPLOYEE_ID = #{value} AND
+                   MG.YEAR = TO_NUMBER(TO_CHAR(LPD.DATE2, 'YYYY')) AND
+                  MG.MONTH = TO_NUMBER(TO_CHAR(LPD.DATE2, 'MM'))
+      ]]>
+   </select>
+   
+   <select id="selectDeptMember" parameterType="String" resultType="WeeklyReportMemberInfo">
+      SELECT  E.EMPLOYEE_ID, E.EMPLOYEE_NAME, E.FILE_POSITION, POST_NUM
+      FROM    EMPLOYEE E, DEPARTMENT D, (SELECT    COUNT(*) AS POST_NUM, WR.EMPLOYEE_ID
+                                         FROM      EMPLOYEE E, WEEKLY_REPORT WR
+                                         WHERE     E.EMPLOYEE_ID = WR.EMPLOYEE_ID
+                                         GROUP BY  WR.EMPLOYEE_ID) CNT
+      WHERE   E.DEPARTMENT_ID = D.DEPARTMENT_ID
+              AND CNT.EMPLOYEE_ID = E.EMPLOYEE_ID
+              AND E.DEPARTMENT_ID = #{value}
+   </select>
+   
+   <select id="selectWeeklyReport" parameterType="String" resultType="WeeklyReport">
+      SELECT WR.*
+      FROM   WEEKLY_REPORT WR, DEPARTMENT D, EMPLOYEE E
+      WHERE   WR.EMPLOYEE_ID = E.EMPLOYEE_ID AND
+                  E.DEPARTMENT_ID = D.DEPARTMENT_ID AND
+                  WR.WEEKLY_REPORT_ID = #{value}
+   </select>
+   
+   <insert id="insertWeeklyReport" parameterType="WeeklyReport">
+      INSERT INTO WEEKLY_REPORT(WEEKLY_REPORT_ID, EMPLOYEE_ID, TITLE, SALES_GOAL, SALES, REG_DATE) 
+      VALUES(#{weekly_report_id}, #{employee_id}, #{title}, #{sales_goal}, #{sales},SYSDATE)
+   </insert>
+   
+   <delete id="deleteWeeklyReport" parameterType="String">
+      DELETE FROM WEEKLY_REPORT WHERE WEEKLY_REPORT_ID = #{value}
+   </delete>
 </mapper>

@@ -126,6 +126,7 @@
 	<script type="text/javascript" src="/js/weekly.js"></script>
 
 	<script type="text/javascript" src="/js/usersettings.js"></script>
+	<script type="text/javascript" src="/js/dailysettings.js"></script>
 	
 	<script type='text/javascript' src='/js/plugins/noty/jquery.noty.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topCenter.js'></script>
