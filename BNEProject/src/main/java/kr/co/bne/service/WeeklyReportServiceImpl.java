@@ -107,6 +107,7 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		}
 		return 0;
 	}
+	
 	@Override
 	public List<WeeklyReportSearchElement> selectWeeklyReportSearch(Map parameterMap) throws Exception {
 		List<WeeklyReportSearchElement> result = null; 

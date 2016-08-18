@@ -62,7 +62,7 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 
 	@Override
 	public  List<WeeklyReportSearchElement> selectWeeklyReportList(Map<String, Object> parameterMap) throws Exception {
-		 List<WeeklyReportSearchElement> result = null;
+		List<WeeklyReportSearchElement> result = null;
 		result = sqlSession.selectList(namespace+"selectWeeklyReportList", parameterMap);
 		return result;
 	}

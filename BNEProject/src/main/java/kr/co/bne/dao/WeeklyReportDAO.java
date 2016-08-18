@@ -16,6 +16,7 @@ public interface WeeklyReportDAO {
 	public int insertWeeklyReport(WeeklyReportDTO weeklyReport) throws Exception;
 
 	// 목록 ////////////////////////////////////////
+	
 	// 조건에 맞는 주간 계획 목록
 	public List<WeeklyReportSearchElement> selectWeeklyReportList(Map<String, Object> parameterMap) throws Exception;
 	// 내 부서 사람들 정보 
