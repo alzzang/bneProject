@@ -340,12 +340,6 @@ public class WeeklyController {
 		parameterMap.put("page", page);
 		parameterMap.put("plan_date", planDate);
 		
-//		Map<String, Object> parameterMap2 = new HashMap<String, Object>();
-//		parameterMap2.put("employee_id", employee_id);
-//		parameterMap2.put("pageSize", 3);
-//		parameterMap2.put("page", 1);
-		
-		
 		// 내 부서의 주간계획 목록
 		List<WeeklyReportSearchElement> myDeptWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
 		System.out.println("weeklyReportListSize : " + myDeptWeeklyReportList.size());

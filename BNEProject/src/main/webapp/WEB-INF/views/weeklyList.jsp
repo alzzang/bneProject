@@ -8,6 +8,7 @@
  <script type="text/javascript" src="/js/plugins/jquery/jquery-ui.min.js"></script>
  <script type="text/javascript" src="/js/plugins/bootstrap/bootstrap.min.js"></script>        
  
+ 
 <script>
 $(window).ready(function(){
 	// 페이지에 보여줄 레코드 수
