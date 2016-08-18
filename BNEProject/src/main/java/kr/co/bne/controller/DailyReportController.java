@@ -278,7 +278,7 @@ public class DailyReportController {
 	}
 	
 	
-	@RequestMapping("/detail", method = RequestMethod.POST)
+	@RequestMapping(value="/detail", method = RequestMethod.POST)
 	public ModelAndView goViewmanager(@RequestParam("dailyReportId")String id, HttpServletRequest req,HttpServletResponse res) {
 		DailyReportDetailDTO dailyReport=dailyReportService.viewReport(id);
 		List<CounsellingDetailDTO> counsellingRecord=dailyReportService.searchCounselRecord(id);

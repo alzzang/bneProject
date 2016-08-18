@@ -73,10 +73,6 @@ public class MainController {
 		}
 		
 		JsonObject weeklyReportDetail = getWekelyTable(loginEmployee);
-		getNoticeInfo(loginEmployee);
-		
-		
-		
 		
 		if(weeklyReportDetail != null)
 			request.setAttribute("weeklyReportDetail", weeklyReportDetail);
@@ -119,9 +115,75 @@ public class MainController {
 		return weeklyReportDetail;
 	}
 	
-	public void getNoticeInfo(EmployeeDTO employee){
-		
-	}
+	public Map<String,Object> unapproval(HttpServletRequest req, HttpServletResponse res) {
+	      
+	      
+	      HttpSession session=req.getSession();
+	      EmployeeDTO employee=(EmployeeDTO) session.getAttribute("user");
+	   
+	      HashMap<String, Object> dailyReportListMap = null;
+	      HashMap<String, Object> params=new HashMap<String, Object>();
+	      
+	      int startIdx=1;
+	      int perContentNum=4;
+	      
+	      if(!employee.getPosition().equals("manager")){
+	      params.put("employee_id", employee.getEmployee_id());
+	      }
+	      
+	      params.put("approval_flag", 0);
+	      
+	      
+	      dailyReportListMap = dailyReportService.selectDailyReportList(employee.getEmployee_id(), startIdx, perContentNum, params);
+	      
+	      //System.out.println(dailyReportListMap);
+	      
+	      //unList=noticeService.searchUnconfirmedNotice(map);
+	      
+	      
+	   /*   for(int i=0;i<unList.size();i++){
+	         String tempTime[]=unList.get(i).getPasstime().split(" ");
+	         String setTime="";
+	         if(tempTime[0].charAt(0)!='0'){
+	            setTime=tempTime[0];
+	         }else if(tempTime[1].charAt(0)!='0'){
+	            setTime=tempTime[1];
+	         }else if(tempTime[2].charAt(0)!='0'){
+	            setTime=tempTime[2];
+	         }else{
+	         for(int j=3;j<tempTime.length;j++){
+	            if(tempTime[j].charAt(0)!='0')
+	               setTime+=tempTime[j]+" ";
+	         }
+	         }
+	         unList.get(i).setPasstime(setTime);
+	      }
+	      
+	      for(int i=0;i<cnList.size();i++){
+	         String tempTime[]=cnList.get(i).getPasstime().split(" ");
+	         String setTime="";
+	         if(tempTime[0].charAt(0)!='0'){
+	            setTime=tempTime[0];
+	         }else if(tempTime[1].charAt(0)!='0'){
+	            setTime=tempTime[1];
+	         }else if(tempTime[2].charAt(0)!='0'){
+	            setTime=tempTime[2];
+	         }else{
+	         for(int j=3;j<tempTime.length;j++){
+	            if(tempTime[j].charAt(0)!='0')
+	               setTime+=tempTime[j]+" ";
+	         }
+	         }
+	         cnList.get(i).setPasstime(setTime);
+	      }
+	      
+	      ModelAndView model=new ModelAndView("alarmDetail");
+	         model.addObject("unList", unList);
+	      model.addObject("cnList", cnList);
+	      model.addObject("position",position);
+	      model.addObject("type", type);*/
+	      return dailyReportListMap;
+	   }
 
 	
 	
