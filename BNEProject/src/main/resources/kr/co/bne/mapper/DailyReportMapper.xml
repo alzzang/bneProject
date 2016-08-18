@@ -294,7 +294,7 @@ and dr.daily_report_id=#{id}
 	</delete>
 	
 	<select id="selectDailyCount" parameterType="hashmap" resultType="Integer">
-		select decode((select count(*) from daily_report where employee_id=#{employee_id} and reg_date=#{reg_date}), 1,(select daily_report_id from daily_report where employee_id=#{employee_id} and reg_date=#{reg_date}),0) name from dual
+		select decode((select count(*) from daily_report where employee_id=#{employee_id} and reg_date=#{reg_date}), 1,(select daily_report_id from daily_report where employee_id=#{employee_id} and reg_date=#{reg_date}),0) num from dual
 	</select>
 
 

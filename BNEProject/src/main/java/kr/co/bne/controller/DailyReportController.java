@@ -378,6 +378,7 @@ public class DailyReportController {
 		int daily_sales=0;
 
 		HashMap<String, Integer> salesMap=new HashMap<String, Integer>();
+		System.out.println(map.toString());
 		daily_sales=dailyReportService.confirmDuplicate(map);
 		Gson gson=new Gson();
 		if(daily_sales>=1){

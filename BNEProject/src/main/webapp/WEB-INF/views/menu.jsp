@@ -68,8 +68,10 @@ String position = ((EmployeeDTO) session.getAttribute("user")).getPosition();
 						계획</span>
 			</a>
 				<ul>
+					<%if (!position.equals("manager")) { %>
 					<li><a
 						href="/weeklyReport/detail/${user.getEmployee_id() }">내 주간 계획</a></li>
+					<%} %>
 					<li class="xn-openable"><a id="weeklyDetail">팀원의 주간 계획</a>
 						<ul id="members">
 						</ul>

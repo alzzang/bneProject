@@ -223,16 +223,8 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
                         </div>                                                
                         <div class="pull-right">
                             <button class="btn btn-default content-frame-left-toggle"><span class="fa fa-bars"></span></button>
-                        </div>                                
-                        <div class="pull-right" style="width: 100px; margin-right: 5px;">
-                            <select class="form-control select" style="display: none;">
-                                <option>All</option>                                
-                                <option>Work</option>
-                                <option>Home</option>
-                                <option>Friends</option>
-                                <option>Closed</option>
-                            </select>
-                        </div>
+                        </div>                        
+                        
                         
                     </div>                    
                     <div class="content-frame-left" style="height: 837px;">
