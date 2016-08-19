@@ -76,8 +76,9 @@ String position = ((EmployeeDTO) session.getAttribute("user")).getPosition();
 						<ul id="members">
 						</ul>
 					</li>
-					
+					<%if (!position.equals("manager")) { %>
 					<li><a href="/weeklyReport/writeForm">주간계획작성</a></li>
+					<%} %>
 				</ul></li>
 
 

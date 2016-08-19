@@ -54,9 +54,6 @@ public class UserController {
 	@Autowired
 	private DailyReportService dailyReportService;
 
-
-
-
 	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
