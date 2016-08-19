@@ -99,7 +99,7 @@ public class NoticeController {
 			}
 			cnList.get(i).setPasstime(setTime);
 		}
-		
+		System.out.println(cnList);
 		ModelAndView model=new ModelAndView("alarmDetail");
 		model.addObject("unList", unList);
 		model.addObject("cnList", cnList);
