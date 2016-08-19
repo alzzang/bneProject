@@ -56,11 +56,7 @@ public class DailyReportController {
 	@RequestMapping(value="/main") 
    public String goMain(Model model, HttpServletRequest request, HttpSession session){
       EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
-      
-      if(user == null) {
-         return "redirect:/user/login";
-      }
-      
+            
       String position = user.getPosition();
 
       if("manager".equals(position)){ //manager이면
@@ -75,10 +71,6 @@ public class DailyReportController {
    public String goMain_Manager(Model model, HttpServletRequest request, HttpSession session){
       EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");      
 
-      if(user == null) {
-         return "redirect:/user/login";
-      }
-
       //employee인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
       if(!"manager".equals(user.getPosition())) {
          return "redirect:/dailyReport/main/employee/" + user.getEmployee_id();
@@ -91,11 +83,7 @@ public class DailyReportController {
    @RequestMapping(value="/main/all/{page}") 
    public String goMain_Manager(Model model, HttpServletRequest request, HttpSession session, @PathVariable("page") int page){
       EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");      
-      
-      if(user == null) {
-         return "redirect:/user/login";
-      }
-      
+            
       HashMap<String, Object> dailyReportListMap = null;      
       HashMap<String, Object> serviceParams = new HashMap<String, Object>();
       int totalUnapprovalNum = 0;
@@ -139,7 +127,7 @@ public class DailyReportController {
       String serviceParamsStr = gson.toJson(serviceParams);
       
       
-      dailyReportListMap = dailyReportService.selectDailyReportList("manager", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
+      dailyReportListMap = dailyReportService.selectDailyReportList(user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
       
       
       HashMap<String, Object> TeamMemeberMenuList = dailyReportService.selectTeamMemberList(user.getEmployee_id());
@@ -166,10 +154,6 @@ public class DailyReportController {
    public String goMain_Employee(Model model, HttpServletRequest request, HttpSession session, @PathVariable("id") String employee_id){
       EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
 
-      if(user == null) {
-         return "redirect:/user/login";
-      }
-
       //manager인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
       if("manager".equals(user.getPosition())) {
          return "redirect:/dailyReport/main/all/1";
@@ -185,11 +169,7 @@ public class DailyReportController {
    @RequestMapping(value="/main/employee/{id}/{page}") 
    public String goMain_Employee(Model model, HttpServletRequest request, HttpSession session, @PathVariable("id") String employee_id, @PathVariable("page") int page){
       EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
-      
-      if(user == null) {
-         return "redirect:/user/login";
-      }
-      
+            
       HashMap<String, Object> dailyReportListMap = null;      
       HashMap<String, Object> serviceParams = new HashMap<String, Object>();
       int totalUnapprovalNum = 0;
@@ -237,7 +217,7 @@ public class DailyReportController {
       String serviceParamsStr = gson.toJson(serviceParams);
     
       
-      dailyReportListMap = dailyReportService.selectDailyReportList("employee", user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
+      dailyReportListMap = dailyReportService.selectDailyReportList(user.getEmployee_id(), page, PER_CONTENT_NUM, serviceParams);
       totalUnapprovalNum = dailyReportService.getgetTotalUnapprovalNum("member", employee_id);
       
       model.addAttribute("dailyReportList", dailyReportListMap.get("dailyReportList"));
@@ -378,6 +358,7 @@ public class DailyReportController {
 		int daily_sales=0;
 
 		HashMap<String, Integer> salesMap=new HashMap<String, Integer>();
+		System.out.println(map.toString());
 		daily_sales=dailyReportService.confirmDuplicate(map);
 		Gson gson=new Gson();
 		if(daily_sales>=1){

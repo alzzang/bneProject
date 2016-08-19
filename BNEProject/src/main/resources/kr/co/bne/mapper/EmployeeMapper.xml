@@ -10,9 +10,6 @@
         ELSE 'employee' END position from employee e, department d where e.DEPARTMENT_ID = d.DEPARTMENT_ID
         and employee_id = #{value}]]>
    </select>
-	
-	<!-- <![CDATA[select * from employee where employee_id=#{value}]]> -->
-	
 
 	<update id="updatePassword" parameterType="HashMap">
 	<![CDATA[update employee set password=#{password} where employee_id=#{id}]]>
@@ -21,16 +18,39 @@
 	<update id="updateFile" parameterType="HashMap">
 	<![CDATA[update employee set file_position=#{filePosition} where employee_id=#{id}]]>
 	</update>
+
 	<update id="defaultUpdateFile" parameterType="String">
 	<![CDATA[update employee set file_position='default.png' where employee_id=#{value}]]>
 	</update>
 
-	
- 
 	<select id="selectImage" resultType="Employee">
-	<![CDATA[
-	select employee_name,file_position from employee where employee_id='1'
-	]]>
+	<![CDATA[select employee_name,file_position from employee where employee_id='1'	]]>
+	</select>
+	
+	<select id="empSearch" parameterType="String" resultType="Employee">
+		<![CDATA[
+		    select EMPLOYEE_ID,EMPLOYEE_NAME,DEPARTMENT_ID,mobile_phone,email,file_position
+			from employee
+			where EMPLOYEE_NAME like #{value}
+			order by 2	]]>
+	</select>
+
+	<select id="selectTeamMember" resultType="Employee" parameterType="Integer">
+	<![CDATA[select employee_name,employee_id from employee where department_id=#{values}]]>
+	</select>
+	
+	
+	<select id="selectTeamMember_menu" resultType="Employee" parameterType="String">
+		select employee_id, employee_name
+		from employee
+		where department_id = (select department_id 
+		                       from employee 
+		                       where employee_id = #{value})
+		      and employee_id not in ((select manager_id 
+		                              from department 
+		                              where department_id = (select department_id 
+		                                                     from employee 
+		                                                     where employee_id=#{value})), #{value})
 	</select>
 
 </mapper>

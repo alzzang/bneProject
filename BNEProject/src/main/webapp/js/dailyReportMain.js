@@ -5,12 +5,11 @@
 
 
 function viewList(option, value) {
-	event.stopPropagation();
 	var originParams =jQuery.parseJSON($("#params").val());
 	var path = $("#url").val();
 	
 	console.log(originParams);
-
+	
 	var page = 1;
 	var employee_id = originParams.employee_id;
 	var reg_date = originParams.reg_date;
@@ -68,10 +67,9 @@ function viewList(option, value) {
 		hiddenField.setAttribute("value", reg_date);
 		form.appendChild(hiddenField);
 	}
-	/*
-	*/
+	
+
 	if( search_text != undefined){
-	//	alert(typeof search_text+":");
 		var hiddenField = document.createElement("input");
 		hiddenField.setAttribute("type", "hidden");
 		hiddenField.setAttribute("name", "search_text");
@@ -86,5 +84,6 @@ function viewList(option, value) {
 	}
 	
 	document.body.appendChild(form);
+
 	form.submit();
 }

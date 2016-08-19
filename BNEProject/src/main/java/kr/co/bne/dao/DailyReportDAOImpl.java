@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.bne.dto.CounsellingDetailDTO;
 import kr.co.bne.dto.CounsellingRecordDTO;
+import kr.co.bne.dto.DailyReportChart2DTO;
+import kr.co.bne.dto.DailyReportChartDTO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
 import kr.co.bne.dto.DailyReportEmployeeDTO;
@@ -22,13 +24,14 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	@Override
+	
 	public DailyReportEmployeeDTO selectPreSales(String employee_id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectEmployee", employee_id);
 	}
 	@Override
 	public int insertDailyReport(DailyReportDTO dailyReportDTO) {
-		System.out.println("dailyreport insert 했지롱");		
+
 		// TODO Auto-generated method stub
 		return sqlSession.insert("kr.co.bne.mapper.DailyReport.insertDailyReport", dailyReportDTO);
 		
@@ -112,6 +115,7 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		return pageNum;
 	}
 	
+	
 
 	@Override
 	public List<DailyReportTeamListElement> selectTeamMemberList(String user_id) throws RuntimeException {
@@ -124,11 +128,9 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 	@Override
 	public int getTotalUnapprovalNum_Manager(String user_id) throws RuntimeException {
 		int TotalUnapprovalNum = sqlSession.selectOne("kr.co.bne.mapper.DailyReport.getTotalUnapprovalNum_Manager", user_id);
-		
 		return TotalUnapprovalNum;
 	}
-	
-	
+		
 	
 	@Override
 	public int getTotalUnapprovalNum_Member(String user_id) throws RuntimeException {
@@ -136,22 +138,77 @@ public class DailyReportDAOImpl implements DailyReportDAO {
 		
 		return TotalUnapprovalNum;
 	}
+	@Override
+	public int selectMonthlyGoal(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectMonthlyGoal", id);
+	}
+	@Override
+	public int selectSumofMonthlyGoal(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoal", id);
+	}
+	@Override
+	public int selectMonthlyGoalManager(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectMonthlyGoalManager", id);
+	}
+	@Override
+	public int selectSumofMonthlyGoalManager(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.DailyReport.selectSumofMonthlyGoalManager", id);
+	}
+	@Override
+	public List<DailyReportChartDTO> selectDailyReportChartLineList(String id){
+		
+		List<DailyReportChartDTO> dailyRepoartChartList = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChartList",id);
+		return dailyRepoartChartList;
+	}
 	
 	@Override
-	public void insertComment(HashMap<String, String> map) {
-		// TODO Auto-generated method stub
-		sqlSession.update("kr.co.bne.mapper.DailyReport.insertComment", map);
+	public List<DailyReportChart2DTO> selectDailyReportChartLine2List(int department_id){
+		List<DailyReportChart2DTO> dailyRepoartChart2List = sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectDailyChart2List",department_id);
+		return dailyRepoartChart2List;
 	}
 	@Override
-	public void deleteComment(String daily_report_id) {
+	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String id) {
 		// TODO Auto-generated method stub
-		sqlSession.update("kr.co.bne.mapper.DailyReport.deleteComment", daily_report_id);
+		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectTeamMonthlyGoal", id);
 	}
+	@Override
+	public List<?> selectVehicleGauge(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectVehicleGauge", id);
+	}
+	@Override
+	public List<DailyReportChart2DTO> selectCustomerSales(int departmentId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.DailyReport.selectCustomerSales", departmentId);
+	}
+	
+	
+	
+	
 	@Override
 	public void deleteReport(String id) {
 		// TODO Auto-generated method stub
 		sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteReport", id);
 	}
+	@Override
+	public void insertComment(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("kr.co.bne.mapper.DailyReport.insertComment",map);
+	}
+	@Override
+	public void deleteComment(String daily_report_id) {
+		
+		sqlSession.delete("kr.co.bne.mapper.DailyReport.deleteComment",daily_report_id);
+		
+		// TODO Auto-generated method stub
+		
+		
+	}
+
 	@Override
 	public int selectDailyCount(HashMap<String, String> map) {
 		// TODO Auto-generated method stub

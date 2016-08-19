@@ -78,12 +78,12 @@ function createNoticeString(subject_name, notice_type) {
 function createNoticeElementHTML(noticeObj) {
 	var message = createNoticeString(noticeObj.subject_name, noticeObj.notice_type);
 	var href = '/alarm/detail/' + noticeObj.link_id;
-	var status = "list-group-status";
+	var status = "";
 	var file= '/assets/images/users/user.jpg';
 	
 	
 	if(noticeObj.notice_type === "WEEKLY_POST") {
-		status += "status-online";
+		status += "fa fa-circle text-danger";
 	}else if(noticeObj.notice_type === "WEEKLY_CORRECT") {
 		status += "fa fa-circle text-danger";
 	}else if(noticeObj.notice_type === "DAILY_POST") {
@@ -91,9 +91,9 @@ function createNoticeElementHTML(noticeObj) {
 	}else if(noticeObj.notice_type === "DAILY_CORRECT") {
 		status += "fa fa-circle text-warning";
 	}else if(noticeObj.notice_type === "COMMENT") {
-		status += "fa fa-circle text-danger";
+		status += "fa fa-circle text-warning";
 	}else if(noticeObj.notice_type === "APPROVAL") {
-		status += "fa fa-circle text-success";
+		status += "fa fa-circle text-primary";
 	}else {
 		alert('error!!');
 		return;
@@ -102,7 +102,7 @@ function createNoticeElementHTML(noticeObj) {
 	var params = noticeObj.notice_id + ", '" + noticeObj.notice_type + "', " + noticeObj.link_id + ", '" + noticeObj.subject_id + "'";
 	
 	var html = '<a href="#" onclick="moveLink(' + params + ')" class="list-group-item">' +
-					'<span class="fa fa-circle text-warning"></span>' +
+					'<span class="' + status + '"></span>' +
 					'<img src="' + file + '" class="pull-left" alt="' + noticeObj.user_name + '">' +
 					'<span class="contacts-title">'+ noticeObj.subject_name + '</span>' +
 					'<p>' + message + '</p>' +

@@ -366,10 +366,7 @@ function approvalDaily() {
     		},
     		success : function(data) {
     			$('#approvalDiv').remove();
-    			/*document.location.hash = "approval";*/
-    			alert('승인되었습니다.');    
-    			//location.reload();
-
+    			alert('승인되었습니다.');
     			/*event.preventDefault();*/
     		},
     		error : function(data)
@@ -404,26 +401,21 @@ function insertComment(){
 			comment : $('#managerComment').val()
 		},
 		success : function(data) {
-		/*	var html='<div class="timeline-body comments">'+'<div class="comment-item">'+' <img src="/user/download/'+$('#manager_file_position').val()+'/">'+                               
-                     '<p class="comment-head">'+' <a href="#">'+$('#manager_name').val()+'</a>'
-                      +'<a href="#" class="pull-right" onclick="deleteComment()">삭제</a><span class="pull-right">&nbsp;|&nbsp;</span>'+
-                      '<a href="#" class="pull-right" onclick="modifyComment('+'\''+$('#managerComment').val()+'\''+')">수정</a></p>'+$('#managerComment').val()+'</div></div>' ;                   
-			$('#commentDiv').html(html);*/
+
 		   location.reload();
 
+		},
+		error:function(){
+			alert("수정오류");
 		}
-
 	})
 }
 function modifyComment(val){
-	alert(val);
 	var html='<div class="form-group push-up-20"><div class="col-md-12"><div class="input-group">'+
 		'<input class="form-control" placeholder="팀장 의견" id="managerComment" value="'+val+'">'
 		+'<span class="input-group-addon"><a href="#" onclick="insertComment()">'+
 		 '<span	class="fa fa-pencil"></span></a></span></div></div></div>';			
 	$('#commentDiv').html(html);
-    
-
 		
 
 }
@@ -436,11 +428,6 @@ function deleteComment(){
 			report_id: $('#report_id').val()
 		},
 		success : function(data) {
-			/*var html='<div class="form-group push-up-20"><div class="col-md-12"><div class="input-group">'+
-				'<input class="form-control" placeholder="팀장 의견" id="managerComment">'
-				+'<span class="input-group-addon"><a href="#" onclick="insertComment()">'+
-				 '<span	class="fa fa-pencil"></span></a></span></div></div></div>';			
-			$('#commentDiv').html(html);*/
 		    location.reload();
 
 		}
@@ -455,7 +442,8 @@ function searchSalesGoal(reg_date) {
 	$.ajax({
 		type : "POST",
 		url : "/dailyReport/dailysales",
-		data : {		
+		data : {
+		 
 			reg_date : $('#reg_date').val()
 		},
 		success : function(data) {

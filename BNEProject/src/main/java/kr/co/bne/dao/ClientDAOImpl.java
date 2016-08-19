@@ -12,12 +12,12 @@ import kr.co.bne.dto.ClientDTO;
 public class ClientDAOImpl implements ClientDAO {
 
 	@Autowired
-	SqlSession sqlSessionl;
+	SqlSession sqlSession;
 	
 	@Override
 	public List<ClientDTO> selectAll() {
 		// TODO Auto-generated method stub
-		return sqlSessionl.selectList("kr.co.bne.mapper.Client.selectClient");
+		return sqlSession.selectList("kr.co.bne.mapper.Client.selectClient");
 	}
 
 
