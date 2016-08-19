@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+#bookmark{
+
+}
+.tasks .task-warning.task-item.task-complete{
+	background:#fdfbf3;
+}
+
+</style>
 <div class="page-content-wrap">
 	<div class="row">
 		<div class="col-md-6">
@@ -9,7 +18,7 @@
 				</div>
 				<div class="panel-body">
 					<div id="calanderDetail" class="calendar" >
-						<div id="calendar" class="fc fc-ltr fc-unthemed "style="height: 430px;">
+						<div id="calendar" class="fc fc-ltr fc-unthemed "style="height: 450px;">
 						</div>
 					</div>
 				</div>
@@ -21,11 +30,36 @@
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">결제/미결제</h3>
+					<h3 class="panel-title">미승인</h3>
 				</div>
-				<div class="panel-body"></div>
-			</div>
-			<!-- START BAR CHART -->
+				<div class="panel-body">
+					<div class="tasks ui-sortable" id="unapproval"
+						style="height: 450px;">
+						<c:forEach items="${requestScope.unapproval.dailyReportList}"
+							var="rlist">
+
+
+							<div
+								class="task-item task-warning task-complete widget widget-item-icon"
+								id='${rlist.idx}' style="max-height:102px; min-height:10px;">
+
+								<div  class="task-text ui-sortable-handle" id='${rlist.idx}'
+									onclick="detailDaily('${rlist.idx}')" style="max-height:102px; padding:0px; padding-top:10px; background:#fdfbf3; color:black;">
+									<div class="widget-item-left">
+										<span id="bookmark" class="fa fa-bookmark"
+											style="font-size: 350%; color: #FFFFFF;"></span>
+									</div>
+									<div style="font-size:1.7em; white-space: nowrap; max-width:25em;margin-top:3%; overflow:hidden; text-overflow:ellipsis;">
+										${rlist.title}
+									</div>
+								</div>
+							</div>
+
+						</c:forEach>
+
+					</div>
+				</div>
+				<!-- START BAR CHART -->
 
 			<!-- END Area CHART -->
 
@@ -33,7 +67,7 @@
 
 	</div>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-4">
 
 			<!-- START BAR CHART -->
 			<div class="panel panel-default">
@@ -48,7 +82,7 @@
 			<!-- END LINE CHART -->
 
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-4">
 
 			<!-- START BAR CHART -->
 			<div class="panel panel-default">
@@ -95,66 +129,30 @@
 	text-align: center;
 }
 </style>
+
 <script>
-var makeSalesInput = function(){
-	var salesCell
-	= 	'<tr>' + 
-			'<td class="fc-axis">매출</td>' +
-			'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
-		'</tr>';
-		
-	$('#weeklyTableHeader>tbody').html(salesCell);
-	
-	var s = $('#weeklyTableHeader>thead>tr>th');
-	
-	for(var i=2; i<7; i++){
-		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
-	}	
-};
-
-
-var inputReportData = function(reportData) {
-
-	var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
-	var planDetailDTOList = reportData.planDetailDTOList;
-
-	for (var i = 0; i < planDetailDTOList.length; i++) {
-		$('#calendar').fullCalendar('renderEvent', {
-			"title" : planDetailDTOList[i].content,
-			"allDay" : false,
-			"start" : planDetailDTOList[i].start_time,
-			"end" : planDetailDTOList[i].end_time
-		}, true);
-	}
-
-	//$('#calendar').fullCalendar( 'gotoDate', weeklyPlanDTOList[0].reg_date );
-
-	// 매출액 정보 행 삽입
-	makeSalesInput();
-	console.log("dfdf="+weeklyPlanDTOList[0].reg_date);
-	for(var i=0; i<weeklyPlanDTOList.length; i++){
-		$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
-	}
-};
-
-
 window.onload = function(){
-
+	weeklyReportDetail = ${weeklyReportDetail};
 	
 	// 처음에 받아온 주간계획 정보 삽입 
-	if('${weeklyReportDetail}'!=''){
-		var reportData = JSON.parse('${weeklyReportDetail}') 
-		inputReportData(reportData);
+	if(weeklyReportDetail !== false){
+		var parseToWeeklyReportDetail = JSON.stringify(weeklyReportDetail);
+		var reportData = JSON.parse(parseToWeeklyReportDetail); 
+		mainInputReportData(reportData);
 	}else{
-		var day = ['mon','tue','wed','thu','fri'];
+		var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+		var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
+		//$('#weekly_report_id')[0].value = weeklyReportDTO.weekly_report_id;
+		$('#title').html(weeklyNumber+'주의 계획');
+		$('#employee_name').html('${user.employee_name}');
+		$('#department_name').html('${user.department_name}');
+		
 		makeSalesInput();
+		var day = ['mon','tue','wed','thu','fri'];
 		for(var i=0; i<5; i++){
-			$('input[id="sales-'+day[i]+'"]').attr({'value': '', 'disabled':'disabled'});
+			$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
 		}
+		openMessageBox('#mb-NoWeeklyPlan');
 	}
 	
 	// 이 주간계획서의 작성자 ID

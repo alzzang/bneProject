@@ -38,6 +38,7 @@ import kr.co.bne.dto.DailyReportEmployeeDTO;
 
 
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.service.CounsellingRecordService;
 import kr.co.bne.service.DailyReportService;
 import kr.co.bne.service.UserService;
 
@@ -53,6 +54,9 @@ public class UserController {
 
 	@Autowired
 	private DailyReportService dailyReportService;
+
+	@Autowired
+	CounsellingRecordService counsellingRecordService;
 
 	
 	public void setFileName(String fileName, HttpServletRequest req){
@@ -196,14 +200,16 @@ public class UserController {
 	public String showSearchUser(Model model,@PathVariable String empId, HttpServletRequest req, HttpServletResponse res)
 			throws IOException {
 				
-		EmployeeDTO ed = employeeDAO.selectEmployee(empId);
-		model.addAttribute("emp",ed);
-
-
-
+		HttpSession session = req.getSession();
+		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("user");
 		
+		EmployeeDTO edto = employeeDAO.selectEmployee(empId);
+		List<EmployeeDTO> depUserList=counsellingRecordService.getManageSales(employeeDTO.getDepartment_id());
+		System.out.println("!!! : "+empId);
+		model.addAttribute("emp",edto);
+		model.addAttribute("depUserList", depUserList);
+		model.addAttribute("employeeDTO", employeeDTO);
 		
-
 		return "searchUser";
 	}
 	

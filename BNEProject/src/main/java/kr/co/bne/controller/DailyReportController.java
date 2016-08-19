@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -417,6 +418,14 @@ public class DailyReportController {
 
 		dailyReportService.removeComment(daily_report_id);
 
+	}
+	
+	@RequestMapping("/checkReport")
+	public @ResponseBody int checkReport(@RequestParam("date")String date,HttpServletRequest req,HttpServletRequest res){
+		HttpSession session=req.getSession();
+		EmployeeDTO employeeDto = (EmployeeDTO)session.getAttribute("user");
+		
+		return dailyReportService.checkReport(date,employeeDto.getEmployee_id());
 	}
 
 }

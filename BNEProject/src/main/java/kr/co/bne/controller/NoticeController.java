@@ -64,24 +64,24 @@ public class NoticeController {
 		unList=noticeService.searchUnconfirmedNotice(map);
 		cnList=noticeService.searchconfirmedNotice(map);
 		
-		for(int i=0;i<unList.size();i++){
-			String tempTime[]=unList.get(i).getPasstime().split(" ");
-			String setTime="";
-			if(tempTime[0].charAt(0)!='0'){
-				setTime=tempTime[0];
-			}else if(tempTime[1].charAt(0)!='0'){
-				setTime=tempTime[1];
-			}else if(tempTime[2].charAt(0)!='0'){
-				setTime=tempTime[2];
-			}else{
-			for(int j=3;j<tempTime.length;j++){
-				if(tempTime[j].charAt(0)!='0')
-					setTime+=tempTime[j]+" ";
-			}
+		for (int i = 0; i < unList.size(); i++) {
+			String tempTime[] = unList.get(i).getPasstime().split(" ");
+			String setTime = "";
+			if (tempTime[0].charAt(0) != '0') {
+				setTime = tempTime[0];
+			} else if (tempTime[1].charAt(0) != '0') {
+				setTime = tempTime[1];
+			} else if (tempTime[2].charAt(0) != '0') {
+				setTime = tempTime[2];
+			} else {
+				for (int j = 3; j < tempTime.length; j++) {
+					if (tempTime[j].charAt(0) != '0')
+						setTime += tempTime[j] + " ";
+				}
 			}
 			unList.get(i).setPasstime(setTime);
 		}
-		
+
 		for(int i=0;i<cnList.size();i++){
 			String tempTime[]=cnList.get(i).getPasstime().split(" ");
 			String setTime="";
@@ -101,7 +101,7 @@ public class NoticeController {
 		}
 		
 		ModelAndView model=new ModelAndView("alarmDetail");
-		model.addObject("unList", unList);
+			model.addObject("unList", unList);
 		model.addObject("cnList", cnList);
 		model.addObject("position",position);
 		model.addObject("type", type);

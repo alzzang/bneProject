@@ -3,6 +3,9 @@ package kr.co.bne.controller;
 import java.io.IOException;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -19,6 +23,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import kr.co.bne.common.NoticeDetail;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
 import kr.co.bne.service.DailyReportService;
@@ -29,8 +34,10 @@ import kr.co.bne.service.WeeklyReportService;
 public class MainController {
 	@Autowired
 	WeeklyReportService weeklyReportService;
+	
 	@Autowired
 	DailyReportService dailyReportService;
+	
 	@Autowired
 	UserService userService;
 	
@@ -56,28 +63,29 @@ public class MainController {
 	}
 	
 	
+	
 	@RequestMapping("/main")
-	public String goMain(HttpServletRequest request,HttpSession session) throws Exception {
+	public String goMain(HttpServletRequest request,HttpServletResponse res,HttpSession session) throws Exception {
 		//주간테이블
 		EmployeeDTO loginEmployee = (EmployeeDTO)session.getAttribute("user");
 		if(loginEmployee == null) {
 			return "redirect:/user/goLoginForm";
 		}
 		
-		Calendar calendar = Calendar.getInstance();
-		int week_of_year = calendar.get(Calendar.WEEK_OF_YEAR); 
-		int year = calendar.get(Calendar.YEAR);
-		String weekly_report_id = year+"_"+week_of_year+"_"+loginEmployee.getEmployee_id();
-		System.out.println("weeklyReportId:"+weekly_report_id);
-		WeeklyReportDetailDTO reportDetail = weeklyReportService.selectWeeklyReportDetail(weekly_report_id);
-		JsonObject weeklyReportDetail = null;
-		if(reportDetail.getWeeklyReportDTO() != null)
-			weeklyReportDetail = parseWeeklyReportDetailDTO(reportDetail);
+		JsonObject weeklyReportDetail = getWekelyTable(loginEmployee);
 		
-		request.setAttribute("weeklyReportDetail", weeklyReportDetail);
+		if(weeklyReportDetail != null)
+			request.setAttribute("weeklyReportDetail", weeklyReportDetail);
+		else{
+			boolean result = false;
+			request.setAttribute("weeklyReportDetail",result);
+		}
 		request.setAttribute("employee_Id", loginEmployee.getEmployee_id());
+		request.setAttribute("unapproval", unapproval(request,res));
 		return "mainboard";
 	}
+	
+	
 		
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){
@@ -95,7 +103,87 @@ public class MainController {
 		return "WeeklyWriteForm";
 	}
 
+	public JsonObject getWekelyTable(EmployeeDTO loginEmployee) throws Exception{
+		Calendar calendar = Calendar.getInstance();
+		int week_of_year = calendar.get(Calendar.WEEK_OF_YEAR); 
+		int year = calendar.get(Calendar.YEAR);
+		String weekly_report_id = year+"_"+week_of_year+"_"+loginEmployee.getEmployee_id();
+		WeeklyReportDetailDTO reportDetail = weeklyReportService.selectWeeklyReportDetail(weekly_report_id);
+		JsonObject weeklyReportDetail = null;
+		if(reportDetail.getWeeklyReportDTO() != null)
+			weeklyReportDetail = parseWeeklyReportDetailDTO(reportDetail);
+		return weeklyReportDetail;
+	}
 	
+	public Map<String,Object> unapproval(HttpServletRequest req, HttpServletResponse res) {
+	      
+	      
+	      HttpSession session=req.getSession();
+	      EmployeeDTO employee=(EmployeeDTO) session.getAttribute("user");
+	   
+	      HashMap<String, Object> dailyReportListMap = null;
+	      HashMap<String, Object> params=new HashMap<String, Object>();
+	      
+	      int startIdx=1;
+	      int perContentNum=4;
+	      
+	      if(!employee.getPosition().equals("manager")){
+	      params.put("employee_id", employee.getEmployee_id());
+	      }
+	      
+	      params.put("approval_flag", 0);
+	      
+	      
+	      dailyReportListMap = dailyReportService.selectDailyReportList(employee.getEmployee_id(), startIdx, perContentNum, params);
+	      
+	      //System.out.println(dailyReportListMap);
+	      
+	      //unList=noticeService.searchUnconfirmedNotice(map);
+	      
+	      
+	   /*   for(int i=0;i<unList.size();i++){
+	         String tempTime[]=unList.get(i).getPasstime().split(" ");
+	         String setTime="";
+	         if(tempTime[0].charAt(0)!='0'){
+	            setTime=tempTime[0];
+	         }else if(tempTime[1].charAt(0)!='0'){
+	            setTime=tempTime[1];
+	         }else if(tempTime[2].charAt(0)!='0'){
+	            setTime=tempTime[2];
+	         }else{
+	         for(int j=3;j<tempTime.length;j++){
+	            if(tempTime[j].charAt(0)!='0')
+	               setTime+=tempTime[j]+" ";
+	         }
+	         }
+	         unList.get(i).setPasstime(setTime);
+	      }
+	      
+	      for(int i=0;i<cnList.size();i++){
+	         String tempTime[]=cnList.get(i).getPasstime().split(" ");
+	         String setTime="";
+	         if(tempTime[0].charAt(0)!='0'){
+	            setTime=tempTime[0];
+	         }else if(tempTime[1].charAt(0)!='0'){
+	            setTime=tempTime[1];
+	         }else if(tempTime[2].charAt(0)!='0'){
+	            setTime=tempTime[2];
+	         }else{
+	         for(int j=3;j<tempTime.length;j++){
+	            if(tempTime[j].charAt(0)!='0')
+	               setTime+=tempTime[j]+" ";
+	         }
+	         }
+	         cnList.get(i).setPasstime(setTime);
+	      }
+	      
+	      ModelAndView model=new ModelAndView("alarmDetail");
+	         model.addObject("unList", unList);
+	      model.addObject("cnList", cnList);
+	      model.addObject("position",position);
+	      model.addObject("type", type);*/
+	      return dailyReportListMap;
+	   }
 
 	
 	

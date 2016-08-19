@@ -42,5 +42,5 @@ public interface DailyReportService {
 	HashMap<String, Object> selectDailyReportList(String user_id, int startIdx, int perContentNum);
 	HashMap<String, Object> selectDailyReportList(String user_id, int startIdx, int perContentNum,
 			HashMap<String, Object> params);
-
+	int checkReport(String date, String employeeId);
 }

@@ -21,6 +21,26 @@
 	text-align: left;
 	width: 100px;
 }
+#mb-alreadyWrittenReport .mb-container{
+	width: 440px;
+	left:50%;
+}
+#mb-alreadyWrittenReport .mb-container .mb-middle {
+    width: 400px;
+    left:0%;
+    position: relative;
+    color: #FFF;
+}
+#mb-SavePlan .mb-container{
+	width: 440px;
+	left:50%;
+}
+#mb-SavePlan .mb-container .mb-middle {
+    width: 400px;
+    left:0%;
+    position: relative;
+    color: #FFF;
+}
 </style>
 
 <div class="content-frame">
@@ -46,7 +66,7 @@
 			</div>	
 		</div>	
 			<input type="hidden" name="department_id" value="${user.department_id}" disabled><br>
-			<input type="hidden" name="employee_Id" value="${employee_Id}" disabled>
+			<input type="hidden" name="employee_Id" value="${employee_Id}"disabled>
 			<div class="panel-body">
 			<table class="table table-bordered detailInfoTable">
 				<thead>
@@ -108,39 +128,90 @@
 					</div>
 				</div>
 				<div id="buttonGroup">
-					<button id ="cancle" type="submit" class="btn btn-danger pull-right" style="margin-left:1%; margin-top:1%">취소</button>
-					<button id ="savePlan" type="button" class="btn btn-success pull-right" style="margin-left:1%; margin-top:1%">저장</button>
+					<button id ="cancle" type="submit" class="btn btn-danger pull-right"  style="margin-left:1%; margin-top:1%">취소</button>
+					<button id ="savePlan" type="button" class="btn btn-success pull-right mb-control"style="margin-left:1%; margin-top:1%">저장</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- END CONTENT FRAME BODY -->
 
+	<!-- MESSAGE BOX-->
+	<div class="message-box animated fadeIn" data-sound="alert"	id="mb-SavePlan">
+		<div class="mb-container">
+			<div class="mb-middle">
+				
+				<div class="mb-title">
+					<span class="fa fa-exclamation"></span><strong>계획을 저장하시겠습니다.</strong>
+				</div>
+				
+				<div class="mb-content">
+					<p></p>
+					<p>확인시 계획확인 화면으로 이동합니다</p>
+				</div>
+				
+				<div class="mb-footer">
+					<div class="pull-right">
+						<a id = "confirm"  class="btn btn-success btn-lg">확인</a>
+						<button class="btn btn-default btn-lg mb-control-close">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MESSAGE BOX-->
+
+
+	<!-- MESSAGE BOX-->
+	<div class="message-box animated fadeIn" data-sound="alert"	id="mb-alreadyWrittenReport">
+		<div class="mb-container">
+			<div class="mb-middle">
+				
+				<div class="mb-title">
+					<span class="fa fa-exclamation"></span><strong>작성된 계획이 존재합니다.</strong>
+				
+				</div>
+				
+				<div class="mb-content">
+					<p>계획을 보시겠습니까?</p>
+					<p>취소시 전에 있던 페이지로 이동합니다.</p>
+				</div>
+				
+				<div class="mb-footer">
+					<div class="pull-right">
+						<a href="/weeklyReport/detail/${employee_Id}" class="btn btn-success btn-lg">확인</a>
+						<a href= "${beforeUrl}" class="btn btn-default btn-lg">취소</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MESSAGE BOX-->
+
+
 </div>
 
 
 <script>
 window.onload = function(){
-	$('#calendar').fullCalendar('next');
+	$('#calendar').fullCalendar('getView').calendar.options.editable = true;
+	$('#calendar').fullCalendar('getView').calendar.options.selectable = true;
 	
-	var tbodyTag
-	= 	'<tr>' + 
-			'<td class="fc-axis">매출</td>' +
-			'<td><input type="text" class="salesInput" id="sales-mon"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-tue"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-wed"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-thu"></td>' +
-			'<td><input type="text" class="salesInput" id="sales-fri"></td>' +
-		'</tr>';
-		
-	$('#weeklyTableHeader>tbody').html(tbodyTag);
-	var s = $('#weeklyTableHeader>thead>tr>th');
-	for(var i=2; i<7; i++){
-		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
-	} 
+	$('#calendar').fullCalendar('next');
+
+	var result = ${result};	
+	if(result == false)
+		openMessageBox('#mb-alreadyWrittenReport');
+	
+	
+	makeSalesInput();	
 	var date = $('#calendar').fullCalendar('getDate');	
 	
-$('#savePlan').on('click',function(){
+	$('#savePlan').on('click',function(){
+		openMessageBox('#mb-SavePlan');
+	});
+
+$('#confirm').on('click',function(){
 	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
 	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
 	
@@ -193,8 +264,8 @@ $('#savePlan').on('click',function(){
 	for(var i = 0; i<s.length; i++){
 		var plan;
 		
-		var title = s[i].title;
-		
+		var title = s[i].title;//.replace(/\'/g,"'");
+		 
 		var startTimeOrigin = s[i].start.format().split('T');
 		var startTime = startTimeOrigin[0]+" "+startTimeOrigin[1];
 		var endTimeOrigin = s[i].end.format().split('T');
@@ -211,7 +282,6 @@ $('#savePlan').on('click',function(){
 	var jPlan = JSON.stringify(allPlan);
 	var jPlan2 = JSON.stringify(weeklyReport);
 	var jPlan3 = JSON.stringify(sales);
-	$('.fc-row .fc-widget-header');
 	
 	$.ajax({
 		type : "POST",
@@ -221,14 +291,29 @@ $('#savePlan').on('click',function(){
 			report : jPlan2,
 			weeklyPlan : jPlan
 		},
-
 		success : function(){
+			alert("성송");
+			window.location.href="/weeklyReport/detail/"+employee_id;
 		},
 		error : function(){
+			alert("실패");
 		}
 	})
-	
 });
+
+$('#sales-mon ,#sales-tue,#sales-wed,#sales-thu,#sales-fri').keydown(function(e){
+	var range = this.selectionStart;
+	if(range == 0 && e.keyCode==48 || e.keyCode==96)
+		e.preventDefault();
+	
+    if (e.keyCode!=37&&e.keyCode!=38&&e.keyCode!=39&&e.keyCode!=40&&e.keyCode!=9&&e.keyCode!=8&&(e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+    }
+});
+
+
 }
 
 </script>
+
+<script type="text/javascript" src="/js/weekly.js"></script>

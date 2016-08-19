@@ -32,7 +32,6 @@ public interface DailyReportDAO {
 	public int selectMonthlyGoalManager(String id);
 	public int selectSumofMonthlyGoalManager(String id);
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String id);
-
 	
 	
 	List<DailyReportListElement> selectDailyReportList(String user_id, int startIdx, int perContentNum,
@@ -56,6 +55,6 @@ public interface DailyReportDAO {
 	public void insertComment(HashMap<String, String> map);
 	public void deleteComment(String daily_report_id);
 	public void deleteReport(String id);
-
+public int checkDailyReport(String date,String employeeId);
 	public int selectDailyCount(HashMap<String, String> map);
 }

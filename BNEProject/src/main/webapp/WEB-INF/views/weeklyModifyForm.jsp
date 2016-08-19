@@ -215,7 +215,7 @@ var makeSalesInput = function(){
             			formatted: lack_rate + '%'
             		}
             	],
-        colors: ['#95B75D', '#D80647'],
+        colors: ['#95B75D', '#1caf9a'],
         formatter: function(x, data){
         	return data.formatted;	
         },
@@ -230,7 +230,9 @@ var makeSalesInput = function(){
 
 	window.onload = function() {
 
-		
+		$('#calendar').fullCalendar('getView').calendar.options.editable = true;
+		$('#calendar').fullCalendar('getView').calendar.options.selectable = true;
+		$('#calendar').fullCalendar('next');
 		
 		var reportData = JSON.parse('${weeklyReportDetail}');
 		inputReportData(reportData);

@@ -16,7 +16,6 @@ import kr.co.bne.dao.DailyReportDAO;
 import kr.co.bne.dao.NoticeDAO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
-import kr.co.bne.dto.WeeklyReportDetailDTO;
 
 
 @Component
@@ -34,7 +33,6 @@ public class NoticeAspect {
    
    public NoticeAspect() {
       System.out.println("aspect 생성!!");
-      
    }
    
    

@@ -25,6 +25,15 @@ function updateImage() {
 		},
 	})
 }
+/* searchuserResult.jsp */
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
 
 function selectSecontClient(value) {
 	$.ajax({	
@@ -57,13 +66,11 @@ function selectSecontClient(value) {
 }
 
 $(function() {
-	
 	$('#myModal1').on('shown.bs.modal',	function() {
 		var myDropzone = Dropzone.forElement("#myDropzone");
 		var mockFile = {
 						name : $('#fileName').val(),
 						accepted : true,
-						size : 12345,
 						status : Dropzone.ACCEPTED
 					};
 		myDropzone.options.addedfile.call(myDropzone, mockFile);

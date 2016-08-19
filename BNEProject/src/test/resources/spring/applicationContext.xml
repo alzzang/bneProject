@@ -41,7 +41,16 @@
 		p:password="${jdbc.password}"
 		p:idleConnectionTestPeriod="14400"
 		p:maxIdleTime="25200"
-		destroy-method="close" />	
+		destroy-method="close" 
+	 		
+		
+		
+		
+/>	
+	<!-- <property name="validationQuery" value="select 1" />
+	<property name="testWhileIdle" value="true" />
+	<property name="timeBetweenEvictionRunsMillis" value="7200000" />
+		 -->
 
 
 	<bean id="transactionManager"
