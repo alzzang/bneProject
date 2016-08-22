@@ -255,6 +255,10 @@ public class DailyReportController {
 	public ModelAndView goWriteform(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session=req.getSession();
 		EmployeeDTO sessionid = (EmployeeDTO) session.getAttribute("user");
+		if(sessionid.getPosition().equals("manager")){
+			ModelAndView model=new ModelAndView("redirect:/dailyReport/main");
+			return model;
+		}
 		DailyReportEmployeeDTO employee=dailyReportService.searchPreSales(sessionid.getEmployee_id());
 		List<ClientDTO> clietns=clientService.getClient();
 		

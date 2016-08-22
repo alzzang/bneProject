@@ -70,7 +70,7 @@ var removeId=0;
 
 					<tr>
 						<th>매출 목표</th>
-						<td><span id="reg_date">${sessionScope.employee.sales_goal}</span></td>
+						<td><span id="goalValue">${sessionScope.employee.sales_goal}</span></td>
 					</tr>
 				</thead>
 			</table>
