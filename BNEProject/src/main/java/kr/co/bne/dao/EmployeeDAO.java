@@ -15,6 +15,4 @@ public interface EmployeeDAO {
 	public EmployeeDTO selectImage(String employee_id);
 	public List<EmployeeDTO> getEmpSearch(String empSearch);
 	List<EmployeeDTO> selectTeamMember_menu(String employee_id);
-		
-	
 }

@@ -63,7 +63,6 @@ $(function(){
 	
 	window.onload = function(){
 
-		
 		// 처음에 받아온 주간계획 정보 삽입 
 		var reportData = JSON.parse('${weeklyReportDetail}') 
 		inputReportData(reportData);

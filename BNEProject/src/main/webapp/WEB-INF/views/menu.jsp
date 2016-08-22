@@ -6,7 +6,11 @@
 
 
 <%
-String position = ((EmployeeDTO) session.getAttribute("user")).getPosition();
+String position = null;
+
+if(((EmployeeDTO) session.getAttribute("user")).getPosition() != null) {
+	position = ((EmployeeDTO) session.getAttribute("user")).getPosition();
+}
 %>
 
 
@@ -61,6 +65,7 @@ String position = ((EmployeeDTO) session.getAttribute("user")).getPosition();
 
 
 			<li class="xn-title">Navigation</li>
+			<%if (position != null) { %>
 			<li class=""><a href="/main"><span class="fa fa-desktop"></span>
 					<span class="xn-text">Home</span></a></li>
 			<li class="xn-openable"><a href="#"> <!-- weeklyReport/write -->
@@ -69,13 +74,12 @@ String position = ((EmployeeDTO) session.getAttribute("user")).getPosition();
 			</a>
 				<ul>
 					<%if (!position.equals("manager")) { %>
-					<li><a
-						href="/weeklyReport/detail/${user.getEmployee_id() }">내 주간 계획</a></li>
+					<li><a href="/weeklyReport/detail/${user.getEmployee_id() }">내
+							주간 계획</a></li>
 					<%} %>
 					<li class="xn-openable"><a id="weeklyDetail">팀원의 주간 계획</a>
 						<ul id="members">
-						</ul>
-					</li>
+						</ul></li>
 					<%if (!position.equals("manager")) { %>
 					<li><a href="/weeklyReport/writeForm">주간계획작성</a></li>
 					<%} %>
@@ -99,11 +103,16 @@ String position = ((EmployeeDTO) session.getAttribute("user")).getPosition();
 								보고</span></a></li>
 				</c:otherwise>
 			</c:choose>
-			
 
-			<li class=""><a href="/chart/page"><span class="fa fa-bar-chart-o"></span><span class="xn-text">chart</span></a>
+
+			<li class=""><a href="/chart/page"><span
+					class="fa fa-bar-chart-o"></span><span class="xn-text">chart</span></a>
 			</li>
-
+		<%}else { %>
+			<li class=""><a href="/chart/page"><span
+					class="fa fa-bar-chart-o"></span><span class="xn-text">부서 관리</span></a>
+			</li>		
+		<%} %>
 
 		</ul>
 		<!-- END X-NAVIGATION -->
@@ -166,6 +175,5 @@ String position = ((EmployeeDTO) session.getAttribute("user")).getPosition();
 
 	</div>
 </div>
-
 
 

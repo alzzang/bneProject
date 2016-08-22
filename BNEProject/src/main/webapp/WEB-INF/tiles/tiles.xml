@@ -86,13 +86,12 @@
 		<put-attribute name="body" value="/WEB-INF/views/searchUserResultList.jsp"/>
 	</definition>
 	
-	
-	
 		<definition name="weeklyModify" extends="tilesbase">
       <put-attribute name="body" value="/WEB-INF/views/weeklyModifyForm.jsp"/>
    </definition>
-	<definition name="mainboard" extends="tilesbase">
-	<put-attribute name="body" value="/WEB-INF/views/main.jsp"/>
+	
+	<definition name="weeklyList" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/weeklyList.jsp"/>
 	</definition>
 </tiles-definitions>
  

@@ -296,7 +296,9 @@ and dr.daily_report_id=#{id}
 	<select id="selectDailyCount" parameterType="hashmap" resultType="Integer">
 		select decode((select count(*) from daily_report where employee_id=#{employee_id} and reg_date=#{reg_date}), 1,(select daily_report_id from daily_report where employee_id=#{employee_id} and reg_date=#{reg_date}),0) num from dual
 	</select>
-
+	<select id="checkDailyReport" parameterType="map" resultType="Integer">
+		SELECT DAILY_REPORT_ID FROM DAILY_REPORT WHERE REG_DATE=#{date} AND EMPLOYEE_ID=#{employeeId}
+	</select>
 
 </mapper>
 

@@ -528,10 +528,10 @@ $(function() {
                         center: 'title',
                         right: ''
                     },
-                    editable: true,
+                    editable: false,
                     eventSources: {url: "/assets/ajax_fullcalendar.php"},
                     droppable: true,
-                    selectable: true,
+                    selectable: false,
                     selectHelper: true,
                     weekends : false,
                     allDaySlot: false,
@@ -540,7 +540,7 @@ $(function() {
                     contentHeight : "auto",
                     businessHours:true,
                     weekNumbers:true,
-                    eventColor:'#33414E',
+                    eventColor:'#1CAF9A',
                     select: function(start, end, allDay) {
                         var title = prompt('Event Title:');
                         if(!end.isAfter(start,'day')){

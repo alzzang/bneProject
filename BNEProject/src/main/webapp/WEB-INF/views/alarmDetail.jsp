@@ -337,5 +337,4 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
                                                 
                     </div>
                     <!-- END CONTENT FRAME BODY -->
-                    
                 </div>

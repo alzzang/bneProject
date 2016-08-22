@@ -41,13 +41,6 @@
 	<input type="hidden" id='fileName' value='${sessionScope.fileName}'>
 	<input type="hidden" name="department_id" id="department_id" value="${sessionScope.user.department_id}">
 
-<!--   <script type="text/javascript">
-   	 var socket;
-	 var socket=io.connect('http://192.168.1.27:3000');
-	 socket.emit('employeeId',{employeeId: '${sessionScope.user.employee_id}'});
-	 socket.on('newmessage',function(data){ noty({text: data.fromId+'로부터 메세지가도착했습니다.', layout: 'topRight', type: 'success', timeout: 5000}) });
-  </script>    -->
-		
 	
 	<div class="page-container">
 		<div class="page-sidebar page-sidebar-fixed scroll mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="height: 979px;">

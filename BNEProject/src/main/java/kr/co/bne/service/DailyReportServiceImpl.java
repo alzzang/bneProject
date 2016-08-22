@@ -237,15 +237,7 @@ public class DailyReportServiceImpl implements DailyReportService {
 
 
 	@Override
-
-
-
-
 	public List<DailyReportChart2DTO> selectCustomersSales(int departmentId) {
-
-
-		// TODO Auto-generated method stub
-
 		return dao.selectCustomerSales(departmentId);
 
 	}
@@ -280,5 +272,10 @@ public class DailyReportServiceImpl implements DailyReportService {
 		// TODO Auto-generated method stub
 		return dao.selectDailyCount(map);
 	}
-
+	
+	@Override
+	public int checkReport(String date,String employeeId) {
+		int result = dao.checkDailyReport(date,employeeId);
+		return result;
+	}
 }

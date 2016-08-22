@@ -246,7 +246,6 @@ function addTag(testdata){
 	removeId++;
 }
 
-
 function tagTest(b,c,d,e,f,g,h,i,j){
 	if(b==0){
 		$('#modalTitle').val(c);
@@ -438,13 +437,12 @@ function addComma(val){
 	return val.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
 }
 function searchSalesGoal(reg_date) {
-
 	$.ajax({
 		type : "POST",
 		url : "/dailyReport/dailysales",
 		data : {
 		 
-			reg_date : $('#reg_date').val()
+			reg_date : reg_date
 		},
 		success : function(data) {
 			var result=jQuery.parseJSON(data);
