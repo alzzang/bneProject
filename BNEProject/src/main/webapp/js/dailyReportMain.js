@@ -8,7 +8,6 @@ function viewList(option, value) {
 	var originParams =jQuery.parseJSON($("#params").val());
 	var path = $("#url").val();
 	
-	console.log(originParams);
 	
 	var page = 1;
 	var employee_id = originParams.employee_id;
@@ -33,7 +32,6 @@ function viewList(option, value) {
 	}else if(option == "search"){
 		search_text=$("#searchText").val();
 		search_type=$("#search_type").val();
-		alert(search_text+":"+search_type);
 		page=1;
 	}else if(option =="list"){
 		page = value;

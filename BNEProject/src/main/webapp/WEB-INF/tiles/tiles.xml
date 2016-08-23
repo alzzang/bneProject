@@ -55,7 +55,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/weeklyWriteForm.jsp"/>
 	</definition>
 
-	<definition name="aaa" extends="tilesbase">
+	<definition name="editor" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/SmartEditor2.jsp"/>
 	</definition>
 	

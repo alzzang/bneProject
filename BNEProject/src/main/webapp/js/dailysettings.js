@@ -264,7 +264,6 @@ function tagTest(b,c,d,e,f,g,h,i,j){
 		
 		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="localUpdate('+j+')">Submit</button>');
 	}else{
-		alert('띠용!!');
 		$('#modalTitle').val(c);
 		$('#contentDiv').html(d);
 		//$('#counsel_id').val(e);
@@ -285,7 +284,6 @@ function tagTest(b,c,d,e,f,g,h,i,j){
 
 }
 function tagDetail(department_name,employee_name,reg_date,title,client_id,client_name,representative,sec_client_name,address,content){
-	alert(department_name);
 	$('#counsel_department').html(department_name);
 	$('#counsel_empname').html(employee_name);
 	$('#counsel_regdate').html(reg_date);
@@ -329,7 +327,6 @@ function changeProgress(money,goal){
 	achievementRate=achievementRate/100;
 	/*achievementRate=Math.round10(achievementRate,-3); */
 	if(achievementRate == 0 ) {
-		alert(achievementRate+":");
 		var rate=achievementRate.toString()+'%';
 		$("#progressCondition").css('width',0.1);
 		$("#progressCondition").html(rate);
@@ -437,21 +434,25 @@ function addComma(val){
 	return val.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
 }
 function searchSalesGoal(reg_date) {
+	var flag=0;
+	if($('#dateFlag').val()==reg_date){
+		flag=1;
+	}
 	$.ajax({
 		type : "POST",
 		url : "/dailyReport/dailysales",
 		data : {
-		 
+			flag : flag,
 			reg_date : reg_date
 		},
 		success : function(data) {
 			var result=jQuery.parseJSON(data);
-			alert(result.flag);
 			if(result.flag===-1){
-				alert('해당 목표액이 존재하지 않습니다');
+				alert('a');
 				$('#dailyGoal').attr('value',0);
 				$('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+0+')');
-			}else if(result.flag===-2){
+				changeProgress($('#inputSales').val(),0);
+			}else if(result.flag===-2 && $('#searchGoalFlag').val()==1){
 				var r = confirm('해당일에 일일업무가 등록되어있습니다. 이동하시겠습니까?');
 			    if (r == true) {
 			    	detailDaily(result.daily_report_id);
@@ -461,12 +462,15 @@ function searchSalesGoal(reg_date) {
 			    }
 				
 			}
-			
-			else{
+			else if(result.flag===0){
 				$('#dailyGoal').attr('value',result.daily_sales);
 				  $('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+result.daily_sales+')'); 
+				  changeProgress($('#inputSales').val(),result.daily_sales);
 			}
-
+			alert(result.flag);
+			if($('#searchGoalFlag').val()==0){
+				$('#searchGoalFlag').val(1);
+			}
 		}
 
 	})

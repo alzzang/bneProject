@@ -167,3 +167,51 @@ var inputReportData = function(reportData) {
 		salesDount.select(0);
 	});
 }
+
+var registerDailyReportEvent = function(){
+	   $('.fc-mon ,.fc-tue,.fc-wed,.fc-thu,.fc-fri').on('click',function(){
+	      var date = this.dataset.date;
+	      $.ajax({
+	         type : "POST",
+	         url : "/dailyReport/checkReport",
+	         data : {
+	            date : date
+	         },
+	         success : function(data){
+	            alert(date);
+	               if(data !== 0){
+	                  var path = "/dailyReport/detail";
+	                  var form = document.createElement("form");
+	                  form.setAttribute("method", "POST");
+	                  form.setAttribute("action", path);
+	                  
+	                  var hiddenField = document.createElement("input");
+	                  hiddenField.setAttribute("type", "hidden");
+	                  hiddenField.setAttribute("name", "dailyReportId");
+	                  hiddenField.setAttribute("value", data);
+	                  form.appendChild(hiddenField);
+	                  document.body.appendChild(form);
+
+	                  form.submit();
+	            }else{
+	            	var path = "/dailyReport/write";
+	                  var form = document.createElement("form");
+	                  form.setAttribute("method", "POST");
+	                  form.setAttribute("action", path);
+	                  
+	                  var hiddenField = document.createElement("input");
+	                  hiddenField.setAttribute("type", "hidden");
+	                  hiddenField.setAttribute("name", "reg_date");
+	                  hiddenField.setAttribute("value", date);
+	                  form.appendChild(hiddenField);
+	                  document.body.appendChild(form);
+
+	                  form.submit();
+	            	
+	              /* location.href="/dailyReport/write"*/
+	            } 
+	         }
+	      });
+
+	   });
+	}

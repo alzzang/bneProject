@@ -63,7 +63,7 @@ public class NoticeController {
 		
 		unList=noticeService.searchUnconfirmedNotice(map);
 		cnList=noticeService.searchconfirmedNotice(map);
-		
+		System.out.println(type+":"+cnList.size()+":스ㅜㅅ지");
 		for (int i = 0; i < unList.size(); i++) {
 			String tempTime[] = unList.get(i).getPasstime().split(" ");
 			String setTime = "";

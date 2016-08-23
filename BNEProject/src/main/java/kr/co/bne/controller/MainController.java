@@ -89,7 +89,7 @@ public class MainController {
 		
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){
-		return "aaa";
+		return "editor";
 	}
 	@RequestMapping(value="/smarteditor")
 	public String getSmartEditor(HttpServletResponse res,HttpServletRequest req) throws ServletException, IOException
