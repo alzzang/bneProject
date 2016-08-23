@@ -3,7 +3,6 @@ package kr.co.bne.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
@@ -14,9 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.Message;
+import org.springframework.integration.MessageChannel;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,18 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-
-
 import kr.co.bne.dao.EmployeeDAO;
-
-
-
-
 import kr.co.bne.dto.DailyReportEmployeeDTO;
-
-
-
-
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.CounsellingRecordService;
 import kr.co.bne.service.DailyReportService;
@@ -57,6 +48,9 @@ public class UserController {
 
 	@Autowired
 	CounsellingRecordService counsellingRecordService;
+	
+	@Autowired
+	MessageChannel ftpChannel;
 
 	
 	public void setFileName(String fileName, HttpServletRequest req){
@@ -85,12 +79,63 @@ public class UserController {
 	}
 
 	private String saveFileToLocalDisk(MultipartFile multipartFile, String id)
-			throws IOException, FileNotFoundException {
-		String temp[] = multipartFile.getContentType().split("/");
-		String outputFileName = getDestinationLocation() + id + "." + temp[1];
-		FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(outputFileName));
-		return id + "." + temp[1];
-	}
+	         throws IOException, FileNotFoundException {
+		
+		if(ftpChannel != null) {
+			System.out.println("빈은 생성됨!!");
+		}
+
+	      String temp[] = multipartFile.getContentType().split("/");
+	      String outputFileName = getDestinationLocation() + id + "." + temp[1];
+	      
+	      
+	   //   FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(outputFileName));
+	      
+	      File file = new File(outputFileName);
+	      //final Message<File> messageFile = MessageBuilder.withPayload(file).build();
+	      
+	   /*   final Message<byte[]> message = MessageBuilder.withPayload(multipartFile.getBytes())
+	            .setHeader("fileName",  multipartFile.getOriginalFilename())
+	            .setHeader("remoteDir",  "/upload/")
+	            .build();
+	            */
+	      
+	      System.out.println("filname : " + multipartFile.getOriginalFilename());
+	      
+	      final Message<byte[]> message = MessageBuilder.withPayload(multipartFile.getBytes()).setHeader("fileName",  multipartFile.getOriginalFilename())
+																				    		  .setHeader("remoteDir",  "/upload/")
+																				    		  .build();
+	      
+	      System.out.println("messageFile.toString"+message.toString());
+	      boolean result =ftpChannel.send(message);
+	      
+	      System.out.println("result"+result);
+	      
+	      return id + "." + temp[1];
+	      
+
+
+			
+			/*try {
+				final Message<byte[]> message = MessageBuilder.withPayload(file.getBytes())
+						.setHeader("fileName",  fileName)
+						.setHeader("remoteDir",  remoteDir)
+						.build();
+				
+				boolean uploadSuccess = ftpChannel.send(message , DEFAULT_FTP_CONNECTION_TIMEOUT);
+				if (uploadSuccess == false) {
+					ErrorVO errorVO = propertiesResource.getErrorValue(CommonErrorConstant.UPLOAD_FAIL);
+					throw new CommonException(errorVO);
+				}
+				logger.info("{}|Ftp file upload is success. path={}, fileName={}", tid, remoteDir, fileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+				logger.error("{}| Ftp sm image upload is failed. path={}, fileName={}, error={}", tid, remoteDir, fileName, LogManager.makeLog(e.getMessage(), e));
+				throw e;
+			}*/
+			/*return remoteDir + "/" + fileName;*/
+
+	   }
 
 	@RequestMapping(value = "/download/{fileName}", method = { RequestMethod.GET })
 	public void showFile(@PathVariable String fileName, HttpServletRequest req, HttpServletResponse res)

@@ -93,6 +93,11 @@
 	<definition name="weeklyList" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/weeklyList.jsp"/>
 	</definition>
+	
+	<definition name="mainboard_admin" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/admin_manageDepartmennt.jsp"/>
+	</definition>
+	
 </tiles-definitions>
  
 

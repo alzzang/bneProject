@@ -68,12 +68,24 @@ public class MainController {
 	public String goMain(HttpServletRequest request,HttpServletResponse res,HttpSession session) throws Exception {
 		//주간테이블
 		EmployeeDTO loginEmployee = (EmployeeDTO)session.getAttribute("user");
-		if(loginEmployee == null) {
-			return "redirect:/user/goLoginForm";
+		
+		if(loginEmployee.getDepartment_id() != 0) { //일반 사용자
+			return goMain_Normal(request, res, loginEmployee);
+		}else {//admin
+			return goMain_Admin(request, res, loginEmployee);
 		}
-		
+	}
+	
+	
+	private String goMain_Admin(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {
+		return "mainboard_admin";
+	}
+	
+	
+	
+	private String goMain_Normal(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {
 		JsonObject weeklyReportDetail = getWekelyTable(loginEmployee);
-		
+
 		if(weeklyReportDetail != null)
 			request.setAttribute("weeklyReportDetail", weeklyReportDetail);
 		else{

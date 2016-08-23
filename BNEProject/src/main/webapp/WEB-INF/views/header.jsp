@@ -1,19 +1,22 @@
+<%@page import="kr.co.bne.dto.EmployeeDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
                     
                     <!-- SEARCH -->
-
+					<%if(!((EmployeeDTO)session.getAttribute("user")).getPosition().equals("admin")) {%>
                    <li class="xn-search">
       			      	<input type="text" id="empSearch" name="search" placeholder="Search...">
       			   </li>
+      			   <%} %>
    <!-- END SEARCH -->
    <!-- SIGN OUT -->
    <li class="xn-icon-button pull-right"><a href="#" class="mb-control" data-box="#mb-signout"><span
          class="fa fa-sign-out"></span></a></li>
    <!-- END SIGN OUT -->
    <!-- MESSAGES -->
+   <%if(!((EmployeeDTO)session.getAttribute("user")).getPosition().equals("admin")) {%>
    <li class="xn-icon-button pull-right" id="noticeButton" onclick='getNoticeList(1, 5)'><a href="#"><span
          class="fa fa-bell"></span></a>
       <div class="informer informer-warning" id="newMessageCount_title">-</div>
@@ -57,6 +60,7 @@
             <a href="/alarm/detail">Show all messages</a>
          </div>
       </div></li>
+      <%} %>
    <!-- END MESSAGES -->
    
    

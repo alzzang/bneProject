@@ -8,7 +8,6 @@ function viewList(option, value) {
 	var originParams =jQuery.parseJSON($("#params").val());
 	var path = $("#url").val();
 	
-	console.log(originParams);
 	
 	var page = 1;
 	var employee_id = originParams.employee_id;
