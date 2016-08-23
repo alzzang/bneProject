@@ -397,11 +397,6 @@ public class DailyReportController {
 			pw.flush();
 			pw.close();
 		}
-
-		/*
-		 * PrintWriter pw = res.getWriter(); pw.print(daily_sales); pw.flush();
-		 * pw.close();
-		 */
 	}
 
 	@RequestMapping(value = "/approval", method = RequestMethod.POST)

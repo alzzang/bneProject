@@ -65,7 +65,7 @@ if(((EmployeeDTO) session.getAttribute("user")).getPosition() != null) {
 
 
 			<li class="xn-title">Navigation</li>
-			<%if (position != null) { %>
+			<%if (!position.equals("admin")) { %>
 			<li class=""><a href="/main"><span class="fa fa-desktop"></span>
 					<span class="xn-text">Home</span></a></li>
 			<li class="xn-openable"><a href="#"> <!-- weeklyReport/write -->
@@ -109,9 +109,10 @@ if(((EmployeeDTO) session.getAttribute("user")).getPosition() != null) {
 					class="fa fa-bar-chart-o"></span><span class="xn-text">chart</span></a>
 			</li>
 		<%}else { %>
-			<li class=""><a href="/chart/page"><span
-					class="fa fa-bar-chart-o"></span><span class="xn-text">부서 관리</span></a>
-			</li>		
+			<li class=""><a href="/chart/page"><span class="fa fa-building-o"></span><span class="xn-text">부서 관리</span></a>
+			</li>
+			<li class=""><a href="/chart/page"><span class="fa fa-user"></span><span class="xn-text">사원 관리</span></a>
+			</li>
 		<%} %>
 
 		</ul>
