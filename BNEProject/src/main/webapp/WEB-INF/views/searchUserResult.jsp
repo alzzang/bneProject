@@ -25,18 +25,14 @@
                                         <div class="profile-data-name">${emp.employee_name }</div>
                                         <div class="profile-data-title" style="color: #FFF;">${emp.employee_id }</div>
                                     </div>
-                                    <div class="profile-controls">
-                                        <a href="#" class="profile-control-left twitter"><span class="fa fa-twitter"></span></a>
-                                        <a href="#" class="profile-control-right facebook"><span class="fa fa-facebook"></span></a>
-                                    </div>                                    
                                 </div>                                
                                 <div class="panel-body">                                    
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <button class="btn btn-info btn-rounded btn-block"><span class="fa fa-check"></span> Following</button>
+                                            <button class="btn btn-info btn-rounded btn-block"><span class="glyphicon glyphicon-earphone"></span>Call</button>
                                         </div>
                                         <div class="col-md-6">
-                                            <button class="btn btn-primary btn-rounded btn-block"><span class="fa fa-comments"></span> Chat</button>
+                                            <button class="btn btn-primary btn-rounded btn-block"><span class="glyphicon glyphicon-envelope"></span>e-mail</button>
                                         </div>
                                     </div>
                                 </div>
@@ -88,50 +84,6 @@
                                                 <span>Samuel Leroy Jackson</span>
                                             </a>                                            
                                         </div>
-                                    </div>
-                                
-                                    <h4 class="text-title">Photos</h4>
-                                    <div class="gallery" id="links">                                                
-                                        <a href="/assets/images/gallery/music-1.jpg" title="Music Image 1" class="gallery-item" data-gallery>
-                                            <div class="image">
-                                                <img src="/assets/images/gallery/music-1.jpg" alt="Music Image 1"/>
-                                            </div>                                            
-                                        </a>
-                                        <a href="/assets/images/gallery/music-2.jpg" title="Music Image 2" class="gallery-item" data-gallery>
-                                            <div class="image">
-                                                <img src="/assets/images/gallery/music-2.jpg" alt="Music Image 2"/>
-                                            </div>                                            
-                                        </a>
-                                        <a href="/assets/images/gallery/music-3.jpg" title="Music Image 3" class="gallery-item" data-gallery>
-                                            <div class="image">
-                                                <img src="/assets/images/gallery/music-3.jpg" alt="Music Image 3"/>
-                                            </div>                                            
-                                        </a>
-                                        <a href="/assets/images/gallery/nature-1.jpg" title="Nature Image 1" class="gallery-item" data-gallery>
-                                            <div class="image">
-                                                <img src="/assets/images/gallery/nature-1.jpg" alt="Nature Image 1"/>
-                                            </div>                                            
-                                        </a>
-                                        <a href="/assets/images/gallery/nature-2.jpg" title="Nature Image 2" class="gallery-item" data-gallery>
-                                            <div class="image">
-                                                <img src="/assets/images/gallery/nature-2.jpg" alt="Nature Image 2"/>
-                                            </div>                                            
-                                        </a>
-                                        <a href="/assets/images/gallery/nature-3.jpg" title="Nature Image 3" class="gallery-item" data-gallery>
-                                            <div class="image">
-                                                <img src="/assets/images/gallery/nature-3.jpg" alt="Nature Image 3"/>
-                                            </div>                                            
-                                        </a>
-                                        <a href="/assets/images/gallery/nature-4.jpg" title="Nature Image 4" class="gallery-item" data-gallery>
-                                            <div class="image">
-                                                <img src="/assets/images/gallery/nature-4.jpg" alt="Nature Image 4"/>
-                                            </div>                                            
-                                        </a>
-                                        <a href="/assets/images/gallery/nature-5.jpg" title="Nature Image 5" class="gallery-item" data-gallery>
-                                            <div class="image">
-                                                <img src="/assets/images/gallery/nature-5.jpg" alt="Nature Image 5"/>
-                                            </div>                                            
-                                        </a>                                        
                                     </div>
                                 </div>
                             </div>                            
@@ -324,9 +276,6 @@
 
                 </div>
                 <!-- END PAGE CONTENT WRAPPER -->
-
-    
-</div>
 
 </body>
 </html>
