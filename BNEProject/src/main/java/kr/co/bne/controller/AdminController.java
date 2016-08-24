@@ -5,22 +5,30 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
 import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.service.UserService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-
+	
+	@Autowired
+	UserService userService;
+	
 	@RequestMapping("/employee")
 	public String goManageEmployeeView(Model model, HttpServletRequest request, HttpSession session, String employee_id) {
 		return goManageEmployeeView(model, request, session, employee_id, 1);
@@ -54,5 +62,14 @@ public class AdminController {
 
 		return "mainboard_admin";
 	}
+	
+	@RequestMapping("/teamList")
+	public @ResponseBody List<EmployeeDTO> getEmpOfDept(@RequestParam("departmentId") int departmentId ,HttpServletRequest req, HttpServletResponse res) {
 
+		List<EmployeeDTO> list =userService.getEmpOfDept(departmentId);
+		return list;
+	}
 }
+
+	
+

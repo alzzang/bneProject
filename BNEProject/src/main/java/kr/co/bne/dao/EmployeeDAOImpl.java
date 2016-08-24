@@ -62,6 +62,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public List<EmployeeDTO> selectTeamMember_menu(String employee_id) {
 		return sqlSession.selectList("kr.co.bne.mapper.Employee.selectTeamMember_menu", employee_id);
 	}
+	@Override
+	public List<EmployeeDTO> selectEmpOfDept(int departmentId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.bne.mapper.Employee.selectDeptMember", departmentId);
+	}
 	
 
 }

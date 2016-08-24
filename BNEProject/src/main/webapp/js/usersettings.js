@@ -91,6 +91,10 @@ $(function() {
 	    $(this).find('form')[0].reset();
 	    $(this).find('.note-editable').empty();
 	});
+	
+	$('#myModal5').on('hidden.bs.modal', function() {
+	    $(this).find('.page-content-wrap').empty();
+	});
 	$("#counsel_id").change(function() {
 		$("#sec_client_id").val('');
 	    $(this).find('form')[0].reset();

@@ -98,6 +98,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/admin_manageDepartmennt.jsp"/>
 	</definition>
 	
+	<definition name="employee_admin" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/admin_manageEmployee.jsp"/>
+	</definition>
+	
 </tiles-definitions>
  
 

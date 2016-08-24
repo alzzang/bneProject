@@ -78,7 +78,8 @@ public class MainController {
 	
 	
 	private String goMain_Admin(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {
-		return "mainboard_admin";
+		/*return "mainboard_admin";*/
+		return "employee_admin";
 	}
 	
 	

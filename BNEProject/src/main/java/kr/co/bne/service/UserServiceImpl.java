@@ -79,5 +79,11 @@ public class UserServiceImpl implements UserService {
 	public List<EmployeeDTO> selectTeamMember_menu(String employee_id) {
 		return employeeDAO.selectTeamMember_menu(employee_id);
 	}
+
+	@Override
+	public List<EmployeeDTO> getEmpOfDept(int departmentId) {
+		// TODO Auto-generated method stub
+		return employeeDAO.selectEmpOfDept(departmentId);
+	}
 	
 }

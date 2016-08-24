@@ -13,4 +13,5 @@ public interface UserService {
 	public List<EmployeeDTO> getEmpSearch(String empSearch);
 	public EmployeeDTO selectEmployee(String employee_id);
 	List<EmployeeDTO> selectTeamMember_menu(String employee_id);
+	public List<EmployeeDTO> getEmpOfDept(int departmentId);
 }
