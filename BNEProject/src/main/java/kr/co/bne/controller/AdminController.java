@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +17,14 @@ import com.google.gson.Gson;
 
 import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.service.UserService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping("/employee")
 	public String goManageEmployeeView(Model model, HttpServletRequest request, HttpSession session, String employee_id) {
@@ -36,7 +41,7 @@ public class AdminController {
 			return "redirect:/user/goLoginForm";
 		}
 
-		HashMap<String, Object> serviceParams = new HashMap<String, Object>(); //service에 요청할 파라미터
+		HashMap<String, String> serviceParams = new HashMap<String, String>(); //service에 요청할 파라미터
 
 		Enumeration parameterNames = request.getParameterNames(); //request 파라미터 이름들 받아옴
 		while(parameterNames.hasMoreElements()) {
@@ -47,10 +52,36 @@ public class AdminController {
 				model.addAttribute(parameterName, (String)serviceParams.get(parameterName));
 			}
 		}
-
-		model.addAttribute("page", page);
-
-		System.out.println(serviceParams.toString());
+		System.out.println("서비스파람:" + serviceParams.toString());
+		
+		String optionQuery = request.getQueryString();
+		if(optionQuery != null) {
+			model.addAttribute("optionQuery", "?" + optionQuery);
+		}
+		
+		HashMap<String, Object> resultMap = userService.pagingEmployeeSearchResultList(page, 15, serviceParams);
+		List<EmployeeDTO> employeeList = (List<EmployeeDTO>)resultMap.get("employeeList");
+		int totalPageNum = (Integer)resultMap.get("totalPageNum");
+		
+		int startIdx = 0;
+		int endIdx = 0;
+		for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
+			startIdx = 1 + (i-1)*4;
+			endIdx = i*4;
+			
+			if((page >= startIdx) && (page <= endIdx)) {
+				if(endIdx >= totalPageNum) {
+					endIdx = totalPageNum;
+				}
+				break;		
+			}
+		}
+		
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPageNum", totalPageNum);
+		model.addAttribute("employeeList", employeeList);
+		model.addAttribute("endIdx", endIdx);
+		model.addAttribute("startIdx", startIdx);
 
 		return "mainboard_admin";
 	}

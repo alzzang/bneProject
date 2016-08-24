@@ -55,5 +55,55 @@
 		                                                     from employee 
 		                                                     where employee_id=#{value})), #{value})
 	</select>
+	
+	
+	
+	<!-- 전체 리스트 페이지 갯수 -->
+	<select id="getPagingNum_EmployeeList" parameterType="hashmap" resultType="int">
+		select ceil(count(*)/#{perContentNum}) cnt
+		from (select * from department where department_id != 0) d , employee e
+		where d.department_id = e.department_id
+		<if test="employee_id != null">
+			and e.employee_id like '%' || #{employee_id} || '%'
+		</if>
+		<if test="employee_name != null">
+			and e.employee_name like '%' || #{employee_name} || '%'
+		</if>
+		<if test="department_id != null">
+			and e.department_id = #{department_id}
+		</if>	
+		<if test="position != null and position.equals('employee')">
+			and e.employee_id in d.manager_id
+		</if>
+		<if test="position != null and position.equals('manager')">
+			and e.employee_id not in d.manager_id
+		</if>
+	</select>
+	
+	
+	<select id="getEmployeeList" parameterType="hashmap" resultType="Employee">
+		select idx, employee_id, employee_name, department_id, mobile_phone, email, department_name
+		from (	select ROW_NUMBER() over (order by employee_name asc) idx, e.*, d.department_name
+				from (select * from department where department_id != 0) d , employee e
+				where d.department_id = e.department_id
+				<if test="employee_id != null">
+					and e.employee_id like '%' || #{employee_id} || '%'
+				</if>
+				<if test="employee_name != null">
+					and e.employee_name like '%' || #{employee_name} || '%'
+				</if>
+				<if test="department_id != null">
+					and e.department_id = #{department_id}
+				</if>	
+				<if test="position != null and position.equals('employee')">
+					and e.employee_id in d.manager_id
+				</if>
+				<if test="position != null and position.equals('manager')">
+					and e.employee_id not in d.manager_id
+				</if>
+			)
+		where idx between 1 + #{perContentNum} * (#{startIdx}-1) and #{startIdx} * #{perContentNum}
+		order by idx asc
+	</select>
 
 </mapper>

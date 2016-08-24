@@ -80,4 +80,17 @@ public class UserServiceImpl implements UserService {
 		return employeeDAO.selectTeamMember_menu(employee_id);
 	}
 	
+	
+	@Override
+	public HashMap<String, Object> pagingEmployeeSearchResultList(int startIdx, int perContentNum, HashMap<String, String> params) {
+		List<EmployeeDTO> employeeList = employeeDAO.getEmployeeList(startIdx, perContentNum, params);
+		int totalPageNum = employeeDAO.getPagingNum_EmployeeList(perContentNum, params);
+
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("totalPageNum", totalPageNum);
+		resultMap.put("employeeList", employeeList);
+		
+		return resultMap;
+	}
+	
 }
