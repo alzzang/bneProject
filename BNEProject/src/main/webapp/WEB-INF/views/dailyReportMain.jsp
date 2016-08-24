@@ -212,7 +212,7 @@ String text=(String)request.getAttribute("search_text");
                                     
                                     <%if(startIdx != 0) { %>
                                     <%if(startIdx > 1) {%>
-                                    <li class="disabled"><a href="<%=url %>/<%=startIdx-1 %>">«</a></li>
+                                    <li><a href="<%=url %>/<%=startIdx-1 %>">«</a></li>
                                     <%} %>
                                     <%for(int i=startIdx; i<=endIdx; i++) { %>
                                     	<%if(currentPage == i) {%>

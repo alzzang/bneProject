@@ -72,9 +72,11 @@ public class MainController {
 		if(loginEmployee.getDepartment_id() != 0) { //일반 사용자
 			return goMain_Normal(request, res, loginEmployee);
 		}else {//admin
-			return goMain_Admin(request, res, loginEmployee);
+			return "redirect:/admin/employee/1";
 		}
 	}
+
+
 	
 	
 	private String goMain_Admin(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {

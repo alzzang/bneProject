@@ -16,4 +16,6 @@ public interface EmployeeDAO {
 	public List<EmployeeDTO> getEmpSearch(String empSearch);
 	List<EmployeeDTO> selectTeamMember_menu(String employee_id);
 	public List<EmployeeDTO> selectEmpOfDept(int departmentId);
+	int getPagingNum_EmployeeList(int perContentNum, HashMap<String, String> params);
+	List<EmployeeDTO> getEmployeeList(int startIdx, int perContentNum, HashMap<String, String> params);
 }

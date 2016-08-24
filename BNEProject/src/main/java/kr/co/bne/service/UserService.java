@@ -1,5 +1,6 @@
 package kr.co.bne.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.co.bne.dto.EmployeeDTO;
@@ -14,4 +15,6 @@ public interface UserService {
 	public EmployeeDTO selectEmployee(String employee_id);
 	List<EmployeeDTO> selectTeamMember_menu(String employee_id);
 	public List<EmployeeDTO> getEmpOfDept(int departmentId);
+	HashMap<String, Object> pagingEmployeeSearchResultList(int startIdx, int perContentNum,
+			HashMap<String, String> params);
 }

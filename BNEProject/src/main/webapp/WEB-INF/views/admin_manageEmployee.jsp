@@ -232,19 +232,12 @@ function EmployeeOfDepartment(departmentId){
 
 <div class="page-content-wrap">
 	
-	
-	
-	
-	
 </div>
 			</div>
 			<div class="modal-footer">
-
 			</div>
 		</div>
-
 	</div>
-	
 </div>
 
 <script type="text/javascript"
