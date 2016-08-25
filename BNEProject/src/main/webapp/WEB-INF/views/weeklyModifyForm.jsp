@@ -232,6 +232,7 @@ var makeSalesInput = function(){
 
 		$('#calendar').fullCalendar('getView').calendar.options.editable = true;
 		$('#calendar').fullCalendar('getView').calendar.options.selectable = true;
+		$('#calendar').fullCalendar('next');
 		
 		var reportData = JSON.parse('${weeklyReportDetail}');
 		inputReportData(reportData);

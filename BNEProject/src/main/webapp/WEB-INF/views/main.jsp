@@ -50,7 +50,7 @@
 											style="font-size: 350%; color: #FFFFFF;"></span>
 									</div>
 									<div style="font-size:1.7em; white-space: nowrap; max-width:25em;margin-top:3%; overflow:hidden; text-overflow:ellipsis;">
-										${rlist.title}
+										${rlist.employee_name}님이 ${rlist.reg_date}일에 작성한  미승인 보고서
 									</div>
 								</div>
 							</div>

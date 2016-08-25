@@ -41,6 +41,7 @@ public class MainController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
 	UserController usercontroller;
 	
 	private JsonObject parseWeeklyReportDetailDTO(WeeklyReportDetailDTO result){
@@ -76,6 +77,10 @@ public class MainController {
 		if(loginEmployee == null) {
 			return "redirect:/user/goLoginForm";
 		}
+		
+		usercontroller.setFileName(loginEmployee.getFile_position(),request);
+		
+		
 		JsonObject weeklyReportDetail = getWekelyTable(loginEmployee);
 		if(weeklyReportDetail != null)
 			request.setAttribute("weeklyReportDetail", weeklyReportDetail);
@@ -85,7 +90,7 @@ public class MainController {
 		}
 		request.setAttribute("employee_Id", loginEmployee.getEmployee_id());
 		request.setAttribute("unapproval", unapproval(request,res));
-		usercontroller.setFileName(loginEmployee.getFile_position(),request);
+		
 		
 		return "mainboard";
 	

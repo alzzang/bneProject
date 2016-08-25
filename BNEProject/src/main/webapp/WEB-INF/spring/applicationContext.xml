@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xmlns:int="http://www.springframework.org/schema/integration"
+   xmlns:int-ftp="http://www.springframework.org/schema/integration/ftp"
    xmlns:context="http://www.springframework.org/schema/context"
    xmlns:p="http://www.springframework.org/schema/p" 
    xmlns:tx="http://www.springframework.org/schema/tx"
@@ -12,9 +14,15 @@
    http://www.springframework.org/schema/tx
    http://www.springframework.org/schema/tx/spring-tx.xsd
    http://www.springframework.org/schema/aop
-   http://www.springframework.org/schema/aop/spring-aop.xsd">
+   http://www.springframework.org/schema/aop/spring-aop.xsd
+   http://www.springframework.org/schema/integration/ftp 
+   http://www.springframework.org/schema/integration/ftp/spring-integration-ftp.xsd
+   http://www.springframework.org/schema/integration 
+   http://www.springframework.org/schema/integration/spring-integration.xsd
+   ">
    <!-- Root Context: defines shared resources visible to all other web components -->
    
+  
    
 
    <context:component-scan base-package="kr.co.bne.dao" />
@@ -28,12 +36,36 @@
          
             
    <!-- datasource -->
-    <bean
+  
+	<bean
       class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
       <property name="locations">
          <value>/WEB-INF/spring/applicationContext.properties</value>
       </property>
    </bean>
+   
+	<bean id="ftpClientFactory" class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
+	
+		<property name="host" value="${ftp.host}"/>
+		<property name="port" value="${ftp.port}"/>
+		<property name="username" value="${ftp.username}"/>
+		<property name="password" value="${ftp.password}"/>
+		<property name="clientMode" value="${ftp.clientMode}" />
+	</bean>
+	
+	<int:channel id="ftpChannel" />
+	
+	<int-ftp:outbound-channel-adapter  
+   				id="ftpOutbound"
+				channel="ftpChannel"
+				remote-directory="/test"
+				session-factory="ftpClientFactory"
+				auto-create-directory="true"
+				charset="UTF-8"
+				>
+	</int-ftp:outbound-channel-adapter>
+	
+	 
    <bean id = "multipartResolver" 
       class = "org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
       
