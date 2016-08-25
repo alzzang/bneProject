@@ -20,16 +20,20 @@ import com.google.gson.Gson;
 
 import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.common.DepartmentTeamList;
+import kr.co.bne.dto.DepartmentDTO;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.UserService;
+import kr.co.bne.service.DepartmentService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	
 	@Autowired
-	UserService userService;
-	
+	private UserService userService;
+	@Autowired
+	private DepartmentService departmentService;
+
 	@RequestMapping("/employee")
 	public String goManageEmployeeView(Model model, HttpServletRequest request, HttpSession session, String employee_id) {
 		return goManageEmployeeView(model, request, session, employee_id, 1);
@@ -89,7 +93,12 @@ public class AdminController {
 
 		return "mainboard_admin";
 	}
-	
+	@RequestMapping("/employee/delete/{employee_id}")
+	public String goManageEmployeeView(Model model, HttpServletRequest request, @PathVariable String employee_id) {
+		userService.deleteEmployee(employee_id);
+		
+		return "redirect:/admin/employee/1";
+	}
 	@RequestMapping("/department")
 	public String goManageDepartmentView(Model model, HttpServletRequest request, HttpSession session) {
 		return  goManageDepartmentView(model, request, session,  1);

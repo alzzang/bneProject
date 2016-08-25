@@ -38,4 +38,11 @@
 		where idx between 1 + #{perContentNum} * (#{startIdx}-1) and #{startIdx} * #{perContentNum}
 		order by idx asc
 	</select>
+
+	<select id="getDepartmentList" resultType="Department">
+		select department_id, department_name
+		from department
+		where department_id != 0
+		order by department_name asc
+	</select>
 </mapper>

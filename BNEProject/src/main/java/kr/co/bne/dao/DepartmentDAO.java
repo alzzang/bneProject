@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import kr.co.bne.common.DepartmentTeamList;
+import java.util.List;
+
+import kr.co.bne.dto.DepartmentDTO;
 
 public interface DepartmentDAO {
 
 	List<DepartmentTeamList> getDepartmentList(int startIdx, int perContentNum, HashMap<String, String> params);
 	int getPagingNum_DepartmentList(int perContentNum, HashMap<String, String> params);
+	List<DepartmentDTO> getDepartmentList();
 
 }

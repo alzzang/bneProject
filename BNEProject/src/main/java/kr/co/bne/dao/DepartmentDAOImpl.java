@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.bne.common.DepartmentTeamList;
+import kr.co.bne.dto.DepartmentDTO;
 
 @Repository
 public class DepartmentDAOImpl implements DepartmentDAO {
@@ -33,6 +34,11 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		map = (HashMap<String, String>)params.clone();
 		map.put("perContentNum", Integer.toString(perContentNum));
 		return sqlSession.selectOne("kr.co.bne.mapper.Department.getPagingNum_DepartmentList", map);
+	}
+	
+	@Override
+	public List<DepartmentDTO> getDepartmentList() {
+		return sqlSession.selectList("kr.co.bne.mapper.Department.getDepartmentList");
 	}
 
 }

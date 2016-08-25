@@ -18,4 +18,5 @@ public interface EmployeeDAO {
 	public List<EmployeeDTO> selectEmpOfDept(int departmentId);
 	int getPagingNum_EmployeeList(int perContentNum, HashMap<String, String> params);
 	List<EmployeeDTO> getEmployeeList(int startIdx, int perContentNum, HashMap<String, String> params);
+	boolean deleteEmployee(String employee_id);
 }
