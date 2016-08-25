@@ -74,7 +74,6 @@ var mainInputReportData = function(reportData) {
 
 	// 매출액 정보 행 삽입
 	makeSalesInput();
-	console.log("dfdf="+weeklyPlanDTOList[0].reg_date);
 	for(var i=0; i<weeklyPlanDTOList.length; i++){
 		$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales+'원', 'disabled':'disabled'});
 	}
