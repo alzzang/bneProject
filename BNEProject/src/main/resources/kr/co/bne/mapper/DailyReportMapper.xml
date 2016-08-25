@@ -44,7 +44,7 @@
 	<select id="selectDailyReportList" parameterType="hashmap" resultMap="DailyReportListElement"> 
 
 	select daily_report_id idx, employee_id, employee_name, title, reg_date, approval_flag
-   from (select ROW_NUMBER() OVER (order by reg_date desc) idx, d.daily_report_id, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
+   from (select ROW_NUMBER() OVER (order by reg_date desc) order_idx, d.daily_report_id, d.employee_id, e.employee_name, d.title, to_char(reg_date, 'yyyy-mm-dd') reg_date, approval_flag
          from daily_report d , employee e
          where d.employee_id = e.employee_id
          and d.department_id = (select department_id from employee where employee_id = #{user_id})
@@ -67,8 +67,8 @@
 		   	and content like '%' || #{search_text} || '%'
 		</if>  		
   	       ) a        
-   where idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
-   order by idx asc  
+   where order_idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
+   order by order_idx asc  
 
 </select>
 
