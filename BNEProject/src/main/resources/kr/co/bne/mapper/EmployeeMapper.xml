@@ -65,6 +65,7 @@
         			and e.department_id =#{departmentId} order by position desc , employee_name
 	</select>
 	
+	
 	<!-- 전체 리스트 페이지 갯수 -->
 	<select id="getPagingNum_EmployeeList" parameterType="hashmap" resultType="int">
 		select ceil(count(*)/#{perContentNum}) cnt

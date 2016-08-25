@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import kr.co.bne.common.DailyReportTeamListElement;
+import kr.co.bne.common.DepartmentTeamList;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.UserService;
 
@@ -87,6 +88,67 @@ public class AdminController {
 		model.addAttribute("startIdx", startIdx);
 
 		return "mainboard_admin";
+	}
+	
+	@RequestMapping("/department")
+	public String goManageDepartmentView(Model model, HttpServletRequest request, HttpSession session) {
+		return  goManageDepartmentView(model, request, session,  1);
+	}
+
+
+	@RequestMapping("/department/{page}")
+	public String goManageDepartmentView(Model model, HttpServletRequest request, HttpSession session,  @PathVariable("page") int page) {
+		EmployeeDTO user = (EmployeeDTO) session.getAttribute("user");
+
+		//admin이 아닌 직책이 접근하려 하면 막아주기 위함
+		if(!"admin".equals(user.getPosition())) {
+			return "redirect:/user/goLoginForm";
+		}
+
+		HashMap<String, String> serviceParams = new HashMap<String, String>(); //service에 요청할 파라미터
+
+		Enumeration parameterNames = request.getParameterNames(); //request 파라미터 이름들 받아옴
+		while(parameterNames.hasMoreElements()) {
+			String parameterName = (String)parameterNames.nextElement();
+
+			if(!request.getParameter(parameterName).trim().equals("")) {
+				serviceParams.put(parameterName, request.getParameter(parameterName));
+				model.addAttribute(parameterName, (String)serviceParams.get(parameterName));
+			}
+		}
+		
+		System.out.println("서비스파람:" + serviceParams.toString());
+		
+		String optionQuery = request.getQueryString();
+		if(optionQuery != null) {
+			model.addAttribute("optionQuery", "?" + optionQuery);
+		}
+		
+		HashMap<String, Object> resultMap = userService.pagingDepartmentSearchResultList(page, 15, serviceParams);
+		List<DepartmentTeamList> departmentList = (List<DepartmentTeamList>)resultMap.get("departmentList");
+		int totalPageNum = (Integer)resultMap.get("totalPageNum");
+		
+		int startIdx = 0;
+		int endIdx = 0;
+		for(int i=1; i <= Math.ceil((double)totalPageNum/4); i++) {
+			startIdx = 1 + (i-1)*4;
+			endIdx = i*4;
+			
+			if((page >= startIdx) && (page <= endIdx)) {
+				if(endIdx >= totalPageNum) {
+					endIdx = totalPageNum;
+				}
+				break;		
+			}
+		}
+		
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPageNum", totalPageNum);
+		model.addAttribute("departmentList", departmentList);
+		model.addAttribute("endIdx", endIdx);
+		model.addAttribute("startIdx", startIdx);
+
+		return "employee_admin";
 	}
 	
 	@RequestMapping("/teamList")

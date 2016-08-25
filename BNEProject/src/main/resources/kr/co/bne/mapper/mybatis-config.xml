@@ -33,6 +33,7 @@
 		<typeAlias alias="Notice" type="kr.co.bne.common.NoticeDetail"/>
 		<typeAlias alias="Gauge" type="kr.co.bne.dto.GaugeDTO"/>
 		<typeAlias alias="NoticeHeader" type="kr.co.bne.common.NoticeHeader"/>
+		<typeAlias alias="DepartmentTeamList" type="kr.co.bne.common.DepartmentTeamList"/>
 	</typeAliases>
 
 	<mappers>

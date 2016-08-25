@@ -148,7 +148,7 @@ int totalPageNum = (Integer)request.getAttribute("totalPageNum");
 						</tr>
 
 						<%
-													for (EmployeeDTO employee : employeeList) {
+								for (EmployeeDTO employee : employeeList) {
 												%>
 						<tr>
 							<td><%=employee.getEmployee_id() %></td>

@@ -78,7 +78,7 @@ public class MainController {
 
 
 	
-	
+	@RequestMapping("/main1")
 	private String goMain_Admin(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {
 		/*return "mainboard_admin";*/
 		return "employee_admin";

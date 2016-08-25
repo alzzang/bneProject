@@ -455,7 +455,9 @@ function searchSalesGoal(reg_date) {
 			}else if(result.flag===-2 && $('#searchGoalFlag').val()==1){
 				var r = confirm('해당일에 일일업무가 등록되어있습니다. 이동하시겠습니까?');
 			    if (r == true) {
+			    	$('#reg_date').val('');
 			    	detailDaily(result.daily_report_id);
+			    	
 			    } else {
 			    	alert('취소되었습니다.');
 			    	$('#reg_date').val('');

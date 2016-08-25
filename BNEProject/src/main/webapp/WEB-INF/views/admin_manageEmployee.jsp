@@ -9,7 +9,10 @@ String employee_id = "";
 String employee_name = "";
 int department_id = 0;
 
-
+int currentPage = (Integer)request.getAttribute("currentPage");
+int startIdx = (Integer)request.getAttribute("startIdx");
+int endIdx = (Integer)request.getAttribute("endIdx");
+int totalPageNum = (Integer)request.getAttribute("totalPageNum");
 %>
 <style>
 .modal-dialog{
@@ -95,26 +98,26 @@ function EmployeeOfDepartment(departmentId){
 				</h3>
 			</div>
 			
-			<form role="form" id="searchForm" class="form-horizontal" action="/admin/employee/${page}">
+			<form role="form" id="searchForm" class="form-horizontal" action="/admin/department/${page}">
 			<div class="panel-body">
 					<div class="form-group">
 						<label class="col-md-3 control-label">코드</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="employee_name" name="employee_name" value=${employee_name}>
+							<input type="text" class="form-control" id="department_id" name="department_id" value=${department_id}>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="col-md-3 control-label">부서</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="employee_id" name="employee_id" value=${employee_id}>
+							<input type="text" class="form-control" id="department_name" name="department_name" value=${department_name}>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="col-md-3 control-label">팀장</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="employee_id" name="employee_id" value=${employee_id}>
+							<input type="text" class="form-control" id="employee_name" name="employee_name" value=${employee_name}>
 						</div>
 					</div>
 				
@@ -130,7 +133,7 @@ function EmployeeOfDepartment(departmentId){
 				</div>
 
 			</div>
-			<!-- </form> -->
+			 </form> 
 		</div>
 	</div>
 	<!-- END CONTENT FRAME LEFT -->
@@ -155,12 +158,13 @@ function EmployeeOfDepartment(departmentId){
 						</tr>
 					</thead>
 					<tbody>
+						<c:forEach items="${departmentList}" var="deptlist">
 						<tr>
-							<td>1</td>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>@mdo</td>
-							<td><a href="#" data-toggle="modal" data-target="#myModal5" id="modalAdd" onclick="EmployeeOfDepartment(1)">@mdo</a></td>
+							<td>${deptlist.department_id }</td>
+							<td>${deptlist.department_name }</td>
+							<td>${deptlist.employee_name }</td>
+							<td>${deptlist.telephone }</td>
+							<td><a href="#" data-toggle="modal" data-target="#myModal5" id="modalAdd" onclick="EmployeeOfDepartment(${deptlist.department_id })">${deptlist.count }</a></td>
 							<td>
 								<button class="btn btn-default btn-rounded btn-sm">
 									<span class="fa fa-pencil"></span>
@@ -171,35 +175,33 @@ function EmployeeOfDepartment(departmentId){
 								</button>
 							</td>
 						</tr>
-						<tr>
-							<td>2</td>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>@fat</td>
-							<td><a href="#" data-toggle="modal" data-target="#myModal5" id="modalAdd" onclick="EmployeeOfDepartment(2)">@mdo</a></td>
-							<td>
-								<button class="btn btn-default btn-rounded btn-sm">
-									<span class="fa fa-pencil"></span>
-								</button>
-								<button class="btn btn-danger btn-rounded btn-sm"
-									onclick="delete_row('trow_1');">
-									<span class="fa fa-times"></span>
-								</button>
-							</td>
-						</tr>
+						</c:forEach>
+						
 						
 					</tbody>
 				</table>
 
-				<div class=" pull-right">
-					<ul class="pagination">
-						<li class="disabled"><a href="#">«</a></li>
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">»</a></li>
+				<div class="panel-footer">
+					<ul class="pagination pagination-sm pull-right">
+
+						<%if(startIdx != 0) { %>
+						<%if(startIdx > 1) {%>
+						<li><a href="/admin/employee/<%=startIdx-1 %>${optionQuery}">«</a></li>
+						<%} %>
+						<%for(int i=startIdx; i<=endIdx; i++) { %>
+						<%if(currentPage == i) {%>
+						<li class="active">
+							<%}else { %>
+						
+						<li style="cursor: pointer;">
+							<%} %> <a href="/admin/employee/<%=i %>${optionQuery}"><%=i %></a>
+						</li>
+						<%} %>
+
+						<%if(totalPageNum > endIdx) {%>
+						<li><a href="/admin/employee/<%=endIdx+1 %>${optionQuery}">»</a></li>
+						<%} %>
+						<%} %>
 					</ul>
 				</div>
 			</div>
@@ -248,13 +250,20 @@ function EmployeeOfDepartment(departmentId){
 
 	function formSubmit() {
 		var form = document.createElement("form");
-		form.setAttribute("action", "/admin/employee/1");
+		form.setAttribute("action", "/admin/department/1");
 
-		if ($("#employee_id").val().trim() != "") {
+		if ($("#department_id").val().trim() != "") {
 			var hiddenField = document.createElement("input");
 			hiddenField.setAttribute("type", "hidden");
-			hiddenField.setAttribute("name", "employee_id");
-			hiddenField.setAttribute("value", $("#employee_id").val());
+			hiddenField.setAttribute("name", "department_id");
+			hiddenField.setAttribute("value", $("#department_id").val());
+			form.appendChild(hiddenField);
+		}
+		if ($("#department_name").val().trim() != "") {
+			var hiddenField = document.createElement("input");
+			hiddenField.setAttribute("type", "hidden");
+			hiddenField.setAttribute("name", "department_name");
+			hiddenField.setAttribute("value", $("#department_name").val());
 			form.appendChild(hiddenField);
 		}
 		if ($("#employee_name").val().trim() != "") {
@@ -264,20 +273,7 @@ function EmployeeOfDepartment(departmentId){
 			hiddenField.setAttribute("value", $("#employee_name").val());
 			form.appendChild(hiddenField);
 		}
-		if ($("#department_id").val().trim() != "*") {
-			var hiddenField = document.createElement("input");
-			hiddenField.setAttribute("type", "hidden");
-			hiddenField.setAttribute("name", "department_id");
-			hiddenField.setAttribute("value", $("#department_id").val());
-			form.appendChild(hiddenField);
-		}
-		if ($("#position").val().trim() != "*") {
-			var hiddenField = document.createElement("input");
-			hiddenField.setAttribute("type", "hidden");
-			hiddenField.setAttribute("name", "position");
-			hiddenField.setAttribute("value", $("#position").val());
-			form.appendChild(hiddenField);
-		}
+
 		document.body.appendChild(form);
 		form.submit();
 	}

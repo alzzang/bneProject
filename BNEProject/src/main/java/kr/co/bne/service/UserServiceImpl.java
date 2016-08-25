@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import kr.co.bne.common.DepartmentTeamList;
+import kr.co.bne.dao.DepartmentDAO;
 import kr.co.bne.dao.EmployeeDAO;
 import kr.co.bne.dto.EmployeeDTO;
 
@@ -16,7 +19,8 @@ public class UserServiceImpl implements UserService {
 	BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	EmployeeDAO employeeDAO;
-
+	@Autowired
+	DepartmentDAO departmentDAO;
 	@Override
 	public EmployeeDTO validCheck(String id, String rawPassword) {
 		EmployeeDTO employeeDTO = employeeDAO.selectEmployee(id);
@@ -98,5 +102,19 @@ public class UserServiceImpl implements UserService {
 		
 		return resultMap;
 	}
+	
+	@Override
+	public HashMap<String, Object> pagingDepartmentSearchResultList(int startIdx, int perContentNum, HashMap<String, String> params) {
+		List<DepartmentTeamList> departmentList = departmentDAO.getDepartmentList(startIdx, perContentNum, params);
+		int totalPageNum = departmentDAO.getPagingNum_DepartmentList(perContentNum, params);
+
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("totalPageNum", totalPageNum);
+		resultMap.put("departmentList", departmentList);
+		
+		return resultMap;
+	}
+	
+	
 	
 }

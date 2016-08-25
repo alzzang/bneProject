@@ -17,4 +17,6 @@ public interface UserService {
 	public List<EmployeeDTO> getEmpOfDept(int departmentId);
 	HashMap<String, Object> pagingEmployeeSearchResultList(int startIdx, int perContentNum,
 			HashMap<String, String> params);
+	HashMap<String, Object> pagingDepartmentSearchResultList(int startIdx, int perContentNum,
+			HashMap<String, String> params);
 }
