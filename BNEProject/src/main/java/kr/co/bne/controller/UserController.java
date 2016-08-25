@@ -55,12 +55,9 @@ public class UserController {
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
 		EmployeeDTO employee=(EmployeeDTO)session.getAttribute("user");
-		System.out.println("1"+employee.getFile_position());
+		session.setAttribute("fileName", employee.getFile_position());
 		
-		employee.setFile_position(fileName);
-		session.setAttribute("user", employee);
-		EmployeeDTO employee1=(EmployeeDTO)session.getAttribute("user");
-		System.out.println("2"+employee1.getFile_position());
+		
 	}
 	
 	@RequestMapping(value = "/defaultFile", method = RequestMethod.POST)
@@ -97,11 +94,13 @@ public class UserController {
 		File uploadFile = new File(outputFileName);
 		multipartFile.transferTo(uploadFile);
 		
+		
 		//FileUtils.forceDelete(uploadFile.getParentFile());
 		final Message<?> message = MessageBuilder.withPayload(uploadFile).build();
 		ftpChannel.send(message);
-
-		FileUtils.deleteQuietly(uploadFile.getParentFile());
+		
+		uploadFile.delete();
+		//FileUtils.deleteQuietly(uploadFile.getParentFile());
 		return id + "." + temp[1];
 		
 	}

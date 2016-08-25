@@ -41,7 +41,7 @@
 		<jsp:forward page="/user/login"/>
 	</c:if>
 
-	<%-- <input type="hidden" id='fileName' value='${sessionScope.fileName}'> --%>
+	<input type="hidden" id='fileName' value='${sessionScope.user.file_position}'>
 	<input type="hidden" name="department_id" id="department_id" value="${sessionScope.user.department_id}">
 
 	
