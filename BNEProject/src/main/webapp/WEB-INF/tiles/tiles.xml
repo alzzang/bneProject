@@ -95,7 +95,7 @@
 	</definition>
 	
 	<definition name="mainboard_admin" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/admin_manageDepartmennt.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin_manageDepartment.jsp"/>
 	</definition>
 	
 </tiles-definitions>

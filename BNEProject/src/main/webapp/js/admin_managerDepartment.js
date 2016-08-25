@@ -15,9 +15,9 @@ function visibleAddForm() {
 
 
 function addInputElement() {
-	var d = $("#employeeAddForm-body").children().first().clone();
+	$("#employeeAddForm-body").children().first().clone(true, true).show().appendTo("#employeeAddForm-body");
+}
+
+function removeInputElement() {
 	
-	$("#employeeAddForm-body").append(d.show());
-	
-	alert(d.html());
 }
