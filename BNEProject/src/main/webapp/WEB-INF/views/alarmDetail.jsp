@@ -103,6 +103,31 @@ function unconfirmedData(){
 					}
 		});
 }
+/* function moveLink(noticeId,type,linkId,subject){
+	$.ajax({
+		type : "POST",
+		url : '/alarm/click',
+		data : {
+			"noticeId" : noticeId
+		},
+		success : function(data) {
+			if(type=="DAILY_POST"){
+				detailDaily(linkId);
+			}else if(type=="WEEKLY_POST"){
+				detailWeekly(linkId,subject);
+			}else if(type=="DAILY_CORRECT"){
+				detailDaily(linkId);
+			}else if(type=="WEEKLY_CORRECT"){
+				detailWeekly(linkId,subject);
+			}else if(type=="APPROVAL"){
+				detailDaily(linkId);
+			}else if(type=="COMMENT"){
+				detailDaily(linkId);
+			}
+		}
+	});
+	
+} */
 function confirmedData(){
 	
 	timer1 = false;
@@ -198,8 +223,8 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
                         </div>                                                
                         <div class="pull-right">
                             <button class="btn btn-default content-frame-left-toggle"><span class="fa fa-bars"></span></button>
-                        </div>                                
-                   
+                        </div>                        
+                        
                         
                     </div>                    
                     <div class="content-frame-left" style="height: 837px;">
@@ -279,16 +304,16 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
                                     
                                     <c:forEach items="${cnList}" var="clist">
 										<c:if test="${clist.notice_type eq 'DAILY_POST'}">
-											<div class="task-item task-primary task-complete" id="${ulist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
+											<div class="task-item task-primary task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
 										</c:if>
 										<c:if test="${clist.notice_type eq 'WEEKLY_POST'}">
-											<div class="task-item task-success task-complete" id="${ulist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
+											<div class="task-item task-success task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
 										</c:if>
 										<c:if test="${clist.notice_type eq 'DAILY_CORRECT'}">
-											<div class="task-item task-warning task-complete" id="${ulist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
+											<div class="task-item task-warning task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
 										</c:if>
 										<c:if test="${clist.notice_type eq 'WEEKLY_CORRECT'}">
-											<div class="task-item task-danger task-complete" id="${ulist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
+											<div class="task-item task-danger task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
 										</c:if>
 										
 										<c:if test="${clist.notice_type eq 'APPROVAL'}">
@@ -299,11 +324,9 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
 										</c:if>
 										                    
                                         	<div class="task-text ui-sortable-handle">${clist.content}</div>
-                                        	
                                         	<div class="task-footer">
                                             	<div class="pull-left"><span class="fa fa-clock-o"></span>${clist.passtime}</div>                                    
                                         	</div>                                    
-                                    	
                                     	</div>
 									</c:forEach>
 									<input type="hidden" id="notice_type"	value="${type}">
@@ -314,5 +337,4 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
                                                 
                     </div>
                     <!-- END CONTENT FRAME BODY -->
-                    
                 </div>

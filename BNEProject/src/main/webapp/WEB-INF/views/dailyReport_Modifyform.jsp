@@ -47,31 +47,37 @@ var jsonArray=new Array();
 	<!-- END CONTENT FRAME TOP -->
 
 	<!-- START CONTENT FRAME LEFT -->
-	<div class="content-frame-left" style="height: 1054px;">
-		<div class="panel-body">
-			<div class="block"></div>
-
+	<div class="content-frame-left" style="height: 837px;">
+	 <div class="panel panel-default">
+		<div class="panel-heading ui-draggable-handle">
 			<div class="page-title">
-				<h5>매출 현황</h5>
-			</div>
-			<table class="table">
+				<h3 class="panel-title">매출 현황</h3>
+			</div>	
+		</div>	
+			
+			<input type="hidden" name="weekly_report_id" id="weekly_report_id" value="2016_34_101"><br>
+			<input type="hidden" name="department_id" value="1" disabled=""><br>
+			<input type="hidden" name="employee_Id" value="101" disabled="">
+			<div class="panel-body">
+			<table class="table table-bordered detailInfoTable">
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td>${sessionScope.employee.department_name}</td>
+						<td><span id="department_name">${sessionScope.employee.department_name}</span></td>
 					</tr>
+
 					<tr>
-						<th>성명</th>
-						<td>${sessionScope.employee.employee_name}</td>
+						<th>이름</th>
+						<td><span id="employee_name">${sessionScope.employee.employee_name}</span></td>
 					</tr>
+
 					<tr>
-						<th>매출목표</th>
-						<td id="goalValue">${sessionScope.employee.sales_goal}</td>
+						<th>매출 목표</th>
+						<td><span id="reg_date">${sessionScope.employee.sales_goal}</span></td>
 					</tr>
 				</thead>
 			</table>
-
-
+	      </div>
 		</div>
 	</div>
 	

@@ -85,18 +85,19 @@
 	<definition name="searchUserList" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/searchUserResultList.jsp"/>
 	</definition>
-
 	
 		<definition name="weeklyModify" extends="tilesbase">
       <put-attribute name="body" value="/WEB-INF/views/weeklyModifyForm.jsp"/>
    </definition>
-   
-   	
-		<definition name="weeklyList" extends="tilesbase">
+	
+	<definition name="weeklyList" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/weeklyList.jsp"/>
 	</definition>
-   
-   
+	
+	<definition name="mainboard_admin" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/admin_manageDepartmennt.jsp"/>
+	</definition>
+	
 </tiles-definitions>
  
 

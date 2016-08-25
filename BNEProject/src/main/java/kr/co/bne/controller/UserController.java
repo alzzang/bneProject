@@ -1,10 +1,8 @@
 package kr.co.bne.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -50,12 +48,12 @@ public class UserController {
 
 	@Autowired
 	CounsellingRecordService counsellingRecordService;
-
+	
 	@Autowired
 	MessageChannel ftpChannel;
 
 	@Autowired
-	PollableChannel ftpChannel1;
+	PollableChannel ftpRecieveChannel;
 	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
@@ -73,14 +71,13 @@ public class UserController {
 	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
 		String fileName = null;
-		
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		for (MultipartFile multipartFile : fileMap.values()) {
 			fileName=saveFileToRemoteDisk(multipartFile, id);
 			userService.modifyFilePosition(id, fileName);
 		}
-		
 		setFileName(fileName,req);
+		
 	}
 
 

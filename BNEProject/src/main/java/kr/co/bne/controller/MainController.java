@@ -71,17 +71,22 @@ public class MainController {
 	public String goMain(HttpServletRequest request,HttpServletResponse res,HttpSession session) throws Exception {
 		//주간테이블
 		EmployeeDTO loginEmployee = (EmployeeDTO)session.getAttribute("user");
+				System.out.println(loginEmployee.getFile_position());
+			usercontroller.setFileName(loginEmployee.getFile_position(),request);
 		
-		
-		
-		if(loginEmployee == null) {
-			return "redirect:/user/goLoginForm";
+		if(loginEmployee.getDepartment_id() != 0) { //일반 사용자
+			return goMain_Normal(request, res, loginEmployee);
+		}else {//admin
+			return "redirect:/admin/employee/1";
 		}
-		
-		usercontroller.setFileName(loginEmployee.getFile_position(),request);
-		
-		
+	}
+
+
+	
+	
+	private String goMain_Normal(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {
 		JsonObject weeklyReportDetail = getWekelyTable(loginEmployee);
+
 		if(weeklyReportDetail != null)
 			request.setAttribute("weeklyReportDetail", weeklyReportDetail);
 		else{
@@ -90,11 +95,7 @@ public class MainController {
 		}
 		request.setAttribute("employee_Id", loginEmployee.getEmployee_id());
 		request.setAttribute("unapproval", unapproval(request,res));
-		
-		
 		return "mainboard";
-	
-	
 	}
 	
 	

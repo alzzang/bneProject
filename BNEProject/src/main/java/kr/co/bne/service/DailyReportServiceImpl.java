@@ -29,7 +29,6 @@ import kr.co.bne.dto.EmployeeDTO;
 @Service
 public class DailyReportServiceImpl implements DailyReportService {
 
-
 	@Autowired
 	private DailyReportDAO dao;
 	@Autowired
@@ -75,7 +74,7 @@ public class DailyReportServiceImpl implements DailyReportService {
 		
 		dailyReportList = dao.selectDailyReportList(user_id, startIdx, perContentNum, params);
 		totalPageNum = dao.getPagingNum_DailyReportList(user_id, perContentNum, params);
-			
+		
 		result.put("dailyReportList", dailyReportList);
 		result.put("totalPageNum", totalPageNum);
 		
@@ -238,15 +237,7 @@ public class DailyReportServiceImpl implements DailyReportService {
 
 
 	@Override
-
-
-
-
 	public List<DailyReportChart2DTO> selectCustomersSales(int departmentId) {
-
-
-		// TODO Auto-generated method stub
-
 		return dao.selectCustomerSales(departmentId);
 
 	}
@@ -276,11 +267,12 @@ public class DailyReportServiceImpl implements DailyReportService {
 	      return result;
 	   }
 
-
-
-
-
-
+	@Override
+	public int confirmDuplicate(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return dao.selectDailyCount(map);
+	}
+	
 	@Override
 	public int checkReport(String date,String employeeId) {
 		int result = dao.checkDailyReport(date,employeeId);

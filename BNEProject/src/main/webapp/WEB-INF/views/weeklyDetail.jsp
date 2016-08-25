@@ -86,12 +86,12 @@
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td><span id="department_name">${user.department_name}</span></td>
+						<td><span id="department_name"></span></td>
 					</tr>
 
 					<tr>
 						<th>이름</th>
-						<td><span id="employee_name">${user.employee_name }</span></td>
+						<td><span id="employee_name"></span></td>
 					</tr>
 
 					<tr>
@@ -180,7 +180,9 @@
 <!-- END THIS PAGE PLUGINS-->       
 
 <script>
+
 	$(window).load(function(){
+		alert("hello");
 		weeklyReportDetail = ${weeklyReportDetail};
 		
 		// 처음에 받아온 주간계획 정보 삽입 
@@ -267,6 +269,7 @@
 	    				}
 	    				inputReportData(data);
 	    			}
+	    			registerDailyReportEvent();
 				},
 				error : function() {
 					alert("주간계획 데이터를 불러오는데 실패했습니다."); 
@@ -320,48 +323,16 @@
 	    	 					$('.fc-right').prepend(o);
 	    	 				}
 	    				}
-	    				
-	    				
-	    		   		
 	    				inputReportData(data);
 	    			}
+	    			registerDailyReportEvent();
 				},
 				error : function() {
 					alert("주간계획 데이터를 불러오는데 실패했습니다."); 
 				}
 			})
 		});
-		$('.fc-mon ,.fc-tue,.fc-wed,.fc-thu,.fc-fri').on('click',function(){
-			var date = this.dataset.date;
-			$.ajax({
-				type : "POST",
-				url : "/dailyReport/checkReport",
-				data : {
-					date : date
-				},
-				success : function(data){
-					alert(data);
- 					if(data !== 0){
- 						var path = "/dailyReport/detail";
-   						var form = document.createElement("form");
-   						form.setAttribute("method", "POST");
-   						form.setAttribute("action", path);
- 						
- 						var hiddenField = document.createElement("input");
- 						hiddenField.setAttribute("type", "hidden");
- 						hiddenField.setAttribute("name", "dailyReportId");
- 						hiddenField.setAttribute("value", data);
- 						form.appendChild(hiddenField);
- 						document.body.appendChild(form);
-
- 						form.submit();
-					}else{
-						location.href="/dailyReport/write"
-					} 
-				}
-			});
-
-		});
+		registerDailyReportEvent();
 
 	});
 	$(document).ready(function() {

@@ -74,4 +74,29 @@ public class UserServiceImpl implements UserService {
 		
 		return employeeDAO.getEmpSearch(empSearch);
 	}
+	
+	@Override
+	public List<EmployeeDTO> selectTeamMember_menu(String employee_id) {
+		return employeeDAO.selectTeamMember_menu(employee_id);
+	}
+	
+	
+	@Override
+	public HashMap<String, Object> pagingEmployeeSearchResultList(int startIdx, int perContentNum, HashMap<String, String> params) {
+		List<EmployeeDTO> employeeList = employeeDAO.getEmployeeList(startIdx, perContentNum, params);
+		int totalPageNum = employeeDAO.getPagingNum_EmployeeList(perContentNum, params);
+
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("totalPageNum", totalPageNum);
+		resultMap.put("employeeList", employeeList);
+		
+		return resultMap;
+	}
+	
+	
+	@Override
+	public boolean deleteEmployee(String employee_id) {
+		return employeeDAO.deleteEmployee(employee_id);
+	}
+	
 }

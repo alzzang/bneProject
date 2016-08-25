@@ -60,7 +60,13 @@
          <if test="search_text != null">
 	  	 	and title like '%' || #{search_text} || '%'
 		</if> 	
-         ) a        
+         <if test="search_text != null and search_type.equals('제목')">
+	   		and title like '%' || #{search_text} || '%'
+		</if>
+		<if test="search_text != null and search_type.equals('내용')">
+		   	and content like '%' || #{search_text} || '%'
+		</if>  		
+  	       ) a        
    where order_idx between 1 + #{perContentNum}*(#{startIdx}-1) and #{startIdx}*#{perContentNum}
    order by order_idx asc  
 
@@ -87,7 +93,12 @@
 		<if test="approval_flag != null">
 			and d.approval_flag = #{approval_flag}
 		</if>
-
+	<if test="search_text != null and search_type.equals('제목')">
+	   	and title like '%' || #{search_text} || '%'
+	</if>
+	<if test="search_text != null and search_type.equals('내용')">
+	   	and content like '%' || #{search_text} || '%'
+	</if>  	
 	</select>
 
 	<select id="selectTeamMemberList" parameterType="java.lang.String" resultMap="DailyReportTeamListElement">
@@ -281,10 +292,13 @@ and dr.daily_report_id=#{id}
 	<delete id="deleteReport" parameterType="String">
 		delete daily_report	where daily_report_id=#{id}
 	</delete>
+	
+	<select id="selectDailyCount" parameterType="hashmap" resultType="Integer">
+		select decode((select count(*) from daily_report where employee_id=#{employee_id} and reg_date=#{reg_date}), 1,(select daily_report_id from daily_report where employee_id=#{employee_id} and reg_date=#{reg_date}),0) num from dual
+	</select>
 	<select id="checkDailyReport" parameterType="map" resultType="Integer">
 		SELECT DAILY_REPORT_ID FROM DAILY_REPORT WHERE REG_DATE=#{date} AND EMPLOYEE_ID=#{employeeId}
 	</select>
-
 
 </mapper>
 

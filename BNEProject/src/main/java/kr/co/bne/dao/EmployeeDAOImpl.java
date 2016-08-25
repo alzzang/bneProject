@@ -58,5 +58,35 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return sqlSession.selectList("kr.co.bne.mapper.Employee.empSearch", empSearch);
 	}
 	
+	@Override
+	public List<EmployeeDTO> selectTeamMember_menu(String employee_id) {
+		return sqlSession.selectList("kr.co.bne.mapper.Employee.selectTeamMember_menu", employee_id);
+	}
+	
+	@Override
+	public int getPagingNum_EmployeeList(int perContentNum, HashMap<String, String> params) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map = (HashMap<String, String>)params.clone();
+		map.put("perContentNum", Integer.toString(perContentNum));
+		return sqlSession.selectOne("kr.co.bne.mapper.Employee.getPagingNum_EmployeeList", map);
+	}
+	
+	@Override
+	public List<EmployeeDTO> getEmployeeList(int startIdx, int perContentNum, HashMap<String, String> params) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map = (HashMap<String, String>)params.clone();
+		
+		
+		map.put("perContentNum", Integer.toString(perContentNum));
+		map.put("startIdx", Integer.toString(startIdx));
+		
+		return sqlSession.selectList("kr.co.bne.mapper.Employee.getEmployeeList", map);
+	}
+	
+	@Override
+	public boolean deleteEmployee(String employee_id) {
+		int rows = sqlSession.delete("kr.co.bne.mapper.Employee.deleteEmployee", employee_id);
+		return rows > 0 ? true : false;
+	}
 
 }

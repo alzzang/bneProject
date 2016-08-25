@@ -127,8 +127,9 @@ String text=(String)request.getAttribute("search_text");
                     <div class="content-frame-body" style="height: 897px;">
                         
                         <div class="panel panel-default">
-                            <div class="panel-heading ui-draggable-handle">
-                                <div class="btn-group">
+                            <div class="panel-heading ui-draggable-handle" >
+                            <div class="row">
+                                <div class="btn-group col-xs-3 col-sm-3 col-md-3 col-lg-3" >
                                                     <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" aria-expanded="false"><%=currentApproval_flag %> <span class="caret"></span></a>
                                                     <ul class="dropdown-menu" role="menu">
                                                         <li onclick='viewList("approval_flag", -1)' role="presentation" class="dropdown-header">전체보기</li>
@@ -137,7 +138,7 @@ String text=(String)request.getAttribute("search_text");
                                                     </ul>
                                 </div>	
                                 
-                                <div class="pull-right" style="width: 150px;">
+                                <div class="pull-right col-xs-3 col-sm-3 col-md-3 col-lg-3">
                                     <div class="input-group">
                                         <div class="input-group-addon" onclick="viewList('reg_date', undefined)" title="초기화" style="cursor: pointer;"><span class="fa fa-calendar"></span></div>
                                         <input class="form-control datepicker" type="text" data-orientation="left" onchange="viewList('reg_date', this.value)" value=<%=currentReg_date %>>                                    
@@ -146,18 +147,15 @@ String text=(String)request.getAttribute("search_text");
 
 
 
-				<div class="pull-right" style="width: 600px;">
-					<div class="col-md-12">
-					<div class="input-group" style="display: inline-block;">
-								<select class="form-control" >
-								  <option>1</option>
-								  <option>2</option>
-								  <option>3</option>
-								  <option>4</option>
-								  <option>5</option>
-								</select>
-							</div>
-						<div class="input-group">
+								<div class="pull-right col-xs-5 col-sm-5 col-md-5 col-lg-4" >
+									<div class="col-md-12 btn-group"  >
+									<div class="input-group btn-group" >
+												<select class="form-control " id="search_type">
+												  <option value="제목" >제목</option>
+												  <option value="내용">내용</option>
+												  </select>
+											</div>
+										<div class="input-group">
 							
 
 							<c:if test="${search_text eq null}">
@@ -175,6 +173,7 @@ String text=(String)request.getAttribute("search_text");
 									onclick="viewList('search', undefined)">Search</button>
 							</div>
 						</div>
+					</div>
 					</div>
 				</div>
 
@@ -213,7 +212,7 @@ String text=(String)request.getAttribute("search_text");
                                     
                                     <%if(startIdx != 0) { %>
                                     <%if(startIdx > 1) {%>
-                                    <li class="disabled"><a href="<%=url %>/<%=startIdx-1 %>">«</a></li>
+                                    <li><a href="<%=url %>/<%=startIdx-1 %>">«</a></li>
                                     <%} %>
                                     <%for(int i=startIdx; i<=endIdx; i++) { %>
                                     	<%if(currentPage == i) {%>

@@ -3,4 +3,12 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.Department">
+
+	<select id="getDepartmentList" resultType="Department">
+		select department_id, department_name
+		from department
+		where department_id != 0
+		order by department_name asc
+	</select>
+
 </mapper>

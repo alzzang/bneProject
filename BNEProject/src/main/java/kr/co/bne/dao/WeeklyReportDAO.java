@@ -13,8 +13,7 @@ public interface WeeklyReportDAO {
 	public WeeklyReportDTO selectWeeklyReport(String weekly_report_id) throws Exception;
 	public List<String> selectAllWeeklyReportId(String employee_id) throws Exception;
 	public int insertWeeklyReport(WeeklyReportDTO weeklyReport) throws Exception;
-
-
+	
 	// 목록 ////////////////////////////////////////
 	
 	// 조건에 맞는 주간 계획 목록
@@ -23,5 +22,4 @@ public interface WeeklyReportDAO {
 	public List<WeeklyReportMemberInfo> selectDeptMember(String department_id) throws Exception;
 	// 조건에 맞는 작성된 주간 계획의 레코드 수   
 	public int selectTotalRecordNum(Map<String, Object> parameterMap) throws Exception;
-
 }

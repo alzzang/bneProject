@@ -18,6 +18,7 @@ public interface DailyReportService {
 	public void writeDailyReport(DailyReportDTO dailyReportDTO, List<CounsellingRecordDTO> list);
 	public DailyReportDetailDTO viewReport(String id);
 	public int searchDailySales(HashMap<String, String> map);
+	public int confirmDuplicate(HashMap<String,String> map);
 	public EmployeeDTO searchImage(String employee_id);
 	public List<CounsellingDetailDTO> searchCounselRecord(String id);
 	public void approvalDailyReport(String daily_report_id);
@@ -25,8 +26,6 @@ public interface DailyReportService {
 	public void updateDailyReport(DailyReportDTO dailyReportDTO);
 	public void writeCounsellingRecord(List<CounsellingRecordDTO> result);
 	public void updateDailyReport(DailyReportDTO dailyReportDTO, List<CounsellingRecordDTO> list);
-
-
 
 	int getgetTotalUnapprovalNum(String position, String user_id);
 
@@ -40,9 +39,8 @@ public interface DailyReportService {
 	public List<DailyReportEmployeeDTO> selectTeamMonthlyGoal(String employeeId);
 	public List<?> selectVehicleGauge(String id);
 	public List<DailyReportChart2DTO> selectCustomersSales(int departmentid);
-	public int checkReport(String date,String employeeId);
 	HashMap<String, Object> selectDailyReportList(String user_id, int startIdx, int perContentNum);
 	HashMap<String, Object> selectDailyReportList(String user_id, int startIdx, int perContentNum,
 			HashMap<String, Object> params);
-	
+	int checkReport(String date, String employeeId);
 }
