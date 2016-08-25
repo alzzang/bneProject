@@ -41,6 +41,9 @@ public class MainController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	UserController usercontroller;
+	
 	private JsonObject parseWeeklyReportDetailDTO(WeeklyReportDetailDTO result){
 		JsonObject weeklyReportDetail = new JsonObject();
 		Gson gson = new Gson();
@@ -68,12 +71,20 @@ public class MainController {
 	public String goMain(HttpServletRequest request,HttpServletResponse res,HttpSession session) throws Exception {
 		//주간테이블
 		EmployeeDTO loginEmployee = (EmployeeDTO)session.getAttribute("user");
+		
+		
+		
+		
+		
 		if(loginEmployee == null) {
 			return "redirect:/user/goLoginForm";
+		}else{
+			System.out.println(loginEmployee.getFile_position());
+			usercontroller.setFileName(loginEmployee.getFile_position(),request);
 		}
+			
 		
 		JsonObject weeklyReportDetail = getWekelyTable(loginEmployee);
-		
 		if(weeklyReportDetail != null)
 			request.setAttribute("weeklyReportDetail", weeklyReportDetail);
 		else{
@@ -82,7 +93,11 @@ public class MainController {
 		}
 		request.setAttribute("employee_Id", loginEmployee.getEmployee_id());
 		request.setAttribute("unapproval", unapproval(request,res));
+		usercontroller.setFileName(loginEmployee.getFile_position(),request);
+		
 		return "mainboard";
+	
+	
 	}
 	
 	

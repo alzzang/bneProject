@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
@@ -52,13 +53,13 @@ public class UserController {
 
 	@Autowired
 	MessageChannel ftpChannel;
-	
+
 	@Autowired
 	PollableChannel ftpRecieveChannel;
 	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
-		session.setAttribute("fileName", fileName);
+		//session.setAttribute("fileName", fileName);
 	}
 	
 	@RequestMapping(value = "/defaultFile", method = RequestMethod.POST)
@@ -72,82 +73,42 @@ public class UserController {
 	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
 		String fileName = null;
+		
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		for (MultipartFile multipartFile : fileMap.values()) {
-			fileName=saveFileToLocalDisk(multipartFile, id);
+			fileName=saveFileToRemoteDisk(multipartFile, id);
 			userService.modifyFilePosition(id, fileName);
 		}
-		setFileName(fileName,req);
 		
+		setFileName(fileName,req);
 	}
 
-	private String saveFileToLocalDisk(MultipartFile multipartFile, String id)
+
+	
+	private String saveFileToRemoteDisk(MultipartFile multipartFile, String id)
 			throws IOException, FileNotFoundException {
 
 		String temp[] = multipartFile.getContentType().split("/");
-		String outputFileName = getDestinationLocation() + id + "." + temp[1];
+		String outputFileName =  id + "." + temp[1];			
 		
-		System.out.println(outputFileName);
-		//File file = new File(outputFileName);
-		File file = new File("/Users/bit-user/git/bneProject/BNEProject/src/main/resources/test.txt");
-		//System.out.println(file.);
-		final Message<File> message = MessageBuilder.withPayload(file).build();
+		File uploadFile = new File( outputFileName);
+		multipartFile.transferTo(uploadFile);
+		final Message<?> message = MessageBuilder.withPayload(uploadFile).build();
+		ftpChannel.send(message);
 		
-		System.out.println(message);
 		
-		boolean result = ftpChannel.send(message);
-		System.out.println(result);
-/*		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		/*FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(outputFileName));*/
+		FileUtils.deleteQuietly(uploadFile.getParentFile());
+		
+		
+		
 		return id + "." + temp[1];
-	}
-
-	@RequestMapping(value = "/download/{fileName}", method = { RequestMethod.GET })
-	public void showFile(@PathVariable String fileName, HttpServletRequest req, HttpServletResponse res)
-			throws IOException {
-/*		ConfigurableApplicationContext ctx =
-				new ClassPathXmlApplicationContext("/kr/co/bne/controller/applicationContext");
-
-		PollableChannel ftpChannel = ctx.getBean("ftpInbound", PollableChannel.class);
-		
-		FtpInboundFileSynchronizer p;
-		p.*/
-		
-		byte[] buffer = new byte[1024];
-		int byteRead = -1;
-		FileInputStream inputStream;
-		OutputStream outStream;
-		Message<?> message = ftpRecieveChannel.receive();
-		Object payload = message.getPayload();
-		System.out.println(payload);
-		System.out.println("message"+message);
-		File f = new File("c:/uploaded-files/" + fileName);
-		inputStream = new FileInputStream(f);
-		outStream = res.getOutputStream();
-
-		//Message<?> message1 = ftpRecieveChannel.receive(2000);
-		while ((byteRead = inputStream.read(buffer)) != -1) {
-			outStream.write(buffer, 0, byteRead);
-		}
-		inputStream.close();
-		outStream.close();
 		
 	}
+	
+	
+	
 
-	private String getDestinationLocation() {
-		String savedir = "c:/uploaded-files";
-		File saveDirFile = new File(savedir);
 
-		if (!saveDirFile.exists()) {
-			saveDirFile.mkdirs();
-		}
-		return "c:/uploaded-files/";
-	}
 
 	@RequestMapping(value = "/goLoginForm", method = { RequestMethod.GET })
 	public String goLoginForm() {
@@ -179,19 +140,14 @@ public class UserController {
 		EmployeeDTO employeeDTO = new EmployeeDTO();
 		employeeDTO = userService.validCheck(id, rawPassword);
 		String newpassword = req.getParameter("newpassword");
-		
-		
-		
+			
 		if (newpassword == null) {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
 				session.setAttribute("fileName", employeeDTO.getFile_position());
 
-
 				DailyReportEmployeeDTO employee= dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
 
-				
-			
 				session.setAttribute("employee", employee);
 				return "redirect:/main";
 			}
@@ -212,17 +168,14 @@ public class UserController {
 	@RequestMapping(value = "/empSearch", method = { RequestMethod.POST })
 	public @ResponseBody List<EmployeeDTO> getEmpSearch(@RequestParam("empSearch") String empSearch ,HttpServletRequest req) {
 
-		
-		
-
-
+	
 			String temp="%"+empSearch+"%";
 			List<EmployeeDTO> list =userService.getEmpSearch(temp);
 			return list;
 	}
 
 	
-	/*    */
+	
 	@RequestMapping(value = "/searchUser/{empId}", method = { RequestMethod.GET })
 	public String showSearchUser(Model model,@PathVariable String empId, HttpServletRequest req, HttpServletResponse res)
 			throws IOException {
