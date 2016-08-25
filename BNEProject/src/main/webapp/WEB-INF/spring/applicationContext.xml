@@ -32,6 +32,12 @@
    <!-- AOP - aspect 사용. -->
    <aop:aspectj-autoproxy proxy-target-class="true"/>
          
+           <bean
+      class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="locations">
+         <value>/WEB-INF/spring/applicationContext.properties</value>
+      </property>
+   </bean>
             
    <!-- datasource -->
    <bean id="ftpClientFactory"
@@ -48,12 +54,8 @@
                                        channel="ftpChannel"
                                       remote-directory="/test"                       
                                       session-factory="ftpClientFactory"/>
-    <bean
-      class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-      <property name="locations">
-         <value>/WEB-INF/spring/applicationContext.properties</value>
-      </property>
-   </bean>
+  
+   
    <bean id = "multipartResolver" 
       class = "org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
       

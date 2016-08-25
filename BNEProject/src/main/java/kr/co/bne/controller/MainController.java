@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -23,7 +22,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import kr.co.bne.common.NoticeDetail;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
 import kr.co.bne.service.DailyReportService;
@@ -71,18 +69,17 @@ public class MainController {
 	public String goMain(HttpServletRequest request,HttpServletResponse res,HttpSession session) throws Exception {
 		//주간테이블
 		EmployeeDTO loginEmployee = (EmployeeDTO)session.getAttribute("user");
-				System.out.println(loginEmployee.getFile_position());
-			usercontroller.setFileName(loginEmployee.getFile_position(),request);
-		
+		System.out.println("m"+loginEmployee.getFile_position());
+			
 		if(loginEmployee.getDepartment_id() != 0) { //일반 사용자
+		
 			return goMain_Normal(request, res, loginEmployee);
+			
 		}else {//admin
 			return "redirect:/admin/employee/1";
 		}
 	}
 
-
-	
 	
 	private String goMain_Normal(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {
 		JsonObject weeklyReportDetail = getWekelyTable(loginEmployee);

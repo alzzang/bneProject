@@ -52,12 +52,15 @@ public class UserController {
 	@Autowired
 	MessageChannel ftpChannel;
 
-	@Autowired
-	PollableChannel ftpRecieveChannel;
-	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
-		session.setAttribute("fileName", fileName);
+		EmployeeDTO employee=(EmployeeDTO)session.getAttribute("user");
+		System.out.println("1"+employee.getFile_position());
+		
+		employee.setFile_position(fileName);
+		session.setAttribute("user", employee);
+		EmployeeDTO employee1=(EmployeeDTO)session.getAttribute("user");
+		System.out.println("2"+employee1.getFile_position());
 	}
 	
 	@RequestMapping(value = "/defaultFile", method = RequestMethod.POST)
@@ -70,12 +73,16 @@ public class UserController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
+		
+		
 		String fileName = null;
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		for (MultipartFile multipartFile : fileMap.values()) {
 			fileName=saveFileToRemoteDisk(multipartFile, id);
 			userService.modifyFilePosition(id, fileName);
 		}
+				
+		
 		setFileName(fileName,req);
 		
 	}
@@ -87,25 +94,18 @@ public class UserController {
 
 		String temp[] = multipartFile.getContentType().split("/");
 		String outputFileName =  id + "." + temp[1];			
-		
-		File uploadFile = new File( outputFileName);
+		File uploadFile = new File(outputFileName);
 		multipartFile.transferTo(uploadFile);
+		
+		//FileUtils.forceDelete(uploadFile.getParentFile());
 		final Message<?> message = MessageBuilder.withPayload(uploadFile).build();
 		ftpChannel.send(message);
-		
-		
+
 		FileUtils.deleteQuietly(uploadFile.getParentFile());
-		
-		
-		
 		return id + "." + temp[1];
 		
 	}
 	
-	
-	
-
-
 
 	@RequestMapping(value = "/goLoginForm", method = { RequestMethod.GET })
 	public String goLoginForm() {

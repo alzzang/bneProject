@@ -31,7 +31,7 @@
 
 
 <script type="text/javascript" src="/js/dailysettings.js"></script>
-<script src="http://192.168.1.6:10000/socket.io/socket.io.js"></script>
+<script src="http://192.168.1.27:10000/socket.io/socket.io.js"></script>
 
 </head>
 
@@ -41,7 +41,7 @@
 		<jsp:forward page="/user/login"/>
 	</c:if>
 
-	<input type="hidden" id='fileName' value='${sessionScope.fileName}'>
+	<%-- <input type="hidden" id='fileName' value='${sessionScope.fileName}'> --%>
 	<input type="hidden" name="department_id" id="department_id" value="${sessionScope.user.department_id}">
 
 	
@@ -142,7 +142,7 @@
 
 
  <script type="text/javascript">
-      var socket = io.connect('http://192.168.1.6:10000');
+      var socket = io.connect('http://192.168.1.27:10000');
       socket.emit('getId', {
          employeeId : '${sessionScope.user.employee_id}'
       });
