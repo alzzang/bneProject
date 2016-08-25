@@ -58,6 +58,7 @@ public class NoticeController {
 		}else{
 			type="%"+type+"%";
 		}
+	/*	System.out.println(type);*/
 		map.put("type", type);
 		
 		unList=noticeService.searchUnconfirmedNotice(map);
@@ -117,7 +118,7 @@ public class NoticeController {
 		String position=employee.getPosition();
 		List<NoticeDetail> unList=null;
 		Map<String, String> map=new HashMap<String, String>();
-		String type=req.getParameter("notice_type");
+		String type=req.getParameter("type");
 		map.put("employee_id", employee.getEmployee_id());
 		Integer start=Integer.parseInt(req.getParameter("start"));
 		start=(start-1)*10+1;
@@ -174,7 +175,7 @@ public class NoticeController {
 		String position=employee.getPosition();
 		List<NoticeDetail> unList=null;
 		Map<String, String> map=new HashMap<String, String>();
-		String type=req.getParameter("notice_type");
+		String type=req.getParameter("type");
 		map.put("employee_id", employee.getEmployee_id());
 		Integer start=Integer.parseInt(req.getParameter("start"));
 		start=(start-1)*10+1;
@@ -191,7 +192,7 @@ public class NoticeController {
 		map.put("type", type);
 		
 		unList=noticeService.searchconfirmedNotice(map);
-		
+		System.out.println(type+":"+unList.size());
 		
 		for(int i=0;i<unList.size();i++){
 			String tempTime[]=unList.get(i).getPasstime().split(" ");

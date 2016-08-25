@@ -14,6 +14,8 @@ public interface EmployeeDAO {
 	public void updateFile(String id);
 	public EmployeeDTO selectImage(String employee_id);
 	public List<EmployeeDTO> getEmpSearch(String empSearch);
-		
-	
+	List<EmployeeDTO> selectTeamMember_menu(String employee_id);
+	int getPagingNum_EmployeeList(int perContentNum, HashMap<String, String> params);
+	List<EmployeeDTO> getEmployeeList(int startIdx, int perContentNum, HashMap<String, String> params);
+	boolean deleteEmployee(String employee_id);
 }

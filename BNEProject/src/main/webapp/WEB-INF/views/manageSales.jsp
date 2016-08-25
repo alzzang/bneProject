@@ -141,14 +141,14 @@
 					
 					
 					$('#bbb'+a).on("change",function(){
-						
+					
 						var tempStr=$('#demo-2').val().split("-");
 						
 						/* 정규식 패턴검사 */
 						var pattern = /^([1-9][0-9]{0,9}$)|^0$/;
 						var tt = $('#bbb'+a).val();
 						var true_false=pattern.test(tt);
-						
+												
 						if(true_false){
 							th.html($('#bbb'+a).val());
 						}else{
@@ -188,7 +188,7 @@
 					modifyFlag=true;
 				}
 		});
-		})(i);	
+		})(i);
     }
    	
    	$('#demo-2').val('<%=cal.get(Calendar.YEAR)%>'+'-'+'<%=cal.get(Calendar.MONTH)+1%>');

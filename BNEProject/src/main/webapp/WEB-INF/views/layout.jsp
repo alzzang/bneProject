@@ -15,6 +15,9 @@
 
 <!-- CSS INCLUDE -->
 <link rel="stylesheet" type="text/css" id="theme" href="/css/theme-default.css" />
+
+<script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
+
 <!-- EOF CSS INCLUDE -->
 <title>Insert title here</title>
 
@@ -28,7 +31,7 @@
 
 
 <script type="text/javascript" src="/js/dailysettings.js"></script>
-<script src="http://192.168.1.27:10000/socket.io/socket.io.js"></script>
+<script src="http://192.168.1.6:10000/socket.io/socket.io.js"></script>
 
 </head>
 
@@ -41,13 +44,6 @@
 	<input type="hidden" id='fileName' value='${sessionScope.fileName}'>
 	<input type="hidden" name="department_id" id="department_id" value="${sessionScope.user.department_id}">
 
-<!--   <script type="text/javascript">
-   	 var socket;
-	 var socket=io.connect('http://192.168.1.27:3000');
-	 socket.emit('employeeId',{employeeId: '${sessionScope.user.employee_id}'});
-	 socket.on('newmessage',function(data){ noty({text: data.fromId+'로부터 메세지가도착했습니다.', layout: 'topRight', type: 'success', timeout: 5000}) });
-  </script>    -->
-		
 	
 	<div class="page-container">
 		<div class="page-sidebar page-sidebar-fixed scroll mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="height: 979px;">
@@ -96,7 +92,7 @@
 
 	<!-- START SCRIPTS -->
 	<!-- START PLUGINS -->
-	<script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
+	
 	<script type="text/javascript" src="/js/plugins/jquery/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap.min.js"></script>
 	<!-- END PLUGINS -->
@@ -105,7 +101,8 @@
 	<script type='text/javascript' src='/js/plugins/icheck/icheck.min.js'></script>
 	<script type="text/javascript" src="/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
 	<script type="text/javascript" src="/js/plugins/scrolltotop/scrolltopcontrol.js"></script>
-
+	
+	
 	<script type="text/javascript" src="/js/plugins/rickshaw/d3.v3.js"></script>
 	<script type="text/javascript" src="/js/plugins/rickshaw/rickshaw.min.js"></script>
 	<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
@@ -124,19 +121,17 @@
 	<script type="text/javascript" src="/js/plugins.js"></script>
 	<script type="text/javascript" src="/js/actions.js"></script>
 	<script type="text/javascript" src="/js/weekly.js"></script>
-
+	<script type='text/javascript' src='/js/notice_on_header.js'></script>
 	<script type="text/javascript" src="/js/usersettings.js"></script>
-	<script type="text/javascript" src="/js/dailysettings.js"></script>
 	
-	<script type='text/javascript' src='/js/plugins/noty/jquery.noty.js'></script>
+	<!-- <script type='text/javascript' src='/js/plugins/noty/jquery.noty.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topCenter.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topLeft.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topRight.js'></script>            
-    <script type='text/javascript' src='/js/plugins/noty/themes/default.js'></script> 
-    <script type='text/javascript' src='/js/notice_on_header.js'></script>
+    <script type='text/javascript' src='/js/plugins/noty/themes/default.js'></script>  -->
+    
     
     <script type='text/javascript' src='/assets/plugins/bootstrap-notify-master/bootstrap-notify.js'></script>
-	
 	
 	
 	<!-- END TEMPLATE -->
@@ -147,7 +142,7 @@
 
 
  <script type="text/javascript">
-      var socket = io.connect('http://192.168.1.27:10000');
+      var socket = io.connect('http://192.168.1.6:10000');
       socket.emit('getId', {
          employeeId : '${sessionScope.user.employee_id}'
       });
@@ -166,9 +161,6 @@
          if($('#noticeButton').hasClass('active')) {
             getNoticeList(1, 5);   
          }   
-         
-         noty({text: message, layout: 'topRight', type: 'success', timeout: 5000})
-      
          
          
          $.notify({
@@ -214,6 +206,41 @@
 
       
    </script>
+   
+   
+   <script type="text/javascript">
+$("#weeklyDetail").click(function(){
+	var path = "/menu/getTeamMemberList";	
+	var html = '';
+	
+	$.ajax({
+		url : path,
+		success : function(data) {
+			for(var i=0; i<data.length; i++) {
+				var employee_id = data[i].employee_id;
+				var employee_name = data[i].employee_name;
+				var link = "location.href=" + "'/weeklyReport/detail/" + employee_id + "'";
+				html += '<li onclick="' + link + '"><a href="#">' +
+							'<span class="fa fa-user"></span>' + employee_name + '</a></li>';
+			}
+			
+			$("#members").html(html);
+		}
+	});
+});
+
+$(function(){
+	var path = "/alarm/unReadCount/" + $("#employee_id").val();
+	
+	$.ajax({
+		url : path,
+		success : function(data) {
+			$("#newMessageCount_title").html(data);
+		}
+	});
+});
+</script>
+   
 
 </body>
 </html>

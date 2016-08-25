@@ -34,9 +34,6 @@
          
             
    <!-- datasource -->
-   
-   
-   
    <bean id="ftpClientFactory"
           class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
         <property name="host" value="${ftp.host}"/>

@@ -6,9 +6,12 @@
 
 	<select id="selectEmployee" parameterType="String" resultType="Employee">
    <![CDATA[select e.*, d.department_name,
-        CASE WHEN employee_id in (select manager_id from department) THEN 'manager'
-        ELSE 'employee' END position from employee e, department d where e.DEPARTMENT_ID = d.DEPARTMENT_ID
-        and employee_id = #{value}]]>
+        			CASE when d.department_id = 0 then 'admin'
+              		WHEN employee_id in (select manager_id from department) THEN 'manager'
+              		ELSE 'employee' END position 
+			from employee e, department d 
+			where e.DEPARTMENT_ID = d.DEPARTMENT_ID
+        			and employee_id = #{value}]]>
    </select>
 
 	<update id="updatePassword" parameterType="HashMap">
@@ -38,5 +41,79 @@
 	<select id="selectTeamMember" resultType="Employee" parameterType="Integer">
 	<![CDATA[select employee_name,employee_id from employee where department_id=#{values}]]>
 	</select>
+	
+	
+	<select id="selectTeamMember_menu" resultType="Employee" parameterType="String">
+		select employee_id, employee_name
+		from employee
+		where department_id = (select department_id 
+		                       from employee 
+		                       where employee_id = #{value})
+		      and employee_id not in ((select manager_id 
+		                              from department 
+		                              where department_id = (select department_id 
+		                                                     from employee 
+		                                                     where employee_id=#{value})), #{value})
+	</select>
+	
+	
+	
+	<!-- 전체 리스트 페이지 갯수 -->
+	<select id="getPagingNum_EmployeeList" parameterType="hashmap" resultType="int">
+		select ceil(count(*)/#{perContentNum}) cnt
+		from (select * from department where department_id != 0) d , employee e
+		where d.department_id = e.department_id
+		<if test="employee_id != null">
+			and e.employee_id like '%' || #{employee_id} || '%'
+		</if>
+		<if test="employee_name != null">
+			and e.employee_name like '%' || #{employee_name} || '%'
+		</if>
+		<if test="department_id != null">
+			and e.department_id = #{department_id}
+		</if>	
+		<if test="position != null and position.equals('employee')">
+			and e.employee_id in d.manager_id
+		</if>
+		<if test="position != null and position.equals('manager')">
+			and e.employee_id not in d.manager_id
+		</if>
+	</select>
+	
+	
+	<select id="getEmployeeList" parameterType="hashmap" resultType="Employee">
+		select idx, employee_id, employee_name, department_id, mobile_phone, email, department_name, CASE
+              		WHEN employee_id in (select manager_id from department) THEN 'manager'
+              		ELSE 'employee' END position 
+		from (	select ROW_NUMBER() over (order by employee_name asc) idx, e.*, d.department_name
+				from (select * from department where department_id != 0) d , employee e
+				where d.department_id = e.department_id
+				<if test="employee_id != null">
+					and e.employee_id like '%' || #{employee_id} || '%'
+				</if>
+				<if test="employee_name != null">
+					and e.employee_name like '%' || #{employee_name} || '%'
+				</if>
+				<if test="department_id != null">
+					and e.department_id = #{department_id}
+				</if>	
+				<if test="position != null and position.equals('employee')">
+					and e.employee_id not in d.manager_id
+				</if>
+				<if test="position != null and position.equals('manager')">
+					and e.employee_id in d.manager_id
+				</if>
+			)
+		where idx between 1 + #{perContentNum} * (#{startIdx}-1) and #{startIdx} * #{perContentNum}
+		order by idx asc
+	</select>
+	
+	
+	
+	<delete id="deleteEmployee" parameterType="String">
+		delete from employee
+		where employee_id = #{value}
+	</delete>
+	
 
 </mapper>

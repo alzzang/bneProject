@@ -16,7 +16,6 @@ import kr.co.bne.dao.DailyReportDAO;
 import kr.co.bne.dao.NoticeDAO;
 import kr.co.bne.dto.DailyReportDTO;
 import kr.co.bne.dto.DailyReportDetailDTO;
-import kr.co.bne.dto.NoticeDTO;
 
 
 @Component
@@ -100,6 +99,12 @@ public class NoticeAspect {
       for(NoticeHeader dto : result) {
          deliver.sendNotice(dto.getSubject_name(), dto.getObject_id(), dto.getLink_id(), dto.getNotice_type());
       }
+   }
+   
+   
+   @AfterReturning("execution(public * kr.co.bne.service.WeeklyReportService.writeWeeklyReport(..))")
+   public void execInsertNotice_WEEKLY_POST(JoinPoint joinPoint) throws Throwable {
+	   /*int weekly_report_id = ((WeeklyReportDetailDTO)(joinPoint.getArgs()[0])).getweekly;*/
    }
 
 }
