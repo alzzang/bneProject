@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.gson.Gson;
 
 import kr.co.bne.common.DailyReportTeamListElement;
+import kr.co.bne.dto.DepartmentDTO;
 import kr.co.bne.dto.EmployeeDTO;
+import kr.co.bne.service.DepartmentService;
 import kr.co.bne.service.UserService;
 
 @Controller
@@ -25,6 +27,8 @@ public class AdminController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private DepartmentService departmentService;
 
 	@RequestMapping("/employee")
 	public String goManageEmployeeView(Model model, HttpServletRequest request, HttpSession session, String employee_id) {
@@ -59,7 +63,7 @@ public class AdminController {
 			model.addAttribute("optionQuery", "?" + optionQuery);
 		}
 		
-		HashMap<String, Object> resultMap = userService.pagingEmployeeSearchResultList(page, 15, serviceParams);
+		HashMap<String, Object> resultMap = userService.pagingEmployeeSearchResultList(page, 10, serviceParams);
 		List<EmployeeDTO> employeeList = (List<EmployeeDTO>)resultMap.get("employeeList");
 		int totalPageNum = (Integer)resultMap.get("totalPageNum");
 		
@@ -77,6 +81,9 @@ public class AdminController {
 			}
 		}
 		
+		List<DepartmentDTO> departmentList = departmentService.getDepartmentList();
+		
+		model.addAttribute("departmentList", departmentList);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPageNum", totalPageNum);
 		model.addAttribute("employeeList", employeeList);
@@ -84,6 +91,15 @@ public class AdminController {
 		model.addAttribute("startIdx", startIdx);
 
 		return "mainboard_admin";
+	}
+	
+	
+	
+	@RequestMapping("/employee/delete/{employee_id}")
+	public String goManageEmployeeView(Model model, HttpServletRequest request, @PathVariable String employee_id) {
+		userService.deleteEmployee(employee_id);
+		
+		return "redirect:/admin/employee/1";
 	}
 
 }

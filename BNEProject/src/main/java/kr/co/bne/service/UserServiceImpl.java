@@ -93,4 +93,10 @@ public class UserServiceImpl implements UserService {
 		return resultMap;
 	}
 	
+	
+	@Override
+	public boolean deleteEmployee(String employee_id) {
+		return employeeDAO.deleteEmployee(employee_id);
+	}
+	
 }

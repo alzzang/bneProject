@@ -16,4 +16,5 @@ public interface UserService {
 	List<EmployeeDTO> selectTeamMember_menu(String employee_id);
 	HashMap<String, Object> pagingEmployeeSearchResultList(int startIdx, int perContentNum,
 			HashMap<String, String> params);
+	boolean deleteEmployee(String employee_id);
 }

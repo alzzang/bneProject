@@ -82,5 +82,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		return sqlSession.selectList("kr.co.bne.mapper.Employee.getEmployeeList", map);
 	}
+	
+	@Override
+	public boolean deleteEmployee(String employee_id) {
+		int rows = sqlSession.delete("kr.co.bne.mapper.Employee.deleteEmployee", employee_id);
+		return rows > 0 ? true : false;
+	}
 
 }
