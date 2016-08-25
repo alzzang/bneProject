@@ -3,7 +3,6 @@ package kr.co.bne.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
@@ -14,9 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.PollableChannel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,18 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-
-
 import kr.co.bne.dao.EmployeeDAO;
-
-
-
-
 import kr.co.bne.dto.DailyReportEmployeeDTO;
-
-
-
-
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.CounsellingRecordService;
 import kr.co.bne.service.DailyReportService;
@@ -58,7 +50,11 @@ public class UserController {
 	@Autowired
 	CounsellingRecordService counsellingRecordService;
 
-
+	@Autowired
+	MessageChannel ftpChannel;
+	
+	@Autowired
+	PollableChannel ftpRecieveChannel;
 	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
@@ -87,26 +83,54 @@ public class UserController {
 
 	private String saveFileToLocalDisk(MultipartFile multipartFile, String id)
 			throws IOException, FileNotFoundException {
+
 		String temp[] = multipartFile.getContentType().split("/");
 		String outputFileName = getDestinationLocation() + id + "." + temp[1];
-		FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(outputFileName));
+		
+		System.out.println(outputFileName);
+		//File file = new File(outputFileName);
+		File file = new File("/Users/bit-user/git/bneProject/BNEProject/src/main/resources/test.txt");
+		//System.out.println(file.);
+		final Message<File> message = MessageBuilder.withPayload(file).build();
+		
+		System.out.println(message);
+		
+		boolean result = ftpChannel.send(message);
+		System.out.println(result);
+/*		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		/*FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(outputFileName));*/
 		return id + "." + temp[1];
 	}
 
 	@RequestMapping(value = "/download/{fileName}", method = { RequestMethod.GET })
 	public void showFile(@PathVariable String fileName, HttpServletRequest req, HttpServletResponse res)
 			throws IOException {
+/*		ConfigurableApplicationContext ctx =
+				new ClassPathXmlApplicationContext("/kr/co/bne/controller/applicationContext");
 
+		PollableChannel ftpChannel = ctx.getBean("ftpInbound", PollableChannel.class);
+		
+		FtpInboundFileSynchronizer p;
+		p.*/
+		
 		byte[] buffer = new byte[1024];
 		int byteRead = -1;
 		FileInputStream inputStream;
 		OutputStream outStream;
-
+		Message<?> message = ftpRecieveChannel.receive();
+		Object payload = message.getPayload();
+		System.out.println(payload);
+		System.out.println("message"+message);
 		File f = new File("c:/uploaded-files/" + fileName);
-
 		inputStream = new FileInputStream(f);
 		outStream = res.getOutputStream();
 
+		//Message<?> message1 = ftpRecieveChannel.receive(2000);
 		while ((byteRead = inputStream.read(buffer)) != -1) {
 			outStream.write(buffer, 0, byteRead);
 		}

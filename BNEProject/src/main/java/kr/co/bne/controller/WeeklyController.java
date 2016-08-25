@@ -177,7 +177,6 @@ public class WeeklyController {
 			PlanDetailDTO dto;
 	        dto=(new Gson()).fromJson(json.get(i), PlanDetailDTO.class);
 	        planDetailList.add(dto);
-	        
 	        dto.setWeekly_report_id(weeklyReportDTO.getWeekly_report_id());
 	      }
 		

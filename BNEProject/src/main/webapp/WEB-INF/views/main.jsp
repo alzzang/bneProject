@@ -150,7 +150,7 @@ window.onload = function(){
 		makeSalesInput();
 		var day = ['mon','tue','wed','thu','fri'];
 		for(var i=0; i<5; i++){
-			$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
+			$('input[id="sales-'+day[i]+'"]').attr({'value': '0원', 'disabled':'disabled'});
 		}
 		openMessageBox('#mb-NoWeeklyPlan');
 	}
