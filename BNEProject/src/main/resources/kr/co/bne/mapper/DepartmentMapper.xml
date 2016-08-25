@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.Department">
-	<!-- 전체 리스트 페이지 갯수 -->
+	
 	<select id="getPagingNum_DepartmentList" parameterType="hashmap" resultType="int">
 		select ceil(count(*)/15) cnt
 		from (select * from department where department_id != 0) d , employee e
@@ -38,11 +38,13 @@
 		where idx between 1 + #{perContentNum} * (#{startIdx}-1) and #{startIdx} * #{perContentNum}
 		order by idx asc
 	</select>
+	
+   <select id="getDepartmentList_all" resultType="Department">
+      select department_id, department_name
+      from department
+      where department_id != 0
+      order by department_name asc
+   </select>
 
-	<select id="getDepartmentList" resultType="Department">
-		select department_id, department_name
-		from department
-		where department_id != 0
-		order by department_name asc
-	</select>
 </mapper>
+

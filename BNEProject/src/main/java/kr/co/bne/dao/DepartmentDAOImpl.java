@@ -38,7 +38,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	
 	@Override
 	public List<DepartmentDTO> getDepartmentList() {
-		return sqlSession.selectList("kr.co.bne.mapper.Department.getDepartmentList");
+		return sqlSession.selectList("kr.co.bne.mapper.Department.getDepartmentList_all");
 	}
 
 }

@@ -31,8 +31,6 @@ public class AdminController {
 	
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private DepartmentService departmentService;
 
 	@RequestMapping("/employee")
 	public String goManageEmployeeView(Model model, HttpServletRequest request, HttpSession session, String employee_id) {
