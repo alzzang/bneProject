@@ -59,7 +59,7 @@ public class UserController {
 	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
-		session.setAttribute("fileName", fileName);
+		//session.setAttribute("fileName", fileName);
 	}
 	
 	@RequestMapping(value = "/defaultFile", method = RequestMethod.POST)
