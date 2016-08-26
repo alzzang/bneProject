@@ -23,7 +23,7 @@
 	</update>
 
 	<update id="defaultUpdateFile" parameterType="String">
-	<![CDATA[update employee set file_position='default.png' where employee_id=#{value}]]>
+	<![CDATA[update employee set file_position='1.png' where employee_id=#{value}]]>
 	</update>
 
 	<select id="selectImage" resultType="Employee">

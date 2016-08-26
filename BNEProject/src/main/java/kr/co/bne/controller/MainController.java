@@ -70,9 +70,7 @@ public class MainController {
 		//주간테이블
 		EmployeeDTO loginEmployee = (EmployeeDTO)session.getAttribute("user");
 		
-		
-		System.out.println("m"+loginEmployee.getFile_position());
-			
+					
 		if(loginEmployee.getDepartment_id() != 0) { //일반 사용자
 		
 			return goMain_Normal(request, res, loginEmployee);

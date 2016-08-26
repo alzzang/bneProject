@@ -1,11 +1,13 @@
 package kr.co.bne.controller;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.PollableChannel;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,7 +57,15 @@ public class UserController {
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
 		EmployeeDTO employee=(EmployeeDTO)session.getAttribute("user");
-		session.setAttribute("fileName", employee.getFile_position());
+		
+		if(!employee.getFile_position().equals(employee.getEmployee_id()+".png")){
+			userService.modifyFilePosition(employee.getEmployee_id(), fileName);
+		}
+		
+		employee.setFile_position(fileName);
+		session.setAttribute("user", employee);
+		
+		
 		
 		
 	}
@@ -63,8 +73,13 @@ public class UserController {
 	@RequestMapping(value = "/defaultFile", method = RequestMethod.POST)
 	public void defaultFile(HttpServletResponse response, HttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
-		userService.modifyFilePosition(id);
-		setFileName("default.png",req);
+		
+
+		File uploadFile = new File("C:\\Users\\bit-user\\git\\bneProject\\BNEProject\\src\\main\\resources\\default.png");
+		final Message<?> message = MessageBuilder.withPayload(uploadFile).setHeader("fileName", id+".png").build();
+		ftpChannel.send(message);
+		setFileName(id+".png",req);
+		
 	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -75,8 +90,11 @@ public class UserController {
 		String fileName = null;
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		for (MultipartFile multipartFile : fileMap.values()) {
+			
 			fileName=saveFileToRemoteDisk(multipartFile, id);
-			userService.modifyFilePosition(id, fileName);
+			
+			
+
 		}
 				
 		
@@ -89,19 +107,19 @@ public class UserController {
 	private String saveFileToRemoteDisk(MultipartFile multipartFile, String id)
 			throws IOException, FileNotFoundException {
 
-		String temp[] = multipartFile.getContentType().split("/");
-		String outputFileName =  id + "." + temp[1];			
+
+		String outputFileName =  id + "." + "png";			
 		File uploadFile = new File(outputFileName);
 		multipartFile.transferTo(uploadFile);
 		
 		
-		//FileUtils.forceDelete(uploadFile.getParentFile());
+	
 		final Message<?> message = MessageBuilder.withPayload(uploadFile).build();
 		ftpChannel.send(message);
 		
 		uploadFile.delete();
-		//FileUtils.deleteQuietly(uploadFile.getParentFile());
-		return id + "." + temp[1];
+	
+		return outputFileName;
 		
 	}
 	
