@@ -38,7 +38,6 @@ var mainpageMorrisCharts = function() {
 			});
 		},
 		error : function() {
-			alert("nono");
 		}
 	});
 
@@ -70,7 +69,6 @@ var mainpageMorrisCharts = function() {
 			});
 		},
 		error : function() {
-			alert("nono");
 		}
 	});
 
@@ -136,7 +134,6 @@ var mainpageMorrisCharts = function() {
 			});
 		},
 		error : function() {
-			alert('error');
 		}
 	});
 }
@@ -171,7 +168,6 @@ var customerSales = function(){
 			}
 		},
 		error : function() {
-			alert("nono");
 		}
 	});
 	
@@ -216,7 +212,6 @@ var gaugeDistance = function(data) {
 			});
 		},
 		error : function() {
-			alert("nono");
 		}
 	});
 
@@ -265,7 +260,6 @@ var mainpageMorrisCharts = function() {
 			});
 		},
 		error : function() {
-			alert("nono");
 		}
 	});
 
@@ -298,7 +292,6 @@ var mainpageMorrisCharts = function() {
 			});
 		},
 		error : function() {
-			alert("nono");
 		}
 	});
 
@@ -364,7 +357,6 @@ var mainpageMorrisCharts = function() {
 			});
 		},
 		error : function() {
-			alert('error');
 		}
 	});
 }
@@ -399,7 +391,6 @@ var customerSales = function(){
 			}
 		},
 		error : function() {
-			alert("nono");
 		}
 	});
 	
@@ -444,7 +435,6 @@ var gaugeDistance = function(data) {
 			});
 		},
 		error : function() {
-			alert("nono");
 		}
 	});
 

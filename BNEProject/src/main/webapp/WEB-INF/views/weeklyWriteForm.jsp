@@ -292,11 +292,9 @@ $('#confirm').on('click',function(){
 			weeklyPlan : jPlan
 		},
 		success : function(){
-			alert("성송");
 			window.location.href="/weeklyReport/detail/"+employee_id;
 		},
 		error : function(){
-			alert("실패");
 		}
 	})
 });

@@ -177,7 +177,6 @@ var registerDailyReportEvent = function(){
 				date : date
 			},
 			success : function(data){
-				alert(data);
 					if(data !== 0){
 						var path = "/dailyReport/detail";
 						var form = document.createElement("form");
