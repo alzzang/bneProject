@@ -182,7 +182,6 @@
 <script>
 
 	$(window).load(function(){
-		alert("hello");
 		weeklyReportDetail = ${weeklyReportDetail};
 		
 		// 처음에 받아온 주간계획 정보 삽입 
@@ -272,7 +271,6 @@
 	    			registerDailyReportEvent();
 				},
 				error : function() {
-					alert("주간계획 데이터를 불러오는데 실패했습니다."); 
 				}
 			})
 		});
@@ -328,7 +326,6 @@
 	    			registerDailyReportEvent();
 				},
 				error : function() {
-					alert("주간계획 데이터를 불러오는데 실패했습니다."); 
 				}
 			})
 		});

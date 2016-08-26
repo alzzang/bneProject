@@ -74,7 +74,6 @@ var mainInputReportData = function(reportData) {
 
 	// 매출액 정보 행 삽입
 	makeSalesInput();
-	console.log("dfdf="+weeklyPlanDTOList[0].reg_date);
 	for(var i=0; i<weeklyPlanDTOList.length; i++){
 		$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales+'원', 'disabled':'disabled'});
 	}
@@ -178,7 +177,6 @@ var registerDailyReportEvent = function(){
 				date : date
 			},
 			success : function(data){
-				alert(data);
 					if(data !== 0){
 						var path = "/dailyReport/detail";
 						var form = document.createElement("form");
@@ -199,5 +197,17 @@ var registerDailyReportEvent = function(){
 			}
 		});
 
+	});
+}
+
+var preventKeyDown = function(){
+	$('#sales-mon ,#sales-tue,#sales-wed,#sales-thu,#sales-fri').keydown(function(e){
+		var range = this.selectionStart;
+		if((e.keyCode==48 || e.keyCode==96) && range == 0)
+			e.preventDefault();
+		
+	    if (e.keyCode!=37&&e.keyCode!=38&&e.keyCode!=39&&e.keyCode!=40&&e.keyCode!=9&&e.keyCode!=8&&(e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+	        e.preventDefault();
+	    }
 	});
 }

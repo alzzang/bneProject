@@ -292,24 +292,14 @@ $('#confirm').on('click',function(){
 			weeklyPlan : jPlan
 		},
 		success : function(){
-			alert("성송");
 			window.location.href="/weeklyReport/detail/"+employee_id;
 		},
 		error : function(){
-			alert("실패");
 		}
 	})
 });
 
-$('#sales-mon ,#sales-tue,#sales-wed,#sales-thu,#sales-fri').keydown(function(e){
-	var range = this.selectionStart;
-	if(range == 0 && e.keyCode==48 || e.keyCode==96)
-		e.preventDefault();
-	
-    if (e.keyCode!=37&&e.keyCode!=38&&e.keyCode!=39&&e.keyCode!=40&&e.keyCode!=9&&e.keyCode!=8&&(e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-        e.preventDefault();
-    }
-});
+	preventKeyDown();
 
 
 }

@@ -11056,13 +11056,11 @@ nhn.husky.SE2M_Hyperlink = jindo.$Class({
 				elTmpDiv.parentNode.insertBefore(elTmpDiv.firstChild, elTmpDiv);
 			}
 			elTmpDiv.parentNode.removeChild(elTmpDiv);
-//			alert(a[i].nodeValue);
 		}
 		elTmpDiv = oTmpRange = elFirstNode = elLastNode = waAllNodes = aAllTextNodes = a = aCleanTextNodes = elParent = null;
 		oCopyNode.innerHTML = oCopyNode.innerHTML.replace(rxTmpStr, "");
 		oTmpNode.innerHTML = oCopyNode.innerHTML;
 		oCopyNode = null;
-//alert(oTmpNode.innerHTML);
 	}
 });
 /**

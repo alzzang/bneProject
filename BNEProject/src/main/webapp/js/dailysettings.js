@@ -264,7 +264,6 @@ function tagTest(b,c,d,e,f,g,h,i,j){
 		
 		$('#counselling-footer').html('<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="localUpdate('+j+')">Submit</button>');
 	}else{
-		alert('띠용!!');
 		$('#modalTitle').val(c);
 		$('#contentDiv').html(d);
 		//$('#counsel_id').val(e);
@@ -285,7 +284,6 @@ function tagTest(b,c,d,e,f,g,h,i,j){
 
 }
 function tagDetail(department_name,employee_name,reg_date,title,client_id,client_name,representative,sec_client_name,address,content){
-	alert(department_name);
 	$('#counsel_department').html(department_name);
 	$('#counsel_empname').html(employee_name);
 	$('#counsel_regdate').html(reg_date);
@@ -321,15 +319,11 @@ function removeTag(seq,val){
 }
 
 function changeProgress(money,goal){
-	
-	/*alert(money+':'+goal);*/
-	
 	var achievementRate=money/goal*10000;
 	achievementRate=Math.round(achievementRate);
 	achievementRate=achievementRate/100;
 	/*achievementRate=Math.round10(achievementRate,-3); */
 	if(achievementRate == 0 ) {
-		alert(achievementRate+":");
 		var rate=achievementRate.toString()+'%';
 		$("#progressCondition").css('width',0.1);
 		$("#progressCondition").html(rate);
@@ -340,8 +334,6 @@ function changeProgress(money,goal){
 		$("#progressCondition").html(rate);
 	}
 	else{
-		//alert(achievementRate);
-		
 		if(achievementRate>100){
 			achievementRate=100;
 		}
@@ -366,12 +358,8 @@ function approvalDaily() {
     		success : function(data) {
     			$('#approvalDiv').remove();
     			alert('승인되었습니다.');
-    			/*event.preventDefault();*/
     		},
-    		error : function(data)
-    		{
-    			console.log(data);
-    			alert('에러입니');
+    		error : function(data){
     		}
     	})
     	
@@ -405,7 +393,6 @@ function insertComment(){
 
 		},
 		error:function(){
-			alert("수정오류");
 		}
 	})
 }
@@ -446,7 +433,6 @@ function searchSalesGoal(reg_date) {
 		},
 		success : function(data) {
 			var result=jQuery.parseJSON(data);
-			alert(result.flag);
 			if(result.flag===-1){
 				alert('해당 목표액이 존재하지 않습니다');
 				$('#dailyGoal').attr('value',0);
