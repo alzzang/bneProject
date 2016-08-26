@@ -57,18 +57,29 @@ public class UserController {
 	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
-		session.setAttribute("fileName", fileName);
+		EmployeeDTO employee=(EmployeeDTO)session.getAttribute("user");
+		employee.setFile_position(fileName);
+		session.setAttribute("user", employee);
 	}
 	
 	@RequestMapping(value = "/defaultFile", method = RequestMethod.POST)
 	public void defaultFile(HttpServletResponse response, HttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
 		userService.modifyFilePosition(id);
-		setFileName("default.png",req);
+
+		File uploadFile = new File("C:/Users/bit-user/git/bneProject/BNEProject/src/main/resources/default.png");
+		File uploadFile2 = new File("C:/Users");
+		File directory = new File("C:/Users");
+
+		uploadFile.createNewFile();
+		final Message<?> message = MessageBuilder.withPayload(uploadFile).build();
+		ftpChannel.send(message);
+		
+		setFileName("id.png",req);
 	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req,
+	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req, 
 			@RequestParam("id") String id) throws IOException {
 		String fileName = null;
 		Map<String, MultipartFile> fileMap = req.getFileMap();
@@ -76,8 +87,7 @@ public class UserController {
 			fileName=saveFileToRemoteDisk(multipartFile, id);
 			userService.modifyFilePosition(id, fileName);
 		}
-		setFileName(fileName,req);
-		
+		setFileName(fileName,req);	
 	}
 
 
@@ -89,23 +99,13 @@ public class UserController {
 		String outputFileName =  id + "." + temp[1];			
 		
 		File uploadFile = new File( outputFileName);
+		
 		multipartFile.transferTo(uploadFile);
 		final Message<?> message = MessageBuilder.withPayload(uploadFile).build();
 		ftpChannel.send(message);
-		
-		
-		FileUtils.deleteQuietly(uploadFile.getParentFile());
-		
-		
-		
+		//FileUtils.deleteQuietly(uploadFile.getParentFile());
 		return id + "." + temp[1];
-		
 	}
-	
-	
-	
-
-
 
 	@RequestMapping(value = "/goLoginForm", method = { RequestMethod.GET })
 	public String goLoginForm() {
