@@ -18,4 +18,5 @@ public interface UserService {
 			HashMap<String, String> params);
 	boolean deleteEmployee(String employee_id);
 	boolean signUp(List<EmployeeDTO> employeeList);
+	boolean isExistEmployee(String employee_id);
 }

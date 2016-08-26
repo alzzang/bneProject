@@ -17,6 +17,13 @@ public class UserServiceImpl implements UserService {
 	BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	EmployeeDAO employeeDAO;
+	
+	
+	@Override
+	public boolean isExistEmployee(String employee_id) {
+		EmployeeDTO employeeDTO = employeeDAO.selectEmployee(employee_id);
+		return employeeDTO == null ? false : true;
+	}
 
 	@Override
 	public EmployeeDTO validCheck(String id, String rawPassword) {

@@ -74,6 +74,22 @@ function submitAddForm() {
 
 
 
+function isExistEmployee(id) {
+	$.ajax({
+		url : "/admin/employee/existCheck/" + id,
+		success : function(data) {
+			alert("성공");
+			result.status = false;
+			result.message = JSON.stringify(data);
+			
+			return data;
+		},
+		error: function() {alert("실패!");}
+	});
+}
+
+
+
 function validCheck(el) {
 	var result = {"status":true, "message":""};
 
@@ -84,7 +100,11 @@ function validCheck(el) {
 				result.status = false;
 				result.message = "사번은 특수문자를 제외한 1자에서 20자 여야 합니다.";
 				break;
-			}	
+			}else {
+				var stat = isExistEmployee(el[key]);
+				result.status = false;
+				result.message = stat;
+			}
 		}else if(key === "employee_name") {
 			var pattern =  /^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]{2,20}$/; //특문 제외 2자 ~ 20자
 			if(!pattern.test(el[key])){
@@ -110,4 +130,10 @@ function validCheck(el) {
 	}
 
 	return result;
+}
+
+
+
+function viewModifyForm() {
+	
 }

@@ -13,16 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
-import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dto.DepartmentDTO;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.DepartmentService;
 import kr.co.bne.service.UserService;
-import com.google.gson.reflect.TypeToken;
 
 @Controller
 @RequestMapping("/admin")
@@ -116,6 +115,15 @@ public class AdminController {
 		userService.signUp(employeeList);
 		
 		return "redirect:/admin/employee/1";
+	}
+	
+	@RequestMapping("/employee/existCheck/{id}")
+	public @ResponseBody HashMap<String, String> Employee(@PathVariable String id) {
+		Boolean result = userService.isExistEmployee(id);
+		HashMap<String, String> resultmap = new HashMap<String, String>();
+		resultmap.put("result", result.toString());
+		
+		return resultmap;
 	}
 
 }
