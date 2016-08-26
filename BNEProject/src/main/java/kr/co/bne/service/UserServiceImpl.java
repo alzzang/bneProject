@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import kr.co.bne.dao.EmployeeDAO;
 import kr.co.bne.dto.EmployeeDTO;
 
@@ -97,6 +98,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean deleteEmployee(String employee_id) {
 		return employeeDAO.deleteEmployee(employee_id);
+	}
+	
+	
+	@Override
+	public boolean signUp(List<EmployeeDTO> employeeList) {
+		boolean status = false;
+		String rawPassword = "Qwe123";
+		
+		for(EmployeeDTO employee : employeeList) {
+			employee.setPassword(passwordEncoder.encode(rawPassword));
+			employee.setFile_position("default.png");
+		}
+		
+		status = employeeDAO.insertEmployeeList(employeeList);
+		
+		return status;
 	}
 	
 }

@@ -8,7 +8,6 @@ public class EmployeeDTO {
 	private String position;
 	private String file_position;
 	private int department_id;
-
 	private String mobile_phone;
 	private String email;
 

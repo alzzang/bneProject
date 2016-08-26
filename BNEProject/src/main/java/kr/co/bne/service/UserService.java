@@ -17,4 +17,5 @@ public interface UserService {
 	HashMap<String, Object> pagingEmployeeSearchResultList(int startIdx, int perContentNum,
 			HashMap<String, String> params);
 	boolean deleteEmployee(String employee_id);
+	boolean signUp(List<EmployeeDTO> employeeList);
 }

@@ -1,5 +1,6 @@
 package kr.co.bne.controller;
 
+import java.lang.reflect.Type;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.dto.DepartmentDTO;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.DepartmentService;
 import kr.co.bne.service.UserService;
+import com.google.gson.reflect.TypeToken;
 
 @Controller
 @RequestMapping("/admin")
@@ -98,6 +101,19 @@ public class AdminController {
 	@RequestMapping("/employee/delete/{employee_id}")
 	public String goManageEmployeeView(Model model, HttpServletRequest request, @PathVariable String employee_id) {
 		userService.deleteEmployee(employee_id);
+		
+		return "redirect:/admin/employee/1";
+	}
+	
+	
+	@RequestMapping("/employee/add")
+	public String addEmployees(Model model, HttpServletRequest request) {
+		String employeeList_jsonStr = request.getParameter("employee_add_info");
+		System.out.println(employeeList_jsonStr);
+		Type listType = new TypeToken<List<EmployeeDTO>>() {}.getType();
+		List<EmployeeDTO> employeeList =  (new Gson()).fromJson(employeeList_jsonStr, listType);
+		
+		userService.signUp(employeeList);
 		
 		return "redirect:/admin/employee/1";
 	}

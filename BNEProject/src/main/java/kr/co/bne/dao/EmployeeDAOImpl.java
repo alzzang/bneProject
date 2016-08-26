@@ -6,25 +6,26 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.bne.dto.EmployeeDTO;
 
 
 @Repository
-	
+
 public class EmployeeDAOImpl implements EmployeeDAO {
 	EmployeeDAO employeeDAO;
 	EmployeeDTO employeeDTO; 
-	
-	
+
+
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 
 	@Override
 	public EmployeeDTO selectEmployee(String id) {
 		// TODO Auto-generated method stub
-		
+
 		return sqlSession.selectOne("kr.co.bne.mapper.Employee.selectEmployee", id);
 	}
 	@Override
@@ -57,12 +58,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		return sqlSession.selectList("kr.co.bne.mapper.Employee.empSearch", empSearch);
 	}
-	
+
 	@Override
 	public List<EmployeeDTO> selectTeamMember_menu(String employee_id) {
 		return sqlSession.selectList("kr.co.bne.mapper.Employee.selectTeamMember_menu", employee_id);
 	}
-	
+
 	@Override
 	public int getPagingNum_EmployeeList(int perContentNum, HashMap<String, String> params) {
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -70,23 +71,40 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		map.put("perContentNum", Integer.toString(perContentNum));
 		return sqlSession.selectOne("kr.co.bne.mapper.Employee.getPagingNum_EmployeeList", map);
 	}
-	
+
 	@Override
 	public List<EmployeeDTO> getEmployeeList(int startIdx, int perContentNum, HashMap<String, String> params) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map = (HashMap<String, String>)params.clone();
-		
-		
+
+
 		map.put("perContentNum", Integer.toString(perContentNum));
 		map.put("startIdx", Integer.toString(startIdx));
-		
+
 		return sqlSession.selectList("kr.co.bne.mapper.Employee.getEmployeeList", map);
 	}
-	
+
+	@Transactional
 	@Override
-	public boolean deleteEmployee(String employee_id) {
+	public boolean deleteEmployee(String employee_id)  {
 		int rows = sqlSession.delete("kr.co.bne.mapper.Employee.deleteEmployee", employee_id);
 		return rows > 0 ? true : false;
+	}
+
+
+	@Transactional
+	@Override
+	public boolean insertEmployeeList(List<EmployeeDTO> employeeList) {
+		try {
+			for(EmployeeDTO employee : employeeList) {
+				int rows = sqlSession.insert("kr.co.bne.mapper.Employee.insertEmployee", employee);
+			}	
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
 	}
 
 }

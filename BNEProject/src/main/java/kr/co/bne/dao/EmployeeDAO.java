@@ -18,4 +18,5 @@ public interface EmployeeDAO {
 	int getPagingNum_EmployeeList(int perContentNum, HashMap<String, String> params);
 	List<EmployeeDTO> getEmployeeList(int startIdx, int perContentNum, HashMap<String, String> params);
 	boolean deleteEmployee(String employee_id);
+	boolean insertEmployeeList(List<EmployeeDTO> employeeList);
 }
