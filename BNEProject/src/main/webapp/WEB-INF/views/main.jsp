@@ -50,7 +50,7 @@
 											style="font-size: 350%; color: #FFFFFF;"></span>
 									</div>
 									<div style="font-size:1.7em; white-space: nowrap; max-width:25em;margin-top:3%; overflow:hidden; text-overflow:ellipsis;">
-										${rlist.employee_name}님의 ${rlist.reg_date}일에 작성한 미승인 보고서
+										${rlist.employee_name}님이 ${rlist.reg_date}일에 작성한  미승인 보고서
 									</div>
 								</div>
 							</div>
@@ -150,7 +150,7 @@ window.onload = function(){
 		makeSalesInput();
 		var day = ['mon','tue','wed','thu','fri'];
 		for(var i=0; i<5; i++){
-			$('input[id="sales-'+day[i]+'"]').attr({'value': '0원', 'disabled':'disabled'});
+			$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
 		}
 		openMessageBox('#mb-NoWeeklyPlan');
 	}

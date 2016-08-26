@@ -1,11 +1,13 @@
 package kr.co.bne.controller;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.PollableChannel;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,42 +54,52 @@ public class UserController {
 	@Autowired
 	MessageChannel ftpChannel;
 
-	@Autowired
-	PollableChannel ftpRecieveChannel;
-	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
 		EmployeeDTO employee=(EmployeeDTO)session.getAttribute("user");
+		
+		if(!employee.getFile_position().equals(employee.getEmployee_id()+".png")){
+			userService.modifyFilePosition(employee.getEmployee_id(), fileName);
+		}
+		
 		employee.setFile_position(fileName);
 		session.setAttribute("user", employee);
+		
+		
+		
+		
 	}
 	
 	@RequestMapping(value = "/defaultFile", method = RequestMethod.POST)
 	public void defaultFile(HttpServletResponse response, HttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
-		userService.modifyFilePosition(id);
-
-		File uploadFile = new File("C:/Users/bit-user/git/bneProject/BNEProject/src/main/resources/default.png");
-		File uploadFile2 = new File("C:/Users");
-		File directory = new File("C:/Users");
-
-		uploadFile.createNewFile();
-		final Message<?> message = MessageBuilder.withPayload(uploadFile).build();
-		ftpChannel.send(message);
 		
-		setFileName("id.png",req);
+
+		File uploadFile = new File("C:\\Users\\bit-user\\git\\bneProject\\BNEProject\\src\\main\\resources\\default.png");
+		final Message<?> message = MessageBuilder.withPayload(uploadFile).setHeader("fileName", id+".png").build();
+		ftpChannel.send(message);
+		setFileName(id+".png",req);
+		
 	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req, 
+	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
+		
+		
 		String fileName = null;
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		for (MultipartFile multipartFile : fileMap.values()) {
+			
 			fileName=saveFileToRemoteDisk(multipartFile, id);
-			userService.modifyFilePosition(id, fileName);
+			
+			
+
 		}
-		setFileName(fileName,req);	
+				
+		
+		setFileName(fileName,req);
+		
 	}
 
 
@@ -95,17 +107,22 @@ public class UserController {
 	private String saveFileToRemoteDisk(MultipartFile multipartFile, String id)
 			throws IOException, FileNotFoundException {
 
-		String temp[] = multipartFile.getContentType().split("/");
-		String outputFileName =  id + "." + temp[1];			
-		
-		File uploadFile = new File( outputFileName);
-		
+
+		String outputFileName =  id + "." + "png";			
+		File uploadFile = new File(outputFileName);
 		multipartFile.transferTo(uploadFile);
+		
+		
+	
 		final Message<?> message = MessageBuilder.withPayload(uploadFile).build();
 		ftpChannel.send(message);
-		//FileUtils.deleteQuietly(uploadFile.getParentFile());
-		return id + "." + temp[1];
+		
+		uploadFile.delete();
+	
+		return outputFileName;
+		
 	}
+	
 
 	@RequestMapping(value = "/goLoginForm", method = { RequestMethod.GET })
 	public String goLoginForm() {
