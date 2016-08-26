@@ -199,3 +199,15 @@ var registerDailyReportEvent = function(){
 
 	});
 }
+
+var preventKeyDown = function(){
+	$('#sales-mon ,#sales-tue,#sales-wed,#sales-thu,#sales-fri').keydown(function(e){
+		var range = this.selectionStart;
+		if((e.keyCode==48 || e.keyCode==96) && range == 0)
+			e.preventDefault();
+		
+	    if (e.keyCode!=37&&e.keyCode!=38&&e.keyCode!=39&&e.keyCode!=40&&e.keyCode!=9&&e.keyCode!=8&&(e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+	        e.preventDefault();
+	    }
+	});
+}
