@@ -211,3 +211,19 @@ var preventKeyDown = function(){
 	    }
 	});
 }
+var preventMouseClick = function(){
+	$('#sales-mon ,#sales-tue,#sales-wed,#sales-thu,#sales-fri').change(function(e){
+		
+		/* 정규식 패턴검사 */
+		var pattern = /^([1-9][0-9]{0,9}$)|^0$/;
+		var oldValue = e.currentTarget.defaultValue;
+		var value = e.currentTarget.value;
+		var result=pattern.test(value);
+								
+		if(result == false){
+			alert('숫자만 입력 가능합니다.');
+			e.currentTarget.value = oldValue;
+			return;
+		}
+	});
+}

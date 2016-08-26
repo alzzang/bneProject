@@ -241,7 +241,7 @@ var makeSalesInput = function(){
 		$('#calendar').fullCalendar('getView').calendar.options.contentHeight = "auto";	
 		
 		preventKeyDown();
-		
+		preventMouseClick();
 		$('#modify').on('click',function(){	
 			event.preventDefault();
 			
@@ -250,8 +250,6 @@ var makeSalesInput = function(){
 			
 			var date = $('#calendar').fullCalendar('getDate');
 			var year = date._d.getFullYear();
-			
-			
 			
 			var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
 			var report_title = $('#title')[0].textContent;
