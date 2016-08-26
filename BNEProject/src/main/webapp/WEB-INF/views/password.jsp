@@ -56,7 +56,8 @@
 								
 								<!-- <a href="/user/validCheck" class="btn btn-default pull-right" id='changebutton'>변경</a> -->
 								<input type="text" hidden="true" name="id" value="${sessionScope.user.employee_id}" >
-								<input type="submit" value="ok">
+								<input class="btn btn-success" type="submit" value="확인">
+								
 							</div>
 						</div>
 
