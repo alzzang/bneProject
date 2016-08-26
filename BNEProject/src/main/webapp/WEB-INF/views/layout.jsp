@@ -227,8 +227,28 @@
 
 
 	<script type="text/javascript">
+	
+	/* $("weeklyDetail").on("addClass", function() {
+		var path = "/menu/getTeamMemberList";	
+		var html = '';
+		alert("Gg");
+		$.ajax({
+			url : path,
+			success : function(data) {
+				for(var i=0; i<data.length; i++) {
+					var employee_id = data[i].employee_id;
+					var employee_name = data[i].employee_name;
+					var link = "location.href=" + "'/weeklyReport/detail/" + employee_id + "'";
+					html += '<li onclick="' + link + '"><a href="#">' +
+								'<span class="fa fa-user"></span>' + employee_name + '</a></li>';
+				}
+				
+				$("#members").html(html);
+			}
+		});
+	}); */
    
-$("#weeklyDetail").children().click(function(){
+ $("#weeklyDetail").children().click(function(){
 	var path = "/menu/getTeamMemberList";	
 	var html = '';
 	
@@ -246,7 +266,7 @@ $("#weeklyDetail").children().click(function(){
 			$("#members").html(html);
 		}
 	});
-}); 
+});  
 
 $(function(){
 	var path = "/alarm/unReadCount/" + $("#employee_id").val();

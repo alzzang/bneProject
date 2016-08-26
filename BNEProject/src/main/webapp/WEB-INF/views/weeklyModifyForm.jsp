@@ -145,7 +145,7 @@ var makeSalesInput = function(){
 		$('#weeklyTableHeader>tbody>tr>td:nth-child('+i+')>input').attr('reg_date', s[i-1].dataset.date);
 	}	
 };
-	var inputReportData = function(reportData) {
+	var inputModifyReportData = function(reportData) {
 
 		var weeklyReportDTO = reportData.weeklyReportDTO;
 		var weeklyPlanDTOList = reportData.weeklyPlanDTOList;
@@ -235,7 +235,7 @@ var makeSalesInput = function(){
 		$('#calendar').fullCalendar('next');
 		
 		var reportData = JSON.parse('${weeklyReportDetail}');
-		inputReportData(reportData);
+		inputModifyReportData(reportData);
 
 		$('#calendar').fullCalendar('getView').calendar.options.cellHeight = 200;
 		$('#calendar').fullCalendar('getView').calendar.options.contentHeight = "auto";	

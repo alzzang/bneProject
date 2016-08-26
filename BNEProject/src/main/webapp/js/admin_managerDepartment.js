@@ -28,8 +28,14 @@ function removeInputElement() {
 function submitAddForm() {
 	var arr = [];
 	
+	if($("#employeeAddForm-body").children("tr").size() <= 1) {
+		alert("등록할 사원 정보가 없습니다.");
+		return;
+	}
+	
 	for(var i=1; i<$("#employeeAddForm-body").children("tr").size(); i++) {
 		var trChild = $("#employeeAddForm-body").children("tr:eq(" + i + ")");
+		trChild.css("background-color", "");
 		
 		var el = {};
 		for(var j=0; j<$(trChild).children("td").size(); j++) {
@@ -41,8 +47,15 @@ function submitAddForm() {
 				el[key] = val;
 			}
 		}
-		
-		arr.push(el);
+		//각 element들 유효성 검사
+		var validCheckResult = validCheck(el);
+		if(validCheckResult.status == false) {
+			trChild.css("background-color", "#E04B4A");
+			alert(validCheckResult.message);
+			return;
+		}else {
+			arr.push(el);
+		}
 	}
 	
 	var form = document.createElement("form");
@@ -57,4 +70,44 @@ function submitAddForm() {
 	document.body.appendChild(form);
 
 	form.submit();
+}
+
+
+
+function validCheck(el) {
+	var result = {"status":true, "message":""};
+
+	for(var key in el) {
+		if(key === "employee_id") {
+			var pattern = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{1,20}$/;//특문 제외 1자 ~ 20자
+			if(!pattern.test(el[key])){
+				result.status = false;
+				result.message = "사번은 특수문자를 제외한 1자에서 20자 여야 합니다.";
+				break;
+			}	
+		}else if(key === "employee_name") {
+			var pattern =  /^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]{2,20}$/; //특문 제외 2자 ~ 20자
+			if(!pattern.test(el[key])){
+				result.status = false;
+				result.message = "이름은 특수문자를 제외한 2자에서 20자의 문자 여야 합니다.";
+				break;
+			}					
+		}else if(key === "mobile_phone") {
+			var pattern =  /^01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$/;
+			if(!pattern.test(el[key])){
+				result.status = false;
+				result.message = "휴대폰 번호 형식에 맞지 않습니다.";
+				break;
+			}					
+		}else if(key === "email") {
+			var pattern =  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+			if(!pattern.test(el[key])){
+				result.status = false;
+				result.message = "이메일 형식에 맞지 않습니다.";
+				break;
+			}				
+		}
+	}
+
+	return result;
 }

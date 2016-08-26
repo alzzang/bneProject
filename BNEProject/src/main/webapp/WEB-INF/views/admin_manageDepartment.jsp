@@ -172,7 +172,7 @@
 										<option value="manager">팀장</option>										
 									</select>
 							</td>
-							<td><input type="text" class="form-control" attr="mobile_phone" required></td>
+							<td><input type="text" class="form-control" attr="mobile_phone" placeholder="하이픈(-) 제외" required></td>
 							<td><div class="input-group">
                                                 <span class="input-group-addon">@</span>
                                                 <input type="text" class="form-control" attr="email" required>
