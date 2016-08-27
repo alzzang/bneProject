@@ -118,7 +118,7 @@
 	
 	<insert id="insertEmployee" parameterType="Employee">
 		insert into employee(employee_id, employee_name, password, department_id, file_position, mobile_phone, email)
-		values(#{employee_id}, #{employee_name}, #{password}, #{department_id}, #{file_position}, #{mobile_phone}, #{email})
+		values(EMPLOYEE_ID_NAMING(#{department_id}), #{employee_name}, #{password}, #{department_id}, #{file_position}, #{mobile_phone}, #{email})
 	</insert>
 	
 

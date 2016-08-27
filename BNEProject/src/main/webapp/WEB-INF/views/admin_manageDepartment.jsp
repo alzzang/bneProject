@@ -143,7 +143,6 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th style="width: 10%;">사번</th>
 							<th>이름</th>
 							<th>부서</th>
 							<th>직책</th>
@@ -153,7 +152,6 @@
 					</thead>
 					<tbody id="employeeAddForm-body">
 						<tr style="display:none;">
-							<td><input type="text" class="form-control" attr="employee_id" required></td>
 							<td><input type="text" class="form-control" attr="employee_name" required></td>
 							<td>					
                                             <select class="form-control" attr="department_id">
@@ -228,7 +226,7 @@
 								<ul class="panel-controls">
 									<li><a href="#"><span class="fa fa-pencil"></span></a></li>
 									<li><a
-										href="/admin/employee/delete/<%=employee.getEmployee_id()%>"><span
+										onclick="removeEmployee('<%=employee.getEmployee_id()%>')"><span
 											class="glyphicon glyphicon-trash"></span></a></li>
 								</ul>
 							</td>

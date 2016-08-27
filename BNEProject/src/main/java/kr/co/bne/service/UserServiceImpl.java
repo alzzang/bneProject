@@ -1,5 +1,7 @@
 package kr.co.bne.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isExistEmployee(String employee_id) {
 		EmployeeDTO employeeDTO = employeeDAO.selectEmployee(employee_id);
+		System.out.println("employeeDAO null 여부 출력:" + employeeDTO == null? false : true);
 		return employeeDTO == null ? false : true;
 	}
 

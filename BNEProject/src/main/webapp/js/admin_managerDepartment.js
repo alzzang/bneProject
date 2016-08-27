@@ -14,8 +14,18 @@ function visibleAddForm() {
 }
 
 
+function removeEmployee(id) {
+	if (confirm("삭제하시면 작성된 글들도 모두 다 삭제됩니다. 그래도 삭제하시겠습니까?") == true){    //확인
+	    location.href = "/admin/employee/delete/" + id;
+	}else{   //취소
+	    return;
+	}
+}
+
+
 function addInputElement() {
-	$("#employeeAddForm-body").children().first().clone(true, true).removeClass(".dummyElement").show().appendTo("#employeeAddForm-body");
+	var trChild = $("#employeeAddForm-body").children().first().clone(true, true).removeClass(".dummyElement").show();
+	trChild.appendTo("#employeeAddForm-body");
 }
 
 function removeInputElement() {
@@ -25,6 +35,8 @@ function removeInputElement() {
 }
 
 
+
+
 function submitAddForm() {
 	var arr = [];
 	
@@ -32,12 +44,13 @@ function submitAddForm() {
 		alert("등록할 사원 정보가 없습니다.");
 		return;
 	}
-	
-	for(var i=1; i<$("#employeeAddForm-body").children("tr").size(); i++) {
+	var i = 1;
+	for(i=1; i<$("#employeeAddForm-body").children("tr").size(); i++) {
 		var trChild = $("#employeeAddForm-body").children("tr:eq(" + i + ")");
 		trChild.css("background-color", "");
 		
 		var el = {};
+		
 		for(var j=0; j<$(trChild).children("td").size(); j++) {
 			var ctrl = trChild.children("td:eq("+j+")").find(".form-control");			
 						
@@ -46,66 +59,44 @@ function submitAddForm() {
 				var val = ctrl.val();
 				el[key] = val;
 			}
+			
+			var validCheckResult = validCheck(el);
+			if(validCheckResult.status == false) {
+				trChild.css("background-color", "#E04B4A");
+				alert(validCheckResult.message);
+				return;
+			}
 		}
-		//각 element들 유효성 검사
-		var validCheckResult = validCheck(el);
-		if(validCheckResult.status == false) {
-			trChild.css("background-color", "#E04B4A");
-			alert(validCheckResult.message);
-			return;
-		}else {
-			arr.push(el);
-		}
+		arr.push(el);
 	}
 	
-	var form = document.createElement("form");
-	var path = "/admin/employee/add";
-	form.setAttribute("method", "POST");
-	form.setAttribute("action", path);
-	var hiddenField = document.createElement("input");
-	hiddenField.setAttribute("type", "hidden");
-	hiddenField.setAttribute("name", "employee_add_info");
-	hiddenField.setAttribute("value", JSON.stringify(arr));
-	form.appendChild(hiddenField);
-	document.body.appendChild(form);
-
-	form.submit();
+	if (confirm("사원정보를 등록하시겠습니까?") == true){    //확인
+		var form = document.createElement("form");
+		var path = "/admin/employee/add";
+		form.setAttribute("method", "POST");
+		form.setAttribute("action", path);
+		var hiddenField = document.createElement("input");
+		hiddenField.setAttribute("type", "hidden");
+		hiddenField.setAttribute("name", "employee_add_info");
+		hiddenField.setAttribute("value", JSON.stringify(arr));
+		form.appendChild(hiddenField);
+		document.body.appendChild(form);
+		
+		form.submit();
+	}else{   //취소
+	    return;
+	}
 }
 
 
-
-function isExistEmployee(id) {
-	$.ajax({
-		url : "/admin/employee/existCheck/" + id,
-		success : function(data) {
-			alert("성공");
-			result.status = false;
-			result.message = JSON.stringify(data);
-			
-			return data;
-		},
-		error: function() {alert("실패!");}
-	});
-}
 
 
 
 function validCheck(el) {
 	var result = {"status":true, "message":""};
-
+	
 	for(var key in el) {
-		if(key === "employee_id") {
-			var pattern = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{1,20}$/;//특문 제외 1자 ~ 20자
-			if(!pattern.test(el[key])){
-				result.status = false;
-				result.message = "사번은 특수문자를 제외한 1자에서 20자 여야 합니다.";
-				break;
-			}else {
-				var stat = isExistEmployee(el[key]);
-				result.status = false;
-				result.message = stat;
-			}
-		}else if(key === "employee_name") {
+		if(key === "employee_name") {
 			var pattern =  /^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]{2,20}$/; //특문 제외 2자 ~ 20자
 			if(!pattern.test(el[key])){
 				result.status = false;

@@ -25,7 +25,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public EmployeeDTO selectEmployee(String id) {
 		// TODO Auto-generated method stub
-
 		return sqlSession.selectOne("kr.co.bne.mapper.Employee.selectEmployee", id);
 	}
 	@Override
