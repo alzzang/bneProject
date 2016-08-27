@@ -3,6 +3,7 @@ package kr.co.bne.service;
 import java.util.HashMap;
 import java.util.List;
 
+import kr.co.bne.common.DepartmentTeamList;
 import kr.co.bne.dto.EmployeeDTO;
 
 public interface UserService {
@@ -20,5 +21,9 @@ public interface UserService {
 	HashMap<String, Object> pagingDepartmentSearchResultList(int startIdx, int perContentNum,
 			HashMap<String, String> params);
 	boolean deleteEmployee(String employee_id);
+	public boolean deleteDepartment(int department_id);
+	public boolean updateDepartment(DepartmentTeamList deptlist);
+	public int searchDepartment(String department_name);
+	
 
 }

@@ -1,5 +1,8 @@
 package kr.co.bne.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -11,15 +14,19 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 
 import kr.co.bne.common.DailyReportTeamListElement;
 import kr.co.bne.common.DepartmentTeamList;
+import kr.co.bne.dto.CounsellingRecordDTO;
 import kr.co.bne.dto.DepartmentDTO;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.service.UserService;
@@ -88,15 +95,15 @@ public class AdminController {
 		model.addAttribute("employeeList", employeeList);
 		model.addAttribute("endIdx", endIdx);
 		model.addAttribute("startIdx", startIdx);
-
+	
 		return "mainboard_admin";
 	}
 	@RequestMapping("/employee/delete/{employee_id}")
 	public String goManageEmployeeView(Model model, HttpServletRequest request, @PathVariable String employee_id) {
 		userService.deleteEmployee(employee_id);
-		
 		return "redirect:/admin/employee/1";
 	}
+	
 	@RequestMapping("/department")
 	public String goManageDepartmentView(Model model, HttpServletRequest request, HttpSession session) {
 		return  goManageDepartmentView(model, request, session,  1);
@@ -154,7 +161,7 @@ public class AdminController {
 		model.addAttribute("departmentList", departmentList);
 		model.addAttribute("endIdx", endIdx);
 		model.addAttribute("startIdx", startIdx);
-
+		System.out.println(model.toString());
 		return "employee_admin";
 	}
 	
@@ -163,6 +170,52 @@ public class AdminController {
 
 		List<EmployeeDTO> list =userService.getEmpOfDept(departmentId);
 		return list;
+	}
+	
+	@RequestMapping("/department/delete/{department_id}")
+	public String goDeleteDepartment(Model model, HttpServletRequest request, @PathVariable int department_id) {
+		userService.deleteDepartment(department_id);
+		
+		return "redirect:/admin/department/1";
+	}
+	
+	@RequestMapping("/department/update/{department_id}")
+	public String goUpdateDepartment(Model model, HttpServletRequest request, @PathVariable Integer department_id,@ModelAttribute("DepartmentTeamList")DepartmentTeamList deptlist) {
+		System.out.println("뭐가"+deptlist);
+		/*HashMap<String, String> map=new HashMap<String, String>();
+		map.put("department_id",department_id.toString());
+		map.put("department_name", request.getParameter("department_name"));
+		map.put("employee_name", request.getParameter("employee_name"));
+		map.put("telephone", request.getParameter("telephone"));
+		map.put("manager_id", request.getParameter("manager_id"));
+		System.out.println(map.toString());*/
+		userService.updateDepartment(deptlist);
+		
+		return "redirect:/admin/department/1";
+	}
+	@RequestMapping("/department/departmentSearch")
+	public void goSearchDepartment(Model model, HttpServletRequest request, HttpServletResponse res) throws IOException {
+
+
+		int department_id=userService.searchDepartment(request.getParameter("department_name"));
+		PrintWriter pw = res.getWriter();
+		pw.print(department_id);
+		pw.flush();
+		pw.close();
+	}
+	@RequestMapping("/department/updateall")
+	public String goUpdateDepartmentAll(Model model, HttpServletRequest request, HttpServletResponse res) throws IOException {
+
+
+		JsonParser parser = new JsonParser();
+		JsonArray json = (JsonArray) parser.parse(request.getParameter("departmentJson"));
+
+		List<DepartmentTeamList> list = new ArrayList<DepartmentTeamList>();
+		for (int i = 0; i < json.size(); i++) {
+			DepartmentTeamList dto = (new Gson()).fromJson(json.get(i), DepartmentTeamList.class);
+			userService.updateDepartment(dto);
+		}
+		return "redirect:/admin/department/1";
 	}
 }
 

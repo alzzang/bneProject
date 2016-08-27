@@ -1075,6 +1075,7 @@ body.page-container-boxed .page-container {
   -moz-border-radius: 20%;
   -webkit-border-radius: 20%;
   border-radius: 20%;
+  max-height: 100px;
 }
 .profile .profile-data {
   width: 100%;

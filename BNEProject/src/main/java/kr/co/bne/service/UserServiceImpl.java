@@ -120,5 +120,25 @@ public class UserServiceImpl implements UserService {
 	public boolean deleteEmployee(String employee_id) {
 		return employeeDAO.deleteEmployee(employee_id);
 	}
+
+	@Override
+	public boolean deleteDepartment(int department_id) {
+		// TODO Auto-generated method stub
+		return departmentDAO.deleteDepartment(department_id);
+	}
+
+	@Override
+	public boolean updateDepartment(DepartmentTeamList deptlist) {
+		// TODO Auto-generated method stub
+		return departmentDAO.updateDepartment(deptlist) && departmentDAO.updateManager(deptlist);
+	}
+
+	@Override
+	public int searchDepartment(String department_name) {
+		// TODO Auto-generated method stub
+		return departmentDAO.selectDeptCount(department_name);
+	}
+
+	
 	
 }

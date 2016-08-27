@@ -41,4 +41,38 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		return sqlSession.selectList("kr.co.bne.mapper.Department.getDepartmentList_all");
 	}
 
+	@Override
+	public boolean deleteDepartment(int department_id) {
+		// TODO Auto-generated method stub
+		
+		int rows=sqlSession.delete("kr.co.bne.mapper.Department.deleteDepartment",department_id);
+		return rows > 0 ? true : false;
+	}
+
+	@Override
+	public boolean updateDepartment(DepartmentTeamList deptlist) {
+		// TODO Auto-generated method stub
+		int rows=sqlSession.update("kr.co.bne.mapper.Department.updateDepartment",deptlist);
+		return rows > 0 ? true : false;
+	}
+
+	@Override
+	public int selectDeptCount(String department_name) {
+		// TODO Auto-generated method stub
+		try {
+			return sqlSession.selectOne("kr.co.bne.mapper.Department.selectCount",department_name);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return -1;
+		}
+		
+	}
+
+	@Override
+	public boolean updateManager(DepartmentTeamList deptlist) {
+		// TODO Auto-generated method stub
+		int rows=sqlSession.update("kr.co.bne.mapper.Department.updateManager",deptlist);
+		return rows > 0 ? true : false;
+	}
+
 }

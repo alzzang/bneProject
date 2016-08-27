@@ -21,8 +21,104 @@ int totalPageNum = (Integer)request.getAttribute("totalPageNum");
 .modal-content{
 border-width: 0px !important;
 }
+tbody tr td{
+	text-align: center !important;
+}
 </style>
 <script>
+ var jsonInfo=new Array();
+ var jsonIdx=0;
+ function departmentManagerSearch(departmentId){
+		/* db에 보낼 str*/
+			var str=$("#employee_name"+departmentId).val();
+			
+			var html='';
+			var html2='';
+			var keycode = e.keyCode;
+			alert(keycode);
+			/*console.log(keycode+':'+str.length);
+			console.log(str);
+			*/
+			$(".xn-search").attr("class","xn-search");
+			if(str==''){
+			}else{
+				empSearchKeyUp(str,keycode);
+			}
+		
+	}
+ 
+ 
+ function enterDepartmentName(departmentId){
+	 var department_name= $('#department_name'+departmentId).val();
+	$.ajax({
+		type : "POST",
+		url : "/admin/department/departmentSearch",
+		data : {
+			department_name:department_name
+		},
+		success : function(data) {
+	
+			if(data!=$('#'+departmentId+' td:nth-child(1)').html()&&data!=-1){
+				alert('이미 존재하는 부서입니다.');
+				/* alert(departmentId); dksy
+				alert($('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val()); */
+				$('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val(-1);
+				/* alert($('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val()); */
+			}else{
+				$('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val(0);
+			}
+			
+		}
+	})
+ }
+function sendModifyDept(departmentId){
+
+	if($('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val()==-1){
+		alert('부서 이름을 확인해주세요');
+	}else{
+		var deptId= $('#'+departmentId +' td:nth-child(1)').html();
+		var dept=$('#department_name'+departmentId).val();
+		var manager=$('#employee_name'+departmentId).val();
+		var phone=$('#telephone'+departmentId).val();
+		var manager_id=$('#'+departmentId+' td:nth-child(6) input').val();
+		
+		var form = document.createElement("form");
+		form.setAttribute("action", "/admin/department/update/"+deptId);
+
+			var hiddenField = document.createElement("input");
+			hiddenField.setAttribute("type", "hidden");
+			hiddenField.setAttribute("name", "department_name");
+			hiddenField.setAttribute("value", dept);
+			form.appendChild(hiddenField);
+
+
+			var hiddenField1 = document.createElement("input");
+			hiddenField1.setAttribute("type", "hidden");
+			hiddenField1.setAttribute("name", "employee_name");
+			hiddenField1.setAttribute("value",manager);
+			form.appendChild(hiddenField1);
+
+			var hiddenField2 = document.createElement("input");
+			hiddenField2.setAttribute("type", "hidden");
+			hiddenField2.setAttribute("name", "telephone");
+			hiddenField2.setAttribute("value", phone);
+			form.appendChild(hiddenField2);
+			
+			var hiddenField3 = document.createElement("input");
+			hiddenField3.setAttribute("type", "hidden");
+			hiddenField3.setAttribute("name", "manager_id");
+			hiddenField3.setAttribute("value", manager_id);
+			form.appendChild(hiddenField3);
+
+		document.body.appendChild(form);
+		form.submit();
+	}
+	
+	
+}
+
+
+
 function EmployeeOfDepartment(departmentId){
 	$.ajax({
 		type : "POST",
@@ -32,25 +128,39 @@ function EmployeeOfDepartment(departmentId){
 		},
 		success : function(data) {
 			console.log(data);
+			var html='';
 			for(var i=0;i<data.length;i++){
-				var html='';
+	
 				if(i==0){
 					
 					html+='<div class="row"><div class="col-md-12"><div class="col-md-6 col-md-offset-3"><div class="panel panel-default"><div class="panel-body profile">'
-                            +'<div class="profile-image"><img src="/user/download/'+data[i].file_position+'" alt="Nadia Ali"></div><div class="profile-data">'
+                            +'<div class="profile-image"><img src="http://192.168.1.18:8085/test/'+data[i].file_position+'" alt="Nadia Ali"></div><div class="profile-data">'
 			                +' <div class="profile-data-name">'+data[i].employee_name+'</div><div class="profile-data-title">'+data[i].employee_id+'</div></div><div class="profile-controls">'
 			                +'</div></div><div class="panel-body"> <div class="contact-info"><p><small>Position</small><br>'+data[i].position+'</p> <p><small>Mobile</small><br>'+data[i].mobile_phone+'</p>'      
 			                +' <p><small>Email</small><br>'+data[i].email+'</p></div></div></div></div>'
+			                $('.page-content-wrap').append(html);
+			                html='';
 			                                                                   			
 				}else{
+					if(i%2==1){
+						html+='<div class="row">';
+					}
 					html+='<div class="col-md-6"><div class="panel panel-default"><div class="panel-body profile">'
-                        +'<div class="profile-image"><img src="/user/download/'+data[i].file_position+'" alt="Nadia Ali"></div><div class="profile-data">'
+                        +'<div class="profile-image"><img src="http://192.168.1.18:8085/test/'+data[i].file_position+'" alt="Nadia Ali"></div><div class="profile-data">'
 		                +' <div class="profile-data-name">'+data[i].employee_name+'</div><div class="profile-data-title">'+data[i].employee_id+'</div></div><div class="profile-controls">'
 		                +'</div></div><div class="panel-body"> <div class="contact-info"><p><small>Position</small><br>'+data[i].position+'</p> <p><small>Mobile</small><br>'+data[i].mobile_phone+'</p>'      
 		                +' <p><small>Email</small><br>'+data[i].email+'</p></div></div></div></div>'
+		           if(i%2==0){
+		        	   html+='</div>';
+		        	   $('.page-content-wrap').append(html);
+		        	   html='';
+		           }
+		           if(i==data.length-1 && i%2==1){
+		        	   $('.page-content-wrap').append(html);
+		           }   
 		              
 				}
-				$('.page-content-wrap').append(html);
+				
 				
 			}
 		},
@@ -92,7 +202,7 @@ function EmployeeOfDepartment(departmentId){
 	<div class="content-frame-left" style="height: 837px;">
 
 		<div class="panel panel-default">
-			<div class="panel-heading ui-draggable-handle">
+			<div class="panel-heading ui-draggable-handle" >
 				<h3 class="panel-title">
 					<span class="glyphicon glyphicon-filter"></span> 검색 필터
 				</h3>
@@ -142,7 +252,7 @@ function EmployeeOfDepartment(departmentId){
 	<div class="content-frame-body" style="height: 897px;">
 
 		<div class="panel panel-default">
-			<div class="panel-heading ui-draggable-handle">
+			<div class="panel-heading ui-draggable-handle" id="departmentBody">
 				<h3 class="panel-title">검색 결과</h3>
 			</div>
 			<div class="panel-body">
@@ -158,22 +268,31 @@ function EmployeeOfDepartment(departmentId){
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${departmentList}" var="deptlist">
-						<tr>
-							<td>${deptlist.department_id }</td>
-							<td>${deptlist.department_name }</td>
-							<td>${deptlist.employee_name }</td>
-							<td>${deptlist.telephone }</td>
-							<td><a href="#" data-toggle="modal" data-target="#myModal5" id="modalAdd" onclick="EmployeeOfDepartment(${deptlist.department_id })">${deptlist.count }</a></td>
-							<td>
-								<button class="btn btn-default btn-rounded btn-sm">
+						<c:forEach items="${departmentList}" var="deptlist"  varStatus="status">
+						<tr id="${status.index}" style="text-align: center;">
+							<td style="width: 10%;">${deptlist.department_id }</td>
+							<td style="width: 20%;">${deptlist.department_name }</td>
+							<td style="width: 20%;">${deptlist.employee_name }</td>
+							<td style="width: 20%;">${deptlist.telephone }</td>
+							<td style="width: 20%;"><a href="#" data-toggle="modal" data-target="#myModal5" id="modalAdd" onclick="EmployeeOfDepartment(${deptlist.department_id })">${deptlist.count }</a></td>
+							<td align="center" style="width: 7%;">
+								<ul class="panel-controls" >
+									<li><a href="#" id="correct${status.index}"><span class="fa fa-pencil"></span></a></li>
+									<li><a
+										href="/admin/department/delete/${deptlist.department_id}"><span
+											class="glyphicon glyphicon-trash"></span></a></li>
+								</ul>
+								<!-- <button class="btn btn-default btn-rounded btn-sm">
 									<span class="fa fa-pencil"></span>
 								</button>
 								<button class="btn btn-danger btn-rounded btn-sm"
 									onclick="delete_row('trow_1');">
 									<span class="fa fa-times"></span>
-								</button>
+								</button> -->
+								<input type="hidden" value="${deptlist.manager_id}" id="managerId${status.index}">
+								<input type="hidden" value="0" id="deptFlag${status.index}">
 							</td>
+							<!-- <input type="hidden" value="0" id="deptFlag"> -->
 						</tr>
 						</c:forEach>
 						
@@ -186,7 +305,7 @@ function EmployeeOfDepartment(departmentId){
 
 						<%if(startIdx != 0) { %>
 						<%if(startIdx > 1) {%>
-						<li><a href="/admin/employee/<%=startIdx-1 %>${optionQuery}">«</a></li>
+						<li><a href="/admin/department/<%=startIdx-1 %>${optionQuery}">«</a></li>
 						<%} %>
 						<%for(int i=startIdx; i<=endIdx; i++) { %>
 						<%if(currentPage == i) {%>
@@ -194,19 +313,18 @@ function EmployeeOfDepartment(departmentId){
 							<%}else { %>
 						
 						<li style="cursor: pointer;">
-							<%} %> <a href="/admin/employee/<%=i %>${optionQuery}"><%=i %></a>
+							<%} %> <a href="/admin/department/<%=i %>${optionQuery}"><%=i %></a>
 						</li>
 						<%} %>
 
 						<%if(totalPageNum > endIdx) {%>
-						<li><a href="/admin/employee/<%=endIdx+1 %>${optionQuery}">»</a></li>
+						<li><a href="/admin/department/<%=endIdx+1 %>${optionQuery}">»</a></li>
 						<%} %>
 						<%} %>
 					</ul>
 				</div>
 			</div>
 		</div>
-
 	</div>
 	<!-- END CONTENT FRAME BODY -->
 </div>
@@ -277,4 +395,205 @@ function EmployeeOfDepartment(departmentId){
 		document.body.appendChild(form);
 		form.submit();
 	}
+	function submitAll(){
+		/**/
+		var flag=0;
+		$.each( jsonInfo, function( idx, value ) {
+			/* alert(value["row_num"]); */
+			var deptId= $('#'+value["row_num"] +' td:nth-child(1)').html();
+			var dept=$('#department_name'+value["row_num"]).val();
+			var manager=$('#employee_name'+value["row_num"]).val();
+			var phone=$('#telephone'+value["row_num"]).val();
+			var manager_id=$('#'+value["row_num"]+' td:nth-child(6) input').val();
+			value["department_id"]=deptId;
+			value["department_name"]=dept;
+			value["employee_name"]=manager;
+			value["telephone"]=phone;
+			value["manager_id"]=manager_id;
+			
+			jsonInfo[idx]=value;
+			 if($('#'+value["row_num"]+' td:nth-child(6) #deptFlag'+value["row_num"]).val()==-1){
+					flag=-1;
+					return;
+				} 
+			
+		});
+		if(flag==-1){
+			alert('부서 이름을 확인해주세요');
+		}else{
+			var departmentJson=JSON.stringify(jsonInfo);
+			
+			var form = document.createElement("form");
+			form.setAttribute("action", "/admin/department/updateall");
+			var hiddenField = document.createElement("input");
+			hiddenField.setAttribute("type", "hidden");
+			hiddenField.setAttribute("name", "departmentJson");
+			hiddenField.setAttribute("value", departmentJson);
+			form.appendChild(hiddenField);
+			document.body.appendChild(form);
+			form.submit();
+		}
+		
+	}
+	
+	for(var i=0;i<15;i++){
+	    
+		
+		/* ramda function*/
+		(function(index){
+	    var t=0;
+	    var cnt=0;
+			var modifyFlag=true;
+			
+		$("#correct"+index).on("click", function() {
+			
+			if(modifyFlag){
+				/* var jsonInfo=new Array();
+				 var  */
+				 var o={};
+				 jsonIdx=0;
+				modifyFlag=false;
+				var idx= $('#'+index +' td').parent().index();
+				var deptId= $('#'+index +' td:nth-child(1)').html();
+				o["row_num"]=index;
+				jsonInfo.push(o);
+				if(jsonInfo.length==2){
+					
+					
+						
+					
+				
+					/* var inputHtml='<input type="button" value="수정" id="correctSubmit" onclick="submitAll()">';
+					$('#departmentBody').append(inputHtml); */
+				var inputHtml='<div class="pull-right"><button type="submit" class="btn btn-primary"  id="correctSubmit" onclick="submitAll()" ><span class="glyphicon glyphicon-search"></span> 전체 수정</button></div>';
+				$('#departmentBody').append(inputHtml);
+				}
+				var dept=$('#'+index+' td:nth-child(2)').html();
+				var manager=$('#'+index+' td:nth-child(3)').html();
+				var phone=$('#'+index+' td:nth-child(4)').html();
+				$('#'+index+' td:nth-child(2)').html('<div class="col-md-8 col-md-offset-2"  style="text-align: center;">'
+						+'<input type="text" class="form-control"  onkeyup="enterDepartmentName('+index+')" style="text-align: center;" id="department_name'+index+'" name="department_name" value='+dept+'></div>');
+				$('#'+index+' td:nth-child(3)').html('<div class="col-md-8 col-md-offset-2"  style="text-align: center;">'
+						+'<input type="text" class="form-control"   style="text-align: center;" id="employee_name'+index+'" name="employee_name" value='+manager+'></div>');
+				$('#'+index+' td:nth-child(4)').html('<div class="col-md-8 col-md-offset-2"  style="text-align: center;">'
+						+'<input type="text" class="form-control"  style="text-align: center;" id="telephone'+index+'" name="telephone" value='+phone+'></div>');
+				$('#'+index+' td:nth-child(6) ul li:nth-child(1) a').attr('onclick','sendModifyDept('+index+')');
+				
+				$("#employee_name"+index).on("keyup",function(e){
+					/* db에 보낼 str*/
+					
+					var str=$("#employee_name"+index).val();
+					var html='';
+					var html2='';
+					var keycode = e.keyCode;
+					$(".xn-search").attr("class","xn-search");
+					if(str==''){
+					}else{
+						managerSearchKeyUp(str,keycode,index);
+					}
+				})
+				
+				 $("#employee_name"+index).on("focusout",function(e){
+					
+					if(e.relatedTarget != null ){
+						var select = e.relatedTarget.innerText;
+						if(select==""){
+							var select= $("#employee_name"+index).val();
+						}
+						var temp =select.split("(");
+						e.currentTarget.value = temp[0];
+						
+						if(temp.length==2){
+							var mgrId=temp[1].split(")");
+							$('#'+index+' td:nth-child(6) #managerId'+index).val(mgrId[0]);
+							targetflag=true;
+						}
+						
+					}
+					
+				
+						$("#SearchDiv"+index).remove(); 
+					
+					
+				}) 
+				
+			}
+		
+		})
+		
+	})(i);
+		
+		
+		
+		
+	} 
+	
+	managerSearchKeyUp = function(str,keycode,index){
+		$.ajax({
+			type : "POST",
+    		url : "/user/empSearch",
+			data:{
+				empSearch:str
+			},
+			dataType:"json",
+			success:function(data){
+				console.log('success');
+				$("#employee_name"+index).parent().find(".panel-primary").remove();
+				$("#empSGJ"+index).empty();
+				html=
+					'<div class="panel panel-primary zoomIn xn-drop-left xn-panel-dragging" style="position:absolute;overflow-y:scroll;z-index:1;height:200px;border:0px;margin:0px;" id="SearchDiv'+index+'">'+
+
+	                    '<div id="empSGJ'+index+'" class="panel-body list-group list-group-contacts scroll" style="">'+
+	                    
+	                    '</div>     '+
+	                '</div>';
+				$("#employee_name"+index).parent().append(html);
+
+				if(data.length===0){
+					console.log('data.length===0');
+					$(".xn-search").attr("class","xn-search active");
+					html2='<a href="#" id="iii" class="list-group-item">'+
+                    '        <span class="contacts-title">검색결과 없음</span>'+
+                    '    </a>';
+                    
+					$("#empSGJ"+index).append(html2);
+					
+					
+				}else{
+					
+					for(var i=0;i<data.length;i++){
+						html2='<a href="#" id="SearchEmpName'+data[i].employee_id+'" class="list-group-item" >'+
+	                    '        <span class="contacts-title">'+data[i].employee_name+"(" +data[i].employee_id+")"+'</span>'+
+	                    '       '+
+	                    '    </a>';
+						
+	                    $("#empSGJ"+index).append(html2);
+	                    (function(id){
+	                    	
+							$('#SearchEmpName'+data[id].employee_id).on('click',function(e){
+						
+								$("#employee_name"+index).val(data[id].employee_name);
+							
+								$("#SearchDiv"+id).remove();
+								
+		                    });
+						
+	                    })(i);
+	                    
+	                    
+						
+						
+					}
+
+					$(".xn-search").attr("class","xn-search active");
+					
+
+					
+				}
+			},
+			error:function(){
+				console.log('error');
+			}
+		});//end ajax
+	};
 </script>

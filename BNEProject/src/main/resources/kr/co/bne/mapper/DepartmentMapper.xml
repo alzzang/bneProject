@@ -7,7 +7,7 @@
 	<select id="getPagingNum_DepartmentList" parameterType="hashmap" resultType="int">
 		select ceil(count(*)/15) cnt
 		from (select * from department where department_id != 0) d , employee e
-		where d.department_id = e.department_id
+		where d.manager_id = e.employee_id(+)
 				<if test="department_id != null">
 					and d.department_id=#{department_id}
 				</if>
@@ -24,7 +24,7 @@
 		from
 		(select ROW_NUMBER() over (order by d.department_id asc) idx, d.*,(select count(*) from employee where department_id=d.DEPARTMENT_ID) count, e.EMPLOYEE_NAME 
 		from DEPARTMENT d,employee e 
-		where e.employee_ID(+) = d.manager_id
+		where e.employee_ID(+) = d.manager_id and d.department_id != 0
 				<if test="department_id != null">
 					and d.department_id=#{department_id}
 				</if>
@@ -45,6 +45,28 @@
       where department_id != 0
       order by department_name asc
    </select>
-
+	
+	<delete id="deleteDepartment" parameterType="Integer">
+		delete department where department_id=#{department_id}
+	</delete>
+	
+	<update id="updateManager" parameterType="DepartmentTeamList">
+		<!-- update department set  -->
+		update employee set department_id=#{department_id} where employee_id=#{manager_id}
+	</update>
+	
+	<update id="updateDepartment" parameterType="DepartmentTeamList">
+	<if test="employee_name!=''">
+	 update department set department_name=#{department_name}, manager_id=#{manager_id}, telephone=#{telephone} where department_id=#{department_id}
+	</if>
+	<if test="employee_name==''">
+	update department set department_name=#{department_name}, manager_id='', telephone=#{telephone} where department_id=#{department_id}
+	</if>
+		
+	</update>
+	
+	<select id="selectCount" parameterType="String" resultType="Integer">
+		 SELECT department_id from department where department_name=#{department_name}  
+	</select>
 </mapper>
 
