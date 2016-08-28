@@ -116,6 +116,45 @@ public class WeeklyController {
 		return "weeklyWrite";
 	}
 	
+	@RequestMapping("/detail/{employeeId}/{week_of_year}")
+	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request,@PathVariable("employeeId") String employeeId,@PathVariable("week_of_year") int week_of_year, String weeklyReportId) throws Exception {
+		ModelAndView mv  = new ModelAndView("weeklyDetail");
+		EmployeeDTO eDTO = userService.selectEmployee(employeeId);
+
+		if(eDTO == null) {
+			mv.setViewName("main");
+			return mv;
+		}
+
+		String weekly_report_id = "";
+			if(weeklyReportId == null || "".equals(weeklyReportId)){
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				model.addAttribute("currentDate", dateFormat.format(calendar.getTime()));
+				//int week_of_year = calendar.get(Calendar.WEEK_OF_YEAR); 
+				int year = calendar.get(Calendar.YEAR);
+				weekly_report_id = year+"_"+week_of_year+"_"+eDTO.getEmployee_id();
+			}
+			else
+				weekly_report_id = weeklyReportId;
+			
+		WeeklyReportDetailDTO weeklyReportDetailDTO = weeklyReportService.selectWeeklyReportDetail(weekly_report_id);
+
+		JsonObject weeklyReportDetail = null;
+		if(weeklyReportDetailDTO.getWeeklyReportDTO()!=null)
+			weeklyReportDetail = parseWeeklyReportDetailDTO(weeklyReportDetailDTO);
+		
+		if(weeklyReportDetail != null)
+			mv.addObject("weeklyReportDetail", weeklyReportDetail);
+		else{
+			boolean result = false;
+			mv.addObject("weeklyReportDetail",result);
+		}
+			
+		//mv.addObject("reportIdList", reportId_list);
+		mv.addObject("employee_Id", employeeId);
+		return mv;
+	}
+	
 	@RequestMapping("/detail/{employeeId}")
 	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request,@PathVariable("employeeId") String employeeId, String weeklyReportId) throws Exception {
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
@@ -154,6 +193,7 @@ public class WeeklyController {
 		mv.addObject("employee_Id", employeeId);
 		return mv;
 	}
+	
 	
 	@RequestMapping("/weeklywriteimpl")
 	public String WeeklyWriteImpl(Model model, HttpServletRequest request) throws Exception{

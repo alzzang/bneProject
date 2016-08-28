@@ -239,14 +239,15 @@ function noWordConfirm(){
     })                                                    
 }  
 
-function getReportInfo(){
-	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
-	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+function getReportInfo(weeklyNumber){
+/*	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];*/
 	
 	var date = $('#calendar').fullCalendar('getDate');
 	var year = date._d.getFullYear();
 	
 	var report_id = year+"_"+weeklyNumber+"_"+$('#employee_id').val();
+	alert($('#title').val())
 	var report_title = $('#title')[0].textContent;
 	if(report_title == ""){
 		report_title = weeklyNumber+"주의 계획";
@@ -321,9 +322,11 @@ function modifyButtonClick() {
 					addClass : 'btn btn-success btn-clean',
 					text : 'Ok',
 					onClick : function($noty) {
+	                	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	                	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
 						event.preventDefault();
 
-						var weeklyReport = getReportInfo();
+						var weeklyReport = getReportInfo(weeklyNumber);
 
 						var sales = getSalesPlan();
 
