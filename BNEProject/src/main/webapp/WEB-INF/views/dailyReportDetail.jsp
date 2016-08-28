@@ -96,7 +96,7 @@ input[type=text] {
 			<div class="panel panel-default">
 				<div class="panel-heading ui-draggable-handle">
 					<div class="pull-left">
-						<img src="/user/download/${dailyReport.file_position}/"
+						<img src="http://192.168.1.18:8085/test/${dailyReport.file_position}"
 							class="panel-title-image" alt="John Doe">
 						<h3 class="panel-title">
 							${dailyReport.employee_name}
@@ -287,7 +287,7 @@ input[type=text] {
 									<div class="timeline-body comments">
 										<div class="comment-item">
 											<img
-												src="/user/download/${dailyReport.manager_file_position}/">
+												src="http://192.168.1.18:8085/test/${dailyReport.manager_file_position}">
 											<p class="comment-head">
 												<a href="#">${dailyReport.manager_name}</a>
 											</p>
@@ -313,7 +313,7 @@ input[type=text] {
 									<div class="timeline-body comments">
 										<div class="comment-item">
 											<img
-												src="/user/download/${dailyReport.manager_file_position}/">
+												src="http://192.168.1.18:8085/test/${dailyReport.manager_file_position}">
 											<p class="comment-head">
 												<a href="#">${dailyReport.manager_name}</a> <a href="#"
 													class="pull-right" onclick="deleteComment()">삭제</a><span

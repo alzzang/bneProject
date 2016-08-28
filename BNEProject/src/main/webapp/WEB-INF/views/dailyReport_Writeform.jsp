@@ -8,6 +8,9 @@
 .modal .modal-admin {
 	width: 750px;
 }
+input[type=text] {
+   color: black !important; 
+}
 </style>
 
 <script
@@ -200,7 +203,7 @@
 									<div class="input-group">
 										<span class="input-group-addon">주행 거리</span> <input
 											type="text" class="form-control" id="result_guage"
-											pattern="[0-9]{0,10}" required="required">
+											pattern="[0-9]{0,10}" required="required" readonly="readonly">
 									</div>
 								</div>
 							</div>
