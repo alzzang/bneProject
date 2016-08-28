@@ -220,9 +220,22 @@ var preventMouseClick = function(){
 		var result=pattern.test(value);
 								
 		if(result == false){
-			alert('숫자만 입력 가능합니다.');
+			noWordConfirm();
 			e.currentTarget.value = oldValue;
 			return;
 		}
 	});
 }
+function noWordConfirm(){
+    noty({
+        text: '숫자만 입력가능합니다',
+        layout: 'center',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: '확인', onClick: function($noty) {
+                    $noty.close();
+                    }
+                }
+            ]
+    })                                                    
+}  
+                                                  

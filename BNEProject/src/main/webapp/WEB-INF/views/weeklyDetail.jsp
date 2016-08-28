@@ -39,7 +39,7 @@
     left: 0px;
     top: 52px;
 	width:100%;
-	height:91%;
+	height:92%;
     background: rgba(0, 0, 0, 0.3);
     z-index: 9999;
     display:table-cell;

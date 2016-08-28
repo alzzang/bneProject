@@ -65,8 +65,8 @@
 				<h3 class="panel-title">개인 정보</h3>
 			</div>	
 		</div>	
-			<input type="hidden" name="department_id" value="${user.department_id}" disabled><br>
-			<input type="hidden" name="employee_Id" value="${employee_Id}"disabled>
+			<input type="hidden" id ="department_id" name="department_id" value="${user.department_id}" disabled><br>
+			<input type="hidden" id ="employee_Id" name="employee_Id" value="${employee_Id}"disabled>
 			<div class="panel-body">
 			<table class="table table-bordered detailInfoTable">
 				<thead>
@@ -128,8 +128,8 @@
 					</div>
 				</div>
 				<div id="buttonGroup">
-					<button id ="cancle" type="submit" class="btn btn-danger pull-right"  style="margin-left:1%; margin-top:1%">취소</button>
-					<button id ="savePlan" type="button" class="btn btn-success pull-right mb-control"style="margin-left:1%; margin-top:1%">저장</button>
+					<button id ="cancle"  class="btn btn-danger pull-right"  style="margin-left:1%; margin-top:1%" onClick="weeklyWriteCancleConfirm()">취소</button>
+					<button class="btn btn-success pull-right mb-control"style="margin-left:1%; margin-top:1%" onClick="weeklyWriteConfirm()">저장</button>  				
 				</div>
 			</div>
 		</div>
@@ -211,97 +211,133 @@ window.onload = function(){
 		openMessageBox('#mb-SavePlan');
 	});
 
-$('#confirm').on('click',function(){
-	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
-	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
-	
-	var date = $('#calendar').fullCalendar('getDate');
-	var year = date._d.getFullYear();
-	
-	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
-	
-	
-	var report_title = $('#weeklyReportId')[0].value;
-	if(report_title == ""){
-		report_title = weeklyNumber+"주의 계획";
-	}
-	
-	var employee_id = "${user.employee_id}";
-	var department_id = "${user.department_id}";
-	var salesGoal = 0;/* ${salesGoal}; */
-	var montlySales = 0;/* ${monthlySales}; */
-	
-	var dayOfWeek = ['mon','tue','wed','thu','fri'];
-	var sales = [];
-	var regdate = [];
-	for(var i= 0; i<5; i++){
-
-		sale = ($('#sales-'+dayOfWeek[i])[0].value);
-		regdate = ($('#sales-'+dayOfWeek[i])[0].attributes[3].textContent);
-		if(sale == "")
-			sale = 0;
-		
-		var plan = {
-					sales : sale,
-					reg_date : regdate
-		};
-		sales.push(plan);
-	}
-	
-	var weeklyReport = {
-			weekly_report_id : report_id,
-			title : report_title,
-			saleGoal : salesGoal,
-			sales : montlySales,
-			employee_id : employee_id,
-			department_id : department_id
-	}
-	
-	
-	
-	var s = $('#calendar').fullCalendar('clientEvents');
-	var allPlan = [];
-	for(var i = 0; i<s.length; i++){
-		var plan;
-		
-		var title = s[i].title;//.replace(/\'/g,"'");
-		 
-		var startTimeOrigin = s[i].start.format().split('T');
-		var startTime = startTimeOrigin[0]+" "+startTimeOrigin[1];
-		var endTimeOrigin = s[i].end.format().split('T');
-		var endTime = endTimeOrigin[0]+" "+endTimeOrigin[1];
-		plan={
-				content:title,
-				start_time:startTime,
-				end_time:endTime
-		}
-		
-		allPlan.push(plan);
-	}
-
-	var jPlan = JSON.stringify(allPlan);
-	var jPlan2 = JSON.stringify(weeklyReport);
-	var jPlan3 = JSON.stringify(sales);
-	
-	$.ajax({
-		type : "POST",
-		url : "/weeklyReport/write",
-		data : {
-			sales : jPlan3,
-			report : jPlan2,
-			weeklyPlan : jPlan
-		},
-		success : function(){
-			window.location.href="/weeklyReport/detail/"+employee_id;
-		},
-		error : function(){
-		}
-	})
-});
-
 	preventKeyDown();
 	preventMouseClick();
 
+}
+
+function weeklyWriteConfirm(){
+    noty({
+        text: '계획을 저장하시겠습니까?',
+        layout: 'center',
+        modal: 'true',
+        killer:'true',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
+                	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+                	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+                	
+                	var date = $('#calendar').fullCalendar('getDate');
+                	var year = date._d.getFullYear();
+                	
+                	var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
+                	
+                	
+                	var report_title = $('#weeklyReportId')[0].value;
+                	if(report_title == ""){
+                		report_title = weeklyNumber+"주의 계획";
+                	}
+                	
+                	var employee_id = "${user.employee_id}";
+                	var department_id = "${user.department_id}";
+                	var salesGoal = 0;/* ${salesGoal}; */
+                	var montlySales = 0;/* ${monthlySales}; */
+                	
+                	var dayOfWeek = ['mon','tue','wed','thu','fri'];
+                	var sales = [];
+                	var regdate = [];
+                	for(var i= 0; i<5; i++){
+
+                		sale = ($('#sales-'+dayOfWeek[i])[0].value);
+                		regdate = ($('#sales-'+dayOfWeek[i])[0].attributes[3].textContent);
+                		if(sale == "")
+                			sale = 0;
+                		
+                		var plan = {
+                					sales : sale,
+                					reg_date : regdate
+                		};
+                		sales.push(plan);
+                	}
+                	
+                	var weeklyReport = {
+                			weekly_report_id : report_id,
+                			title : report_title,
+                			saleGoal : salesGoal,
+                			sales : montlySales,
+                			employee_id : employee_id,
+                			department_id : department_id
+                	}
+                	
+                	
+                	
+                	var s = $('#calendar').fullCalendar('clientEvents');
+                	var allPlan = [];
+                	for(var i = 0; i<s.length; i++){
+                		var plan;
+                		
+                		var title = s[i].title;//.replace(/\'/g,"'");
+                		 
+                		var startTimeOrigin = s[i].start.format().split('T');
+                		var startTime = startTimeOrigin[0]+" "+startTimeOrigin[1];
+                		var endTimeOrigin = s[i].end.format().split('T');
+                		var endTime = endTimeOrigin[0]+" "+endTimeOrigin[1];
+                		plan={
+                				content:title,
+                				start_time:startTime,
+                				end_time:endTime
+                		}
+                		
+                		allPlan.push(plan);
+                	}
+
+                	var jPlan = JSON.stringify(allPlan);
+                	var jPlan2 = JSON.stringify(weeklyReport);
+                	var jPlan3 = JSON.stringify(sales);
+                	
+                	$.ajax({
+                		type : "POST",
+                		url : "/weeklyReport/write",
+                		data : {
+                			sales : jPlan3,
+                			report : jPlan2,
+                			weeklyPlan : jPlan
+                		},
+                		success : function(){
+                			window.location.href="/weeklyReport/detail/"+employee_id;
+                		},
+                		error : function(){
+                		}
+                	})
+                }
+                },
+                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
+                    $noty.close();
+                   
+                    }
+                }
+            ]
+    })                                                    
+}
+
+function weeklyWriteCancleConfirm(){
+	noty({
+        text: '취소시 작성한 정보가 사라집니다.',
+        layout: 'center',
+        modal: 'true',
+        killer:'true',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
+                	window.location.href = "/main"
+                	}
+                },
+                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
+                    $noty.close();
+                   
+                    }
+                }
+            ]
+    })      
 }
 
 </script>
