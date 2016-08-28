@@ -38,14 +38,15 @@ if(((EmployeeDTO) session.getAttribute("user")).getPosition() != null) {
 
 
 			<li class="xn-profile active"><a href="#" class="profile-mini">
-					<img src="/user/download/${sessionScope.user.file_position}/">
+					<img src="http://192.168.1.18:8085/test/${sessionScope.user.file_position}">
+					
 			</a>
 				<div class="profile">
 					<div class="profile-image">
 
 						<a href="#"> <span class="fa fa-gear "
 							style="position: absolute"> </span> <img
-							src="/user/download/${sessionScope.fileName}/">
+							src="http://192.168.1.18:8085/test/${sessionScope.user.file_position}">
 						</a>
 
 					</div>

@@ -12,7 +12,6 @@ var jsonArray=new Array();
 	  searchSalesGoal('${dailyReport.reg_date}');
 	 computeGuage();
 	var counsellingArray = jQuery.parseJSON('${counsellingJson}');
-	/*   alert(JSON.stringify(counsellingArray));  */
  	$.each( counsellingArray, function( counselRecord, value ) {
 		   var html='<li id="'+value.counsel_id+'"><a href="#" data-toggle="modal" data-target="#myModal2" onclick="tagTest('+'\''+value.counsel_id+'\''+','+'\''+value.title+'\''+','+'\''+value.content+'\''+','+'\''+value.client_id+'\''+','+'\''+value.sec_client_id+'\''+','+'\''+value.address+'\''+','+'\''+value.client_id +'\''+','+'\''+value.representative+'\''+','+'\''+value.counsel_id+'\''+')"><span class="fa fa-tag"></span>'
 		  html+=value.title+'</a><span class="glyphicon glyphicon-remove " onclick="removeTag('+'\''+value.counsel_id+'\''+','+1+')"></span></li>';

@@ -1,21 +1,23 @@
 package kr.co.bne.controller;
 
+import java.awt.Image;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.integration.Message;
-import org.springframework.integration.MessageChannel;
 import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,122 +54,75 @@ public class UserController {
 	@Autowired
 	MessageChannel ftpChannel;
 
-	
 	public void setFileName(String fileName, HttpServletRequest req){
 		HttpSession session = req.getSession();
-		session.setAttribute("fileName", fileName);
+		EmployeeDTO employee=(EmployeeDTO)session.getAttribute("user");
+		
+		if(!employee.getFile_position().equals(employee.getEmployee_id()+".png")){
+			userService.modifyFilePosition(employee.getEmployee_id(), fileName);
+		}
+		
+		employee.setFile_position(fileName);
+		session.setAttribute("user", employee);
+		
+		
+		
+		
 	}
 	
 	@RequestMapping(value = "/defaultFile", method = RequestMethod.POST)
 	public void defaultFile(HttpServletResponse response, HttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
-		userService.modifyFilePosition(id);
-		setFileName("default.png",req);
+		
+
+		File uploadFile = new File("C:\\Users\\bit-user\\git\\bneProject\\BNEProject\\src\\main\\resources\\default.png");
+		final Message<?> message = MessageBuilder.withPayload(uploadFile).setHeader("fileName", id+".png").build();
+		ftpChannel.send(message);
+		setFileName(id+".png",req);
+		
 	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
+		
+		
 		String fileName = null;
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		for (MultipartFile multipartFile : fileMap.values()) {
-			fileName=saveFileToLocalDisk(multipartFile, id);
-			userService.modifyFilePosition(id, fileName);
+			
+			fileName=saveFileToRemoteDisk(multipartFile, id);
+			
+			
+
 		}
+				
+		
 		setFileName(fileName,req);
 		
 	}
 
-	private String saveFileToLocalDisk(MultipartFile multipartFile, String id)
-	         throws IOException, FileNotFoundException {
+
+	
+	private String saveFileToRemoteDisk(MultipartFile multipartFile, String id)
+			throws IOException, FileNotFoundException {
+
+
+		String outputFileName =  id + "." + "png";			
+		File uploadFile = new File(outputFileName);
+		multipartFile.transferTo(uploadFile);
 		
-		if(ftpChannel != null) {
-			System.out.println("빈은 생성됨!!");
-		}
-
-	      String temp[] = multipartFile.getContentType().split("/");
-	      String outputFileName = getDestinationLocation() + id + "." + temp[1];
-	      
-	      
-	   //   FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(outputFileName));
-	      
-	      File file = new File(outputFileName);
-	      //final Message<File> messageFile = MessageBuilder.withPayload(file).build();
-	      
-	   /*   final Message<byte[]> message = MessageBuilder.withPayload(multipartFile.getBytes())
-	            .setHeader("fileName",  multipartFile.getOriginalFilename())
-	            .setHeader("remoteDir",  "/upload/")
-	            .build();
-	            */
-	      
-	      System.out.println("filname : " + multipartFile.getOriginalFilename());
-	      
-	      final Message<byte[]> message = MessageBuilder.withPayload(multipartFile.getBytes()).setHeader("fileName",  multipartFile.getOriginalFilename())
-																				    		  .setHeader("remoteDir",  "/upload/")
-																				    		  .build();
-	      
-	      System.out.println("messageFile.toString"+message.toString());
-	      boolean result =ftpChannel.send(message);
-	      
-	      System.out.println("result"+result);
-	      
-	      return id + "." + temp[1];
-	      
-
-
-			
-			/*try {
-				final Message<byte[]> message = MessageBuilder.withPayload(file.getBytes())
-						.setHeader("fileName",  fileName)
-						.setHeader("remoteDir",  remoteDir)
-						.build();
-				
-				boolean uploadSuccess = ftpChannel.send(message , DEFAULT_FTP_CONNECTION_TIMEOUT);
-				if (uploadSuccess == false) {
-					ErrorVO errorVO = propertiesResource.getErrorValue(CommonErrorConstant.UPLOAD_FAIL);
-					throw new CommonException(errorVO);
-				}
-				logger.info("{}|Ftp file upload is success. path={}, fileName={}", tid, remoteDir, fileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-				logger.error("{}| Ftp sm image upload is failed. path={}, fileName={}, error={}", tid, remoteDir, fileName, LogManager.makeLog(e.getMessage(), e));
-				throw e;
-			}*/
-			/*return remoteDir + "/" + fileName;*/
-
-	   }
-
-	@RequestMapping(value = "/download/{fileName}", method = { RequestMethod.GET })
-	public void showFile(@PathVariable String fileName, HttpServletRequest req, HttpServletResponse res)
-			throws IOException {
-
-		byte[] buffer = new byte[1024];
-		int byteRead = -1;
-		FileInputStream inputStream;
-		OutputStream outStream;
-
-		File f = new File("c:/uploaded-files/" + fileName);
-
-		inputStream = new FileInputStream(f);
-		outStream = res.getOutputStream();
-
-		while ((byteRead = inputStream.read(buffer)) != -1) {
-			outStream.write(buffer, 0, byteRead);
-		}
-		inputStream.close();
-		outStream.close();
+		
+	
+		final Message<?> message = MessageBuilder.withPayload(uploadFile).build();
+		ftpChannel.send(message);
+		
+		uploadFile.delete();
+	
+		return outputFileName;
 		
 	}
-
-	private String getDestinationLocation() {
-		String savedir = "c:/uploaded-files";
-		File saveDirFile = new File(savedir);
-
-		if (!saveDirFile.exists()) {
-			saveDirFile.mkdirs();
-		}
-		return "c:/uploaded-files/";
-	}
+	
 
 	@RequestMapping(value = "/goLoginForm", method = { RequestMethod.GET })
 	public String goLoginForm() {
@@ -199,14 +154,11 @@ public class UserController {
 		EmployeeDTO employeeDTO = new EmployeeDTO();
 		employeeDTO = userService.validCheck(id, rawPassword);
 		String newpassword = req.getParameter("newpassword");
-		
-		
-		
+			
 		if (newpassword == null) {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
 				session.setAttribute("fileName", employeeDTO.getFile_position());
-
 
 				DailyReportEmployeeDTO employee= dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
 
@@ -230,17 +182,14 @@ public class UserController {
 	@RequestMapping(value = "/empSearch", method = { RequestMethod.POST })
 	public @ResponseBody List<EmployeeDTO> getEmpSearch(@RequestParam("empSearch") String empSearch ,HttpServletRequest req) {
 
-		
-		
-
-
+	
 			String temp="%"+empSearch+"%";
 			List<EmployeeDTO> list =userService.getEmpSearch(temp);
 			return list;
 	}
 
 	
-	/*    */
+	
 	@RequestMapping(value = "/searchUser/{empId}", method = { RequestMethod.GET })
 	public String showSearchUser(Model model,@PathVariable String empId, HttpServletRequest req, HttpServletResponse res)
 			throws IOException {

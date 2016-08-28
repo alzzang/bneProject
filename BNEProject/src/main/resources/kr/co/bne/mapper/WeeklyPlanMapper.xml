@@ -16,6 +16,6 @@
 	</insert>
 	
 	<update id="updateWeeklyPlan" parameterType="WeeklyPlan">
-		UPDATE WEEKLY_PLAN SET SALES= #{sales} WHERE WEEKLY_REPORT_ID = #{weekly_report_id}
+		UPDATE WEEKLY_PLAN SET SALES= #{sales} WHERE WEEKLY_REPORT_ID = #{weekly_report_id} AND REG_DATE = #{reg_date}
 	</update>
 </mapper>

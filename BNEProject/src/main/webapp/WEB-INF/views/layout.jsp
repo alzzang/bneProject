@@ -39,7 +39,7 @@
 <body>
 
 	<c:if test="${sessionScope.user == null}">
-		<jsp:forward page="/user/login" />
+		<jsp:forward page="/user/login"/>
 	</c:if>
 
 	<input type="hidden" id='fileName' value='${sessionScope.fileName}'>
@@ -123,14 +123,10 @@
 	<script type="text/javascript"
 		src="/js/plugins/owl/owl.carousel.min.js"></script>
 	<script type="text/javascript" src="/js/plugins/moment.min.js"></script>
-	<script type="text/javascript"
-		src="/js/plugins/daterangepicker/daterangepicker.js"></script>
-	<script type="text/javascript"
-		src="/js/plugins/fullcalendar/fullcalendar.min.js"></script>
-	<script type="text/javascript"
-		src="/js/plugins/dropzone/dropzone.min.js"></script>
-	<script type="text/javascript"
-		src="/js/plugins/summernote/summernote.js"></script>
+	<script type="text/javascript" src="/js/plugins/daterangepicker/daterangepicker.js"></script>
+	<script type="text/javascript" src="/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+	<script type="text/javascript" src="/js/plugins/dropzone/dropzone.min.js"></script>
+	<script type="text/javascript" src="/js/plugins/summernote/summernote.js"></script>
 	<!-- END THIS PAGE PLUGINS-->
 
 	<!-- START TEMPLATE -->
@@ -141,17 +137,28 @@
 	<script type='text/javascript' src='/js/notice_on_header.js'></script>
 	<script type="text/javascript" src="/js/usersettings.js"></script>
 
+
+	<script type='text/javascript' src='/js/plugins/noty/jquery.noty.js'></script>
+	<script type='text/javascript'
+		src='/js/plugins/noty/layouts/topCenter.js'></script>
+	<script type='text/javascript'
+		src='/js/plugins/noty/layouts/topLeft.js'></script>
+	<script type='text/javascript'
+		src='/js/plugins/noty/layouts/topRight.js'></script>
+	<script type='text/javascript' src='/js/plugins/noty/layouts/center.js'></script>
+	<script type='text/javascript' src='/js/plugins/noty/themes/default.js'></script>
+
+
 	<!-- <script type='text/javascript' src='/js/plugins/noty/jquery.noty.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topCenter.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topLeft.js'></script>
     <script type='text/javascript' src='/js/plugins/noty/layouts/topRight.js'></script>            
     <script type='text/javascript' src='/js/plugins/noty/themes/default.js'></script>  -->
-
-
-	<script type='text/javascript'
-		src='/assets/plugins/bootstrap-notify-master/bootstrap-notify.js'></script>
-
-
+    
+    
+    <script type='text/javascript' src='/assets/plugins/bootstrap-notify-master/bootstrap-notify.js'></script>
+	
+	
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
 
@@ -224,31 +231,10 @@
 
       
    </script>
-
-
-	<script type="text/javascript">
-	
-	/* $("weeklyDetail").on("addClass", function() {
-		var path = "/menu/getTeamMemberList";	
-		var html = '';
-		alert("Gg");
-		$.ajax({
-			url : path,
-			success : function(data) {
-				for(var i=0; i<data.length; i++) {
-					var employee_id = data[i].employee_id;
-					var employee_name = data[i].employee_name;
-					var link = "location.href=" + "'/weeklyReport/detail/" + employee_id + "'";
-					html += '<li onclick="' + link + '"><a href="#">' +
-								'<span class="fa fa-user"></span>' + employee_name + '</a></li>';
-				}
-				
-				$("#members").html(html);
-			}
-		});
-	}); */
    
- $("#weeklyDetail").children().click(function(){
+   
+   <script type="text/javascript">
+$("#weeklyDetail").click(function(){
 	var path = "/menu/getTeamMemberList";	
 	var html = '';
 	
@@ -266,7 +252,7 @@
 			$("#members").html(html);
 		}
 	});
-});  
+});
 
 $(function(){
 	var path = "/alarm/unReadCount/" + $("#employee_id").val();

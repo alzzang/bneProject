@@ -319,9 +319,6 @@ function removeTag(seq,val){
 }
 
 function changeProgress(money,goal){
-	
-	/*alert(money+':'+goal);*/
-	
 	var achievementRate=money/goal*10000;
 	achievementRate=Math.round(achievementRate);
 	achievementRate=achievementRate/100;
@@ -337,8 +334,6 @@ function changeProgress(money,goal){
 		$("#progressCondition").html(rate);
 	}
 	else{
-		//alert(achievementRate);
-		
 		if(achievementRate>100){
 			achievementRate=100;
 		}
@@ -363,12 +358,8 @@ function approvalDaily() {
     		success : function(data) {
     			$('#approvalDiv').remove();
     			alert('승인되었습니다.');
-    			/*event.preventDefault();*/
     		},
-    		error : function(data)
-    		{
-    			console.log(data);
-    			alert('에러입니');
+    		error : function(data){
     		}
     	})
     	
@@ -402,7 +393,6 @@ function insertComment(){
 
 		},
 		error:function(){
-			alert("수정오류");
 		}
 	})
 }

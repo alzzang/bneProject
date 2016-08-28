@@ -56,7 +56,6 @@ var morrisCharts = function() {
 			});
 		},
 		error : function() {
-			alert('error');
 		}
 	});
 	

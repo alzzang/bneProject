@@ -18,8 +18,7 @@
    http://www.springframework.org/schema/integration/ftp 
    http://www.springframework.org/schema/integration/ftp/spring-integration-ftp.xsd
    http://www.springframework.org/schema/integration 
-   http://www.springframework.org/schema/integration/spring-integration.xsd
-   ">
+   http://www.springframework.org/schema/integration/spring-integration.xsd">
    <!-- Root Context: defines shared resources visible to all other web components -->
    
    
@@ -33,33 +32,31 @@
    <!-- AOP - aspect 사용. -->
    <aop:aspectj-autoproxy proxy-target-class="true"/>
          
-            
-   <!-- datasource -->
-   <bean id="ftpClientFactory"
-          class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
-        <property name="host" value="192.168.1.18"/>
-        <property name="port" value="8086"/>
-        <property name="username" value="bne"/>
-        <property name="password" value="bne123"/>
-        
-        
-    </bean>
-
-    <int:channel id="ftpChannel" />
-
-    <int-ftp:outbound-channel-adapter id="ftpOutbound"
-                                      channel="ftpChannel"
-                                      remote-directory="/upload"
-                                      auto-create-directory="true"
-                                      charset="UTF-8"                                      
-                                      session-factory="ftpClientFactory"/>
-   
-    <bean
+           <bean
       class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
       <property name="locations">
          <value>/WEB-INF/spring/applicationContext.properties</value>
       </property>
    </bean>
+            
+   <!-- datasource -->
+   <bean id="ftpClientFactory"
+          class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
+        <property name="host" value="${ftp.host}"/>
+        <property name="port" value="${ftp.port}"/>
+        <property name="username" value="${ftp.username}"/>
+        <property name="password" value="${ftp.password}"/>
+    </bean>
+
+    <int:channel id="ftpChannel" />
+
+    <int-ftp:outbound-channel-adapter id="ftpOutbound"
+                                       channel="ftpChannel"
+                                      remote-directory="/test"
+                                      remote-filename-generator-expression="headers['fileName']"                       
+                                      session-factory="ftpClientFactory"/>
+  
+   
    <bean id = "multipartResolver" 
       class = "org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
       
@@ -87,7 +84,6 @@
 
    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
       <constructor-arg index="0" ref="sqlSessionFactory" />
-
    </bean>   
    
    

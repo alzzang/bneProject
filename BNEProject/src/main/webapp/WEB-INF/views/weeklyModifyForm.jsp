@@ -26,7 +26,7 @@
 }
 </style>
     
-<form  action="/weeklyReport/detail/${employee_Id}">
+<%-- <form  action="/weeklyReport/detail/${employee_Id}"> --%>
 
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -51,8 +51,8 @@
 		</div>	
 			
 			<input type ="hidden" name = "weekly_report_id" id = "weekly_report_id" ><br>
-			<input type="hidden" name="department_id" value="${user.department_id}" disabled><br>
-			<input type="hidden" name="employee_Id" value="${employee_Id}" disabled>
+			<input type="hidden" id="department_id"name="department_id" value="${user.department_id}" disabled><br>
+			<input type="hidden" id="employee_id"name="employee_Id" value="${employee_Id}" disabled>
 			<div class="panel-body">
 			<table class="table table-bordered detailInfoTable">
 				<thead>
@@ -115,16 +115,17 @@
 					</div>
 				</div>
 				<div id="buttonGroup">
-					<button id ="cancle" type="submit" class="btn btn-danger pull-right" style="margin-left:1%; margin-top:1%">취소</button>
-					<button id ="modify" type="button" class="btn btn-success pull-right" style="margin-left:1%; margin-top:1%">수정</button>
+					<button id ="cancle"  class="btn btn-danger pull-right"  style="margin-left:1%; margin-top:1%" onClick="weeklyCancleConfirm()">취소</button>
+					<button class="btn btn-success pull-right mb-control"style="margin-left:1%; margin-top:1%" onClick="modifyButtonClick()">저장</button>
 				</div>
 			</div>
 		</div>
 			
 	</div>
 </div>
-	<!-- END CONTENT FRAME BODY -->
-</form>     
+
+<!-- END CONTENT FRAME BODY -->
+<!-- </form> -->     
 <script>
 var makeSalesInput = function(){
 	var salesCell
@@ -240,101 +241,19 @@ var makeSalesInput = function(){
 		$('#calendar').fullCalendar('getView').calendar.options.cellHeight = 200;
 		$('#calendar').fullCalendar('getView').calendar.options.contentHeight = "auto";	
 		
+		preventKeyDown();
+		preventMouseClick();
 		
-		$('#modify').on('click',function(){	
-			event.preventDefault();
-			
-			var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
-			var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
-			
-			var date = $('#calendar').fullCalendar('getDate');
-			var year = date._d.getFullYear();
-			
-			
-			
-			var report_id = year+"_"+weeklyNumber+"_"+${user.employee_id};
-			var report_title = $('#title')[0].textContent;
-			if(report_title == ""){
-				report_title = weeklyNumber+"주의 계획";
-			}
-			
-			var employee_id = "${user.employee_id}";
-			var department_id = "${user.department_id}";
-			var salesGoal = 0;/* ${salesGoal}; */
-			var montlySales = 0;/* ${monthlySales}; */
-			
-			var dayOfWeek = ['mon','tue','wed','thu','fri'];
-			var sales = [];
-			var regdate = [];
-			for(var i= 0; i<5; i++){
-
-				sale = ($('#sales-'+dayOfWeek[i])[0].value);
-				regdate = ($('#sales-'+dayOfWeek[i])[0].attributes[3].textContent);
-				if(sales[i] == "")
-					sales[i] = 0;
-				
-				var plan = {
-							sales : sale,
-							reg_date : regdate
-				};
-				sales.push(plan);
-			}
-			
-			var weeklyReport = {
-					weekly_report_id : report_id,
-					title : report_title,
-					saleGoal : salesGoal,
-					sales : montlySales,
-					employee_id : employee_id,
-					department_id : department_id
-			}
-			
-			
-			
-			var s = $('#calendar').fullCalendar('clientEvents');
-			var allPlan = [];
-			for(var i = 0; i<s.length; i++){
-				var plan;
-				
-				var title = s[i].title;
-				
-				var startTimeOrigin = s[i].start.format().split('T');
-				var startTime = startTimeOrigin[0]+" "+startTimeOrigin[1];
-				var endTimeOrigin = s[i].end.format().split('T');
-				var endTime = endTimeOrigin[0]+" "+endTimeOrigin[1];
-				plan={
-						content:title,
-						start_time:startTime,
-						end_time:endTime
-				}
-				
-				allPlan.push(plan);
-			}
-
-			var jPlan = JSON.stringify(allPlan);
-			var jPlan2 = JSON.stringify(weeklyReport);
-			var jPlan3 = JSON.stringify(sales);
-			$('.fc-row .fc-widget-header');
-			
-			$.ajax({
-				type : "POST",
-				url : "/weeklyReport/modify",
-				data : {
-					sales : jPlan3,
-					report : jPlan2,
-					weeklyPlan : jPlan
-				},
-
-				success : function(data){
-					window.location.href="/weeklyReport/detail/"+employee_id;
-				},
-				error : function(){
-					event.preventDefault();
-				}
-			})
-			
+		$('#modifyCancle').on('click',function(){
+			openMessageBox("#mb-confirmCancle");
+		})
+		$('#modify').on('click',function(){
+			openMessageBox('#mb-confirmModify');
 		});
 	}
+	
+
+	
 </script>
 
 <!-- START THIS PAGE PLUGINS-->        

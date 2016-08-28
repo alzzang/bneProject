@@ -48,7 +48,6 @@ var makeSalesInput = function() {
 
 var isModify = function(now) {
 	var result = false;
-
 	var lastDayWeek = $('#calendar').fullCalendar('getView').end;
 	lastDayWeek._d.setDate(lastDayWeek._d.getDate() + 1)
 
@@ -74,9 +73,8 @@ var mainInputReportData = function(reportData) {
 
 	// 매출액 정보 행 삽입
 	makeSalesInput();
-	console.log("dfdf="+weeklyPlanDTOList[0].reg_date);
 	for(var i=0; i<weeklyPlanDTOList.length; i++){
-		$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales, 'disabled':'disabled'});
+		$('input[reg_date="'+weeklyPlanDTOList[i].reg_date+'"]').attr({'value': weeklyPlanDTOList[i].sales+'원', 'disabled':'disabled'});
 	}
 };
 
@@ -120,7 +118,7 @@ var inputReportData = function(reportData) {
 
 	for (var i = 0; i < weeklyPlanDTOList.length; i++) {
 		$('input[reg_date="' + weeklyPlanDTOList[i].reg_date + '"]').attr({
-			'value' : weeklyPlanDTOList[i].sales,
+			'value' : weeklyPlanDTOList[i].sales+'원',
 			'disabled' : 'disabled'
 		});
 	}
@@ -169,49 +167,217 @@ var inputReportData = function(reportData) {
 }
 
 var registerDailyReportEvent = function(){
-	   $('.fc-mon ,.fc-tue,.fc-wed,.fc-thu,.fc-fri').on('click',function(){
-	      var date = this.dataset.date;
-	      $.ajax({
-	         type : "POST",
-	         url : "/dailyReport/checkReport",
-	         data : {
-	            date : date
-	         },
-	         success : function(data){
-	            alert(date);
-	               if(data !== 0){
-	                  var path = "/dailyReport/detail";
-	                  var form = document.createElement("form");
-	                  form.setAttribute("method", "POST");
-	                  form.setAttribute("action", path);
-	                  
-	                  var hiddenField = document.createElement("input");
-	                  hiddenField.setAttribute("type", "hidden");
-	                  hiddenField.setAttribute("name", "dailyReportId");
-	                  hiddenField.setAttribute("value", data);
-	                  form.appendChild(hiddenField);
-	                  document.body.appendChild(form);
+	$('.fc-mon ,.fc-tue,.fc-wed,.fc-thu,.fc-fri').on('click',function(){
+		var date = this.dataset.date;
+		$.ajax({
+			type : "POST",
+			url : "/dailyReport/checkReport",
+			data : {
+				date : date
+			},
+			success : function(data){
+					if(data !== 0){
+						var path = "/dailyReport/detail";
+						var form = document.createElement("form");
+						form.setAttribute("method", "POST");
+						form.setAttribute("action", path);
+						
+						var hiddenField = document.createElement("input");
+						hiddenField.setAttribute("type", "hidden");
+						hiddenField.setAttribute("name", "dailyReportId");
+						hiddenField.setAttribute("value", data);
+						form.appendChild(hiddenField);
+						document.body.appendChild(form);
 
-	                  form.submit();
-	            }else{
-	            	var path = "/dailyReport/write";
-	                  var form = document.createElement("form");
-	                  form.setAttribute("method", "POST");
-	                  form.setAttribute("action", path);
-	                  
-	                  var hiddenField = document.createElement("input");
-	                  hiddenField.setAttribute("type", "hidden");
-	                  hiddenField.setAttribute("name", "reg_date");
-	                  hiddenField.setAttribute("value", date);
-	                  form.appendChild(hiddenField);
-	                  document.body.appendChild(form);
+						form.submit();
+				}else{
+					location.href="/dailyReport/write"
+				} 
+			}
+		});
 
-	                  form.submit();
-	            	
-	              /* location.href="/dailyReport/write"*/
-	            } 
-	         }
-	      });
+	});
+}
 
-	   });
+var preventKeyDown = function(){
+	$('#sales-mon ,#sales-tue,#sales-wed,#sales-thu,#sales-fri').keydown(function(e){
+		var range = this.selectionStart;
+		if((e.keyCode==48 || e.keyCode==96) && range == 0)
+			e.preventDefault();
+		
+	    if (e.keyCode!=37&&e.keyCode!=38&&e.keyCode!=39&&e.keyCode!=40&&e.keyCode!=9&&e.keyCode!=8&&(e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+	        e.preventDefault();
+	    }
+	});
+}
+var preventMouseClick = function(){
+	$('#sales-mon ,#sales-tue,#sales-wed,#sales-thu,#sales-fri').change(function(e){
+		
+		/* 정규식 패턴검사 */
+		var pattern = /^([1-9][0-9]{0,9}$)|^0$/;
+		var oldValue = e.currentTarget.defaultValue;
+		var value = e.currentTarget.value;
+		var result=pattern.test(value);
+								
+		if(result == false){
+			noWordConfirm();
+			e.currentTarget.value = oldValue;
+			return;
+		}
+	});
+}
+function noWordConfirm(){
+    noty({
+        text: '숫자만 입력가능합니다',
+        layout: 'center',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: '확인', onClick: function($noty) {
+                    $noty.close();
+                    }
+                }
+            ]
+    })                                                    
+}  
+
+function getReportInfo(){
+	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+	
+	var date = $('#calendar').fullCalendar('getDate');
+	var year = date._d.getFullYear();
+	
+	var report_id = year+"_"+weeklyNumber+"_"+$('#employee_id').val();
+	var report_title = $('#title')[0].textContent;
+	if(report_title == ""){
+		report_title = weeklyNumber+"주의 계획";
 	}
+	
+	var employee_id = $('#employee_id').val();
+	var department_id = $('#department_id').val();
+	var salesGoal = 0;/* ${salesGoal}; */
+	var montlySales = 0;/* ${monthlySales}; */
+	
+	var weeklyReport = {
+			weekly_report_id : report_id,
+			title : report_title,
+			saleGoal : salesGoal,
+			sales : montlySales,
+			employee_id : employee_id,
+			department_id : department_id
+	}
+	return weeklyReport;
+}
+
+function getSalesPlan(){
+	var dayOfWeek = ['mon','tue','wed','thu','fri'];
+	var sales = [];
+	for(var i= 0; i<5; i++){
+		var sale = ($('#sales-'+dayOfWeek[i])[0].value);
+		regdate = ($('#sales-'+dayOfWeek[i])[0].attributes[3].textContent);
+		if(sale == "")
+			sale = 0;
+		
+		var plan = {
+					sales : sale,
+					reg_date : regdate
+		};
+		sales.push(plan);
+	}
+	return sales;
+}
+
+function getPlanDetail(){
+	var s = $('#calendar').fullCalendar('clientEvents');
+	var allPlan = [];
+	for(var i = 0; i<s.length; i++){
+		var plan;
+		
+		var title = s[i].title;
+		
+		var startTimeOrigin = s[i].start.format().split('T');
+		var startTime = startTimeOrigin[0]+" "+startTimeOrigin[1];
+		var endTimeOrigin = s[i].end.format().split('T');
+		var endTime = endTimeOrigin[0]+" "+endTimeOrigin[1];
+		plan={
+				content:title,
+				start_time:startTime,
+				end_time:endTime
+		}
+		
+
+				allPlan.push(plan);
+	}
+	return allPlan;
+}
+
+function modifyButtonClick() {
+	noty({
+		text : '수정하시겠습니까?',
+		layout : 'center',
+		killer:'true',
+		modal:'true',
+		buttons : [
+				{
+					addClass : 'btn btn-success btn-clean',
+					text : 'Ok',
+					onClick : function($noty) {
+						event.preventDefault();
+
+						var weeklyReport = getReportInfo();
+
+						var sales = getSalesPlan();
+
+						var allPlan = getPlanDetail();
+
+						var jPlan = JSON.stringify(allPlan);
+						var jPlan2 = JSON.stringify(weeklyReport);
+						var jPlan3 = JSON.stringify(sales);
+						$('.fc-row .fc-widget-header');
+
+						$.ajax({
+							type : "POST",
+							url : "/weeklyReport/modify",
+							data : {
+								sales : jPlan3,
+								report : jPlan2,
+								weeklyPlan : jPlan
+							},
+
+							success : function(data) {
+								alert($('#employee_id').val());
+								window.location.href = "/weeklyReport/detail/"
+										+ $('#employee_id').val();
+							},
+							error : function() {
+								event.preventDefault();
+							}
+						})
+					}
+				}, {
+					addClass : 'btn btn-danger btn-clean',
+					text : 'Cancel',
+					onClick : function($noty) {
+						$noty.close();
+					}
+				} ]
+	})
+}  
+function weeklyCancleConfirm(){
+	noty({
+        text: '취소시 작성한 정보가 사라집니다.',
+        layout: 'center',
+        modal: 'true',
+        killer:'true',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
+                	window.location.href = "/main"
+                	}
+                },
+                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
+                    $noty.close();
+                   
+                    }
+                }
+            ]
+    })      
+}

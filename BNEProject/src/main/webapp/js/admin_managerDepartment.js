@@ -22,6 +22,8 @@ function addInputElement() {
    alert(d.html());
 }
 
+function removeInputElement() {
+	}
 /* 부서추가 버튼 눌렀을때 */
 $("#addDepartmentFormButton").on("click",function(){
     $("#addDepartmentFormButton").val();

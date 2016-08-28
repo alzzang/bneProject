@@ -352,13 +352,8 @@
         					}	                				}
         			}
     			}
-    			
-    			
-    			
-    			
     		},
     		error : function() {
-    			alert('error');
     		}
     	});
         
