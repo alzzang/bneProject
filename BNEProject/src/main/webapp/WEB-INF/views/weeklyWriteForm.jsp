@@ -151,13 +151,13 @@
 				
 				<div class="mb-content">
 					<p>계획을 보시겠습니까?</p>
-					<p>취소시 전에 있던 페이지로 이동합니다.</p>
+					<p>취소시 메인 페이지로 이동합니다.</p>
 				</div>
 				
 				<div class="mb-footer">
 					<div class="pull-right">
 						<a href="/weeklyReport/detail/${employee_Id}" class="btn btn-success btn-lg">확인</a>
-						<a href= "${beforeUrl}" class="btn btn-default btn-lg">취소</a>
+						<a href= "/main" class="btn btn-default btn-lg">취소</a>
 					</div>
 				</div>
 			</div>
@@ -178,7 +178,8 @@ window.onload = function(){
 
 	var result = ${result};	
 	if(result == false)
-		openMessageBox('#mb-alreadyWrittenReport');
+		weeklyWriteCancleConfirm();
+		//openMessageBox('#mb-alreadyWrittenReport');
 	
 	
 	makeSalesInput();	
@@ -193,53 +194,7 @@ window.onload = function(){
 
 }
 
-function weeklyWriteConfirm(){
-    noty({
-        text: '계획을 저장하시겠습니까?',
-        layout: 'center',
-        modal: 'true',
-        killer:'true',
-        buttons: [
-                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
-                	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
-                	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
-                	
-					var weeklyReport = getReportInfo(weeklyNumber);
 
-					var sales = getSalesPlan();
-
-					var allPlan = getPlanDetail();
-                	
-             
-
-                	var jPlan = JSON.stringify(allPlan);
-                	var jPlan2 = JSON.stringify(weeklyReport);
-                	var jPlan3 = JSON.stringify(sales);
-                	
-                	
-                	$.ajax({
-                		type : "POST",
-                		url : "/weeklyReport/write",
-                		data : {
-                			sales : jPlan3,
-                			report : jPlan2,
-                			weeklyPlan : jPlan
-                		},
-                		success : function(){
-                			window.location.href="/weeklyReport/detail/"+$('#employee_Id').val()+"/"+weeklyNumber;
-                		},
-                		error : function(){
-                		}
-                	})
-                }
-                },
-                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
-                    $noty.close();
-                    }
-                }
-            ]
-    })                                                    
-}
 
 
 

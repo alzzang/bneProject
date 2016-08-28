@@ -196,50 +196,37 @@
 				$('#calendar').fullCalendar('prev');
 			}
 		}
-		
-
-		weeklyReportDetail = ${weeklyReportDetail};
-		
-		// 처음에 받아온 주간계획 정보 삽입 
-		if(weeklyReportDetail !== false){
-			var parseToWeeklyReportDetail = JSON.stringify(weeklyReportDetail);
-			var reportData = JSON.parse(parseToWeeklyReportDetail); 
-			inputReportData(reportData);
-		}else{
-
-			//$('#weekly_report_id')[0].value = weeklyReportDTO.weekly_report_id;
-			$('#title').html(weeklyNumber+'주의 계획');
-			$('#employee_name').html('${user.employee_name}');
-			$('#department_name').html('${user.department_name}');
-			
-			makeSalesInput();
-			var day = ['mon','tue','wed','thu','fri'];
-			for(var i=0; i<5; i++){
-				$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
-			}
-			var o = '<div id="contentFrameBody"><h1>작성된 계획이 없습니다.</h1></div>'
-			$('#trash').append(o);
-			openMessageBox('#mb-NoWeeklyPlan');
-		}
-		
 		// 이 주간계획서의 작성자 ID
 		$('#calendar').fullCalendar('getView').calendar.options.editable = false;
 		$('#calendar').fullCalendar('getView').calendar.options.selectable = false;
-		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
-		$('.fc-center').append(o);
-		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>';
-		$('.fc-center').prepend(o);
+		
 		
 		var sessionUserId = ${user.employee_id};
 		var employeeId = ${employee_Id};
 		var date = $('#calendar').fullCalendar('getDate');
 		var now = $('#calendar').fullCalendar('getView').calendar.getNow();
 		now._d.setDate(now._d.getDate()+7);
-		if(sessionUserId == employeeId && isModify(now)){
+
+		weeklyReportDetail = ${weeklyReportDetail};
+		
+		// 처음에 받아온 주간계획 정보 삽입 
+		getWeeklyPlanButtonEvent(weeklyReportDetail,sessionUserId,now);
+		
+
+		var o = '<button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
+		$('.fc-center').append(o);
+		o = '<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>';
+		$('.fc-center').prepend(o);
+		
+
+/* 		if(sessionUserId == employeeId && isModify(now)){
 			o = '<button type="submit" class="fc-button fc-state-default fc-corner-right fc-corner-left"><span class="fa fa-pencil"></span></button></form>';
 			$('.fc-right').prepend(o);
-		}
+		} */
 
+		
+		registerDailyReportEvent();
+		
 		$('.fc-next-button').on('click', function() {
 			var report_id = makeReportId('next');
 
@@ -250,41 +237,10 @@
 					ReportId : report_id
 				},
 				success : function(data) {
+    				$('#calendar').fullCalendar('next');
+    		   		$('#calendar').fullCalendar('removeEvents');
 					$('.fc-right').empty();
-	    			if(data.weeklyReportDTO == null){
-	    				$('#calendar').fullCalendar('next');
-	    		   		$('#calendar').fullCalendar('removeEvents');
-	    				var o = '<div id="contentFrameBody"><h1>등록된 계획이 없습니다.</h1></div>'
-		    			$('#trash').append(o);
-						openMessageBox('#mb-NoWeeklyPlan');
-						var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
-						var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
-						
-	    				$('#reg_date').html("");
-	    				$('#title').html(weeklyNumber+'주의 계획');
-	    				$('#employee_name').html('${user.employee_name}');
-	    				$('#department_name').html('${user.department_name}');
-	    				
-	    				var day = ['mon','tue','wed','thu','fri'];
-	    				makeSalesInput();
-	    				for(var i=0; i<5; i++){
-	    					$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
-	    				}
-	    				var box = $('#mb-NoWeeklyPlan');
-	    			}else{
-	    				$('#calendar').fullCalendar('next');
-	    		   		$('#calendar').fullCalendar('removeEvents');
-	    		   		
-	    				if(sessionUserId == employeeId){
-	    					
-	    	 				if(isModify(now)){
-	    	 					o = '<button type="submit" class="fc-button fc-state-default fc-corner-right fc-corner-left"><span class="fa fa-pencil"></span></button>';
-	    	 					$('.fc-right').prepend(o);
-	    	 				}
-	    				}
-	    				inputReportData(data);
-	    			}
-	    			registerDailyReportEvent();
+					getWeeklyPlanButtonEvent(data,sessionUserId,now);
 				},
 				error : function() {
 				}
@@ -302,46 +258,16 @@
 					ReportId : report_id
 				},
 				success : function(data) {
+    				$('#calendar').fullCalendar('prev');
+    				$('#calendar').fullCalendar('removeEvents');
 					$('.fc-right').empty();
-	    			if(data.weeklyReportDTO == null){
-	    				$('#calendar').fullCalendar('prev');
-	    				$('#calendar').fullCalendar('removeEvents');
-	    				var o = '<div id="contentFrameBody"><h1>등록된 계획이 없습니다.</h1></div>'
-	    				$('#trash').append(o);
-						openMessageBox('#mb-NoWeeklyPlan');
-						var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
-						var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
-						$('#title').html(weeklyNumber+'주의 계획');
-						$('#employee_name').html('${user.employee_name}');
-						$('#department_name').html('${user.department_name}');
-						
-						var day = ['mon','tue','wed','thu','fri'];
-						makeSalesInput();
-						for(var i=0; i<5; i++){
-							$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
-						}
-	    			}else{
-	    				$('#calendar').fullCalendar('prev');
-	    				$('#calendar').fullCalendar('removeEvents');
-
-	    				result = isModify(now);
-	    				console.log(result);
-	    	 			if(sessionUserId == employeeId){
-	    	 				$('.fc-right').empty();
-	    	 				if(result){
-	    	 					o = '<button type="submit" class="fc-button fc-state-default fc-corner-right fc-corner-left"><span class="fa fa-pencil"></span></button>';
-	    	 					$('.fc-right').prepend(o);
-	    	 				}
-	    				}
-	    				inputReportData(data);
-	    			}
-	    			registerDailyReportEvent();
+					getWeeklyPlanButtonEvent(data,sessionUserId,now);
 				},
 				error : function() {
 				}
 			})
 		});
-		registerDailyReportEvent();
+		
 
 	});
 	$(document).ready(function() {

@@ -365,6 +365,51 @@ function modifyButtonClick() {
 				} ]
 	})
 }  
+function getWeeklyPlanButtonEvent(data,sessionUserId,now){
+	if(data.weeklyReportDTO == null){
+		var o = '<div id="contentFrameBody"><h1>등록된 계획이 없습니다.</h1></div>'
+		$('#trash').append(o);
+		weeklyNoPlanConfirm();
+		var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+		var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
+		
+		$('#reg_date').html("");
+		$('#title').html(weeklyNumber+'주의 계획');
+		$('#employee_name').html('${user.employee_name}');
+		$('#department_name').html('${user.department_name}');
+		
+		var day = ['mon','tue','wed','thu','fri'];
+		makeSalesInput();
+		for(var i=0; i<5; i++){
+			$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
+		}
+		var box = $('#mb-NoWeeklyPlan');
+	}else{    		   		
+		if(sessionUserId == $('#employee_Id').val()){
+			
+				if(isModify(now)){
+					o = '<button type="submit" class="fc-button fc-state-default fc-corner-right fc-corner-left"><span class="fa fa-pencil"></span></button>';
+					$('.fc-right').prepend(o);
+				}
+		}
+		inputReportData(data);
+	}
+	registerDailyReportEvent();
+}
+function weeklyNoPlanConfirm(){
+	noty({
+        text: '작성된 계획이 없습니다.',
+        layout: 'center',
+        modal: 'true',
+        killer:'true',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: '확인', onClick: function($noty) {
+                    $noty.close();
+                    }
+                }
+            ]
+    })      
+}
 function weeklyCancleConfirm(){
 	noty({
         text: '취소시 작성한 정보가 사라집니다.',
@@ -383,4 +428,76 @@ function weeklyCancleConfirm(){
                 }
             ]
     })      
+}
+
+function weeklyWriteCancleConfirm(){
+	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
+	noty({
+        text: '작성된 계획이 존재합니다.\n작성된 계획을 보시겠습니까? \n 취소시 메인화면으로 돌아갑니다.',
+        layout: 'center',
+        modal: 'true',
+        killer:'true',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
+                		window.location.href = "/weeklyReport/detail/"+$('#employee_Id').val()+"/"+weeklyNumber;
+                        $noty.close();
+                	}
+                },
+                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
+                	window.location.href = "/main"
+                    $noty.close();
+                   
+                    }
+                }
+            ]
+    })      
+}
+
+function weeklyWriteConfirm(){
+    noty({
+        text: '계획을 저장하시겠습니까?',
+        layout: 'center',
+        modal: 'true',
+        killer:'true',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
+                	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+                	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+                	
+					var weeklyReport = getReportInfo(weeklyNumber);
+
+					var sales = getSalesPlan();
+
+					var allPlan = getPlanDetail();
+                	
+             
+
+                	var jPlan = JSON.stringify(allPlan);
+                	var jPlan2 = JSON.stringify(weeklyReport);
+                	var jPlan3 = JSON.stringify(sales);
+                	
+                	
+                	$.ajax({
+                		type : "POST",
+                		url : "/weeklyReport/write",
+                		data : {
+                			sales : jPlan3,
+                			report : jPlan2,
+                			weeklyPlan : jPlan
+                		},
+                		success : function(){
+                			window.location.href="/weeklyReport/detail/"+$('#employee_Id').val()+"/"+weeklyNumber;
+                		},
+                		error : function(){
+                		}
+                	})
+                }
+                },
+                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
+                    $noty.close();
+                    }
+                }
+            ]
+    })                                                    
 }
