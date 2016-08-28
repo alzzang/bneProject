@@ -1,7 +1,25 @@
+
+
+/*function initializeSearchFilter() {
+	var employee_id = ${employee_id};
+	var employee_name = ${employee_name};
+	var department_id = ${department_id};
+	var position = ${position};
+	
+	$("#employee_name").val(employee_name);
+	$("#employee_id").val(employee_id);
+	$("#department_id").val(department_id);
+	$("#position").val(position);
+}*/
+
+
+
 function visibleAddForm() {
 	$("#addEmployeeFormButton").val();
 	if($("#addEmployeeFormButton").hasClass('btn-danger')) { //폼 추가
 		$("#employeeAddForm").show();
+		initializeInputElement();
+		addInputElement();
 		
 		$("#addEmployeeFormButton").html('<span class="fa fa-minus"></span> 숨기기');
 		$("#addEmployeeFormButton").removeClass('btn btn-danger').addClass('btn btn-primary');
@@ -14,6 +32,7 @@ function visibleAddForm() {
 }
 
 
+
 function removeEmployee(id) {
 	if (confirm("삭제하시면 작성된 글들도 모두 다 삭제됩니다. 그래도 삭제하시겠습니까?") == true){    //확인
 	    location.href = "/admin/employee/delete/" + id;
@@ -22,6 +41,13 @@ function removeEmployee(id) {
 	}
 }
 
+
+function initializeInputElement() {
+	var cnt = $("#employeeAddForm-body").children().size();
+	for(var i=1; i< cnt; i++) {
+		$("#employeeAddForm-body").children().last().remove();
+	}
+}
 
 function addInputElement() {
 	var trChild = $("#employeeAddForm-body").children().first().clone(true, true).removeClass(".dummyElement").show();

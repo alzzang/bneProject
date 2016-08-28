@@ -19,8 +19,27 @@
 	int startIdx = (Integer) request.getAttribute("startIdx");
 	int endIdx = (Integer) request.getAttribute("endIdx");
 	int totalPageNum = (Integer) request.getAttribute("totalPageNum");
+	
 %>
 
+<script>
+window.onload = function() {
+	var employee_id = '${employee_id}';
+	var employee_name = '${employee_name}';
+	var department_id = '${department_id}';
+	var position = '${position}';
+	
+	$("#filter_employee_name").val(employee_name);
+	$("#filter_employee_id").val(employee_id);
+	
+	if(department_id.trim() != "") {
+		$("#filter_department_id").val(department_id).prop("selected", true);	
+	}
+	if(position.trim() != "") {
+		$("#filter_position").val(position).prop("selected", true);
+	}	
+};
+</script>
 
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -61,25 +80,25 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">이름</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="employee_name"
-								name="employee_name" value=${employee_name}>
+							<input type="text" class="form-control" id="filter_employee_name"
+								name="employee_name" value="${employee_name }">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="col-md-3 control-label">사번</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="employee_id"
-								name="employee_id" value=${employee_id}>
+							<input type="text" class="form-control" id="filter_employee_id"
+								name="employee_id">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="col-md-3 control-label">부서</label>
 						<div class="col-md-9">
-							<select class="form-control select" name="department_id"
-								id="department_id">
-								<option value="*">전체</option>
+							<select class="form-control" name="department_id"
+								id="filter_department_id">
+								<option value="*" selected>전체</option>
 								<%
 									for (DepartmentDTO department : departmentList) {
 								%>
@@ -90,6 +109,18 @@
 							</select>
 						</div>
 					</div>
+					
+					<div class="form-group">
+                  <label class="col-md-3 control-label">직책</label>
+                  <div class="col-md-9">
+                     <select class="form-control" id="filter_position" name="position">
+                        <option value="*" selected>전체</option>
+                        <option value="manager">팀장</option>
+                        <option value="employee">팀원</option>
+                     </select>
+                  </div>
+               </div>
+					
 				</div>
 
 				<div class="panel-heading ui-draggable-handle">
@@ -138,7 +169,7 @@
 						</tr>
 					</thead>
 					<tbody id="employeeAddForm-body">
-						<tr style="display: none;">
+						<tr style="display: none;" class="dummyElement">
 							<td><input type="text" class="form-control"
 								attr="employee_name" required></td>
 							<td><select class="form-control" attr="department_id">
@@ -342,10 +373,6 @@
 </div>
 
 
-
-
-<script type="text/javascript"
-	src="/js/plugins/bootstrap/bootstrap-select.js"></script>
 <script type="text/javascript"
 	src="/js/plugins/datatables/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/js/admin_managerDepartment.js"></script>
+<script type="text/javascript" src="/js/admin_manageEmployee.js"></script>

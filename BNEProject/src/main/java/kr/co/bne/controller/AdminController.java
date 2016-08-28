@@ -55,7 +55,9 @@ public class AdminController {
 
 			if(!request.getParameter(parameterName).trim().equals("") && !request.getParameter(parameterName).trim().equals("*")) {
 				serviceParams.put(parameterName, request.getParameter(parameterName));
-				model.addAttribute(parameterName, (String)serviceParams.get(parameterName));
+				model.addAttribute(parameterName, request.getParameter(parameterName));
+				System.out.println(request.getParameter(parameterName));
+				System.out.println("parameterName  :"+parameterName);
 			}
 		}
 		System.out.println("서비스파람:" + serviceParams.toString());
