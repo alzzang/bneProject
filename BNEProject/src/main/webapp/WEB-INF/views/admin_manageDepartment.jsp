@@ -49,9 +49,9 @@
 					<span class="glyphicon glyphicon-filter"></span> 검색 필터
 				</h3>
 				<div class="pull-right">
-						<a href="/admin/employee/1" class="btn btn-danger">
-							<span class="fa fa-eraser"></span> 초기화
-						</a>
+					<a href="/admin/employee/1" class="btn btn-danger"> <span
+						class="fa fa-eraser"></span> 초기화
+					</a>
 				</div>
 			</div>
 
@@ -90,19 +90,6 @@
 							</select>
 						</div>
 					</div>
-
-					<div class="form-group">
-						<label class="col-md-3 control-label">직책</label>
-						<div class="col-md-9">
-							<select class="form-control select" id="position" name="position">
-								<option value="*">전체</option>
-								<option value="manager">팀장</option>
-								<option value="employee">팀원</option>
-							</select>
-						</div>
-					</div>
-
-
 				</div>
 
 				<div class="panel-heading ui-draggable-handle">
@@ -127,14 +114,15 @@
 
 	<!-- START CONTENT FRAME BODY -->
 	<div class="content-frame-body" style="height: 897px;">
-		<!-- start 사원 추가 폼 -->		
-		<div class="panel panel-danger" style="display: none;" id="employeeAddForm">
+		<!-- start 사원 추가 폼 -->
+		<div class="panel panel-danger" style="display: none;"
+			id="employeeAddForm">
 			<div class="panel-heading ui-draggable-handle">
 				<h3 class="panel-title">사원 추가</h3>
 				<ul class="panel-controls">
 					<li><a onclick="addInputElement()"><span
 							class="fa fa-plus"></span></a></li>
-							<li><a onclick="removeInputElement()"><span
+					<li><a onclick="removeInputElement()"><span
 							class="fa fa-minus"></span></a></li>
 				</ul>
 			</div>
@@ -145,36 +133,29 @@
 						<tr>
 							<th>이름</th>
 							<th>부서</th>
-							<th>직책</th>
 							<th>연락처</th>
 							<th>email</th>
 						</tr>
 					</thead>
 					<tbody id="employeeAddForm-body">
-						<tr style="display:none;">
-							<td><input type="text" class="form-control" attr="employee_name" required></td>
-							<td>					
-                                            <select class="form-control" attr="department_id">
-                                                <%
+						<tr style="display: none;">
+							<td><input type="text" class="form-control"
+								attr="employee_name" required></td>
+							<td><select class="form-control" attr="department_id">
+									<%
 											for (DepartmentDTO department : departmentList) {
 										%>
-										<option value="<%=department.getDepartment_id()%>"><%=department.getDepartment_name()%></option>
-										<%
+									<option value="<%=department.getDepartment_id()%>"><%=department.getDepartment_name()%></option>
+									<%
 											}
 										%>
-                                            </select>
-							</td>
-							<td>
-									<select class="form-control" attr="position">
-									<option value="employee">팀원</option>
-										<option value="manager">팀장</option>										
-									</select>
-							</td>
-							<td><input type="text" class="form-control" attr="mobile_phone" placeholder="하이픈(-) 제외" required></td>
+							</select></td>
+							<td><input type="text" class="form-control"
+								attr="mobile_phone" placeholder="하이픈(-) 제외" required></td>
 							<td><div class="input-group">
-                                                <span class="input-group-addon">@</span>
-                                                <input type="text" class="form-control" attr="email" required>
-                                            </div></td>
+									<span class="input-group-addon">@</span> <input type="text"
+										class="form-control" attr="email" required>
+								</div></td>
 						</tr>
 					</tbody>
 				</table>
@@ -212,25 +193,28 @@
 							<th style="width: 7%;">수정/삭제</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="employeeSearchResultForm-body">
+
+
 						<%for (EmployeeDTO employee : employeeList) {%>
 						<tr style="text-align: center;">
 							<td><%=employee.getEmployee_id()%></td>
 							<td><%=employee.getEmployee_name()%></td>
-							<td><%=employee.getDepartment_name()%></td>
-							<td><%=employee.getPosition().equals("employee") ? "팀원" : "팀장"%>
-							</td>
+							<td department_id=<%=employee.getDepartment_id() %>><%=employee.getDepartment_name()%></td>
+							<td><%=employee.getPosition().equals("employee") ? "팀원" : "팀장"%></td>
 							<td><%=employee.getMobile_phone()%></td>
 							<td><%=employee.getEmail()%></td>
 							<td>
 								<ul class="panel-controls">
-									<li><a href="#"><span class="fa fa-pencil"></span></a></li>
+									<li><a class="editButton mb-control"
+										onclick="openEditForm()"><span class="fa fa-pencil"></span></a></li>
 									<li><a
 										onclick="removeEmployee('<%=employee.getEmployee_id()%>')"><span
 											class="glyphicon glyphicon-trash"></span></a></li>
 								</ul>
 							</td>
 						</tr>
+
 						<%}%>
 					</tbody>
 				</table>
@@ -284,8 +268,81 @@
 		</div>
 		<!-- end 검색 결과 폼 -->
 	</div>
+
+	<!-- START MODAL -->
+	<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog">
+			<form class="form-horizontal" id="editForm" name="editForm" method="POST"
+				onsubmit="return submitEditForm()">
+				<div class="panel panel-danger">
+					<div class="panel-heading ui-draggable-handle">
+						<h3 class="panel-title">사원 정보 수정</h3>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<div class="col-md-10">
+								<div class="input-group">
+									<span class="input-group-addon">사번</span> <input type="text" name="employee_id"
+										class="form-control" readonly="readonly">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-10">
+								<div class="input-group">
+									<span class="input-group-addon">이름</span> <input
+										attr="employee_name" type="text" class="form-control" name="employee_name"
+										placeholder="Left side addon">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-10">
+								<div class="input-group">
+									<span class="input-group-addon">부서</span> <select
+										attr="department_id" class="form-control" attr="department_id" name="department_id">
+										<%
+											for (DepartmentDTO department : departmentList) {
+										%>
+										<option value="<%=department.getDepartment_id()%>"><%=department.getDepartment_name()%></option>
+										<%
+											}
+										%>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-10">
+								<div class="input-group">
+									<span class="input-group-addon">연락처</span> <input
+										attr="mobile_phone" type="text" class="form-control" name="mobile_phone"
+										placeholder="Left side addon">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-10">
+								<div class="input-group">
+									<span class="input-group-addon">이메일</span> <input attr="email" name="email"
+										type="text" class="form-control" placeholder="Left side addon">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer">
+						<button class="btn btn-primary pull-right">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- END MODAL -->
 	<!-- END CONTENT FRAME BODY -->
 </div>
+
+
+
 
 <script type="text/javascript"
 	src="/js/plugins/bootstrap/bootstrap-select.js"></script>

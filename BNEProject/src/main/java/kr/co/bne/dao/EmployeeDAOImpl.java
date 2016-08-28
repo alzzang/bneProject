@@ -106,4 +106,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return true;
 	}
 
+	@Transactional
+	@Override
+	public boolean updateEmployee(EmployeeDTO employeeDTO) {
+		try {
+			int rows = sqlSession.update("kr.co.bne.mapper.Employee.updateEmployee", employeeDTO);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
+
 }

@@ -126,4 +126,10 @@ public class UserServiceImpl implements UserService {
 		return status;
 	}
 	
+	
+	@Override
+	public boolean updateEmploye(EmployeeDTO employee) {
+		return employeeDAO.updateEmployee(employee);
+	}
+	
 }

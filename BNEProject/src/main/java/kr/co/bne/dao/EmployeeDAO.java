@@ -19,4 +19,5 @@ public interface EmployeeDAO {
 	List<EmployeeDTO> getEmployeeList(int startIdx, int perContentNum, HashMap<String, String> params);
 	boolean deleteEmployee(String employee_id);
 	boolean insertEmployeeList(List<EmployeeDTO> employeeList);
+	boolean updateEmployee(EmployeeDTO employeeDTO);
 }

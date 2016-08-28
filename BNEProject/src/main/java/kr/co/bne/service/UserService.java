@@ -19,4 +19,5 @@ public interface UserService {
 	boolean deleteEmployee(String employee_id);
 	boolean signUp(List<EmployeeDTO> employeeList);
 	boolean isExistEmployee(String employee_id);
+	boolean updateEmploye(EmployeeDTO employee);
 }

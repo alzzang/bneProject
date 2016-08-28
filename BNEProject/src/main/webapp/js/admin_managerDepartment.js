@@ -89,7 +89,33 @@ function submitAddForm() {
 }
 
 
-
+function submitEditForm() {
+	var el = {};
+	
+	var i = 1;
+	for(i=1; i<$("#editForm").find(".form-control").size(); i++) {
+		var input = $("#editForm").find(".form-control:eq("+ i +")");
+		
+		var key = input.attr("attr");
+		var val = input.val();
+		el[key] = val;
+	}
+	
+	var validCheckResult = validCheck(el);
+	if(validCheckResult.status == false) {
+		alert(validCheckResult.message);
+		return false;
+	}
+	
+	if (confirm("사원정보를 수정하시겠습니까?") == true){    //확인
+		//form의 action 설정
+		alert($("#editForm").find(".form-control:eq(0)").val());
+		$("#editForm").attr("action", "/admin/employee/update/" + $("#editForm").find(".form-control:eq(0)").val());
+		return true;
+	}else{   //취소
+	    return false;
+	}
+}
 
 
 function validCheck(el) {
@@ -125,6 +151,14 @@ function validCheck(el) {
 
 
 
-function viewModifyForm() {
-	
+function openEditForm() {
+	$("#editModal .form-control:eq(0)").val($(event.target).parents("tr").children("td:eq(0)").html());
+	$("#editModal .form-control:eq(1)").val($(event.target).parents("tr").children("td:eq(1)").html());
+	var department_id = $(event.target).parents("tr").children("td:eq(2)").attr("department_id");
+	$("#editModal .form-control:eq(2)").val(department_id).prop("selected", true);
+	$("#editModal .form-control:eq(3)").val($(event.target).parents("tr").children("td:eq(4)").html());
+	$("#editModal .form-control:eq(4)").val($(event.target).parents("tr").children("td:eq(5)").html());
+	$("#editModal").modal("show");
 }
+
+

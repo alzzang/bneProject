@@ -125,5 +125,20 @@ public class AdminController {
 		
 		return resultmap;
 	}
+	
+	
+	@RequestMapping("/employee/update/{id}")
+	public String updateEmployee(@PathVariable String id, HttpServletRequest request) {
+		EmployeeDTO employee = new EmployeeDTO();
+		employee.setEmployee_id(id);
+		employee.setDepartment_id(Integer.parseInt(request.getParameter("department_id")));
+		employee.setEmail(request.getParameter("email"));
+		employee.setEmployee_name(request.getParameter("employee_name"));
+		employee.setMobile_phone(request.getParameter("mobile_phone"));
+		
+		Boolean result = userService.updateEmploye(employee);
+		 
+		return "redirect:/admin/employee/1";
+	}
 
 }
