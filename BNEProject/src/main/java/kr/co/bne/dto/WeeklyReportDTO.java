@@ -7,13 +7,14 @@ public class WeeklyReportDTO {
 	private String reg_date;
 	private int sales_goal;
 	private int sales;
-
+	private int link_id;
+	
 	public WeeklyReportDTO() {
 		super();
 	}
 
 	public WeeklyReportDTO(String weekly_report_id, String employee_id, String title, String reg_date, int sales_goal,
-			int sales) {
+			int sales, int link_id) {
 		super();
 		this.weekly_report_id = weekly_report_id;
 		this.employee_id = employee_id;
@@ -21,8 +22,18 @@ public class WeeklyReportDTO {
 		this.reg_date = reg_date;
 		this.sales_goal = sales_goal;
 		this.sales = sales;
+		this.link_id = link_id;
 	}
 
+	
+	
+	public int getLink_id() {
+		return link_id;
+	}
+
+	public void setLink_id(int link_id) {
+		this.link_id = link_id;
+	}
 	public String getWeekly_report_id() {
 		return weekly_report_id;
 	}
