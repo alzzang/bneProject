@@ -120,11 +120,10 @@
 
 
 
-
 	<!-- START CONTENT FRAME BODY -->
 	<div class="content-frame-body" style="height: 897px;">
-		<div class="panel panel-danger" style="display: none;"
-			id="employeeAddForm">
+		<!-- start 사원 추가 폼 -->		
+		<div class="panel panel-danger" style="display: none;" id="employeeAddForm">
 			<div class="panel-heading ui-draggable-handle">
 				<h3 class="panel-title">사원 추가</h3>
 				<ul class="panel-controls">
@@ -148,28 +147,26 @@
 						</tr>
 					</thead>
 					<tbody id="employeeAddForm-body">
-						<tr>
+						<tr style="display:none;" class="dummyElement">
 							<td><input type="text" class="form-control"></td>
 							<td><input type="text" class="form-control"></td>
-							<td><div>
-									<select class="form-control select">
-										<option value="*">전체</option>
-										<%
+							<td>					
+                                            <select class="form-control">
+                                                <%
 											for (DepartmentDTO department : departmentList) {
 										%>
 										<option value="<%=department.getDepartment_id()%>"><%=department.getDepartment_name()%></option>
 										<%
 											}
 										%>
+                                            </select>
+							</td>
+							<td>
+									<select class="form-control">
+									<option value="employee">팀원</option>
+										<option value="manager">팀장</option>										
 									</select>
-								</div></td>
-							<td><div>
-									<select class="form-control select">
-										<option value="*">전체</option>
-										<option value="manager">팀장</option>
-										<option value="employee">팀원</option>
-									</select>
-								</div></td>
+								</td>
 							<td><input type="text" class="form-control"></td>
 							<td><div class="input-group">
 									<input type="text" class="form-control"> <span
@@ -191,11 +188,11 @@
 				</div>
 			</div>
 		</div>
+		<!-- end 사원 추가 폼 -->
 
 
 
-
-
+		<!-- start 검색 결과 폼 -->
 		<div class="panel panel-colorful">
 			<div class="panel-heading ui-draggable-handle">
 				<h3 class="panel-title">검색 결과</h3>
@@ -215,12 +212,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr id="employeeAddForm">
-						</tr>
-
-						<%
-							for (EmployeeDTO employee : employeeList) {
-						%>
+						<%for (EmployeeDTO employee : employeeList) {%>
 						<tr style="text-align: center;">
 							<td><%=employee.getEmployee_id()%></td>
 							<td><%=employee.getEmployee_name()%></td>
@@ -238,15 +230,9 @@
 								</ul>
 							</td>
 						</tr>
-						<%
-							}
-						%>
-
+						<%}%>
 					</tbody>
 				</table>
-
-
-
 			</div>
 
 			<div class="panel-heading ui-draggable-handle">
@@ -295,7 +281,7 @@
 				</ul>
 			</div>
 		</div>
-
+		<!-- end 검색 결과 폼 -->
 	</div>
 	<!-- END CONTENT FRAME BODY -->
 </div>
