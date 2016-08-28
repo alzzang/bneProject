@@ -92,8 +92,6 @@ public class NoticeAspect {
 	public void execInsertNotice_DAILY_CORRECT(JoinPoint joinPoint) throws Throwable {
 		System.out.println("일일보고 수정 aop 실행!!");
 
-
-
 		int daily_report_id = ((DailyReportDTO)(joinPoint.getArgs()[0])).getDaily_report_id();
 		DailyReportDetailDTO dailyReport = dailyReportDAO.selectDailyReport(Integer.toString(daily_report_id));
 
@@ -114,6 +112,22 @@ public class NoticeAspect {
 		String weekly_id = ((WeeklyReportDetailDTO)(joinPoint.getArgs()[0])).getWeeklyReportDTO().getWeekly_report_id();
 		WeeklyReportDetailDTO weeklyReport = weeklyReportService.selectWeeklyReportDetail(weekly_id);
 		List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.WEEKLY_POST, link_id, weeklyReport.getWeeklyReportDTO().getEmployee_id());
+
+		//node.js에 보내는 코드도 작성
+		for(NoticeHeader dto : result) {
+			deliver.sendNotice(dto.getSubject_name(), dto.getObject_id(), dto.getLink_id(), dto.getNotice_type());
+		}
+	}
+	
+	
+	@AfterReturning("execution(public * kr.co.bne.service.WeeklyReportService.modifyWeeklyReport(..))")
+	public void execInsertNotice_WEEKLY_CORRECT(JoinPoint joinPoint) throws Throwable {
+		System.out.println("주간계획 수정 aop 실행!!");
+
+		int link_id = ((WeeklyReportDetailDTO)(joinPoint.getArgs()[0])).getLink_id();
+		String weekly_id = ((WeeklyReportDetailDTO)(joinPoint.getArgs()[0])).getWeeklyReportDTO().getWeekly_report_id();
+		WeeklyReportDetailDTO weeklyReport = weeklyReportService.selectWeeklyReportDetail(weekly_id);
+		List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.WEEKLY_CORRECT, link_id, weeklyReport.getWeeklyReportDTO().getEmployee_id());
 
 		//node.js에 보내는 코드도 작성
 		for(NoticeHeader dto : result) {
