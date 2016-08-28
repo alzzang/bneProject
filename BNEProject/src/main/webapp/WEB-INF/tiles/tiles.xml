@@ -95,11 +95,11 @@
 	</definition>
 	
 	<definition name="mainboard_admin" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/admin_manageDepartment.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin_manageEmployee.jsp"/>
 	</definition>
 	
-	<definition name="employee_admin" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/admin_manageEmployee.jsp"/>
+	<definition name="department_admin" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/admin_manageDepartment.jsp"/>
 	</definition>
 	
 </tiles-definitions>

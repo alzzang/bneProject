@@ -39,6 +39,9 @@ public class AdminController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private DepartmentService departmentService;
+	
 	@RequestMapping("/employee")
 	public String goManageEmployeeView(Model model, HttpServletRequest request, HttpSession session, String employee_id) {
 		return goManageEmployeeView(model, request, session, employee_id, 1);
@@ -162,7 +165,7 @@ public class AdminController {
 		model.addAttribute("endIdx", endIdx);
 		model.addAttribute("startIdx", startIdx);
 		System.out.println(model.toString());
-		return "employee_admin";
+		return "department_admin";
 	}
 	
 	@RequestMapping("/teamList")
@@ -217,6 +220,27 @@ public class AdminController {
 		}
 		return "redirect:/admin/department/1";
 	}
+	
+	 @RequestMapping("/department/add")
+	   public String addDepartment(Model model, HttpServletRequest request, HttpServletResponse res) throws IOException {
+	      
+	      String a = request.getParameter("department_add").toString();
+	      int idxS = a.indexOf(":");
+	      int idxE = a.indexOf("}");
+	      String deptName=a.substring(idxS+2, idxE-1);
+	      departmentService.addDepartment(deptName);
+	      return "redirect:/admin/department/1";
+	   }
+	 @RequestMapping("/department/searchManager")
+	 public void goSearchManager(Model model, HttpServletRequest request, HttpServletResponse res) throws IOException {
+
+
+			int cnt=departmentService.searchManager(request.getParameter("manager_id"));
+			PrintWriter pw = res.getWriter();
+			pw.print(cnt);
+			pw.flush();
+			pw.close();
+		}
 }
 
 	

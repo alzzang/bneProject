@@ -68,5 +68,13 @@
 	<select id="selectCount" parameterType="String" resultType="Integer">
 		 SELECT department_id from department where department_name=#{department_name}  
 	</select>
+	
+	<insert id="insertDepartmentName" parameterType="java.lang.String">
+     insert into department (department_id,department_name) values(department_num.nextval,#{value})
+   </insert>
+   
+   <select id="selectManager" parameterType="String" resultType="Integer">
+   	 select count(*) from department where manager_id=#{manager_id}
+   </select>
 </mapper>
 
