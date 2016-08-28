@@ -17,7 +17,7 @@ public interface DepartmentDAO {
 	boolean updateDepartment(DepartmentTeamList deptlist);
 	int selectDeptCount(String department_name);
 	boolean updateManager(DepartmentTeamList deptlist);
-	boolean addDepartment(String deptName);
 	int getManagerCount(String  manager_id);
+	boolean addDepartment(DepartmentDTO ddto);
 
 }

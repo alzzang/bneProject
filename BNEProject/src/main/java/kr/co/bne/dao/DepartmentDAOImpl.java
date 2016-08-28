@@ -74,22 +74,25 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		int rows=sqlSession.update("kr.co.bne.mapper.Department.updateManager",deptlist);
 		return rows > 0 ? true : false;
 	}
-	@Override
-	   public boolean addDepartment(String deptName) {
-	       try {
-	               int a = sqlSession.insert("kr.co.bne.mapper.Department.insertDepartmentName", deptName);
-	               
-	         }catch(Exception e) {
-	            e.printStackTrace();
-	            return false;
-	         }
-	      
-	      return true;
-	   }
+	
 
 	@Override
 	public int getManagerCount(String manager_id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.bne.mapper.Department.selectManager", manager_id);
 	}
+
+	@Override
+	public boolean addDepartment(DepartmentDTO ddto) {
+		try {
+            int a = sqlSession.insert("kr.co.bne.mapper.Department.insertDepartmentName", ddto);
+            
+      }catch(Exception e) {
+         e.printStackTrace();
+         return false;
+      }
+   
+		return true;
+	}
+
 }

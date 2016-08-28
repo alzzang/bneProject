@@ -268,15 +268,15 @@ public class AdminController {
 	}
 	
 	 @RequestMapping("/department/add")
-	   public String addDepartment(Model model, HttpServletRequest request, HttpServletResponse res) throws IOException {
-	      
-	      String a = request.getParameter("department_add").toString();
-	      int idxS = a.indexOf(":");
-	      int idxE = a.indexOf("}");
-	      String deptName=a.substring(idxS+2, idxE-1);
-	      departmentService.addDepartment(deptName);
-	      return "redirect:/admin/department/1";
-	   }
+     public String addDepartment(Model model, HttpServletRequest request, HttpServletResponse res) throws IOException {
+       String department_jsonStr = request.getParameter("department_add");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<DepartmentDTO>>() {}.getType();
+        List<DepartmentDTO> ddto = gson.fromJson(department_jsonStr,listType);
+        departmentService.addDepartment(ddto.get(0));
+        return "redirect:/admin/department/1";
+     }
+	 
 	 @RequestMapping("/department/searchManager")
 	 public void goSearchManager(Model model, HttpServletRequest request, HttpServletResponse res) throws IOException {
 
@@ -287,5 +287,7 @@ public class AdminController {
 			pw.flush();
 			pw.close();
 		}
+	 
+	 
 
 }

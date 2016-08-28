@@ -255,7 +255,7 @@ function EmployeeOfDepartment(departmentId){
 	<!-- START CONTENT FRAME BODY -->
 	<div class="content-frame-body" style="height: 897px;">
 		
-     <!-- start 부서 추가 폼 -->      
+      <!-- start 부서 추가 폼 -->      
       <div class="panel panel-danger" style="display: none;" id="departmentAddForm">
          <div class="panel-heading ui-draggable-handle">
             <h3 class="panel-title">부서 추가</h3>
@@ -266,17 +266,15 @@ function EmployeeOfDepartment(departmentId){
                <thead>
                   <tr>
                      <th>부서명</th>
-                      <th>팀장</th>
-                      <th>전화번호</th>
+                     <th>팀  장</th>
+                     <th>연락처</th>
                   </tr>
-            
                </thead>
                <tbody id="deptartmentAddForm-body">
                   <tr>
                      <td><input type="text" id="deptAFInputDName" formflag="false" class="form-control" required></td>
-                  	<td></td>
-                  	<td></td>
-                  	
+                     <td><input type="text" id="deptAFInputMName" formflag="false" managerId="" class="form-control" required></td>
+                     <td><input type="text" id="deptAFInputDNum" formflag="false" telephone"" class="form-control" required></td>
                   </tr>
                </tbody>
             </table>
@@ -292,6 +290,8 @@ function EmployeeOfDepartment(departmentId){
          </div>
       </div>
       <!-- end 사원 추가 폼 -->
+     
+     
 		<div class="panel panel-default">
 			<div class="panel-heading ui-draggable-handle" id="departmentBody">
 				<h3 class="panel-title">검색 결과</h3>
@@ -646,7 +646,7 @@ function EmployeeOfDepartment(departmentId){
 				$("#employee_name"+index).parent().find(".panel-primary").remove();
 				$("#empSGJ"+index).empty();
 				html=
-					'<div class="panel panel-primary zoomIn xn-drop-left xn-panel-dragging" style="position:absolute;overflow-y:scroll;z-index:1;height:200px;border:0px;margin:0px;" id="SearchDiv'+index+'">'+
+					'<div class="panel panel-primary zoomIn xn-drop-left xn-panel-dragging" style="position:absolute;overflow-y:scroll;z-index:1;height:120px;border:0px;margin:0px;" id="SearchDiv'+index+'">'+
 
 	                    '<div id="empSGJ'+index+'" class="panel-body list-group list-group-contacts scroll" style="">'+
 	                    
