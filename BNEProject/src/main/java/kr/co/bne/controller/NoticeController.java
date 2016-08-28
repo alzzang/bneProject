@@ -63,7 +63,7 @@ public class NoticeController {
 		
 		unList=noticeService.searchUnconfirmedNotice(map);
 		cnList=noticeService.searchconfirmedNotice(map);
-		
+		System.out.println(type+":"+cnList.size()+":스ㅜㅅ지");
 		for (int i = 0; i < unList.size(); i++) {
 			String tempTime[] = unList.get(i).getPasstime().split(" ");
 			String setTime = "";
@@ -99,7 +99,7 @@ public class NoticeController {
 			}
 			cnList.get(i).setPasstime(setTime);
 		}
-		
+		System.out.println(cnList);
 		ModelAndView model=new ModelAndView("alarmDetail");
 			model.addObject("unList", unList);
 		model.addObject("cnList", cnList);

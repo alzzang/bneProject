@@ -5,18 +5,25 @@
 
 
 <style type="text/css">
-.modal .modal-admin{ width: 750px; }
-   
+.modal .modal-admin {
+	width: 750px;
+}
 </style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- 111 -->
 
 <script>
+	var jsonArray = new Array();
+	var removeId = 0;
 
-var jsonArray=new Array();
-var removeId=0;
-
+	$(document).ready(function() {
+		if ('${reg_date}' != null) {
+			searchSalesGoal('${reg_date}');
+			computeGuage();
+		}
+	});
 </script>
 
 <div class="content-frame">
@@ -34,56 +41,57 @@ var removeId=0;
 		</div>
 	</div>
 	<!-- END CONTENT FRAME TOP -->
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	<!-- START CONTENT FRAME LEFT -->
 	<div class="content-frame-left" style="height: 837px;">
-	 <div class="panel panel-default">
-		<div class="panel-heading ui-draggable-handle">
-			<div class="page-title">
-				<h3 class="panel-title">매출 현황</h3>
-			</div>	
-		</div>	
-			
-			<input type="hidden" name="weekly_report_id" id="weekly_report_id" value="2016_34_101"><br>
-			<input type="hidden" name="department_id" value="1" disabled=""><br>
-			<input type="hidden" name="employee_Id" value="101" disabled="">
+		<div class="panel panel-default">
+			<div class="panel-heading ui-draggable-handle">
+				<div class="page-title">
+					<h3 class="panel-title">매출 현황</h3>
+				</div>
+			</div>
+
+			<input type="hidden" name="weekly_report_id" id="weekly_report_id"
+				value="2016_34_101"><br> <input type="hidden"
+				name="department_id" value="1" disabled=""><br> <input
+				type="hidden" name="employee_Id" value="101" disabled="">
 			<div class="panel-body">
-			<table class="table table-bordered detailInfoTable">
-				<thead>
-					<tr>
-						<th>소속</th>
-						<td><span id="department_name">${sessionScope.employee.department_name}</span></td>
-					</tr>
+				<table class="table table-bordered detailInfoTable">
+					<thead>
+						<tr>
+							<th>소속</th>
+							<td><span id="department_name">${sessionScope.employee.department_name}</span></td>
+						</tr>
 
-					<tr>
-						<th>이름</th>
-						<td><span id="employee_name">${sessionScope.employee.employee_name}</span></td>
-					</tr>
+						<tr>
+							<th>이름</th>
+							<td><span id="employee_name">${sessionScope.employee.employee_name}</span></td>
+						</tr>
 
-					<tr>
-						<th>매출 목표</th>
-						<td><span id="goalValue">${sessionScope.employee.sales_goal}</span></td>
-					</tr>
-				</thead>
-			</table>
-	      </div>
+						<tr>
+							<th>매출 목표</th>
+							<td><span id="goalValue">${sessionScope.employee.sales_goal}</span></td>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</div>
 	</div>
-	
-	
-	
+
+
+
 	<script>
-	$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
+		$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
 	</script>
-	
+
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->
@@ -124,8 +132,17 @@ var removeId=0;
 								<div class="col-md-6 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon"><span
-											class="fa fa-calendar"></span></span> <input type="text" 
-											class="form-control datepicker"  value="" name="reg_date" onchange="searchSalesGoal(this.value)" required="required" id="reg_date">
+											class="fa fa-calendar"></span></span>
+											 <c:if test="${reg_date ne null}">
+											 <input type="text" 
+											class="form-control datepicker"  value="${reg_date }" name="reg_date" onchange="searchSalesGoal(this.value)" required="required" id="reg_date">
+											</c:if>
+											
+											<c:if test="${reg_date eq null}">
+										<input type="text" class="form-control datepicker" value=""
+											name="reg_date" onchange="searchSalesGoal(this.value)"
+											required="required" id="reg_date">
+										</c:if>
 									</div>
 								</div>
 							</div>
@@ -137,9 +154,8 @@ var removeId=0;
 									<div class="input-group">
 										<span class="input-group-addon" style="padding-bottom: 10px;"><span
 											class="fa fa-won"></span></span> <input type="text"
-											class="form-control"
-											id="inputSales" 
-											name="sales"  pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" required="required">
+											class="form-control" id="inputSales" name="sales"
+											pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" required="required">
 										<span class="progress"> <span
 											class="progress-bar progress-bar-danger" role="progressbar"
 											aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
@@ -148,12 +164,11 @@ var removeId=0;
 
 									</div>
 								</div>
-								
+
 								<div class="col-md-2 col-xs-12">
-								<input type="text"
-											class="form-control"
-											id="dailyGoal"
-											pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" readonly="readonly" required="required">
+									<input type="text" class="form-control" id="dailyGoal"
+										pattern="[0]{1}|[1-9]{1}[0-9]{0,15}" readonly="readonly"
+										required="required">
 								</div>
 
 
@@ -165,21 +180,27 @@ var removeId=0;
 								<div class="col-md-2 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">출근 시 계기판</span> <input
-											type="text" class="form-control" value="0" onchange="computeGuage()" name="before_gauge" id="before_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
+											type="text" class="form-control" value="0"
+											onchange="computeGuage()" name="before_gauge"
+											id="before_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}"
+											required="required">
 									</div>
 								</div>
 
 								<div class="col-md-2 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">퇴근 시 계기판</span> <input
-											type="text" value="0" class="form-control" onchange="computeGuage()" name="after_gauge" id="after_gauge" pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
+											type="text" value="0" class="form-control"
+											onchange="computeGuage()" name="after_gauge" id="after_gauge"
+											pattern="[0]{1}|[1-9]{1}[0-9]{0,10}" required="required">
 									</div>
 								</div>
 
 								<div class="col-md-2 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">주행 거리</span> <input
-											type="text" class="form-control" id="result_guage" pattern="[0-9]{0,10}" required="required">
+											type="text" class="form-control" id="result_guage"
+											pattern="[0-9]{0,10}" required="required">
 									</div>
 								</div>
 							</div>
@@ -192,22 +213,28 @@ var removeId=0;
 										<span class="input-group-addon" style="cursor: pointer;"><span
 											class="fa fa-plus"></span></span> -->
 										<ul class="list-tags">
-											<li><a href="#" data-toggle="modal" data-target="#myModal2" id="modalAdd"><span class="fa fa-plus"></span>추가</a></li>
+											<li><a href="#" data-toggle="modal"
+												data-target="#myModal2" id="modalAdd"><span
+													class="fa fa-plus"></span>추가</a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
 
 							<jsp:include page="SmartEditor2.jsp"></jsp:include>
-							<div class="panel-footer" >
-								 <button class="btn btn-primary pull-right"
-									id="dailyReportSubmit" onclick="submitContents()">Submit</button> 
+							<div class="panel-footer">
+								<button class="btn btn-primary pull-right"
+									id="dailyReportSubmit" onclick="submitContents()">Submit</button>
 							</div>
 
 						</div>
-						<input type="hidden" name="department_id" value="${sessionScope.user.department_id}">
-						<input type="hidden" name="employee_id" value="${sessionScope.user.employee_id}">
-						<input type="hidden" id="counsellingJSON" name="counsellingJSON" value="">
+						<input type="hidden" name="department_id"
+							value="${sessionScope.user.department_id}"> <input
+							type="hidden" name="employee_id"
+							value="${sessionScope.user.employee_id}"> <input
+							type="hidden" id="counsellingJSON" name="counsellingJSON"
+							value=""> <input type="hidden" id="searchGoalFlag"
+							value="1">
 					</div>
 				</form>
 
@@ -215,7 +242,7 @@ var removeId=0;
 		</div>
 
 
-	
+
 	</div>
 
 	<!-- END CONTENT FRAME BODY -->
@@ -223,109 +250,110 @@ var removeId=0;
 </div>
 
 
-<div id="myModal2"  class="modal fade" role="dialog">
+<div id="myModal2" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-admin">
 
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-			
+
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title"><span class="fa fa-arrow-circle-o-left"></span> 상담일지 작성</h4>
-				
+				<h4 class="modal-title">
+					<span class="fa fa-arrow-circle-o-left"></span> 상담일지 작성
+				</h4>
+
 			</div>
 			<div class="modal-body">
-			<div class="page-title">
-	 <h2>
-		
-	</h2>  
-</div> 
-<!-- END PAGE TITLE -->
+				<div class="page-title">
+					<h2></h2>
+				</div>
+				<!-- END PAGE TITLE -->
 
-<!-- PAGE CONTENT WRAPPER -->
+				<!-- PAGE CONTENT WRAPPER -->
 
-<div class="page-content-wrap">
-	<div class="row">
-		<div class="col-md-12">
-			<form action="#" onsubmit="event.preventDefault();" method="POST" class="form-horizontal" id="dailyModalForm">
-				<div class="panel panel-default">
-					<div class="panel-body">										
-						<div class="form-group">
-							<label class="col-md-2 col-xs-12 control-label">제목</label>
-							<div class="col-md-8 col-xs-12">
-								<div class="input-group">
-									<span class="input-group-addon"><span
-										class="fa fa-pencil"></span></span> 
-										<input type="text" class="form-control" name="title" id="modalTitle">
+				<div class="page-content-wrap">
+					<div class="row">
+						<div class="col-md-12">
+							<form action="#" onsubmit="event.preventDefault();" method="POST"
+								class="form-horizontal" id="dailyModalForm">
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<div class="form-group">
+											<label class="col-md-2 col-xs-12 control-label">제목</label>
+											<div class="col-md-8 col-xs-12">
+												<div class="input-group">
+													<span class="input-group-addon"><span
+														class="fa fa-pencil"></span></span> <input type="text"
+														class="form-control" name="title" id="modalTitle">
+												</div>
+												<span class="help-block">This is text field</span>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-md-2 col-xs-12 control-label">Text
+												Field</label>
+											<div class="col-md-8 col-xs-12">
+												<textarea class="form-control summernote" name="content"
+													rows="5" id="modalContent"></textarea>
+
+												<span class="help-block">This is text field</span>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-md-2 col-xs-12 control-label">고객명</label> <span
+												class="col-md-4 col-xs-12"> <select
+												class="form-control" name="counselling_id"
+												id="counselling_id" required>
+													<option value="" disabled selected hidden="true">선택하세요!</option>
+													<c:forEach var="client" items="${clients}">
+														<option value="${client.client_id }">${client.client_name}</option>
+													</c:forEach>
+											</select> <span class="help-block">Select box </span>
+											</span> <span class="col-md-2 col-xs-12"> <input type="text"
+												class="form-control" placeholder="고객코드" readonly
+												id="client_id" name="client_id">
+											</span> <span class="col-md-2 col-xs-12"> <input type="text"
+												class="form-control" placeholder="대표자" readonly
+												id="representative" name="representative">
+											</span>
+
+										</div>
+
+										<div class="form-group">
+											<label class="col-md-2 col-xs-12 control-label">2차거래선</label>
+											<span class="col-md-5 col-xs-12"> <select
+												class="form-control" name="sec_client_id" id="sec_client_id"
+												required>
+											</select> <span class="help-block">Select box </span>
+											</span> <span class="col-md-3 col-xs-12"> <input type="text"
+												class="form-control" placeholder="주소" readonly id="address"
+												name="address">
+											</span>
+
+										</div>
+									</div>
+
+									<div class="panel-footer" id="counselling-footer">
+										<button type="button" class="btn btn-primary pull-right"
+											data-dismiss="modal" onclick="localSave()">Submit</button>
+									</div>
 								</div>
-								<span class="help-block">This is text field</span>
-							</div>
-						</div>
+								<input type="hidden" value="${sessionScope.user.department_id }"
+									name="department_id"> <input type="hidden" value=""
+									id="temp_scId">
+							</form>
 
-						<div class="form-group">
-							<label class="col-md-2 col-xs-12 control-label">Text
-								Field</label>
-							<div class="col-md-8 col-xs-12">
-								<textarea class="form-control summernote" name="content"
-									rows="5" id="modalContent"></textarea>
 
-								<span class="help-block">This is text field</span>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-2 col-xs-12 control-label">고객명</label> <span
-								class="col-md-4 col-xs-12"> <select class="form-control"
-								name="counselling_id" id="counselling_id" required>
-									<option value="" disabled selected hidden="true">선택하세요!</option>
-									<c:forEach var="client" items="${clients}" >
-										<option value="${client.client_id }">${client.client_name}</option>
-									</c:forEach>
-							</select> <span class="help-block">Select box </span>
-							</span> 
-							<span class="col-md-2 col-xs-12"> 
-							<input type="text" class="form-control" placeholder="고객코드" readonly id="client_id" name="client_id">
-							</span>
-							 
-							 <span class="col-md-2 col-xs-12"> 
-							 <input type="text" class="form-control" placeholder="대표자" readonly id="representative" name="representative">
-							</span>
-
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-2 col-xs-12 control-label">2차거래선</label>
-							<span class="col-md-5 col-xs-12">
-								<select class="form-control" name="sec_client_id"
-									id="sec_client_id" required>
-								</select> <span class="help-block">Select box </span>
-							</span>
-							<span class="col-md-3 col-xs-12"> <input type="text"
-								class="form-control" placeholder="주소" readonly
-								id="address" name="address">
-							</span>
-						
 						</div>
 					</div>
-
-					<div class="panel-footer" id="counselling-footer">
-					<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="localSave()">Submit</button>
-					</div> 
 				</div>
-				<input type="hidden" value="${sessionScope.user.department_id }" name="department_id">
-				<input type="hidden" value="" id="temp_scId">
-			</form>
-			
-			
-		</div>
-	</div>
-</div>
 			</div>
-			<div class="modal-footer">
-			</div>
+			<div class="modal-footer"></div>
 		</div>
 
 	</div>
-	
+
 </div>
 

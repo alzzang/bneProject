@@ -76,6 +76,13 @@ public class MainController {
 
 
 	
+	@RequestMapping("/main1")
+	private String goMain_Admin(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {
+		/*return "mainboard_admin";*/
+		return "employee_admin";
+	}
+	
+	
 	
 	private String goMain_Normal(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {
 		JsonObject weeklyReportDetail = getWekelyTable(loginEmployee);
@@ -95,7 +102,7 @@ public class MainController {
 		
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){
-		return "aaa";
+		return "editor";
 	}
 	@RequestMapping(value="/smarteditor")
 	public String getSmartEditor(HttpServletResponse res,HttpServletRequest req) throws ServletException, IOException

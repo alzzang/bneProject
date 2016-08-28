@@ -95,8 +95,8 @@ when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무 
 END as content, n.link_id,n.SUBJECT
 from notice n,notice_type nt, employee e, employee e1
 where e.employee_id=n.object and e1.employee_id=n.subject and
-n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=0) unconfirmed
-where unconfirmed.idx BETWEEN #{start} and #{end} and notice_type like #{type}
+n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=0 and notice_type like #{type}) unconfirmed
+where unconfirmed.idx BETWEEN #{start} and #{end} 
 ]]>
 </if>
 <if test='position.equals("employee")'>
@@ -117,8 +117,8 @@ when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무 
 END as content, n.link_id,n.SUBJECT
 from notice n,notice_type nt, employee e, employee e1
 where e.employee_id=n.object and e1.employee_id=n.subject and
-n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=0) unconfirmed
-where unconfirmed.idx BETWEEN #{start} and #{end} and notice_type like #{type}
+n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=0 and notice_type like #{type}) unconfirmed
+where unconfirmed.idx BETWEEN #{start} and #{end} 
 ]]>
 </if>
 </select>
@@ -142,8 +142,8 @@ when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무 
 END as content, n.link_id,n.SUBJECT
 from notice n,notice_type nt, employee e, employee e1
 where e.employee_id=n.object and e1.employee_id=n.subject and
-n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=1) confirmed
-where confirmed.idx BETWEEN #{start} and #{end} and notice_type like #{type}
+n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=1 and notice_type like #{type}) confirmed
+where confirmed.idx BETWEEN #{start} and #{end} 
 ]]>
 </if>
 <if test='position.equals("employee")'>
@@ -164,8 +164,8 @@ when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무 
 END as content, n.link_id,n.SUBJECT
 from notice n,notice_type nt, employee e, employee e1
 where e.employee_id=n.object and e1.employee_id=n.subject and
-n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=1) confirmed
-where confirmed.idx BETWEEN #{start} and #{end} and notice_type like #{type}
+n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=1 and notice_type like #{type}) confirmed
+where confirmed.idx BETWEEN #{start} and #{end} 
 ]]>
 </if>
 </select>

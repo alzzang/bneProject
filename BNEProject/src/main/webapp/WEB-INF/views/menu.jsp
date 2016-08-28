@@ -109,9 +109,9 @@ if(((EmployeeDTO) session.getAttribute("user")).getPosition() != null) {
 					class="fa fa-bar-chart-o"></span><span class="xn-text">chart</span></a>
 			</li>
 		<%}else { %>
-			<li class=""><a href="/admin/department"><span class="fa fa-building-o"></span><span class="xn-text">부서 관리</span></a>
+			<li class=""><a href="/admin/department/1"><span class="fa fa-building-o"></span><span class="xn-text">부서 관리</span></a>
 			</li>
-			<li class=""><a href="/admin/employee"><span class="fa fa-user"></span><span class="xn-text">사원 관리</span></a>
+			<li class=""><a href="/admin/employee/1"><span class="fa fa-user"></span><span class="xn-text">사원 관리</span></a>
 			</li>
 		<%} %>
 
