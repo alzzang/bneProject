@@ -247,8 +247,8 @@ function getReportInfo(weeklyNumber){
 	var year = date._d.getFullYear();
 	
 	var report_id = year+"_"+weeklyNumber+"_"+$('#employee_id').val();
-	alert($('#title').val())
-	var report_title = $('#title')[0].textContent;
+	alert($('#weeklyReportId').val())
+	var report_title = $('#weeklyReportId').val();
 	if(report_title == ""){
 		report_title = weeklyNumber+"주의 계획";
 	}

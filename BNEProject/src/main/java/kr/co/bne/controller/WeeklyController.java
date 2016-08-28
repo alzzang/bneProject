@@ -118,6 +118,7 @@ public class WeeklyController {
 	
 	@RequestMapping("/detail/{employeeId}/{week_of_year}")
 	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request,@PathVariable("employeeId") String employeeId,@PathVariable("week_of_year") int week_of_year, String weeklyReportId) throws Exception {
+		System.out.println(week_of_year);
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
 		EmployeeDTO eDTO = userService.selectEmployee(employeeId);
 
@@ -152,6 +153,7 @@ public class WeeklyController {
 			
 		//mv.addObject("reportIdList", reportId_list);
 		mv.addObject("employee_Id", employeeId);
+		mv.addObject("weekly_of_year",week_of_year);
 		return mv;
 	}
 	
@@ -159,7 +161,7 @@ public class WeeklyController {
 	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request,@PathVariable("employeeId") String employeeId, String weeklyReportId) throws Exception {
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
 		EmployeeDTO eDTO = userService.selectEmployee(employeeId);
-
+		int week_of_year = 0;
 		if(eDTO == null) {
 			mv.setViewName("main");
 			return mv;
@@ -169,7 +171,7 @@ public class WeeklyController {
 			if(weeklyReportId == null || "".equals(weeklyReportId)){
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				model.addAttribute("currentDate", dateFormat.format(calendar.getTime()));
-				int week_of_year = calendar.get(Calendar.WEEK_OF_YEAR); 
+				week_of_year = calendar.get(Calendar.WEEK_OF_YEAR); 
 				int year = calendar.get(Calendar.YEAR);
 				weekly_report_id = year+"_"+week_of_year+"_"+eDTO.getEmployee_id();
 			}
@@ -191,6 +193,7 @@ public class WeeklyController {
 			
 		//mv.addObject("reportIdList", reportId_list);
 		mv.addObject("employee_Id", employeeId);
+		mv.addObject("weekly_of_year",week_of_year);
 		return mv;
 	}
 	

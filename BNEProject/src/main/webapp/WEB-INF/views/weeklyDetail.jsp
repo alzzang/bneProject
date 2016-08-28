@@ -184,6 +184,20 @@
 
 <script>
 	$(window).load(function(){
+		var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+		var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
+		var week_of_year = ${weekly_of_year};
+		if(weeklyNumber<week_of_year){
+			for(var i = weeklyNumber; i< week_of_year;i++)
+				$('#calendar').fullCalendar('next');
+		}
+		else if(weeklyNumber>week_of_year){
+			for(var i = week_of_year; i<weeklyNumber;i++){
+				$('#calendar').fullCalendar('prev');
+			}
+		}
+		
+
 		weeklyReportDetail = ${weeklyReportDetail};
 		
 		// 처음에 받아온 주간계획 정보 삽입 
@@ -192,8 +206,7 @@
 			var reportData = JSON.parse(parseToWeeklyReportDetail); 
 			inputReportData(reportData);
 		}else{
-			var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
-			var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
+
 			//$('#weekly_report_id')[0].value = weeklyReportDTO.weekly_report_id;
 			$('#title').html(weeklyNumber+'주의 계획');
 			$('#employee_name').html('${user.employee_name}');
