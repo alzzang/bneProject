@@ -21,7 +21,7 @@
 	text-align: left;
 	width: 100px;
 }
-#mb-alreadyWrittenReport .mb-container{
+/* #mb-alreadyWrittenReport .mb-container{
 	width: 440px;
 	left:50%;
 }
@@ -40,7 +40,7 @@
     left:0%;
     position: relative;
     color: #FFF;
-}
+} */
 </style>
 
 <div class="content-frame">
@@ -300,7 +300,7 @@ $('#confirm').on('click',function(){
 });
 
 	preventKeyDown();
-
+	preventMouseClick();
 
 }
 

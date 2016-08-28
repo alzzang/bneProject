@@ -24,8 +24,8 @@
 	text-align: left;
 	width: 100px;
 }
-#mb-NoWeeklyPlan .mb-container{
-	width: 400px;
+/* #mb-NoWeeklyPlan .mb-container{
+	width: 400px ;
 	left:50%;
 }
 #mb-NoWeeklyPlan .mb-container .mb-middle {
@@ -33,13 +33,13 @@
     left:0%;
     position: relative;
     color: #FFF;
-}
+} */
 #contentFrameBody{
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: 52px;
 	width:100%;
-	height:100%;
+	height:91%;
     background: rgba(0, 0, 0, 0.3);
     z-index: 9999;
     display:table-cell;
@@ -141,6 +141,9 @@
 					<div id="calendar" class="fc fc-ltr fc-unthemed">
 					</div>
 				</div>
+<!-- 				<div id="buttonGroup">
+					<button onclick="notyConfirm();" id ="cancle" type="button" class="btn btn-danger pull-right"  style="margin-left:1%; margin-top:1%">취소</button>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -180,7 +183,6 @@
 <!-- END THIS PAGE PLUGINS-->       
 
 <script>
-
 	$(window).load(function(){
 		weeklyReportDetail = ${weeklyReportDetail};
 		
@@ -202,6 +204,8 @@
 			for(var i=0; i<5; i++){
 				$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
 			}
+			var o = '<div id="contentFrameBody"><h1>작성된 계획이 없습니다.</h1></div>'
+			$('#trash').append(o);
 			openMessageBox('#mb-NoWeeklyPlan');
 		}
 		
@@ -233,6 +237,7 @@
 					ReportId : report_id
 				},
 				success : function(data) {
+					$('.fc-right').empty();
 	    			if(data.weeklyReportDTO == null){
 	    				$('#calendar').fullCalendar('next');
 	    		   		$('#calendar').fullCalendar('removeEvents');
@@ -258,10 +263,8 @@
 	    		   		$('#calendar').fullCalendar('removeEvents');
 	    		   		
 	    				if(sessionUserId == employeeId){
-	    	 				if(!isModify(now)){
-	    						$('.fc-right').empty();
-	    	 				}
-	    	 				else if(isModify(now)){
+	    					
+	    	 				if(isModify(now)){
 	    	 					o = '<button type="submit" class="fc-button fc-state-default fc-corner-right fc-corner-left"><span class="fa fa-pencil"></span></button>';
 	    	 					$('.fc-right').prepend(o);
 	    	 				}
@@ -286,16 +289,15 @@
 					ReportId : report_id
 				},
 				success : function(data) {
+					$('.fc-right').empty();
 	    			if(data.weeklyReportDTO == null){
 	    				$('#calendar').fullCalendar('prev');
 	    				$('#calendar').fullCalendar('removeEvents');
 	    				var o = '<div id="contentFrameBody"><h1>등록된 계획이 없습니다.</h1></div>'
 	    				$('#trash').append(o);
-	    				//$('#contentFrameBody').css("background",'rgba(255,255,255,0.5)');
 						openMessageBox('#mb-NoWeeklyPlan');
 						var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
 						var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
-						//$('#weekly_report_id')[0].value = weeklyReportDTO.weekly_report_id;
 						$('#title').html(weeklyNumber+'주의 계획');
 						$('#employee_name').html('${user.employee_name}');
 						$('#department_name').html('${user.department_name}');
@@ -305,8 +307,6 @@
 						for(var i=0; i<5; i++){
 							$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
 						}
-						var box = $('#mb-NoWeeklyPlan');
-				    	//$('#calendar').fullCalendar('next');
 	    			}else{
 	    				$('#calendar').fullCalendar('prev');
 	    				$('#calendar').fullCalendar('removeEvents');
@@ -314,9 +314,8 @@
 	    				result = isModify(now);
 	    				console.log(result);
 	    	 			if(sessionUserId == employeeId){
-	    	 				if(!result){
-	    						$('.fc-right').empty();
-	    	 				}else if(result){
+	    	 				$('.fc-right').empty();
+	    	 				if(result){
 	    	 					o = '<button type="submit" class="fc-button fc-state-default fc-corner-right fc-corner-left"><span class="fa fa-pencil"></span></button>';
 	    	 					$('.fc-right').prepend(o);
 	    	 				}

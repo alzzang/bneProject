@@ -48,7 +48,6 @@ var makeSalesInput = function() {
 
 var isModify = function(now) {
 	var result = false;
-
 	var lastDayWeek = $('#calendar').fullCalendar('getView').end;
 	lastDayWeek._d.setDate(lastDayWeek._d.getDate() + 1)
 

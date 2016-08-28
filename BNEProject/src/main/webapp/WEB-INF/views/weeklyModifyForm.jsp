@@ -26,7 +26,7 @@
 }
 </style>
     
-<form  action="/weeklyReport/detail/${employee_Id}">
+<%-- <form  action="/weeklyReport/detail/${employee_Id}"> --%>
 
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
@@ -115,7 +115,7 @@
 					</div>
 				</div>
 				<div id="buttonGroup">
-					<button id ="cancle" type="submit" class="btn btn-danger pull-right" style="margin-left:1%; margin-top:1%">취소</button>
+					<button id ="modifyCancle" type="button" class="btn btn-danger pull-right" style="margin-left:1%; margin-top:1%">취소</button>
 					<button id ="modify" type="button" class="btn btn-success pull-right" style="margin-left:1%; margin-top:1%">수정</button>
 				</div>
 			</div>
@@ -123,8 +123,54 @@
 			
 	</div>
 </div>
+
+	<!-- MESSAGE BOX-->
+	<div class="message-box animated fadeIn" data-sound="alert"	id="mb-confirmModify">
+		<div class="mb-container">
+			<div class="mb-middle">
+				<div class="mb-title">
+					<span class="fa fa-exclamation"></span><strong>수정하시겠습니까?</strong>
+				</div>
+				<div class="mb-content">
+					<p></p>
+					<p></p>
+				</div>
+				<div class="mb-footer">
+					<div class="pull-right">
+						<a id="mb-modify" class="btn btn-success btn-lg">확인</a>
+						<button class="btn btn-danger btn-lg mb-control-close">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MESSAGE BOX-->
+	
+	<!-- MESSAGE BOX-->
+	<div class="message-box animated fadeIn" data-sound="alert"	id="mb-confirmCancle">
+		<div class="mb-container">
+			<div class="mb-middle">
+				<div class="mb-title">
+					<span class="fa fa-exclamation"></span><strong>취소하시겠습니까?</strong>
+				</div>
+				<div class="mb-content">
+					<p></p>
+					<p></p>
+				</div>
+				<div class="mb-footer">
+					<div class="pull-right">
+						<a href="/weeklyReport/detail/${employee_Id}" id="mb-ModifyCancle" class="btn btn-success btn-lg">확인</a>
+						<button class="btn btn-danger btn-lg mb-control-close">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MESSAGE BOX-->
+	
+	
 	<!-- END CONTENT FRAME BODY -->
-</form>     
+<!-- </form> -->     
 <script>
 var makeSalesInput = function(){
 	var salesCell
@@ -242,7 +288,15 @@ var makeSalesInput = function(){
 		
 		preventKeyDown();
 		preventMouseClick();
-		$('#modify').on('click',function(){	
+		
+		$('#modifyCancle').on('click',function(){
+			openMessageBox("#mb-confirmCancle");
+		})
+		$('#modify').on('click',function(){
+			openMessageBox('#mb-confirmModify');
+		});
+		
+		$('#mb-modify').on('click',function(){	
 			event.preventDefault();
 			
 			var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
@@ -266,13 +320,10 @@ var makeSalesInput = function(){
 			var sales = [];
 			var regdate = [];
 			for(var i= 0; i<5; i++){
-				var temp;
-				sale = ($('#sales-'+dayOfWeek[i])[0].value);
-				temp = sale.split('원');
-				sale = temp[0];
+				var sale = ($('#sales-'+dayOfWeek[i])[0].value);
 				regdate = ($('#sales-'+dayOfWeek[i])[0].attributes[3].textContent);
-				if(sales[i] == "")
-					sales[i] = 0;
+				if(sale == "")
+					sale = 0;
 				
 				var plan = {
 							sales : sale,

@@ -268,12 +268,13 @@ public class WeeklyController {
 		
 		JsonArray json1 = (JsonArray)parser.parse(sales);
 		List<WeeklyPlanDTO> weeklyPlanList = new ArrayList<WeeklyPlanDTO>();
-		
+		//System.out.println(json1);
 		for(int i = 0; i<json1.size(); i++){
 			WeeklyPlanDTO dto = new WeeklyPlanDTO();
 
 			dto = (new Gson()).fromJson(json1.get(i), WeeklyPlanDTO.class);
 			dto.setWeekly_report_id(weeklyReportDTO.getWeekly_report_id());
+			//System.out.println(dto.getReg_date()+"의 "+dto.getSales());
 			weeklyPlanList.add(dto);
 		}
 		
