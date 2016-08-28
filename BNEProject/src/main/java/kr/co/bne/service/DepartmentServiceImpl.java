@@ -18,5 +18,17 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public List<DepartmentDTO> getDepartmentList() {
 		return departmentDAO.getDepartmentList();
 	}
-	
+	@Override
+	   public boolean addDepartment(String deptName) {
+	      boolean status = false;
+	      
+	       status = departmentDAO.addDepartment(deptName);
+	         
+	        return status;
+	   }
+	@Override
+	public int searchManager(String manager_id) {
+		// TODO Auto-generated method stub
+		return departmentDAO.getManagerCount(manager_id);
+	}
 }

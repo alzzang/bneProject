@@ -107,11 +107,11 @@ public class DailyReportServiceImpl implements DailyReportService {
 		HashMap<String,String> map=new HashMap<String, String>();
 		map.put("reg_date", dto.getReg_date());
 		map.put("employee_id", dto.getEmployee_id());
+		System.out.println(map.toString());
 		int wpsales=0;
 		try {
-			wpsales=dao.selectDailySalesGoal(map);
+			dto.setWpsales(dao.selectDailySalesGoal(map));
 		} catch (Exception e) {
-			// TODO: handle exception
 			dto.setWpsales(wpsales);
 		}
 

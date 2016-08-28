@@ -1,11 +1,16 @@
 package kr.co.bne.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import kr.co.bne.common.DepartmentTeamList;
+import kr.co.bne.dao.DepartmentDAO;
 import kr.co.bne.dao.EmployeeDAO;
 import kr.co.bne.dto.EmployeeDTO;
 
@@ -16,6 +21,14 @@ public class UserServiceImpl implements UserService {
 	BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	EmployeeDAO employeeDAO;
+	@Autowired
+	DepartmentDAO departmentDAO;
+	@Override
+	public boolean isExistEmployee(String employee_id) {
+		EmployeeDTO employeeDTO = employeeDAO.selectEmployee(employee_id);
+		System.out.println("employeeDAO null 여부 출력:" + employeeDTO == null? false : true);
+		return employeeDTO == null ? false : true;
+	}
 
 	@Override
 	public EmployeeDTO validCheck(String id, String rawPassword) {
@@ -79,6 +92,12 @@ public class UserServiceImpl implements UserService {
 	public List<EmployeeDTO> selectTeamMember_menu(String employee_id) {
 		return employeeDAO.selectTeamMember_menu(employee_id);
 	}
+
+	@Override
+	public List<EmployeeDTO> getEmpOfDept(int departmentId) {
+		// TODO Auto-generated method stub
+		return employeeDAO.selectEmpOfDept(departmentId);
+	}
 	
 	
 	@Override
@@ -93,10 +112,61 @@ public class UserServiceImpl implements UserService {
 		return resultMap;
 	}
 	
+	@Override
+	public HashMap<String, Object> pagingDepartmentSearchResultList(int startIdx, int perContentNum, HashMap<String, String> params) {
+		List<DepartmentTeamList> departmentList = departmentDAO.getDepartmentList(startIdx, perContentNum, params);
+		int totalPageNum = departmentDAO.getPagingNum_DepartmentList(perContentNum, params);
+
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("totalPageNum", totalPageNum);
+		resultMap.put("departmentList", departmentList);
+		
+		return resultMap;
+	}
+	
 	
 	@Override
 	public boolean deleteEmployee(String employee_id) {
 		return employeeDAO.deleteEmployee(employee_id);
+	}
+
+	@Override
+	public boolean deleteDepartment(int department_id) {
+		// TODO Auto-generated method stub
+		return departmentDAO.deleteDepartment(department_id);
+	}
+
+	@Override
+	public boolean signUp(List<EmployeeDTO> employeeList) {
+		boolean status = false;
+		String rawPassword = "Qwe123";
+		
+		for(EmployeeDTO employee : employeeList) {
+			employee.setPassword(passwordEncoder.encode(rawPassword));
+			employee.setFile_position("default.png");
+		}
+		
+		status = employeeDAO.insertEmployeeList(employeeList);
+		
+		return status;
+	}
+	
+	@Override
+	public boolean updateDepartment(DepartmentTeamList deptlist) {
+		// TODO Auto-generated method stub
+		return departmentDAO.updateDepartment(deptlist) && departmentDAO.updateManager(deptlist);
+	}
+
+	@Override
+	public int searchDepartment(String department_name) {
+		// TODO Auto-generated method stub
+		return departmentDAO.selectDeptCount(department_name);
+	}
+	
+	
+	@Override
+	public boolean updateEmploye(EmployeeDTO employee) {
+		return employeeDAO.updateEmployee(employee);
 	}
 	
 }

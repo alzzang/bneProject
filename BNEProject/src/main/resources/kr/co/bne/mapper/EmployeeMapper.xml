@@ -4,18 +4,53 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.Employee">
 
-	<select id="selectEmployee" parameterType="String" resultType="Employee">
+   <select id="selectEmployee" parameterType="String" resultType="Employee">
    <![CDATA[select e.*, d.department_name,
-        			CASE when d.department_id = 0 then 'admin'
-              		WHEN employee_id in (select manager_id from department) THEN 'manager'
+                 CASE when d.department_id = 0 then 'admin'
+                    WHEN employee_id in (select manager_id from department) THEN 'manager'
+                    ELSE 'employee' END position 
+         from employee e, department d 
+         where e.DEPARTMENT_ID = d.DEPARTMENT_ID
+                 and employee_id = #{value}]]>
+   </select>
+
+   
+   <select id="selectTeamMember" resultType="Employee" parameterType="Integer">
+   <![CDATA[select employee_name,employee_id from employee where department_id=#{values}]]>
+   </select>
+   
+   
+   <select id="selectTeamMember_menu" resultType="Employee" parameterType="String">
+      select employee_id, employee_name
+      from employee
+      where department_id = (select department_id 
+                             from employee 
+                             where employee_id = #{value})
+            and employee_id not in ((select manager_id 
+                                    from department 
+                                    where department_id = (select department_id 
+                                                           from employee 
+                                                           where employee_id=#{value})), #{value})
+   </select>
+   
+   <select id="selectDeptMember" parameterType="Integer" resultType="Employee">
+	    select e.*, d.department_name,
+        			CASE WHEN employee_id in (select manager_id from department) THEN 'manager'
               		ELSE 'employee' END position 
 			from employee e, department d 
 			where e.DEPARTMENT_ID = d.DEPARTMENT_ID
-        			and employee_id = #{value}]]>
-   </select>
-
+        			and e.department_id =#{departmentId} order by position desc , employee_name
+	</select>
+	
+   
+   
 	<update id="updatePassword" parameterType="HashMap">
 	<![CDATA[update employee set password=#{password} where employee_id=#{id}]]>
+	</update>
+	
+	<update id="updateEmployee" parameterType="Employee">
+	<![CDATA[update employee set employee_name=#{employee_name}, department_id=#{department_id}, email=#{email}, mobile_phone=#{mobile_phone} 
+	where employee_id=#{employee_id}]]>
 	</update>
 	
 	<update id="updateFile" parameterType="HashMap">
@@ -38,24 +73,6 @@
 			order by 2	]]>
 	</select>
 
-	<select id="selectTeamMember" resultType="Employee" parameterType="Integer">
-	<![CDATA[select employee_name,employee_id from employee where department_id=#{values}]]>
-	</select>
-	
-	
-	<select id="selectTeamMember_menu" resultType="Employee" parameterType="String">
-		select employee_id, employee_name
-		from employee
-		where department_id = (select department_id 
-		                       from employee 
-		                       where employee_id = #{value})
-		      and employee_id not in ((select manager_id 
-		                              from department 
-		                              where department_id = (select department_id 
-		                                                     from employee 
-		                                                     where employee_id=#{value})), #{value})
-	</select>
-	
 	
 	
 	<!-- 전체 리스트 페이지 갯수 -->
@@ -115,5 +132,10 @@
 		where employee_id = #{value}
 	</delete>
 	
-
+	
+	<insert id="insertEmployee" parameterType="Employee">
+		insert into employee(employee_id, employee_name, password, department_id, file_position, mobile_phone, email)
+		values(EMPLOYEE_ID_NAMING(#{department_id}), #{employee_name}, #{password}, #{department_id}, #{file_position}, #{mobile_phone}, #{email})
+	</insert>
+   
 </mapper>

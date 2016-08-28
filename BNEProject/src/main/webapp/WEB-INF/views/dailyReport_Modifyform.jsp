@@ -9,7 +9,7 @@ var removeId=0;
 var jsonArray=new Array();
 
  $(document).ready(function(){
-	 searchSalesGoal('${dailyReport.reg_date}');
+	  searchSalesGoal('${dailyReport.reg_date}');
 	 computeGuage();
 	var counsellingArray = jQuery.parseJSON('${counsellingJson}');
  	$.each( counsellingArray, function( counselRecord, value ) {
@@ -72,7 +72,7 @@ var jsonArray=new Array();
 
 					<tr>
 						<th>매출 목표</th>
-						<td><span id="reg_date">${sessionScope.employee.sales_goal}</span></td>
+						<td><span id="goalValue">${sessionScope.employee.sales_goal}</span></td>
 					</tr>
 				</thead>
 			</table>
@@ -123,7 +123,7 @@ var jsonArray=new Array();
 									<div class="input-group">
 										<span class="input-group-addon"><span
 											class="fa fa-calendar"></span></span> <input type="text" 
-											class="form-control datepicker"  value="${dailyReport.reg_date}" name="reg_date" onchange="searchSalesGoal(this.value)"  required="required" id="reg_date">
+											class="form-control datepicker"  value="${dailyReport.reg_date}" id="reg_date" name="reg_date" onchange="searchSalesGoal(this.value)"  required="required" >
 									</div>
 								</div>
 							</div>
@@ -207,6 +207,8 @@ var jsonArray=new Array();
 						<input type="hidden" name="department_id" value="${sessionScope.user.department_id}">
 						<input type="hidden" name="employee_id" value="${sessionScope.user.employee_id}">
 						<input type="hidden" id="counsellingJSON" name="counsellingJSON" value="">
+						<input type="hidden" id="searchGoalFlag" value="0">
+						<input type="hidden" id="dateFlag" value="${dailyReport.reg_date}">
 				</form>
 
 			</div>

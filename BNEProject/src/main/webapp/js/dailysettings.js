@@ -147,7 +147,7 @@ function localSave(){
 	   });
 	   o["remove_Id"]=removeId;
 	   o["counsel_id"]=0;
-	   +jsonArray.push(o);
+	   jsonArray.push(o);
 	   console.log(o);
 	   console.log(jsonArray);
 	   var tagJson=JSON.stringify(o);
@@ -424,35 +424,45 @@ function addComma(val){
 	return val.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
 }
 function searchSalesGoal(reg_date) {
+	var flag=0;
+	if($('#dateFlag').val()==reg_date){
+		flag=1;
+	}
 	$.ajax({
 		type : "POST",
 		url : "/dailyReport/dailysales",
 		data : {
-		 
+			flag : flag,
 			reg_date : reg_date
 		},
 		success : function(data) {
 			var result=jQuery.parseJSON(data);
 			if(result.flag===-1){
-				alert('해당 목표액이 존재하지 않습니다');
+				alert('a');
 				$('#dailyGoal').attr('value',0);
 				$('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+0+')');
-			}else if(result.flag===-2){
+				changeProgress($('#inputSales').val(),0);
+			}else if(result.flag===-2 && $('#searchGoalFlag').val()==1){
 				var r = confirm('해당일에 일일업무가 등록되어있습니다. 이동하시겠습니까?');
 			    if (r == true) {
+			    	$('#reg_date').val('');
 			    	detailDaily(result.daily_report_id);
+			    	
 			    } else {
 			    	alert('취소되었습니다.');
 			    	$('#reg_date').val('');
 			    }
 				
 			}
-			
-			else{
+			else if(result.flag===0){
 				$('#dailyGoal').attr('value',result.daily_sales);
 				  $('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+result.daily_sales+')'); 
+				  changeProgress($('#inputSales').val(),result.daily_sales);
 			}
-
+			alert(result.flag);
+			if($('#searchGoalFlag').val()==0){
+				$('#searchGoalFlag').val(1);
+			}
 		}
 
 	})

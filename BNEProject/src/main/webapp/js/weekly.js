@@ -238,4 +238,3 @@ function noWordConfirm(){
             ]
     })                                                    
 }  
-                                                  
