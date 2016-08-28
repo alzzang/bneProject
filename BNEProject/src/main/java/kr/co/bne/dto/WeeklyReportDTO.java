@@ -7,7 +7,7 @@ public class WeeklyReportDTO {
 	private String reg_date;
 	private int sales_goal;
 	private int sales;
-
+	private int link_id;
 	public WeeklyReportDTO() {
 		super();
 	}
@@ -124,6 +124,14 @@ public class WeeklyReportDTO {
 		} else if (!weekly_report_id.equals(other.weekly_report_id))
 			return false;
 		return true;
+	}
+
+	public int getLink_id() {
+		return link_id;
+	}
+
+	public void setLink_id(int link_id) {
+		this.link_id = link_id;
 	}
 
 	
