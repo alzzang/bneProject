@@ -128,7 +128,7 @@
 					</div>
 				</div>
 				<div id="buttonGroup">
-					<button id ="cancle"  class="btn btn-danger pull-right"  style="margin-left:1%; margin-top:1%" onClick="weeklyWriteCancleConfirm()">취소</button>
+					<button id ="cancle"  class="btn btn-danger pull-right"  style="margin-left:1%; margin-top:1%" onClick="weeklyCancleConfirm()">취소</button>
 					<button class="btn btn-success pull-right mb-control"style="margin-left:1%; margin-top:1%" onClick="weeklyWriteConfirm()">저장</button>  				
 				</div>
 			</div>
@@ -136,30 +136,7 @@
 	</div>
 	<!-- END CONTENT FRAME BODY -->
 
-	<!-- MESSAGE BOX-->
-	<div class="message-box animated fadeIn" data-sound="alert"	id="mb-SavePlan">
-		<div class="mb-container">
-			<div class="mb-middle">
-				
-				<div class="mb-title">
-					<span class="fa fa-exclamation"></span><strong>계획을 저장하시겠습니다.</strong>
-				</div>
-				
-				<div class="mb-content">
-					<p></p>
-					<p>확인시 계획확인 화면으로 이동합니다</p>
-				</div>
-				
-				<div class="mb-footer">
-					<div class="pull-right">
-						<a id = "confirm"  class="btn btn-success btn-lg">확인</a>
-						<button class="btn btn-default btn-lg mb-control-close">취소</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- END MESSAGE BOX-->
+
 
 
 	<!-- MESSAGE BOX-->
@@ -320,25 +297,7 @@ function weeklyWriteConfirm(){
     })                                                    
 }
 
-function weeklyWriteCancleConfirm(){
-	noty({
-        text: '취소시 작성한 정보가 사라집니다.',
-        layout: 'center',
-        modal: 'true',
-        killer:'true',
-        buttons: [
-                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
-                	window.location.href = "/main"
-                	}
-                },
-                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
-                    $noty.close();
-                   
-                    }
-                }
-            ]
-    })      
-}
+
 
 </script>
 
