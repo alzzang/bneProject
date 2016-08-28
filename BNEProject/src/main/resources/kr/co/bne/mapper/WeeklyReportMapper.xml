@@ -107,8 +107,8 @@
    </select>
    
    <insert id="insertWeeklyReport" parameterType="WeeklyReport">
-      INSERT INTO WEEKLY_REPORT(WEEKLY_REPORT_ID, EMPLOYEE_ID, TITLE, SALES_GOAL, SALES, REG_DATE) 
-      VALUES(#{weekly_report_id}, #{employee_id}, #{title}, #{sales_goal}, #{sales},SYSDATE)
+      INSERT INTO WEEKLY_REPORT(WEEKLY_REPORT_ID, EMPLOYEE_ID, TITLE, SALES_GOAL, SALES, REG_DATE,LINK_ID) 
+      VALUES(#{weekly_report_id}, #{employee_id}, #{title}, #{sales_goal}, #{sales},SYSDATE, WEEKLY_LINK_SEQ.nextval)
    </insert>
    
    <delete id="deleteWeeklyReport" parameterType="String">

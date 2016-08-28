@@ -226,7 +226,7 @@ function weeklyWriteConfirm(){
                 			weeklyPlan : jPlan
                 		},
                 		success : function(){
-                			window.location.href="/weeklyReport/detail/"+employee_id+"/"+weeklyNumber;
+                			window.location.href="/weeklyReport/detail/"+$('#employee_Id').val()+"/"+weeklyNumber;
                 		},
                 		error : function(){
                 		}
