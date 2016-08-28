@@ -102,7 +102,20 @@ public class NoticeAspect {
 			deliver.sendNotice(dto.getSubject_name(), dto.getObject_id(), dto.getLink_id(), dto.getNotice_type());
 		}
 	}
+	@AfterReturning("execution(public * kr.co.bne.service.WeeklyReportService.modifyWeeklyReport(..))")
+	   public void execInsertNotice_WEEKLY_CORRECT(JoinPoint joinPoint) throws Throwable {
+	      System.out.println("주간계획 수정 aop 실행!!");
+	      
+	      String weekly_id = ((WeeklyReportDetailDTO)(joinPoint.getArgs()[0])).getWeeklyReportDTO().getWeekly_report_id();
+	      WeeklyReportDetailDTO weeklyReport = weeklyReportService.selectWeeklyReportDetail(weekly_id);
+	      int link_id = weeklyReport.getWeeklyReportDTO().getLink_id();
+	      List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.WEEKLY_CORRECT, link_id, weeklyReport.getWeeklyReportDTO().getEmployee_id());
 
+	      //node.js에 보내는 코드도 작성
+	      for(NoticeHeader dto : result) {
+	         deliver.sendNotice(dto.getSubject_name(), dto.getObject_id(), dto.getLink_id(), dto.getNotice_type());
+	      }
+	   }
 
 	@AfterReturning("execution(public * kr.co.bne.service.WeeklyReportService.writeWeeklyReport(..))")
 	   public void execInsertNotice_WEEKLY_POST(JoinPoint joinPoint) throws Throwable {
@@ -119,20 +132,5 @@ public class NoticeAspect {
 	      }
 	   }
 	
-	
-	@AfterReturning("execution(public * kr.co.bne.service.WeeklyReportService.modifyWeeklyReport(..))")
-	   public void execInsertNotice_WEEKLY_CORRECT(JoinPoint joinPoint) throws Throwable {
-	      System.out.println("주간계획 수정 aop 실행!!");
-	      
-	      String weekly_id = ((WeeklyReportDetailDTO)(joinPoint.getArgs()[0])).getWeeklyReportDTO().getWeekly_report_id();
-	      WeeklyReportDetailDTO weeklyReport = weeklyReportService.selectWeeklyReportDetail(weekly_id);
-	      int link_id = weeklyReport.getWeeklyReportDTO().getLink_id();
-	      List<NoticeHeader> result = noticeDAO.insertNotice(NoticeType.WEEKLY_CORRECT, link_id, weeklyReport.getWeeklyReportDTO().getEmployee_id());
-
-	      //node.js에 보내는 코드도 작성
-	      for(NoticeHeader dto : result) {
-	         deliver.sendNotice(dto.getSubject_name(), dto.getObject_id(), dto.getLink_id(), dto.getNotice_type());
-	      }
-	   }
 	
 }

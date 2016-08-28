@@ -6,20 +6,13 @@ public class WeeklyReportDetailDTO {
 	private WeeklyReportDTO weeklyReportDTO;
 	private List<WeeklyPlanDTO> weeklyPlanDTOList;
 	private List<PlanDetailDTO> planDetailDTOList;
-	private int link_id;
+	
 
 	
 	public WeeklyReportDetailDTO() {
 		super();
 	}
-	
-	public int getLink_id() {
-		return link_id;
-	}
 
-	public void setLink_id(int link_id) {
-		this.link_id = link_id;
-	}
 
 
 	public WeeklyReportDetailDTO(WeeklyReportDTO weeklyReportDTO, List<WeeklyPlanDTO> weeklyPlanDTOList,

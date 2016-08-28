@@ -304,7 +304,7 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
                                  <div class="task-item task-primary task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
                               </c:if>
                               <c:if test="${clist.notice_type eq 'WEEKLY_POST'}">
-                                 <div class="task-item task-success task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
+                                 <div class="task-item task-success task-complete" id="${clist.notice_id }" onclick="moveLHink(this.id,'${clist.notice_type}',${clist.link_id})">
                               </c:if>
                               <c:if test="${clist.notice_type eq 'DAILY_CORRECT'}">
                                  <div class="task-item task-warning task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
