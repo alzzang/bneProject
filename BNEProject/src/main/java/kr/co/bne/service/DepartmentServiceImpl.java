@@ -34,7 +34,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 	       status = departmentDAO.addDepartment(ddto);
 	   	deptlist.setDepartment_id(ddto.getDepartment_id());
 		deptlist.setManager_id(ddto.getManager_id());
-		System.out.println(deptlist);
 	       status1=	departmentDAO.updateManager(deptlist);
 	        return status && status1;
 	}
