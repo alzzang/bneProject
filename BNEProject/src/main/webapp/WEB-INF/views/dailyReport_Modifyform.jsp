@@ -86,9 +86,11 @@ input[type=text] {
 		</div>
 	</div>
 	
-	<script>
-	$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
-	</script>
+	<c:if test="${sessionScope.employee.department_name ne null}">
+   <script>
+      $('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
+   </script>
+   </c:if>
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->

@@ -231,8 +231,8 @@ public class UserController {
          out.close();
       }
       model.addAttribute("emp",edto);
-      List<EmployeeDTO> depUserList=counsellingRecordService.getManageSales(edto.getDepartment_id());
-      System.out.println(depUserList.get(0).getFile_position());
+      List<EmployeeDTO> depUserList=employeeDAO.selectEmployeeListA(edto.getDepartment_id());
+      
       model.addAttribute("depUserList", depUserList);
       model.addAttribute("employeeDTO", employeeDTO);
       

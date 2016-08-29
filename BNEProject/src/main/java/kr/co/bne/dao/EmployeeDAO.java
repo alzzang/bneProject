@@ -21,4 +21,5 @@ public interface EmployeeDAO {
 	boolean deleteEmployee(String employee_id);
 	boolean insertEmployeeList(List<EmployeeDTO> employeeList);
 	boolean updateEmployee(EmployeeDTO employeeDTO);
+	public List<EmployeeDTO> selectEmployeeListA(int department_id);
 }

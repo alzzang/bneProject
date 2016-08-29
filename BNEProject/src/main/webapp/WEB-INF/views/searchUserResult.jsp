@@ -30,7 +30,7 @@
             </div>
             <div class="profile-data">
                <div class="profile-data-name">${emp.employee_name}</div>
-               <div class="profile-data-title" style="color: #FFF;">${emp.employee_id }</div>
+               <div class="profile-data-title" style="color: #FFF;">${emp.department_name }</div>
             </div>
             <div class="profile-controls">
 <!--                <a href="#" class="profile-control-left twitter"><span
@@ -104,12 +104,14 @@
                <c:forEach items="${depUserList }" var="list" varStatus="status">
                   <c:if test="${list.employee_id != employeeDTO.employee_id}">
                       <c:if test="${list.employee_id != emp.employee_id}">
-                        <div class="col-md-4 col-xs-4">
-                           <a href="/user/searchUser/${list.employee_id}" class="friend">
-                              <img src="http://192.168.1.18:8085/test/${list.file_position }">
-                              <span>${list.employee_name}<br>(${list.file_position})</span>
-                           </a>
-                        </div>
+                      	<c:if test="${list.position != 'manager'}">
+	                        <div class="col-md-4 col-xs-4">
+	                           <a href="/user/searchUser/${list.employee_id}" class="friend">
+	                              <img src="http://192.168.1.18:8085/test/${list.file_position }">
+	                              <span>${list.employee_name}<br></span>
+	                           </a>
+	                        </div>
+                        </c:if>
                      </c:if>
                   </c:if>
                </c:forEach>

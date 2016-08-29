@@ -70,19 +70,34 @@ input[type=text] {
 				<table class="table table-bordered detailInfoTable">
 					<thead>
 						<tr>
-							<th>소속</th>
-							<td><span id="department_name">${sessionScope.employee.department_name}</span></td>
-						</tr>
+                     <th>소속</th>
+                     <c:if test="${sessionScope.employee.department_name ne null}">
+                     <td><span id="department_name">${sessionScope.employee.department_name}</span></td>
+                     </c:if>
+                     <c:if test="${sessionScope.employee.department_name eq null}">
+                     <td><span id="department_name">${sessionScope.user.department_name}</span></td>
+                     </c:if>
+                  </tr>
 
-						<tr>
-							<th>이름</th>
-							<td><span id="employee_name">${sessionScope.employee.employee_name}</span></td>
-						</tr>
+                  <tr>
+                     <th>이름</th>
+                     <c:if test="${sessionScope.employee.department_name ne null}">
+                     <td><span id="employee_name">${sessionScope.employee.employee_name}</span></td>
+                     </c:if>
+                     <c:if test="${sessionScope.employee.department_name eq null}">
+                     <td><span id="employee_name">${sessionScope.user.employee_name}</span></td>
+                     </c:if>
+                  </tr>
 
-						<tr>
-							<th>매출 목표</th>
-							<td><span id="goalValue">${sessionScope.employee.sales_goal}</span></td>
-						</tr>
+                  <tr>
+                     <th>매출 목표</th>
+                     <c:if test="${sessionScope.employee.department_name ne null}">
+                     <td><span id="goalValue">${sessionScope.employee.sales_goal}</span></td>
+                     </c:if>
+                     <c:if test="${sessionScope.employee.department_name eq null}">
+                     <td><span id="goalValue">0원</span></td>
+                     </c:if>
+                  </tr>
 					</thead>
 				</table>
 			</div>
@@ -91,10 +106,11 @@ input[type=text] {
 
 
 
-	<script>
-		$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
-	</script>
-
+	<c:if test="${sessionScope.employee.department_name ne null}">
+   <script>
+      $('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
+   </script>
+   </c:if>
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->

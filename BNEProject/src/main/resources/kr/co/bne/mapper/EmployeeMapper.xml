@@ -3,6 +3,29 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.Employee">
+
+   <resultMap type="Employee" id="empSearchAll">
+      <result column="employee_id" property="employee_id"/>
+      <result column="employee_name" property="employee_name"/>
+      <result column="department_id" property="department_id"/>
+      <result column="file_position" property="file_position"/>
+      <result column="mobile_phone" property="mobile_phone"/>
+      <result column="email" property="email"/>
+   </resultMap>
+
+   <select id="selectEmployeeListA" parameterType="Integer" resultMap="empSearchAll"> 
+    <![CDATA[
+    
+       select e.EMPLOYEE_ID, e.EMPLOYEE_NAME, e.DEPARTMENT_ID, e.mobile_phone, e.email, e.file_position,d.department_name,
+                CASE WHEN employee_id in (select manager_id from department) THEN 'manager'
+                ELSE 'employee' END position
+         from employee e, department d
+         where e.department_id=d.department_id and e.DEPARTMENT_ID = #{value} and e.employee_name <> 'admin'
+      order by 2
+      
+     ]]>
+   </select>
+
    <select id="selectEmployee" parameterType="String" resultType="Employee">
    <![CDATA[select e.*, d.department_name,
                  CASE when d.department_id = 0 then 'admin'

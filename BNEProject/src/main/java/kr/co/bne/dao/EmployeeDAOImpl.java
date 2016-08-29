@@ -127,5 +127,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		return true;
 	}
+	@Override
+	public List<EmployeeDTO> selectEmployeeListA(int department_id) {
+		return sqlSession.selectList("kr.co.bne.mapper.Employee.selectEmployeeListA",department_id);
+	}
 
 }
