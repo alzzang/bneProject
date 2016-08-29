@@ -1,18 +1,18 @@
 package kr.co.bne.controller;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
@@ -149,12 +149,17 @@ public class UserController {
 	@RequestMapping(value = "/validCheck", method = { RequestMethod.POST })
 	public String validCheck(@RequestParam("id") String id, @RequestParam("password") String rawPassword,
 			HttpServletRequest req, HttpServletResponse res) throws IOException {
-
+		
+		res.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html;charset=UTF-8");
+		PrintWriter outs = res.getWriter();
+		
 		HttpSession session = req.getSession();
 		EmployeeDTO employeeDTO = new EmployeeDTO();
 		employeeDTO = userService.validCheck(id, rawPassword);
 		String newpassword = req.getParameter("newpassword");
-			
+		
+		
 		if (newpassword == null) {
 			if (employeeDTO != null) {
 				session.setAttribute("user", employeeDTO);
@@ -165,15 +170,32 @@ public class UserController {
 				session.setAttribute("employee", employee);
 				return "redirect:/main";
 			}
+	     
+			
 			return "redirect:/user/login";
 		}
 
 		else {
 			if (employeeDTO != null) {
 				userService.modifyPassword(id, newpassword);
-				return "redirect:/main";
+		
+				outs.println("<script type='text/javascript'>");
+				outs.println(" location.href = '/main'"); 
+	            outs.println(" alert('비밀번호변경 완료'); ");
+	            outs.println("</script>");
+	            outs.flush();
+	            outs.close();
+	            return "mainboard";
 			}
-			return "redirect:/user/changeProfile";
+			
+			outs.println("<script type='text/javascript'>");
+            outs.println(" location.href = '/user/changeProfile'"); 
+            outs.println(" alert('비밀번호 변경 실패'); ");
+            outs.println("</script>");
+            outs.flush();
+            outs.close();
+            
+			return "password";
 		}
 	}
 	
