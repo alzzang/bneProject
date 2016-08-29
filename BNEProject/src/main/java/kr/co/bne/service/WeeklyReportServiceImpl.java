@@ -62,7 +62,6 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		return result;
 	}
 
-	
 	@Override
 	public List<String> selectAllReportId(String employee_id) throws Exception{
 		List<String> result = weeklyReportDAO.selectAllWeeklyReportId(employee_id);
@@ -115,6 +114,10 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		result = weeklyReportDAO.selectTotalRecordNum(parameterMap);
 		return result;
 	}
-	
+	@Override
+	public WeeklyReportDTO selectWeeklyReport(int link_id) {
+		// TODO Auto-generated method stub
+		return weeklyReportDAO.getWeeklyReport(link_id);
+	}
 
 }

@@ -77,5 +77,11 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 		return result;
 	}
 
+	@Override
+	public WeeklyReportDTO getWeeklyReport(int link_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.WeeklyReport.getWeeklyReport",link_id);
+	}
+
 	
 }

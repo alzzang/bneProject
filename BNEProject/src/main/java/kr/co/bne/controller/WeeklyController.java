@@ -118,6 +118,16 @@ public class WeeklyController {
 		request.setAttribute("result", result);
 		return "weeklyWrite";
 	}
+	@RequestMapping("/alarm/{linkId}")
+	public ModelAndView goMain_Employee(Model model, HttpServletRequest request, HttpSession session,@PathVariable("linkId") int link_id) throws NumberFormatException, Exception {
+		WeeklyReportDTO dto=weeklyReportService.selectWeeklyReport(link_id);
+		// manager인 사람이 이 url로 접근 하려고 할 때 막아주기 위함
+		/*if ("manager".equals(user.getPosition())) {
+			return "redirect:/dailyReport/main/all/1";
+		}*/
+		String[] str=dto.getWeekly_report_id().split("_");
+		return WeeklyDetail(model, request,dto.getEmployee_id(), Integer.parseInt(str[1]),dto.getWeekly_report_id());
+	}
 	
 	@RequestMapping("/detail/{employeeId}/{week_of_year}")
 	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request,@PathVariable("employeeId") String employeeId,@PathVariable("week_of_year") int week_of_year, String weeklyReportId) throws Exception {

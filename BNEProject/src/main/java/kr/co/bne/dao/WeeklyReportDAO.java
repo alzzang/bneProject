@@ -22,4 +22,5 @@ public interface WeeklyReportDAO {
 	public List<WeeklyReportMemberInfo> selectDeptMember(int department_id) throws Exception;
 	// 조건에 맞는 작성된 주간 계획의 레코드 수   
 	public int selectTotalRecordNum(Map<String, Object> parameterMap) throws Exception;
+	public WeeklyReportDTO getWeeklyReport(int link_id);
 }

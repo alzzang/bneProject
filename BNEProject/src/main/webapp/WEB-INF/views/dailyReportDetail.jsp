@@ -96,7 +96,7 @@ input[type=text] {
 			<div class="panel panel-default">
 				<div class="panel-heading ui-draggable-handle">
 					<div class="pull-left">
-						<img src="/user/download/${dailyReport.file_position}/"
+						<img src="http://192.168.1.18:8085/test/${dailyReport.file_position}"
 							class="panel-title-image" alt="John Doe">
 						<h3 class="panel-title">
 							${dailyReport.employee_name}
@@ -287,7 +287,7 @@ input[type=text] {
 									<div class="timeline-body comments">
 										<div class="comment-item">
 											<img
-												src="/user/download/${dailyReport.manager_file_position}/">
+												src="http://192.168.1.18:8085/test/${dailyReport.manager_file_position}">
 											<p class="comment-head">
 												<a href="#">${dailyReport.manager_name}</a>
 											</p>
@@ -313,7 +313,7 @@ input[type=text] {
 									<div class="timeline-body comments">
 										<div class="comment-item">
 											<img
-												src="/user/download/${dailyReport.manager_file_position}/">
+												src="http://192.168.1.18:8085/test/${dailyReport.manager_file_position}">
 											<p class="comment-head">
 												<a href="#">${dailyReport.manager_name}</a> <a href="#"
 													class="pull-right" onclick="deleteComment()">삭제</a><span
@@ -363,7 +363,7 @@ input[type=text] {
 
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">
-					<span class="fa fa-arrow-circle-o-left"></span> 상담일지 작성
+					<span class="fa fa-arrow-circle-o-left"></span> 상담일지
 				</h4>
 
 			</div>
@@ -380,17 +380,14 @@ input[type=text] {
 						<div class="col-md-12">
 
 							<div class="panel-body">
-								<p>
-									<code>상담일지</code>
-
-								</p>
+								
 								<table class="table">
 									<thead>
 										<tr>
-											<th>소속</th>
-											<td id="counsel_department"></td>
-											<th>성명</th>
-											<td id="counsel_empname"></td>
+											<th style="width: 15%">소속</th>
+											<td id="counsel_department" style="width: 20%"></td>
+											<th >성명</th>
+											<td id="counsel_empname" style="width: 18%"></td>
 											<th>작성일</th>
 											<td id="counsel_regdate"></td>
 										</tr>

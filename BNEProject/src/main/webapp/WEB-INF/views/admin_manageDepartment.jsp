@@ -36,9 +36,7 @@ tbody tr td{
 			var html='';
 			var html2='';
 			var keycode = e.keyCode;
-			/*console.log(keycode+':'+str.length);
-			console.log(str);
-			*/
+
 			if(str==''){
 			}else{
 				empSearchKeyUp(str,keycode);
@@ -59,7 +57,9 @@ tbody tr td{
 	
 			if(data!=$('#'+departmentId+' td:nth-child(1)').html()&&data!=-1){
 				alert('이미 존재하는 부서입니다.');
+		
 				$('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val(-1);
+		
 			}else{
 				$('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val(0);
 			}
@@ -128,7 +128,7 @@ function EmployeeOfDepartment(departmentId){
 			departmentId:departmentId
 		},
 		success : function(data) {
-			console.log(data);
+			
 			var html='';
 			for(var i=0;i<data.length;i++){
 	
@@ -460,6 +460,7 @@ function EmployeeOfDepartment(departmentId){
 		var result = {"flag":0, "index":0};
 		var pattern =  /^0([0-9]{1,2})([0-9]{3,4})([0-9]{4})$/;
 		$.each( jsonInfo, function( idx, value ) {
+		
 			var deptId= $('#'+value["row_num"] +' td:nth-child(1)').html();
 			var dept=$('#department_name'+value["row_num"]).val();
 			var manager=$('#employee_name'+value["row_num"]).val();
@@ -472,6 +473,7 @@ function EmployeeOfDepartment(departmentId){
 			value["manager_id"]=manager_id;
 			
 			jsonInfo[idx]=value;
+
 			 if($('#'+value["row_num"]+' td:nth-child(6) #deptFlag'+value["row_num"]).val()==-1){
 					result.flag=-1;
 					result.index=value["row_num"];
@@ -518,18 +520,6 @@ function EmployeeOfDepartment(departmentId){
 	               result.message = "\n전화번호는 0으로 시작된 11자리 내 숫자여야 합니다.";  
 	               
 	            }
-		/* 
-		var regExp = /^0([0-9]{1,2})([0-9]{3,4})([0-9]{4})$/;
-		
-		 
-		alert(regExp.test(number));
-		if(regExp.test(number)){
-		
-			  alert("정상적인 문자입니다. ==>" + number)
-			 }else{
-				 $('#telephone'+numberIdx).val(number.substr(0, number.length-1));	 
-
-			 } */
 
 	}
 	for(var i=0;i<15;i++){
@@ -637,7 +627,6 @@ function EmployeeOfDepartment(departmentId){
 			},
 			dataType:"json",
 			success:function(data){
-				console.log('success');
 				$("#employee_name"+index).parent().find(".panel-primary").remove();
 				$("#empSGJ"+index).empty();
 				html=
@@ -650,7 +639,6 @@ function EmployeeOfDepartment(departmentId){
 				$("#employee_name"+index).parent().append(html);
 
 				if(data.length===0){
-					console.log('data.length===0');
 					$(".xn-search").attr("class","xn-search active");
 					html2=''+
                     '        <span class="list-group-item contacts-title"><b>검색결과 없음</b></span>'+

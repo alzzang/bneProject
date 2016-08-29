@@ -6,6 +6,7 @@ import java.util.Map;
 
 import kr.co.bne.common.WeeklyReportMemberInfo;
 import kr.co.bne.common.WeeklyReportSearchElement;
+import kr.co.bne.dto.WeeklyReportDTO;
 import kr.co.bne.dto.WeeklyReportDetailDTO;
 
 public interface WeeklyReportService {
@@ -23,4 +24,5 @@ public interface WeeklyReportService {
 	public List<WeeklyReportSearchElement> selectWeeklyReportSearch(Map<String, Object> parameterMap) throws Exception;
 	public List<WeeklyReportMemberInfo> selectDeptMember(int department_id) throws Exception;
 	public int selectTotalRecordNum(Map<String, Object> parameterMap) throws Exception;
+	public WeeklyReportDTO selectWeeklyReport(int link_id);
 }
