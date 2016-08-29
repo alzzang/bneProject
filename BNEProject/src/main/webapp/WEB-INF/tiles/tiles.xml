@@ -55,7 +55,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/weeklyWriteForm.jsp"/>
 	</definition>
 
-	<definition name="aaa" extends="tilesbase">
+	<definition name="editor" extends="tilesbase">
 		<put-attribute name="body" value="/WEB-INF/views/SmartEditor2.jsp"/>
 	</definition>
 	
@@ -95,9 +95,20 @@
 	</definition>
 	
 	<definition name="mainboard_admin" extends="tilesbase">
-		<put-attribute name="body" value="/WEB-INF/views/admin_manageDepartmennt.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin_manageEmployee.jsp"/>
 	</definition>
 	
+	<definition name="department_admin" extends="tilesbase">
+		<put-attribute name="body" value="/WEB-INF/views/admin_manageDepartment.jsp"/>
+	</definition>
+	
+	<!-- 우동이 거래처 관리 -->
+   	<definition name="clientList" extends="tilesbase">
+   		<put-attribute name="body" value="/WEB-INF/views/clientList.jsp"/>
+   	</definition>
+   	<definition name="secondaryClientList" extends="tilesbase">
+   		<put-attribute name="body" value="/WEB-INF/views/secondaryClientList.jsp"/>
+   	</definition>
 </tiles-definitions>
  
 

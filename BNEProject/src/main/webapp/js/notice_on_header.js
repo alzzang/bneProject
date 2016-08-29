@@ -95,7 +95,6 @@ function createNoticeElementHTML(noticeObj) {
 	}else if(noticeObj.notice_type === "APPROVAL") {
 		status += "fa fa-circle text-primary";
 	}else {
-		alert('error!!');
 		return;
 	}
 	

@@ -213,20 +213,30 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/searchUser/{empId}", method = { RequestMethod.GET })
-	public String showSearchUser(Model model,@PathVariable String empId, HttpServletRequest req, HttpServletResponse res)
-			throws IOException {
-				
-		HttpSession session = req.getSession();
-		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("user");
-		
-		EmployeeDTO edto = employeeDAO.selectEmployee(empId);
-		List<EmployeeDTO> depUserList=counsellingRecordService.getManageSales(employeeDTO.getDepartment_id());
-		System.out.println("!!! : "+empId);
-		model.addAttribute("emp",edto);
-		model.addAttribute("depUserList", depUserList);
-		model.addAttribute("employeeDTO", employeeDTO);
-		
-		return "searchUser";
+   public String showSearchUser(Model model,@PathVariable String empId, HttpServletRequest req, HttpServletResponse res)
+         throws IOException {
+
+      res.setCharacterEncoding("UTF-8");
+      res.setContentType("text/html; charset=UTF-8");
+      HttpSession session = req.getSession();
+      EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("user");
+      PrintWriter out = res.getWriter();
+      EmployeeDTO edto = employeeDAO.selectEmployee(empId);
+      if(edto.getPosition().equals("manager")){
+         System.out.println("manager search!");
+         out.println("<script language='javascript'>"); 
+         out.println("alert('manager의 url 검색은 할 수 없습니다.');"); 
+         out.println("location.href='/main'");
+         out.println("</script>"); 
+         out.close();
+      }
+      model.addAttribute("emp",edto);
+      List<EmployeeDTO> depUserList=employeeDAO.selectEmployeeListA(edto.getDepartment_id());
+      
+      model.addAttribute("depUserList", depUserList);
+      model.addAttribute("employeeDTO", employeeDTO);
+      
+      return "searchUser";
 	}
 	
 	@RequestMapping(value = "/empSearch2", method = { RequestMethod.GET })

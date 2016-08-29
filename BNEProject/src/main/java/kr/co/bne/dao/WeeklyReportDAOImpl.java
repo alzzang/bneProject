@@ -64,7 +64,7 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 	}
 
 	@Override
-	public List<WeeklyReportMemberInfo> selectDeptMember(String department_id) throws Exception {
+	public List<WeeklyReportMemberInfo> selectDeptMember(int department_id) throws Exception {
 		List<WeeklyReportMemberInfo> result = null;
 		result = sqlSession.selectList(namespace+"selectDeptMember", department_id);
 		return result;
@@ -75,6 +75,12 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 		int result = 0;
 		result = sqlSession.selectOne(namespace + "selectTotalRecordNum", parameterMap);
 		return result;
+	}
+
+	@Override
+	public WeeklyReportDTO getWeeklyReport(int link_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.bne.mapper.WeeklyReport.getWeeklyReport",link_id);
 	}
 
 	

@@ -95,15 +95,15 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		return 0;
 	}
 	
-		@Override
-	public List<WeeklyReportSearchElement> selectWeeklyReportSearch(Map parameterMap) throws Exception {
+	@Override
+	public List<WeeklyReportSearchElement> selectWeeklyReportSearch(Map<String, Object> parameterMap) throws Exception {
 		List<WeeklyReportSearchElement> result = null; 
 		result = weeklyReportDAO.selectWeeklyReportList(parameterMap);
 		return result;
 	}
 
 	@Override
-	public List<WeeklyReportMemberInfo> selectDeptMember(String department_id) throws Exception {
+	public List<WeeklyReportMemberInfo> selectDeptMember(int department_id) throws Exception {
 		List<WeeklyReportMemberInfo> result = weeklyReportDAO.selectDeptMember(department_id);
 		return result;
 	}
@@ -113,6 +113,11 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		int result = 0;
 		result = weeklyReportDAO.selectTotalRecordNum(parameterMap);
 		return result;
+	}
+	@Override
+	public WeeklyReportDTO selectWeeklyReport(int link_id) {
+		// TODO Auto-generated method stub
+		return weeklyReportDAO.getWeeklyReport(link_id);
 	}
 
 }

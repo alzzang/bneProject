@@ -578,10 +578,6 @@ $(function() {
 
                     },
                     eventDragStop: function(event, jsEvent, ui, view) { 
-/*                       alert(event.title());*/
-                        //console.log(event.id);
-/*                       var v = event.allDay;
-                       alert(v);*/
                          if (isElemOverDiv($('div#trash>a'))) {
                             console.log(event._id);
                             calendar.fullCalendar('removeEvents', event._id);
@@ -614,7 +610,6 @@ $(function() {
             if($('div#trash>a').length){
                 var left = draggedItem1.position().left;
                 var top = draggedItem1.position().top;
-/*                alert(top+","+left);*/
                 if(left<0 || top<0 || top>390){
                    return true;
                 }            

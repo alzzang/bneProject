@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%-- <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %> --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="/js/dailysettings.js"></script>
@@ -11,14 +12,16 @@
 $(document).ready(function(){
 
 	var a = ${dailyReport.drsales};
-	var b = ${dailyReport.wpsales}
+	var b = ${dailyReport.wpsales};
 	changeProgress(a,b);
 	
 });
-
-
 </script>
-
+<style>
+input[type=text] {
+   color: black !important; 
+}
+</style>
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -62,18 +65,19 @@ $(document).ready(function(){
 
 					<tr>
 						<th>매출 목표</th>
-						<td><span id="reg_date">${sessionScope.employee.sales_goal}</span></td>
+						<td><span id="goalValue">${sessionScope.employee.sales_goal}</span></td>
 					</tr>
 				</thead>
 			</table>
+			<script>
+		$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
+		</script>
 	      </div>
 		</div>
 	</div>
 	
 
-	<script>
-	$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
-	</script>
+	
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->
@@ -92,7 +96,7 @@ $(document).ready(function(){
 			<div class="panel panel-default">
 				<div class="panel-heading ui-draggable-handle">
 					<div class="pull-left">
-						<img src="/user/download/${dailyReport.file_position}/"
+						<img src="http://192.168.1.18:8085/test/${dailyReport.file_position}"
 							class="panel-title-image" alt="John Doe">
 						<h3 class="panel-title">
 							${dailyReport.employee_name}
@@ -233,7 +237,8 @@ $(document).ready(function(){
 							</div>
 						</div>
 					</div>
-
+					
+					<c:if test="${fn:length(counselList) ne 0}">
 					<div class="form-group">
 						<label class="col-md-3 col-xs-12 control-label">상담 일지</label>
 						<div class="col-md-6 col-xs-12">
@@ -251,7 +256,7 @@ $(document).ready(function(){
 							</div>
 						</div>
 					</div>
-
+					</c:if>
 					<br> <br>
 					<div class="col-md-6 col-md-offset-3" id="dailyReportContent">
 						${dailyReport.content}
@@ -282,7 +287,7 @@ $(document).ready(function(){
 									<div class="timeline-body comments">
 										<div class="comment-item">
 											<img
-												src="/user/download/${dailyReport.manager_file_position}/">
+												src="http://192.168.1.18:8085/test/${dailyReport.manager_file_position}">
 											<p class="comment-head">
 												<a href="#">${dailyReport.manager_name}</a>
 											</p>
@@ -308,7 +313,7 @@ $(document).ready(function(){
 									<div class="timeline-body comments">
 										<div class="comment-item">
 											<img
-												src="/user/download/${dailyReport.manager_file_position}/">
+												src="http://192.168.1.18:8085/test/${dailyReport.manager_file_position}">
 											<p class="comment-head">
 												<a href="#">${dailyReport.manager_name}</a> <a href="#"
 													class="pull-right" onclick="deleteComment()">삭제</a><span
@@ -317,7 +322,9 @@ $(document).ready(function(){
 													onclick="modifyComment('${dailyReport.manager_comment}')">수정</a>
 												<!-- <span class="text-muted">@bradpitt</span> -->
 											</p>
+											<div>
 											${dailyReport.manager_comment}
+											</div>
 											<!--  <small class="text-muted">10h ago</small> -->
 										</div>
 									</div>
@@ -356,7 +363,7 @@ $(document).ready(function(){
 
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">
-					<span class="fa fa-arrow-circle-o-left"></span> 상담일지 작성
+					<span class="fa fa-arrow-circle-o-left"></span> 상담일지
 				</h4>
 
 			</div>
@@ -373,17 +380,14 @@ $(document).ready(function(){
 						<div class="col-md-12">
 
 							<div class="panel-body">
-								<p>
-									<code>상담일지</code>
-
-								</p>
+								
 								<table class="table">
 									<thead>
 										<tr>
-											<th>소속</th>
-											<td id="counsel_department"></td>
-											<th>성명</th>
-											<td id="counsel_empname"></td>
+											<th style="width: 15%">소속</th>
+											<td id="counsel_department" style="width: 20%"></td>
+											<th >성명</th>
+											<td id="counsel_empname" style="width: 18%"></td>
 											<th>작성일</th>
 											<td id="counsel_regdate"></td>
 										</tr>

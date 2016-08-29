@@ -32,7 +32,6 @@ function viewList(option, value) {
 	}else if(option == "search"){
 		search_text=$("#searchText").val();
 		search_type=$("#search_type").val();
-		alert(search_text+":"+search_type);
 		page=1;
 	}else if(option =="list"){
 		page = value;

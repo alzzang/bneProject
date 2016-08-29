@@ -6,10 +6,14 @@ public class WeeklyReportDetailDTO {
 	private WeeklyReportDTO weeklyReportDTO;
 	private List<WeeklyPlanDTO> weeklyPlanDTOList;
 	private List<PlanDetailDTO> planDetailDTOList;
+	
 
+	
 	public WeeklyReportDetailDTO() {
 		super();
 	}
+
+
 
 	public WeeklyReportDetailDTO(WeeklyReportDTO weeklyReportDTO, List<WeeklyPlanDTO> weeklyPlanDTOList,
 			List<PlanDetailDTO> planDetailDTOList) {

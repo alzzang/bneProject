@@ -116,16 +116,16 @@ function detailWeekly(id,subject){
 	event.preventDefault();
 	var form = document.createElement("form");     
 	form.setAttribute("method","post");                    
-	form.setAttribute("action","/weeklyReport/detail"+subject);        
+	form.setAttribute("action","/weeklyReport/alarm/"+id);        
 	document.body.appendChild(form);                        
 	 
 	//input
-	var input_id = document.createElement("input");  
+	/*var input_id = document.createElement("input");  
 	input_id.setAttribute("type", "hidden");                 
 	input_id.setAttribute("name", "weeekly_report_id");                        
 	input_id.setAttribute("value", id);                          
 	form.appendChild(input_id);
-	 
+	 */
 	//폼전송
 	form.submit();  
 }
@@ -147,9 +147,7 @@ function localSave(){
 	   });
 	   o["remove_Id"]=removeId;
 	   o["counsel_id"]=0;
-	   +jsonArray.push(o);
-	   console.log(o);
-	   console.log(jsonArray);
+	   jsonArray.push(o);
 	   var tagJson=JSON.stringify(o);
 	   addTag(tagJson);
 	    var t=JSON.stringify(jsonArray);
@@ -192,7 +190,6 @@ function localUpdate(val){
 
 	   var t=JSON.stringify(jsonArray);
 	   localStorage.setItem("tt", t);
-	   console.log(t);
 }
 //db update
 function dbUpdate(val){
@@ -234,11 +231,9 @@ function dbUpdate(val){
 	   
 	   var t=JSON.stringify(jsonArray);
 	   localStorage.setItem("tt", t);
-	   console.log(t);
 }
 function addTag(testdata){
 	var obj = jQuery.parseJSON(testdata);
-	console.log(obj);
 //	var cc="obj.title";
 	var appendHtml='<li id="'+obj.remove_Id+'"><a href="#" data-toggle="modal" data-target="#myModal2" onclick="tagTest('+'\''+obj.counsel_id+'\''+','+'\''+obj.title+'\''+','+'\''+obj.content+'\''+','+'\''+obj.counselling_id+'\''+','+'\''+obj.sec_client_id+'\''+','+'\''+obj.address+'\''+','+'\''+obj.client_id +'\''+','+'\''+obj.representative+'\''+','+'\''+obj.remove_Id+'\''+')"><span class="fa fa-tag"></span>'
 	appendHtml+=obj.title+'</a><span class="glyphicon glyphicon-remove " onclick="removeTag('+'\''+obj.remove_Id+'\''+','+0+')"></span></li>';
@@ -286,7 +281,7 @@ function tagTest(b,c,d,e,f,g,h,i,j){
 function tagDetail(department_name,employee_name,reg_date,title,client_id,client_name,representative,sec_client_name,address,content){
 	$('#counsel_department').html(department_name);
 	$('#counsel_empname').html(employee_name);
-	$('#counsel_regdate').html(reg_date);
+	$('#counsel_regdate').html(reg_date.substring(0, reg_date.lastIndexOf(":")));
 	$('#counsel_title').html(title);
 	$('#counsel_code').html(client_id);
 	$('#counsel_departmentname').html(client_name);
@@ -301,7 +296,6 @@ function removeTag(seq,val){
 			  return n.remove_Id!=seq;
 		});
 	}else if(val==1){
-		console.log(jsonArray);
 		$.each( jsonArray, function( idx, value ) {
 			if(value["counsel_id"]==seq){
 				value["counsel_id"]=value["counsel_id"]*-1;
@@ -424,35 +418,44 @@ function addComma(val){
 	return val.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1,');
 }
 function searchSalesGoal(reg_date) {
+	var flag=0;
+	if($('#dateFlag').val()==reg_date){
+		flag=1;
+	}
 	$.ajax({
 		type : "POST",
 		url : "/dailyReport/dailysales",
 		data : {
-		 
+			flag : flag,
 			reg_date : reg_date
 		},
 		success : function(data) {
 			var result=jQuery.parseJSON(data);
 			if(result.flag===-1){
-				alert('해당 목표액이 존재하지 않습니다');
+				
 				$('#dailyGoal').attr('value',0);
 				$('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+0+')');
-			}else if(result.flag===-2){
+				changeProgress($('#inputSales').val(),0);
+			}else if(result.flag===-2 && $('#searchGoalFlag').val()==1){
 				var r = confirm('해당일에 일일업무가 등록되어있습니다. 이동하시겠습니까?');
 			    if (r == true) {
+			    	$('#reg_date').val('');
 			    	detailDaily(result.daily_report_id);
+			    	
 			    } else {
 			    	alert('취소되었습니다.');
 			    	$('#reg_date').val('');
 			    }
 				
 			}
-			
-			else{
+			else if(result.flag===0){
 				$('#dailyGoal').attr('value',result.daily_sales);
 				  $('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+result.daily_sales+')'); 
+				  changeProgress($('#inputSales').val(),result.daily_sales);
 			}
-
+			if($('#searchGoalFlag').val()==0){
+				$('#searchGoalFlag').val(1);
+			}
 		}
 
 	})

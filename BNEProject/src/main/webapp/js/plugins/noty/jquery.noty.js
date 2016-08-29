@@ -460,7 +460,7 @@ if(typeof Object.create !== 'function') {
         type        : 'alert',
         text        : '',
         dismissQueue: true,
-        template    : '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
+        template    : '<div class="noty_message"><span class="noty_text"  style="font-size:14pt;" ></span><div class="noty_close"></div></div>',
         animation   : {
             open  : {opacity: 'toggle'},
             close : {height: 'toggle'},

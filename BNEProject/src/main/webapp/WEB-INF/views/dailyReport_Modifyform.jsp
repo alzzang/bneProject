@@ -9,7 +9,7 @@ var removeId=0;
 var jsonArray=new Array();
 
  $(document).ready(function(){
-	 searchSalesGoal('${dailyReport.reg_date}');
+	  searchSalesGoal('${dailyReport.reg_date}');
 	 computeGuage();
 	var counsellingArray = jQuery.parseJSON('${counsellingJson}');
  	$.each( counsellingArray, function( counselRecord, value ) {
@@ -29,6 +29,12 @@ var jsonArray=new Array();
 	 setUpdateContents('${dailyReport.content}');
  });
 </script>
+<style>
+input[type=text] {
+   color: black !important; 
+}
+</style>
+
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -72,7 +78,7 @@ var jsonArray=new Array();
 
 					<tr>
 						<th>매출 목표</th>
-						<td><span id="reg_date">${sessionScope.employee.sales_goal}</span></td>
+						<td><span id="goalValue">${sessionScope.employee.sales_goal}</span></td>
 					</tr>
 				</thead>
 			</table>
@@ -80,9 +86,11 @@ var jsonArray=new Array();
 		</div>
 	</div>
 	
-	<script>
-	$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
-	</script>
+	<c:if test="${sessionScope.employee.department_name ne null}">
+   <script>
+      $('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
+   </script>
+   </c:if>
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->
@@ -123,7 +131,7 @@ var jsonArray=new Array();
 									<div class="input-group">
 										<span class="input-group-addon"><span
 											class="fa fa-calendar"></span></span> <input type="text" 
-											class="form-control datepicker"  value="${dailyReport.reg_date}" name="reg_date" onchange="searchSalesGoal(this.value)"  required="required" id="reg_date">
+											class="form-control datepicker"  value="${dailyReport.reg_date}" id="reg_date" name="reg_date" onchange="searchSalesGoal(this.value)"  required="required" >
 									</div>
 								</div>
 							</div>
@@ -177,7 +185,7 @@ var jsonArray=new Array();
 								<div class="col-md-2 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">주행 거리</span> <input
-											type="text" class="form-control" id="result_guage" pattern="[0-9]{0,10}" required="required">
+											type="text" class="form-control" id="result_guage" pattern="[0-9]{0,10}" required="required" readonly="readonly">
 									</div>
 								</div>
 							</div>
@@ -207,6 +215,8 @@ var jsonArray=new Array();
 						<input type="hidden" name="department_id" value="${sessionScope.user.department_id}">
 						<input type="hidden" name="employee_id" value="${sessionScope.user.employee_id}">
 						<input type="hidden" id="counsellingJSON" name="counsellingJSON" value="">
+						<input type="hidden" id="searchGoalFlag" value="0">
+						<input type="hidden" id="dateFlag" value="${dailyReport.reg_date}">
 				</form>
 
 			</div>
@@ -254,18 +264,16 @@ var jsonArray=new Array();
 										class="fa fa-pencil"></span></span> 
 										<input type="text" class="form-control" name="title" id="modalTitle">
 								</div>
-								<span class="help-block">This is text field</span>
-							</div>
+								</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-2 col-xs-12 control-label">Text
-								Field</label>
+							<label class="col-md-2 col-xs-12 control-label">
+							</label>
 							<div class="col-md-8 col-xs-12">
 								<textarea class="form-control summernote" name="content"
 									rows="5" id="modalContent"></textarea>
 
-								<span class="help-block">This is text field</span>
 							</div>
 						</div>
 
@@ -277,7 +285,7 @@ var jsonArray=new Array();
 									<c:forEach var="client" items="${clients}" >
 										<option value="${client.client_id }">${client.client_name}</option>
 									</c:forEach>
-							</select> <span class="help-block">Select box </span>
+							</select> 
 							</span> 
 							<span class="col-md-2 col-xs-12"> 
 							<input type="text" class="form-control" placeholder="고객코드" readonly id="client_id" name="client_id">
@@ -294,7 +302,7 @@ var jsonArray=new Array();
 							<span class="col-md-5 col-xs-12">
 								<select class="form-control" name="sec_client_id"
 									id="sec_client_id" required>
-								</select> <span class="help-block">Select box </span>
+								</select>
 							</span>
 							<span class="col-md-3 col-xs-12"> <input type="text"
 								class="form-control" placeholder="주소" readonly

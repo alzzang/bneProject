@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -38,9 +38,6 @@ public class MainController {
 	
 	@Autowired
 	UserService userService;
-	
-	@Autowired
-	UserController usercontroller;
 	
 	private JsonObject parseWeeklyReportDetailDTO(WeeklyReportDetailDTO result){
 		JsonObject weeklyReportDetail = new JsonObject();
@@ -70,16 +67,22 @@ public class MainController {
 		//주간테이블
 		EmployeeDTO loginEmployee = (EmployeeDTO)session.getAttribute("user");
 		
-					
 		if(loginEmployee.getDepartment_id() != 0) { //일반 사용자
-		
 			return goMain_Normal(request, res, loginEmployee);
-			
 		}else {//admin
 			return "redirect:/admin/employee/1";
 		}
 	}
 
+
+	
+	@RequestMapping("/main1")
+	private String goMain_Admin(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {
+		/*return "mainboard_admin";*/
+		return "employee_admin";
+	}
+	
+	
 	
 	private String goMain_Normal(HttpServletRequest request,HttpServletResponse res, EmployeeDTO loginEmployee) throws Exception {
 		JsonObject weeklyReportDetail = getWekelyTable(loginEmployee);
@@ -99,7 +102,7 @@ public class MainController {
 		
 	@RequestMapping(value= "/editor")
 	public String goEditor(HttpServletResponse res,HttpServletRequest req){
-		return "aaa";
+		return "editor";
 	}
 	@RequestMapping(value="/smarteditor")
 	public String getSmartEditor(HttpServletResponse res,HttpServletRequest req) throws ServletException, IOException

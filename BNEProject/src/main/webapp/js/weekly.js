@@ -48,7 +48,6 @@ var makeSalesInput = function() {
 
 var isModify = function(now) {
 	var result = false;
-
 	var lastDayWeek = $('#calendar').fullCalendar('getView').end;
 	lastDayWeek._d.setDate(lastDayWeek._d.getDate() + 1)
 
@@ -221,9 +220,280 @@ var preventMouseClick = function(){
 		var result=pattern.test(value);
 								
 		if(result == false){
-			alert('숫자만 입력 가능합니다.');
+			noWordConfirm();
 			e.currentTarget.value = oldValue;
 			return;
 		}
 	});
+}
+function noWordConfirm(){
+    noty({
+        text: '숫자만 입력가능합니다',
+        layout: 'center',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: '확인', onClick: function($noty) {
+                    $noty.close();
+                    }
+                }
+            ]
+    })                                                    
+}  
+
+function getReportInfo(weeklyNumber){
+/*	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];*/
+	
+	var date = $('#calendar').fullCalendar('getDate');
+	var year = date._d.getFullYear();
+	
+	var report_id = year+"_"+weeklyNumber+"_"+$('#employee_id').val();
+	var report_title = $('#weeklyReportId').val();
+	if(report_title == ""){
+		report_title = weeklyNumber+"주의 계획";
+	}
+	
+	var employee_id = $('#employee_id').val();
+	var department_id = $('#department_id').val();
+	var salesGoal = 0;/* ${salesGoal}; */
+	var montlySales = 0;/* ${monthlySales}; */
+	
+	var weeklyReport = {
+			weekly_report_id : report_id,
+			title : report_title,
+			saleGoal : salesGoal,
+			sales : montlySales,
+			employee_id : employee_id,
+			department_id : department_id
+	}
+	return weeklyReport;
+}
+
+function getSalesPlan(){
+	var dayOfWeek = ['mon','tue','wed','thu','fri'];
+	var sales = [];
+	for(var i= 0; i<5; i++){
+		var sale = ($('#sales-'+dayOfWeek[i])[0].value);
+		regdate = ($('#sales-'+dayOfWeek[i])[0].attributes[3].textContent);
+		if(sale == "")
+			sale = 0;
+		
+		var plan = {
+					sales : sale,
+					reg_date : regdate
+		};
+		sales.push(plan);
+	}
+	return sales;
+}
+
+function getPlanDetail(){
+	var s = $('#calendar').fullCalendar('clientEvents');
+	var allPlan = [];
+	for(var i = 0; i<s.length; i++){
+		var plan;
+		
+		var title = s[i].title;
+		
+		var startTimeOrigin = s[i].start.format().split('T');
+		var startTime = startTimeOrigin[0]+" "+startTimeOrigin[1];
+		var endTimeOrigin = s[i].end.format().split('T');
+		var endTime = endTimeOrigin[0]+" "+endTimeOrigin[1];
+		plan={
+				content:title,
+				start_time:startTime,
+				end_time:endTime
+		}
+		
+
+				allPlan.push(plan);
+	}
+	return allPlan;
+}
+
+function modifyButtonClick() {
+	noty({
+		text : '수정하시겠습니까?',
+		layout : 'center',
+		killer:'true',
+		modal:'true',
+		buttons : [
+				{
+					addClass : 'btn btn-success btn-clean',
+					text : 'Ok',
+					onClick : function($noty) {
+	                	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	                	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+						event.preventDefault();
+
+						var weeklyReport = getReportInfo(weeklyNumber);
+
+						var sales = getSalesPlan();
+
+						var allPlan = getPlanDetail();
+
+						var jPlan = JSON.stringify(allPlan);
+						var jPlan2 = JSON.stringify(weeklyReport);
+						var jPlan3 = JSON.stringify(sales);
+						$('.fc-row .fc-widget-header');
+
+						$.ajax({
+							type : "POST",
+							url : "/weeklyReport/modify",
+							data : {
+								sales : jPlan3,
+								report : jPlan2,
+								weeklyPlan : jPlan
+							},
+
+							success : function(data) {
+								window.location.href = "/weeklyReport/detail/"
+										+ $('#employee_id').val()+"/"+weeklyNumber;
+							},
+							error : function() {
+								event.preventDefault();
+							}
+						})
+					}
+				}, {
+					addClass : 'btn btn-danger btn-clean',
+					text : 'Cancel',
+					onClick : function($noty) {
+						$noty.close();
+					}
+				} ]
+	})
+}  
+function getWeeklyPlanButtonEvent(data,sessionUserId,now){
+	if(data.weeklyReportDTO == null){
+		var o = '<div id="contentFrameBody"><h1>등록된 계획이 없습니다.</h1></div>'
+		$('#trash').append(o);
+		weeklyNoPlanConfirm();
+		var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+		var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
+		$('#reg_date').html("");
+		$('#title').html(weeklyNumber+'주의 계획');
+/*		$('#employee_name').html('${user.employee_name}');
+		$('#department_name').html('${user.department_name}');*/
+		
+		var day = ['mon','tue','wed','thu','fri'];
+		makeSalesInput();
+		for(var i=0; i<5; i++){
+			$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
+		}
+		var box = $('#mb-NoWeeklyPlan');
+	}else{    		   		
+		if(sessionUserId == $('#employee_Id').val()){
+			
+				if(isModify(now)){
+					o = '<button type="submit" class="fc-button fc-state-default fc-corner-right fc-corner-left"><span class="fa fa-pencil"></span></button>';
+					$('.fc-right').prepend(o);
+				}
+		}
+		inputReportData(data);
+	}
+	registerDailyReportEvent();
+}
+function weeklyNoPlanConfirm(){
+	noty({
+        text: '작성된 계획이 없습니다.',
+        layout: 'center',
+        modal: 'true',
+        killer:'true',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: '확인', onClick: function($noty) {
+                    $noty.close();
+                    }
+                }
+            ]
+    })      
+}
+function weeklyCancleConfirm(){
+	noty({
+        text: '취소시 작성한 정보가 사라집니다.',
+        layout: 'center',
+        modal: 'true',
+        killer:'true',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
+                	window.location.href = "/main"
+                	}
+                },
+                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
+                    $noty.close();
+                   
+                    }
+                }
+            ]
+    })      
+}
+
+function weeklyWriteCancleConfirm(){
+	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+	var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
+	noty({
+        text: '작성된 계획이 존재합니다.<br><br> 작성된 계획을 보시겠습니까?',
+        layout: 'center',
+        modal: 'true',
+        killer:'true',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
+                		window.location.href = "/weeklyReport/detail/"+$('#employee_Id').val()+"/"+weeklyNumber;
+                        $noty.close();
+                	}
+                },
+                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
+                	window.location.href = "/main"
+                    $noty.close();
+                    }
+                }
+            ]
+    })      
+}
+
+function weeklyWriteConfirm(){
+    noty({
+        text: '계획을 저장하시겠습니까?',
+        layout: 'center',
+        modal: 'true',
+        killer:'true',
+        buttons: [
+                {addClass: 'btn btn-success btn-clean', text: 'Ok', onClick: function($noty) {
+                	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+                	var weeklyNumber = weeklyNumberText[1]+weeklyNumberText[2];
+                	
+					var weeklyReport = getReportInfo(weeklyNumber);
+
+					var sales = getSalesPlan();
+
+					var allPlan = getPlanDetail();
+                	
+             
+
+                	var jPlan = JSON.stringify(allPlan);
+                	var jPlan2 = JSON.stringify(weeklyReport);
+                	var jPlan3 = JSON.stringify(sales);
+                	
+                	
+                	$.ajax({
+                		type : "POST",
+                		url : "/weeklyReport/write",
+                		data : {
+                			sales : jPlan3,
+                			report : jPlan2,
+                			weeklyPlan : jPlan
+                		},
+                		success : function(){
+                			window.location.href="/weeklyReport/detail/"+$('#employee_Id').val()+"/"+weeklyNumber;
+                		},
+                		error : function(){
+                		}
+                	})
+                }
+                },
+                {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
+                    $noty.close();
+                    }
+                }
+            ]
+    })                                                    
 }

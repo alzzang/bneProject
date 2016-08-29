@@ -44,11 +44,11 @@
 	</servlet-mapping>
 	
  	 <welcome-file-list>
-    	<welcome-file>main.jsp</welcome-file>
+    	<welcome-file>NewFile.jsp</welcome-file>
   	</welcome-file-list> 
   	
-  	<error-page>
+<!--   	<error-page>
     	<error-code>405</error-code>
     	<location>/WEB-INF/views/405error.jsp</location>
-    </error-page>
+    </error-page> -->
 </web-app>

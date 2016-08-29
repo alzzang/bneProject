@@ -3,12 +3,81 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.Department">
-
-	<select id="getDepartmentList" resultType="Department">
-		select department_id, department_name
-		from department
-		where department_id != 0
-		order by department_name asc
+	<select id="getPagingNum_DepartmentList" parameterType="hashmap" resultType="int">
+		select ceil(count(*)/15) cnt
+		from (select * from department where department_id != 0) d , employee e
+		where d.manager_id = e.employee_id(+)
+				<if test="department_id != null">
+					and d.department_id=#{department_id}
+				</if>
+				<if test="department_name != null">
+					and d.department_name like '%' || #{department_name} || '%'
+				</if>
+        		<if test="employee_name != null">
+					and e.employee_name like '%' || #{employee_name} || '%'
+				</if>
 	</select>
-
+	
+	<select id="getDepartmentList" parameterType="hashmap" resultType="DepartmentTeamList">
+		select deptlist.*
+		from
+		(select ROW_NUMBER() over (order by d.department_id asc) idx, d.*,(select count(*) from employee where department_id=d.DEPARTMENT_ID) count, e.EMPLOYEE_NAME 
+		from DEPARTMENT d,employee e 
+		where e.employee_ID(+) = d.manager_id and d.department_id != 0
+				<if test="department_id != null">
+					and d.department_id=#{department_id}
+				</if>
+				<if test="department_name != null">
+					and d.department_name like '%' || #{department_name} || '%'
+				</if>
+        		<if test="employee_name != null">
+					and e.employee_name like '%' || #{employee_name} || '%'
+				</if>
+		) deptlist
+		where idx between 1 + #{perContentNum} * (#{startIdx}-1) and #{startIdx} * #{perContentNum}
+		order by idx asc
+	</select>
+	
+   <select id="getDepartmentList_all" resultType="Department">
+      select department_id, department_name
+      from department
+      where department_id != 0
+      order by department_name asc
+   </select>
+	
+	<delete id="deleteDepartment" parameterType="Integer">
+		delete department where department_id=#{department_id}
+	</delete>
+	
+	<update id="updateManager" parameterType="DepartmentTeamList">
+		<!-- update department set  -->
+		update employee set department_id=#{department_id} where employee_id=#{manager_id}
+	</update>
+	
+	<update id="updateDepartment" parameterType="DepartmentTeamList">
+	<if test="employee_name!=''">
+	 update department set department_name=#{department_name}, manager_id=#{manager_id}, telephone=#{telephone} where department_id=#{department_id}
+	</if>
+	<if test="employee_name==''">
+	update department set department_name=#{department_name}, manager_id='', telephone=#{telephone} where department_id=#{department_id}
+	</if>
+		
+	</update>
+	
+	<select id="selectCount" parameterType="String" resultType="Integer">
+		 SELECT department_id from department where department_name=#{department_name}  
+	</select>
+	
+   
+   <select id="selectManager" parameterType="String" resultType="Integer">
+   	 select count(*) from department where manager_id=#{manager_id}
+   </select>
+   
+   <insert id="insertDepartmentName" parameterType="Department">
+     insert into department (department_id,department_name,manager_id,telephone) values(department_num.nextval,#{department_name},#{manager_id},#{telephone})
+   <selectKey keyProperty="department_id" resultType="Integer" order="AFTER">
+      select department_num.CURRVAL from dual
+      </selectKey>
+     </insert>
 </mapper>
+
