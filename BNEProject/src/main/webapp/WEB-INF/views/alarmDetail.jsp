@@ -70,7 +70,6 @@ function unconfirmedData(){
 
                   var str = JSON.stringify(data);
                   var list = $.parseJSON(str);
-                  console.log(list);
                   var len = Object.keys(list).length
                   if(len>0){
                      for(var i=0;i<len;i++){
@@ -145,7 +144,7 @@ function confirmedData(){
 
                var str = JSON.stringify(data);
                var list = $.parseJSON(str);
-               console.log(list);
+
                var len = Object.keys(list).length
                if(len>0){
                   for(var i=0;i<len;i++){

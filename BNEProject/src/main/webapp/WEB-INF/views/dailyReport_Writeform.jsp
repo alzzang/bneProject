@@ -289,18 +289,17 @@ input[type=text] {
 														class="fa fa-pencil"></span></span> <input type="text"
 														class="form-control" name="title" id="modalTitle">
 												</div>
-												<span class="help-block">This is text field</span>
+												
 											</div>
 										</div>
 
 										<div class="form-group">
-											<label class="col-md-2 col-xs-12 control-label">Text
-												Field</label>
+											<label class="col-md-2 col-xs-12 control-label">
+												</label>
 											<div class="col-md-8 col-xs-12">
 												<textarea class="form-control summernote" name="content"
 													rows="5" id="modalContent"></textarea>
 
-												<span class="help-block">This is text field</span>
 											</div>
 										</div>
 
@@ -313,7 +312,7 @@ input[type=text] {
 													<c:forEach var="client" items="${clients}">
 														<option value="${client.client_id }">${client.client_name}</option>
 													</c:forEach>
-											</select> <span class="help-block">Select box </span>
+											</select> 
 											</span> <span class="col-md-2 col-xs-12"> <input type="text"
 												class="form-control" placeholder="고객코드" readonly
 												id="client_id" name="client_id">

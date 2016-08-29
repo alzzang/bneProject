@@ -116,4 +116,8 @@
    <delete id="deleteWeeklyReport" parameterType="String">
       DELETE FROM WEEKLY_REPORT WHERE WEEKLY_REPORT_ID = #{value}
    </delete>
+   
+   <select id="getWeeklyReport" parameterType="Integer" resultType="WeeklyReport">
+   	select * from weekly_report where link_id=#{link_id}
+   </select>
 </mapper>

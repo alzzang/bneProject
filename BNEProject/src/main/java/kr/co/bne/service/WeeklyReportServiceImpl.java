@@ -114,5 +114,10 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		result = weeklyReportDAO.selectTotalRecordNum(parameterMap);
 		return result;
 	}
+	@Override
+	public WeeklyReportDTO selectWeeklyReport(int link_id) {
+		// TODO Auto-generated method stub
+		return weeklyReportDAO.getWeeklyReport(link_id);
+	}
 
 }

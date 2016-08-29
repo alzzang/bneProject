@@ -161,8 +161,7 @@ $(function() {
 		var html='';
 		var html2='';
 		var keycode = e.keyCode;
-		console.log(keycode+':'+str.length);
-		console.log(str);
+
 		$(".xn-search").attr("class","xn-search");
 		if(str==''){
 		}else{
@@ -186,7 +185,7 @@ $(function() {
 			},
 			dataType:"json",
 			success:function(data){
-				console.log('success');
+		
 				$("#empSearch").parent().find(".panel-primary").remove();
 				html=
 					'<div class="panel panel-primary zoomIn xn-drop-left xn-panel-dragging">'+
@@ -203,7 +202,6 @@ $(function() {
 				$("#empSearch").parent().append(html);
 
 				if(data.length===0){
-					console.log('data.length===0');
 					$(".xn-search").attr("class","xn-search active");
 					html2='<a href="#" id="iii" class="list-group-item">'+
                     '        <div class="list-group-status status-online"></div>'+
@@ -219,7 +217,7 @@ $(function() {
                     '    </a>';
 					
 					for(var i=0;i<data.length;i++){
-						console.log('data find '+i);
+				
 						html2='<a href="#" id="iii'+data[i].employee_id+'" class="list-group-item">'+
 	                    '        <div class="list-group-status status-online"></div>'+
 	                    '        <img src="/assets/images/users/user2.jpg" class="pull-left" alt="John Doe"/>'+
@@ -242,7 +240,7 @@ $(function() {
 					
 
 					if(keycode=='13'){
-						console.log('str:'+str);
+					
 						location.href='/user/empSearch2?empSearch='+str;
 					}
 					$(".showUserList").on("click",function(e){

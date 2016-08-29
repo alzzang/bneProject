@@ -119,7 +119,7 @@
    		var modifyFlag=true;
    		
 		$("#manageSalesButton"+a).on("click", function() {
-			alert(a);
+
 				var th = $(this).parent().prev();
 				var ts=$('#demo-2').val().split("-");
 				var tty = +'<%=cal.get(Calendar.YEAR)%>';

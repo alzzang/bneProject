@@ -363,7 +363,7 @@ input[type=text] {
 
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">
-					<span class="fa fa-arrow-circle-o-left"></span> 상담일지 작성
+					<span class="fa fa-arrow-circle-o-left"></span> 상담일지
 				</h4>
 
 			</div>
@@ -380,17 +380,14 @@ input[type=text] {
 						<div class="col-md-12">
 
 							<div class="panel-body">
-								<p>
-									<code>상담일지</code>
-
-								</p>
+								
 								<table class="table">
 									<thead>
 										<tr>
-											<th>소속</th>
-											<td id="counsel_department"></td>
-											<th>성명</th>
-											<td id="counsel_empname"></td>
+											<th style="width: 15%">소속</th>
+											<td id="counsel_department" style="width: 20%"></td>
+											<th >성명</th>
+											<td id="counsel_empname" style="width: 18%"></td>
 											<th>작성일</th>
 											<td id="counsel_regdate"></td>
 										</tr>

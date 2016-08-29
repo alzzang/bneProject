@@ -29,6 +29,12 @@ var jsonArray=new Array();
 	 setUpdateContents('${dailyReport.content}');
  });
 </script>
+<style>
+input[type=text] {
+   color: black !important; 
+}
+</style>
+
 <div class="content-frame">
 	<!-- START CONTENT FRAME TOP -->
 	<div class="content-frame-top">
@@ -177,7 +183,7 @@ var jsonArray=new Array();
 								<div class="col-md-2 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">주행 거리</span> <input
-											type="text" class="form-control" id="result_guage" pattern="[0-9]{0,10}" required="required">
+											type="text" class="form-control" id="result_guage" pattern="[0-9]{0,10}" required="required" readonly="readonly">
 									</div>
 								</div>
 							</div>
@@ -256,18 +262,16 @@ var jsonArray=new Array();
 										class="fa fa-pencil"></span></span> 
 										<input type="text" class="form-control" name="title" id="modalTitle">
 								</div>
-								<span class="help-block">This is text field</span>
-							</div>
+								</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-2 col-xs-12 control-label">Text
-								Field</label>
+							<label class="col-md-2 col-xs-12 control-label">
+							</label>
 							<div class="col-md-8 col-xs-12">
 								<textarea class="form-control summernote" name="content"
 									rows="5" id="modalContent"></textarea>
 
-								<span class="help-block">This is text field</span>
 							</div>
 						</div>
 
@@ -279,7 +283,7 @@ var jsonArray=new Array();
 									<c:forEach var="client" items="${clients}" >
 										<option value="${client.client_id }">${client.client_name}</option>
 									</c:forEach>
-							</select> <span class="help-block">Select box </span>
+							</select> 
 							</span> 
 							<span class="col-md-2 col-xs-12"> 
 							<input type="text" class="form-control" placeholder="고객코드" readonly id="client_id" name="client_id">
@@ -296,7 +300,7 @@ var jsonArray=new Array();
 							<span class="col-md-5 col-xs-12">
 								<select class="form-control" name="sec_client_id"
 									id="sec_client_id" required>
-								</select> <span class="help-block">Select box </span>
+								</select>
 							</span>
 							<span class="col-md-3 col-xs-12"> <input type="text"
 								class="form-control" placeholder="주소" readonly
