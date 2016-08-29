@@ -370,11 +370,10 @@ function getWeeklyPlanButtonEvent(data,sessionUserId,now){
 		weeklyNoPlanConfirm();
 		var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
 		var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
-		
 		$('#reg_date').html("");
 		$('#title').html(weeklyNumber+'주의 계획');
-		$('#employee_name').html('${user.employee_name}');
-		$('#department_name').html('${user.department_name}');
+/*		$('#employee_name').html('${user.employee_name}');
+		$('#department_name').html('${user.department_name}');*/
 		
 		var day = ['mon','tue','wed','thu','fri'];
 		makeSalesInput();

@@ -86,12 +86,12 @@
 				<thead>
 					<tr>
 						<th>소속</th>
-						<td><span id="department_name"></span></td>
+						<td><span id="department_name">${employee.department_name }</span></td>
 					</tr>
 
 					<tr>
 						<th>이름</th>
-						<td><span id="employee_name"></span></td>
+						<td><span id="employee_name">${employee.employee_name }</span></td>
 					</tr>
 
 					<tr>

@@ -120,11 +120,11 @@ $("#submitAddFormBtn1").on("click",function(){
           alert('부서를 등록 할 수 없습니다.(부서명)');
           return;
        }
-       
+  /*     
        if($("#deptAFInputMName").attr("formflag")=='false'){
            alert('부서를 등록 할 수 없습니다.(팀장)');
            return;
-        }
+        }*/
        
        if($("#deptAFInputDNum").attr("formflag")=='false'){
            alert('부서를 등록 할 수 없습니다.(연락처)');

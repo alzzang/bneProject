@@ -77,7 +77,7 @@ $(function() {
                };
       myDropzone.options.addedfile.call(myDropzone, mockFile);
       myDropzone.options.thumbnail.call(myDropzone, mockFile,
-            "/user/download/" + $('#fileName').val() + "/");
+            "http://192.168.1.18:8085/test/" + $('#fileName').val());
       myDropzone.emit("complete", mockFile);
       myDropzone.files.push(mockFile);
    });

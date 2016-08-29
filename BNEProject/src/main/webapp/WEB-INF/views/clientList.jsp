@@ -93,7 +93,7 @@
               </div>
               <div class="mb-footer">
               	<div class="pull-right">
-            		<a id="removeClientAnchor" class="btn btn-default btn-lg mb-control-close" onclick="submitModifyForm();">Yes</a>
+            		<a id="modifyClientAnchor" class="btn btn-default btn-lg mb-control-close" onclick="submitModifyForm();">Yes</a>
                    <button class="btn btn-default btn-lg mb-control-close">No</button>
 				</div>
               </div>

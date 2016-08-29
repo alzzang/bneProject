@@ -71,7 +71,7 @@
                 ELSE 'employee' END position
          from employee e, department d
          where e.DEPARTMENT_ID = d.DEPARTMENT_ID and e.employee_name <> 'admin'
-           and EMPLOYEE_NAME like '%a%'
+           and EMPLOYEE_NAME like #{value}
          order by 2	]]>
 	</select>
 

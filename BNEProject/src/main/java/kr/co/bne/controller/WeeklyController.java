@@ -29,6 +29,7 @@ import com.google.gson.JsonParser;
 
 import kr.co.bne.common.WeeklyReportMemberInfo;
 import kr.co.bne.common.WeeklyReportSearchElement;
+import kr.co.bne.dto.DepartmentDTO;
 import kr.co.bne.dto.EmployeeDTO;
 import kr.co.bne.dto.PlanDetailDTO;
 import kr.co.bne.dto.WeeklyPlanDTO;
@@ -153,6 +154,7 @@ public class WeeklyController {
 		}
 			
 		//mv.addObject("reportIdList", reportId_list);
+		mv.addObject("employee",eDTO);
 		mv.addObject("employee_Id", employeeId);
 		mv.addObject("weekly_of_year",week_of_year);
 		return mv;
@@ -193,6 +195,7 @@ public class WeeklyController {
 		}
 			
 		//mv.addObject("reportIdList", reportId_list);
+		mv.addObject("employee",eDTO);
 		mv.addObject("employee_Id", employeeId);
 		mv.addObject("weekly_of_year",week_of_year);
 		return mv;

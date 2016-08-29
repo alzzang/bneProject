@@ -20,7 +20,7 @@
 
 <select id="selectManageUser" parameterType="Integer" resultType="Employee"> 
 
-select e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.department_id 
+select e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.department_id
 from employee e,department d
 where e.department_id=#{value}
 minus 
@@ -31,7 +31,7 @@ order by 2
 </select>
 
 <select id="selectManageSalesList" parameterType="CounsellingManageSales" resultType="CounsellingManageSalesList"> 
-select b.EMPLOYEE_NAME,a.employee_id,a.sales_goal,a.year,a.month,b.department_id 
+select b.EMPLOYEE_NAME,a.employee_id,a.sales_goal,a.year,a.month,b.department_id,b.file_position
 from (select e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.department_id 
       from employee e,department d
       where e.department_id=#{department_id}
