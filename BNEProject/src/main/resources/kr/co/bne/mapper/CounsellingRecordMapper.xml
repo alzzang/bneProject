@@ -31,7 +31,7 @@ order by 2
 </select>
 
 <select id="selectManageSalesList" parameterType="CounsellingManageSales" resultType="CounsellingManageSalesList"> 
-select b.EMPLOYEE_NAME,a.employee_id,a.sales_goal,a.year,a.month,b.department_id,b.file_position
+select b.EMPLOYEE_NAME,a.employee_id,a.sales_goal,a.year,a.month,b.department_id
 from (select e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.department_id 
       from employee e,department d
       where e.department_id=#{department_id}
@@ -39,7 +39,7 @@ from (select e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.department_id
       select e.EMPLOYEE_ID,e.EMPLOYEE_NAME,e.department_id 
       from employee e,department d
       where e.employee_id=d.manager_id) b,monthly_goal a
-where a.employee_id=b.employee_id and b.department_id=1 and year = #{year} and month = #{month}
+where a.employee_id=b.employee_id and year = #{year} and month = #{month}
 
 </select>
 

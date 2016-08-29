@@ -36,6 +36,11 @@
 					<div class="tasks ui-sortable" id="unapproval"
 						style="height: 450px;">
 										
+						
+						
+							
+						<c:choose>
+						 <c:when test="${requestScope.unapproval.totalPageNum > 0}">				
 						<c:forEach items="${requestScope.unapproval.dailyReportList}" var="rlist">
 							<div
 								class="task-item task-warning task-complete widget widget-item-icon"
@@ -55,7 +60,15 @@
 								</div>
 							</div>
 						</c:forEach>
-				
+						</c:when>
+						<c:otherwise>
+						 <div class="panel-body">
+                                    
+						 <p>미승인 보고서가 없습니다.</p>
+						 </div>
+						</c:otherwise>
+						
+						</c:choose>
 					</div>
 				</div>
 				<!-- START BAR CHART -->

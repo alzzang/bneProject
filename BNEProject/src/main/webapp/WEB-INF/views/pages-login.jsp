@@ -28,14 +28,14 @@
 				<form action="/user/validCheck" class="form-horizontal" method="post">
 					<div class="form-group">
 						<div class="col-md-12">
-							<input type="text" class="form-control" placeholder="Username"
-								name='id' />
+							<input type="text" class="form-control" placeholder="EmployeeID"
+								name='id' required="required" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-md-12">
 							<input type="password" class="form-control"
-								placeholder="Password" name='password' />
+								placeholder="Password" name='password' required="required"/>
 						</div>
 					</div>
 					<div class="form-group">

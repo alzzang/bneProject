@@ -171,8 +171,16 @@ public class UserController {
 				return "redirect:/main";
 			}
 	     
+			outs.println("<script type='text/javascript'>");
+			outs.println(" location.href = '/user/login'"); 
+            outs.println(" alert('없는 아이디 또는 비밀번호가 틀렸습니다.'); ");
+            outs.println("</script>");
+            outs.flush();
+            outs.close();
+           
+			return "login";
 			
-			return "redirect:/user/login";
+			//return "redirect:/user/login";
 		}
 
 		else {

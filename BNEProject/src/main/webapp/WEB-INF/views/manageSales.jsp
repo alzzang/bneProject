@@ -146,7 +146,7 @@
 					
 					
 					$('#salesGoalInput'+a).on("change",function(){
-						alert('hello');
+						
 						var tempStr=$('#demo-2').val().split("-");
 						
 						/* 정규식 패턴검사 */
@@ -156,7 +156,6 @@
 						
 						
 						if(true_false){
-							alert('true');
 							th.html($('#salesGoalInput'+a).val());
 						}else{
 							alert('숫자만 입력 가능합니다.');

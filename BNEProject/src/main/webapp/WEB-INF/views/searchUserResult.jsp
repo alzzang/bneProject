@@ -24,13 +24,13 @@
    <div class="content-frame-left">
       <div class="panel panel-default">
          <div class="panel-body profile"
-            style="background: url('/assets/images/gallery/music-4.jpg') center center no-repeat;">
+            style="background: url('/assets/images/gallery/nature-7.jpg') center center no-repeat;">
             <div class="profile-image">
                <img src="http://192.168.1.18:8085/test/${emp.file_position }" alt="Nadia Ali" />
             </div>
             <div class="profile-data">
-               <div class="profile-data-name">${emp.employee_name}</div>
-               <div class="profile-data-title" style="color: #FFF;">${emp.department_name }</div>
+               <div class="profile-data-name" style="color:black;">${emp.employee_name}</div>
+               <div class="profile-data-title" style="color:black;">${emp.department_name }</div>
             </div>
             <div class="profile-controls">
 <!--                <a href="#" class="profile-control-left twitter"><span
@@ -107,7 +107,7 @@
                       	<c:if test="${list.position != 'manager'}">
 	                        <div class="col-md-4 col-xs-4">
 	                           <a href="/user/searchUser/${list.employee_id}" class="friend">
-	                              <img src="http://192.168.1.18:8085/test/${list.file_position }">
+	                              <img src="http://192.168.1.18:8085/test/${list.file_position }" style="height:63px;">
 	                              <span>${list.employee_name}<br></span>
 	                           </a>
 	                        </div>
