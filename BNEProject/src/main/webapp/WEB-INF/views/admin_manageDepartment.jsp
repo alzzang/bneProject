@@ -59,10 +59,7 @@ tbody tr td{
 	
 			if(data!=$('#'+departmentId+' td:nth-child(1)').html()&&data!=-1){
 				alert('이미 존재하는 부서입니다.');
-				/* alert(departmentId); dksy
-				alert($('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val()); */
 				$('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val(-1);
-				/* alert($('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val()); */
 			}else{
 				$('#'+departmentId+' td:nth-child(6) #deptFlag'+departmentId).val(0);
 			}
@@ -463,7 +460,6 @@ function EmployeeOfDepartment(departmentId){
 		var result = {"flag":0, "index":0};
 		var pattern =  /^0([0-9]{1,2})([0-9]{3,4})([0-9]{4})$/;
 		$.each( jsonInfo, function( idx, value ) {
-			/* alert(value["row_num"]); */
 			var deptId= $('#'+value["row_num"] +' td:nth-child(1)').html();
 			var dept=$('#department_name'+value["row_num"]).val();
 			var manager=$('#employee_name'+value["row_num"]).val();
@@ -476,7 +472,6 @@ function EmployeeOfDepartment(departmentId){
 			value["manager_id"]=manager_id;
 			
 			jsonInfo[idx]=value;
-			alert(value["row_num"]);
 			 if($('#'+value["row_num"]+' td:nth-child(6) #deptFlag'+value["row_num"]).val()==-1){
 					result.flag=-1;
 					result.index=value["row_num"];

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -74,9 +75,11 @@ public class WeeklyController {
 	
 	
 	@RequestMapping("/writeForm")
-	public String WeeklyWriteForm(Model model,HttpServletResponse response,HttpServletRequest request, HttpSession session) throws Exception{
+	public String WeeklyWriteForm(Model model,HttpServletResponse response, HttpServletRequest request, HttpSession session) throws Exception{
 		EmployeeDTO loginEmployee = (EmployeeDTO) session.getAttribute("user");
 
+		
+		
 		if(loginEmployee == null) 
 				return "main";
 		
@@ -195,7 +198,6 @@ public class WeeklyController {
 		return mv;
 	}
 	
-	
 	@RequestMapping("/weeklywriteimpl")
 	public String WeeklyWriteImpl(Model model, HttpServletRequest request) throws Exception{
 		return "main";
@@ -218,6 +220,7 @@ public class WeeklyController {
 			PlanDetailDTO dto;
 	        dto=(new Gson()).fromJson(json.get(i), PlanDetailDTO.class);
 	        planDetailList.add(dto);
+	        
 	        dto.setWeekly_report_id(weeklyReportDTO.getWeekly_report_id());
 	      }
 		
@@ -323,7 +326,6 @@ public class WeeklyController {
 		weeklyReportDetail.setWeeklyPlanDTOList(weeklyPlanList);
 		int result = weeklyReportService.modifyWeeklyReport(weeklyReportDetail);
 	}
-
 	
 	@RequestMapping("/list")
 	public ModelAndView getFirstWeeklyList(HttpServletRequest request) throws Exception {
@@ -342,21 +344,12 @@ public class WeeklyController {
 			return mv;
 		}
 
-		// keyword
 		String keyword = request.getParameter("keyword");
-		
-		// plan_date
 		String planDate = request.getParameter("planDate");
-		
-		// department_id
-		String department_id = loginUser.getDepartment_id() + "";
-		
-		// pageSize
+		int department_id = loginUser.getDepartment_id();
 		int pageSize = 5;
 
-		// page
 		String pageStr = request.getParameter("pageStr");
-
 		int page = 0;
 		if("".equals(pageStr) || pageStr == null)
 			page = 1;
@@ -373,9 +366,10 @@ public class WeeklyController {
 		
 		// 내 부서의 주간계획 목록
 		List<WeeklyReportSearchElement> myDeptWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
-		for (WeeklyReportSearchElement weeklyReportSearchElement : myDeptWeeklyReportList) {
-			System.out.println(weeklyReportSearchElement);
-		}
+//		System.out.println("weeklyReportListSize : " + myDeptWeeklyReportList.size());
+//		for (WeeklyReportSearchElement weeklyReportSearchElement : myDeptWeeklyReportList) {
+//			System.out.println(weeklyReportSearchElement);
+//		}
 		
 		List<WeeklyReportMemberInfo> myDeptMemberList = weeklyReportService.selectDeptMember(department_id);
 //		System.out.println("myDeptMemberList : " + myDeptMemberList.size());

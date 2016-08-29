@@ -114,6 +114,8 @@ if(((EmployeeDTO) session.getAttribute("user")).getPosition() != null) {
 			</li>
 			<li class=""><a href="/admin/employee/1"><span class="fa fa-user"></span><span class="xn-text">사원 관리</span></a>
 			</li>
+			<li class=""><a href="/client/list"><span class="fa fa-desktop"></span> <span class="xn-text">1차 거래처 목록</span></a>
+			<li class=""><a href="/2ndclient/list"><span class="fa fa-desktop"></span> <span class="xn-text">2차 거래처 목록</span></a>
 		<%} %>
 
 		</ul>

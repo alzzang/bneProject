@@ -20,6 +20,9 @@
       <!-- WeeklyReport 우동이 추가 -->
       <typeAlias alias="WeeklyReportSearchElement" type="kr.co.bne.common.WeeklyReportSearchElement"/>
       <typeAlias alias="WeeklyReportMemberInfo" type="kr.co.bne.common.WeeklyReportMemberInfo"/>
+      <typeAlias alias="ClientSearchElement" type="kr.co.bne.common.ClientSearchElement"/>
+	 <typeAlias alias="SecondaryClientSearchElement" type="kr.co.bne.common.SecondaryClientSearchElement"/>
+		
       <!--DailyReport 태우 추가-->
       <typeAlias alias="DailyReportEmployee" type="kr.co.bne.dto.DailyReportEmployeeDTO"/>
       <typeAlias alias="DailyReportDetail" type="kr.co.bne.dto.DailyReportDetailDTO"/>

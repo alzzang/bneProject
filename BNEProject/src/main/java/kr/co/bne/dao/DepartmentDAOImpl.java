@@ -67,7 +67,6 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		}
 		
 	}
-
 	@Override
 	public boolean updateManager(DepartmentTeamList deptlist) {
 		// TODO Auto-generated method stub

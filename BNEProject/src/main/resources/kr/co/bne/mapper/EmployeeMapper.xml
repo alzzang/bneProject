@@ -3,7 +3,6 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.Employee">
-
    <select id="selectEmployee" parameterType="String" resultType="Employee">
    <![CDATA[select e.*, d.department_name,
                  CASE when d.department_id = 0 then 'admin'
@@ -67,14 +66,13 @@
 	
 	<select id="empSearch" parameterType="String" resultType="Employee">
 		<![CDATA[
-		   select EMPLOYEE_ID,EMPLOYEE_NAME,DEPARTMENT_ID,mobile_phone,email,file_position
- from employee
- where EMPLOYEE_NAME like #{value}
- minus
- select EMPLOYEE_ID,EMPLOYEE_NAME,DEPARTMENT_ID,mobile_phone,email,file_position
- from employee
- where EMPLOYEE_NAME ='admin'
- order by 2	]]>
+		   select e.EMPLOYEE_ID, e.EMPLOYEE_NAME, e.DEPARTMENT_ID, e.mobile_phone, e.email, e.file_position,
+                CASE WHEN employee_id in (select manager_id from department) THEN 'manager'
+                ELSE 'employee' END position
+         from employee e, department d
+         where e.DEPARTMENT_ID = d.DEPARTMENT_ID and e.employee_name <> 'admin'
+           and EMPLOYEE_NAME like '%a%'
+         order by 2	]]>
 	</select>
 
 	

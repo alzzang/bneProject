@@ -243,13 +243,6 @@ var makeSalesInput = function(){
 		
 		preventKeyDown();
 		preventMouseClick();
-		
-		$('#modifyCancle').on('click',function(){
-			openMessageBox("#mb-confirmCancle");
-		})
-		$('#modify').on('click',function(){
-			openMessageBox('#mb-confirmModify');
-		});
 	}
 	
 

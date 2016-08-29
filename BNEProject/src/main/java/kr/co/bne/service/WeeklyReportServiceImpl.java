@@ -62,6 +62,7 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		return result;
 	}
 
+	
 	@Override
 	public List<String> selectAllReportId(String employee_id) throws Exception{
 		List<String> result = weeklyReportDAO.selectAllWeeklyReportId(employee_id);
@@ -95,15 +96,15 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		return 0;
 	}
 	
-		@Override
-	public List<WeeklyReportSearchElement> selectWeeklyReportSearch(Map parameterMap) throws Exception {
+	@Override
+	public List<WeeklyReportSearchElement> selectWeeklyReportSearch(Map<String, Object> parameterMap) throws Exception {
 		List<WeeklyReportSearchElement> result = null; 
 		result = weeklyReportDAO.selectWeeklyReportList(parameterMap);
 		return result;
 	}
 
 	@Override
-	public List<WeeklyReportMemberInfo> selectDeptMember(String department_id) throws Exception {
+	public List<WeeklyReportMemberInfo> selectDeptMember(int department_id) throws Exception {
 		List<WeeklyReportMemberInfo> result = weeklyReportDAO.selectDeptMember(department_id);
 		return result;
 	}
@@ -114,5 +115,6 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		result = weeklyReportDAO.selectTotalRecordNum(parameterMap);
 		return result;
 	}
+	
 
 }

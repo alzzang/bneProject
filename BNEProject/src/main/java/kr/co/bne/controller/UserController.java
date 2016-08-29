@@ -1,23 +1,20 @@
 package kr.co.bne.controller;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -85,8 +82,6 @@ public class UserController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public void uploadFiles(HttpServletResponse response, MultipartHttpServletRequest req,
 			@RequestParam("id") String id) throws IOException {
-		
-		
 		String fileName = null;
 		Map<String, MultipartFile> fileMap = req.getFileMap();
 		for (MultipartFile multipartFile : fileMap.values()) {
@@ -96,8 +91,6 @@ public class UserController {
 			
 
 		}
-				
-		
 		setFileName(fileName,req);
 		
 	}
@@ -122,7 +115,6 @@ public class UserController {
 		return outputFileName;
 		
 	}
-	
 
 	@RequestMapping(value = "/goLoginForm", method = { RequestMethod.GET })
 	public String goLoginForm() {
@@ -161,7 +153,6 @@ public class UserController {
 				session.setAttribute("fileName", employeeDTO.getFile_position());
 
 				DailyReportEmployeeDTO employee= dailyReportService.searchPreSales(employeeDTO.getEmployee_id());
-
 				session.setAttribute("employee", employee);
 				return "redirect:/main";
 			}
@@ -191,20 +182,30 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/searchUser/{empId}", method = { RequestMethod.GET })
-	public String showSearchUser(Model model,@PathVariable String empId, HttpServletRequest req, HttpServletResponse res)
-			throws IOException {
-				
-		HttpSession session = req.getSession();
-		EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("user");
-		
-		EmployeeDTO edto = employeeDAO.selectEmployee(empId);
-		List<EmployeeDTO> depUserList=counsellingRecordService.getManageSales(employeeDTO.getDepartment_id());
-		System.out.println("!!! : "+empId);
-		model.addAttribute("emp",edto);
-		model.addAttribute("depUserList", depUserList);
-		model.addAttribute("employeeDTO", employeeDTO);
-		
-		return "searchUser";
+   public String showSearchUser(Model model,@PathVariable String empId, HttpServletRequest req, HttpServletResponse res)
+         throws IOException {
+
+      res.setCharacterEncoding("UTF-8");
+      res.setContentType("text/html; charset=UTF-8");
+      HttpSession session = req.getSession();
+      EmployeeDTO employeeDTO = (EmployeeDTO)session.getAttribute("user");
+      PrintWriter out = res.getWriter();
+      EmployeeDTO edto = employeeDAO.selectEmployee(empId);
+      if(edto.getPosition().equals("manager")){
+         System.out.println("manager search!");
+         out.println("<script language='javascript'>"); 
+         out.println("alert('manager의 url 검색은 할 수 없습니다.');"); 
+         out.println("location.href='/main'");
+         out.println("</script>"); 
+         out.close();
+      }
+      model.addAttribute("emp",edto);
+      List<EmployeeDTO> depUserList=counsellingRecordService.getManageSales(edto.getDepartment_id());
+      
+      model.addAttribute("depUserList", depUserList);
+      model.addAttribute("employeeDTO", employeeDTO);
+      
+      return "searchUser";
 	}
 	
 	@RequestMapping(value = "/empSearch2", method = { RequestMethod.GET })

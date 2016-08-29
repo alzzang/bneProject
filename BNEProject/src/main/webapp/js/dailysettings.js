@@ -438,7 +438,6 @@ function searchSalesGoal(reg_date) {
 		success : function(data) {
 			var result=jQuery.parseJSON(data);
 			if(result.flag===-1){
-				alert('a');
 				$('#dailyGoal').attr('value',0);
 				$('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+0+')');
 				changeProgress($('#inputSales').val(),0);
@@ -459,7 +458,6 @@ function searchSalesGoal(reg_date) {
 				  $('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+result.daily_sales+')'); 
 				  changeProgress($('#inputSales').val(),result.daily_sales);
 			}
-			alert(result.flag);
 			if($('#searchGoalFlag').val()==0){
 				$('#searchGoalFlag').val(1);
 			}

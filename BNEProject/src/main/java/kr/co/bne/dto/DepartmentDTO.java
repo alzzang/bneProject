@@ -96,5 +96,4 @@ public class DepartmentDTO {
       return true;
    }
    
-   
 }

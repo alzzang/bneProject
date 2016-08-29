@@ -18,8 +18,7 @@ function addInputElement() {
    var d = $("#employeeAddForm-body").children().first().clone();
    
    $("#employeeAddForm-body").append(d.show());
-   
-   alert(d.html());
+
 }
 
 function removeInputElement() {

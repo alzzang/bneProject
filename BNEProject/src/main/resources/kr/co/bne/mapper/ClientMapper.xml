@@ -4,9 +4,72 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.Client">
 
-<select id="selectClient" resultType="Client">
-	<![CDATA[select * from client]]>
-</select>
-
+	<select id="selectClient" resultType="Client">
+	<![CDATA[select * from client order by client_name]]>
+	</select>
+	
+	<insert id="insertClient" parameterType="Client">
+		INSERT INTO CLIENT VALUES(CLIENT_SEQ.NEXTVAL, #{client_name}, #{representative}, #{department_id}, #{address}, #{telephone})
+	</insert>
+	 
+	<update id="updateClient" parameterType="Client">
+		UPDATE	CLIENT
+		<set>
+			<if test="client_name != null and client_name != ''">
+				CLIENT_NAME=#{client_name},
+			</if>
+			<if test="representative != null and representative != ''">
+				REPRESENTATIVE=#{representative},
+			</if>
+			<if test="address != null and address != ''">
+				ADDRESS=#{address},
+			</if>
+			<if test="telephone != null and telephone != ''">
+				TELEPHONE=#{telephone},
+			</if>
+			<if test="department_id != 0 and department_id != ''">
+				DEPARTMENT_ID=#{department_id}
+			</if>
+		</set>
+		WHERE	CLIENT_ID = #{client_id}
+	</update>
+	
+	<delete id="deleteClient" parameterType="Integer">
+		DELETE FROM	CLIENT WHERE CLIENT_ID = #{value}
+	</delete>
+	
+	<select id="searchClient" parameterType="map" resultType="ClientSearchElement">
+		SELECT *
+		FROM   (SELECT  ROW_NUMBER() OVER (ORDER BY CLIENT_ID DESC) IDX, C.*, D.DEPARTMENT_NAME
+				FROM    CLIENT C, DEPARTMENT D
+				WHERE	C.DEPARTMENT_ID = D.DEPARTMENT_ID
+					<if test="client.client_name != null and client.client_name != ''">
+				  		AND C.CLIENT_NAME LIKE '%'||#{client.client_name}||'%'
+					</if>
+					<if test="client.representative != null and client.representative != ''">
+				  		AND C.REPRESENTATIVE LIKE '%'||#{client.representative}||'%'
+					</if>
+					<if test="client.department_id != 0 and client.department_id != ''">
+				  		AND C.DEPARTMENT_ID = #{client.department_id}
+					</if>
+				)
+		WHERE IDX BETWEEN 1 + (#{pageSize} * (#{page}-1)) AND #{pageSize} + (#{pageSize} * (#{page}-1))
+	</select>
+	
+	<select id="searchClientCount" parameterType="map" resultType="Integer">
+		SELECT  COUNT(*)
+		FROM    CLIENT C, DEPARTMENT D
+		WHERE	C.DEPARTMENT_ID = D.DEPARTMENT_ID
+			<if test="client.client_name != null and client.client_name != ''">
+				AND	C.CLIENT_NAME LIKE '%'||#{client.client_name}||'%'
+			</if>
+			<if test="client.representative != null and client.representative != ''">
+				AND C.REPRESENTATIVE LIKE '%'||#{client.representative}||'%'
+			</if>
+			<if test="client.department_id != 0 and client.department_id != ''">
+				AND C.DEPARTMENT_ID = #{client.department_id}
+			</if>
+	</select>
+	
 </mapper>
 

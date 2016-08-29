@@ -247,7 +247,6 @@ function getReportInfo(weeklyNumber){
 	var year = date._d.getFullYear();
 	
 	var report_id = year+"_"+weeklyNumber+"_"+$('#employee_id').val();
-	alert($('#weeklyReportId').val())
 	var report_title = $('#weeklyReportId').val();
 	if(report_title == ""){
 		report_title = weeklyNumber+"주의 계획";
@@ -347,9 +346,8 @@ function modifyButtonClick() {
 							},
 
 							success : function(data) {
-								alert($('#employee_id').val());
 								window.location.href = "/weeklyReport/detail/"
-										+ $('#employee_id').val();
+										+ $('#employee_id').val()+"/"+weeklyNumber;
 							},
 							error : function() {
 								event.preventDefault();
@@ -434,7 +432,7 @@ function weeklyWriteCancleConfirm(){
 	var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
 	var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
 	noty({
-        text: '작성된 계획이 존재합니다.\n작성된 계획을 보시겠습니까? \n 취소시 메인화면으로 돌아갑니다.',
+        text: '작성된 계획이 존재합니다.<br><br> 작성된 계획을 보시겠습니까?',
         layout: 'center',
         modal: 'true',
         killer:'true',

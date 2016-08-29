@@ -14,10 +14,10 @@
               WHERE   WR.WEEKLY_REPORT_ID = DATE_CHAR.WEEKLY_REPORT_ID
                  AND   E.EMPLOYEE_ID = WR.EMPLOYEE_ID
                  AND   D.DEPARTMENT_ID = E.DEPARTMENT_ID
-               <if test="employee_id != null">
+               <if test="employee_id != null and employee_id !=''">
                   AND   E.EMPLOYEE_ID = #{employee_id}
                </if>
-               <if test="department_id != null">
+               <if test="department_id != null and department_id !=0">
                   AND   D.DEPARTMENT_ID = #{department_id}
                </if>
                 <if test="keyword != null and keyword != ''"> 
@@ -36,10 +36,10 @@
       FROM     WEEKLY_REPORT WR, EMPLOYEE E, DEPARTMENT D
       WHERE   E.EMPLOYEE_ID = WR.EMPLOYEE_ID
          AND   D.DEPARTMENT_ID = E.DEPARTMENT_ID
-            <if test="employee_id != null">
+            <if test="employee_id != null and employee_id !=''">
             AND   E.EMPLOYEE_ID = #{employee_id}
             </if>
-            <if test="department_id != null">
+            <if test="department_id != null and department_id !=0">
             AND   D.DEPARTMENT_ID = #{department_id}
             </if>
            <if test="keyword != null and keyword != ''"> 
@@ -74,20 +74,23 @@
    
    <!-- 새로 작성시 이번주에 필요한 매출 목표 -->
    <select id="selectSalesGoal" parameterType="String" resultType="Integer">
-      <![CDATA[
-      SELECT  MG.SALES_GOAL AS MONTHLY_SALES_GOAL
-      FROM    MONTHLY_GOAL MG, (SELECT  LAST_PLAN_DATE AS DATE1, NEXT_DAY(LAST_PLAN_DATE, 2) AS DATE2
-                                               FROM    (SELECT  TRUNC(MAX(WP.REG_DATE),'DD') AS LAST_PLAN_DATE
-                                                            FROM   WEEKLY_REPORT WR, WEEKLY_PLAN WP
-                                                            WHERE  WR.EMPLOYEE_ID = #{value} AND
-                                                                         WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID)) LPD
-      WHERE   MG.EMPLOYEE_ID = #{value} AND
-                   MG.YEAR = TO_NUMBER(TO_CHAR(LPD.DATE2, 'YYYY')) AND
-                  MG.MONTH = TO_NUMBER(TO_CHAR(LPD.DATE2, 'MM'))
-      ]]>
+   <![CDATA[
+		SELECT CASE WHEN SUM(RESULT) IS NULL THEN 0
+		    		ELSE SUM(RESULT)
+		        END AS MONTHLY_SALES_GOAL 
+		FROM	(SELECT  MG.SALES_GOAL AS RESULT
+				 FROM    MONTHLY_GOAL MG, (SELECT  LAST_PLAN_DATE AS DATE1, NEXT_DAY(LAST_PLAN_DATE, 2) AS DATE2
+		             					             FROM    (SELECT  TRUNC(MAX(WP.REG_DATE),'DD') AS LAST_PLAN_DATE
+		                                						    FROM   WEEKLY_REPORT WR, WEEKLY_PLAN WP
+		                                    						WHERE  WR.EMPLOYEE_ID = #{value} AND
+		                                           								WR.WEEKLY_REPORT_ID = WP.WEEKLY_REPORT_ID)) LPD
+				 WHERE   MG.EMPLOYEE_ID = #{value} AND
+			     	     MG.YEAR = TO_NUMBER(TO_CHAR(LPD.DATE2, 'YYYY')) AND
+			        	 MG.MONTH = TO_NUMBER(TO_CHAR(LPD.DATE2, 'MM')))
+		]]>
    </select>
    
-   <select id="selectDeptMember" parameterType="String" resultType="WeeklyReportMemberInfo">
+   <select id="selectDeptMember" parameterType="Integer" resultType="WeeklyReportMemberInfo">
       SELECT  E.EMPLOYEE_ID, E.EMPLOYEE_NAME, E.FILE_POSITION, POST_NUM
       FROM    EMPLOYEE E, DEPARTMENT D, (SELECT    COUNT(*) AS POST_NUM, WR.EMPLOYEE_ID
                                          FROM      EMPLOYEE E, WEEKLY_REPORT WR

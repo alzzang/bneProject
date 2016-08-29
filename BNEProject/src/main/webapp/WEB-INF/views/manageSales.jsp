@@ -16,8 +16,13 @@
         <link rel="stylesheet" type="text/css" id="theme" href="/css/theme-default.css"/>
       <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
-</head>
+<style>
+#salesGoalTable>tbody>tr>td{
+	height:70px;
+}
+</style>
 
+</head>
 <body>
 <div class="row pull-right">
 	<input type="hidden" id="manageSalesLength" value="${ fn:length(manageSales)}">
@@ -37,7 +42,7 @@
                                 <div class="panel-body panel-body-table">
 
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-actions">
+                                        <table class="table table-bordered table-striped table-actions" id="salesGoalTable">
                                             <thead>
                                                 <tr>
                                                     <th width="50">id</th>
@@ -51,10 +56,10 @@
                                             
                                                 <c:forEach items="${manageSales}" var="list" varStatus="status">
                                                 <tr id="trow_${status.count} ">
-													<td id="maSaa${status.index}"><strong>${list.employee_id}</strong></td>
-													<td><strong>${list.employee_name}</strong></td>
-													<td id="maSa${status.index}" isEmpty="1">0</td>
-													<td>
+													<td style="width:10%;" id="maSaa${status.index}"><strong>${list.employee_id}</strong></td>
+													<td style="width:20%;"><strong>${list.employee_name}</strong></td>
+													<td style="" id="maSa${status.index}" isEmpty="1">0</td>
+													<td style="width:5%;">
                                                         <button id="manageSalesButton${status.index}" class="btn btn-default btn-rounded btn-sm"><span class="fa fa-pencil"></span></button>
                                                     </td>
 													<%-- ${list.sales_goal} <br/> --%>
@@ -119,7 +124,6 @@
    		var modifyFlag=true;
    		
 		$("#manageSalesButton"+a).on("click", function() {
-			alert(a);
 				var th = $(this).parent().prev();
 				var ts=$('#demo-2').val().split("-");
 				var tty = +'<%=cal.get(Calendar.YEAR)%>';
@@ -136,22 +140,24 @@
 				if(modifyFlag){
 					t = th.text();
 					th.html('');
-					th.append("<input id='bbb"+a+"' type=text value='"+t+"'/>");
+					th.append("<input id='salesGoalInput"+a+"' type='text' value='"+t+"' style='width:120px;'/>");
 					th.children().focus(); 
 					modifyFlag=false;
 					
 					
-					$('#bbb'+a).on("change",function(){
-					
+					$('#salesGoalInput'+a).on("change",function(){
+						alert('hello');
 						var tempStr=$('#demo-2').val().split("-");
 						
 						/* 정규식 패턴검사 */
 						var pattern = /^([1-9][0-9]{0,9}$)|^0$/;
-						var tt = $('#bbb'+a).val();
+						var tt = $('#salesGoalInput'+a).val();
 						var true_false=pattern.test(tt);
-												
+						
+						
 						if(true_false){
-							th.html($('#bbb'+a).val());
+							alert('true');
+							th.html($('#salesGoalInput'+a).val());
 						}else{
 							alert('숫자만 입력 가능합니다.');
 							th.empty();
@@ -177,6 +183,7 @@
 	                			modifyFlag=true;
 	                		},
 	                		error : function() {
+	                			alert('error');
 	                		}
 	                	});
 						
@@ -188,7 +195,7 @@
 					modifyFlag=true;
 				}
 		});
-		})(i);
+		})(i);	
     }
    	
    	$('#demo-2').val('<%=cal.get(Calendar.YEAR)%>'+'-'+'<%=cal.get(Calendar.MONTH)+1%>');

@@ -67,6 +67,6 @@ public class WeeklyReportSearchElement extends WeeklyReportDTO {
                + "]";
       }
 
-      
-      
+		
+		
 }

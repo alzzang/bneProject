@@ -135,7 +135,6 @@ function submitEditForm() {
 	
 	if (confirm("사원정보를 수정하시겠습니까?") == true){    //확인
 		//form의 action 설정
-		alert($("#editForm").find(".form-control:eq(0)").val());
 		$("#editForm").attr("action", "/admin/employee/update/" + $("#editForm").find(".form-control:eq(0)").val());
 		return true;
 	}else{   //취소
