@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -74,9 +75,11 @@ public class WeeklyController {
 	
 	
 	@RequestMapping("/writeForm")
-	public String WeeklyWriteForm(Model model,HttpServletResponse response,HttpServletRequest request, HttpSession session) throws Exception{
+	public String WeeklyWriteForm(Model model,HttpServletResponse response, HttpServletRequest request, HttpSession session) throws Exception{
 		EmployeeDTO loginEmployee = (EmployeeDTO) session.getAttribute("user");
 
+		
+		
 		if(loginEmployee == null) 
 				return "main";
 		
@@ -120,7 +123,18 @@ public class WeeklyController {
 	public ModelAndView WeeklyDetail(Model model,HttpServletRequest request,@PathVariable("employeeId") String employeeId, String weeklyReportId) throws Exception {
 		ModelAndView mv  = new ModelAndView("weeklyDetail");
 		EmployeeDTO eDTO = userService.selectEmployee(employeeId);
-
+		
+		
+		Map<String, Object> modelData = model.asMap();
+		System.out.println("ㅇㅇㅇ");
+		   Iterator<String> iterator = modelData.keySet().iterator();
+		    while (iterator.hasNext()) {
+		        String key = (String) iterator.next();
+		        System.out.print("key="+key);
+		        System.out.println(" value="+modelData.get(key));
+		    }
+		
+		
 		if(eDTO == null) {
 			mv.setViewName("main");
 			return mv;
@@ -295,7 +309,7 @@ public class WeeklyController {
 	
 	@RequestMapping("/list/{employee_id}")
 	public ModelAndView getWeeklyList(@PathVariable String employee_id, HttpServletRequest request) throws Exception {
-		System.out.println("===========================================================");
+//		System.out.println("===========================================================");
 		
 		ModelAndView mv = new ModelAndView("weeklyList");
 		HttpSession session = request.getSession();
@@ -307,30 +321,17 @@ public class WeeklyController {
 		}
 		System.out.println("employee_id : " + employee_id);
 
-		// keyword
 		String keyword = request.getParameter("keyword");
-		System.out.println("keyword : " + keyword);
-		
-		// plan_date
 		String planDate = request.getParameter("planDate");
-		System.out.println("planDate : " + planDate);
-		
-		// department_id
-		String department_id = loginUser.getDepartment_id() + "";
-		System.out.println("department_id : " + department_id);
-		
-		// pageSize
+		int department_id = loginUser.getDepartment_id();
 		int pageSize = 5;
 
-		// page
 		String pageStr = request.getParameter("pageStr");
-		System.out.println("pageStr : " + pageStr);
 		int page = 0;
 		if("".equals(pageStr) || pageStr == null)
 			page = 1;
 		else								
 			page = Integer.parseInt(pageStr);
-		System.out.println("page : " + page);
 		
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("employee_id", employee_id);
@@ -342,10 +343,10 @@ public class WeeklyController {
 		
 		// 내 부서의 주간계획 목록
 		List<WeeklyReportSearchElement> myDeptWeeklyReportList = weeklyReportService.selectWeeklyReportSearch(parameterMap);
-		System.out.println("weeklyReportListSize : " + myDeptWeeklyReportList.size());
-		for (WeeklyReportSearchElement weeklyReportSearchElement : myDeptWeeklyReportList) {
-			System.out.println(weeklyReportSearchElement);
-		}
+//		System.out.println("weeklyReportListSize : " + myDeptWeeklyReportList.size());
+//		for (WeeklyReportSearchElement weeklyReportSearchElement : myDeptWeeklyReportList) {
+//			System.out.println(weeklyReportSearchElement);
+//		}
 		
 		List<WeeklyReportMemberInfo> myDeptMemberList = weeklyReportService.selectDeptMember(department_id);
 //		System.out.println("myDeptMemberList : " + myDeptMemberList.size());
@@ -356,7 +357,7 @@ public class WeeklyController {
 		}
 		
 		int totalRecordNum = weeklyReportService.selectTotalRecordNum(parameterMap);
-		System.out.println("totalRecordNum : " + totalRecordNum);
+//		System.out.println("totalRecordNum : " + totalRecordNum);
 
 		mv.addObject("myDeptWeeklyReportList", myDeptWeeklyReportList);
 		mv.addObject("selectedMemberId", employee_id);

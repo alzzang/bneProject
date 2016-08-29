@@ -68,7 +68,7 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 	}
 
 	@Override
-	public List<WeeklyReportMemberInfo> selectDeptMember(String department_id) throws Exception {
+	public List<WeeklyReportMemberInfo> selectDeptMember(int department_id) throws Exception {
 		List<WeeklyReportMemberInfo> result = null;
 		result = sqlSession.selectList(namespace+"selectDeptMember", department_id);
 		return result;

@@ -70,7 +70,7 @@
 
 	<!-- START CONTENT FRAME LEFT --> 
 	<form  action="/weeklyReport/modifyWeeklyReport" method="post">	
-	<div class="content-frame-left" style="height: 1054px;">
+	<div class="content-frame-left" style="height: 1054px;display: block">
 	 <div class="panel panel-default" >
 		<div class="panel-heading">
 			<div class="page-title">

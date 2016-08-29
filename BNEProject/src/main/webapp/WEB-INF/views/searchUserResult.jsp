@@ -1,281 +1,370 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+   pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<!-- <h1>hello</h1> -->
+<%-- <h1>${fn:length(depUserList)}</h1> --%>
+<style>
+.salesInput {
+   width:100%;
+   background-color: transparent;
+   border:0px solid black;
+   text-align: center;
+}
+</style>
 
- <!-- PAGE CONTENT WRAPPER -->
-                <div class="page-content-wrap">
-                    
-                    <div class="row">
-                        <div class="col-md-3">
-                            
-                            <div class="panel panel-default">
-                                <div class="panel-body profile" style="background: url('/assets/images/gallery/music-4.jpg') center center no-repeat;">
-                                    <div class="profile-image">
-                                        <img src="/assets/images/users/user3.jpg" alt="Nadia Ali"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">${emp.employee_name }</div>
-                                        <div class="profile-data-title" style="color: #FFF;">${emp.employee_id }</div>
-                                    </div>
-                                </div>                                
-                                <div class="panel-body">                                    
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <button class="btn btn-info btn-rounded btn-block"><span class="glyphicon glyphicon-earphone"></span>Call</button>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <button class="btn btn-primary btn-rounded btn-block"><span class="glyphicon glyphicon-envelope"></span>e-mail</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel-body list-group border-bottom">
-                                    <a href="#" class="list-group-item active"><span class="fa fa-bar-chart-o"></span> Activity</a>
-                                    <a href="#" class="list-group-item"><span class="fa fa-coffee"></span> Groups <span class="badge badge-default">18</span></a>                                
-                                    <a href="#" class="list-group-item"><span class="fa fa-users"></span> Friends <span class="badge badge-danger">+7</span></a>
-                                    <a href="#" class="list-group-item"><span class="fa fa-folder"></span> Apps</a>
-                                    <a href="#" class="list-group-item"><span class="fa fa-cog"></span> Settings</a>
-                                </div>
-                                <div class="panel-body">
-                                    <h4 class="text-title">Friends</h4>
-                                    <div class="row">
-                                        <div class="col-md-4 col-xs-4">
-                                            <a href="#" class="friend">
-                                                <img src="/assets/images/users/user.jpg"/>
-                                                <span>Dmitry Ivaniuk</span>
-                                            </a>                                            
-                                        </div>
-                                        <div class="col-md-4 col-xs-4">                                            
-                                            <a href="#" class="friend">
-                                                <img src="/assets/images/users/user2.jpg"/>
-                                                <span>John Doe</span>
-                                            </a>                                            
-                                        </div>
-                                        <div class="col-md-4 col-xs-4">                                            
-                                            <a href="#" class="friend">
-                                                <img src="/assets/images/users/user4.jpg"/>
-                                                <span>Brad Pit</span>
-                                            </a>                                            
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4 col-xs-4">                                            
-                                            <a href="#" class="friend">
-                                                <img src="/assets/images/users/user5.jpg"/>
-                                                <span>John Travolta</span>
-                                            </a>                                            
-                                        </div>
-                                        <div class="col-md-4 col-xs-4">                                            
-                                            <a href="#" class="friend">
-                                                <img src="/assets/images/users/user6.jpg"/>
-                                                <span>Darth Vader</span>
-                                            </a>                                            
-                                        </div>
-                                        <div class="col-md-4 col-xs-4">                                            
-                                            <a href="#" class="friend">
-                                                <img src="/assets/images/users/user7.jpg"/>
-                                                <span>Samuel Leroy Jackson</span>
-                                            </a>                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                            
-                            
+
+<div class="content-frame">
+   <div class="content-frame-top">
+      <div class="page-title">
+         <h2>사원 정보</h2>
+      </div>
+   </div>
+   <div class="content-frame-left">
+      <div class="panel panel-default">
+         <div class="panel-body profile"
+            style="background: url('/assets/images/gallery/music-4.jpg') center center no-repeat;">
+            <div class="profile-image">
+               <img src="http://192.168.1.18:8085/test/${emp.file_position }" alt="Nadia Ali" />
+            </div>
+            <div class="profile-data">
+               <div class="profile-data-name">${emp.employee_name}</div>
+               <div class="profile-data-title" style="color: #FFF;">${emp.employee_id }</div>
+            </div>
+            <div class="profile-controls">
+<!--                <a href="#" class="profile-control-left twitter"><span
+                  class="fa fa-twitter"></span></a> <a href="#"
+                  class="profile-control-right facebook"><span
+                  class="fa fa-facebook"></span></a> -->
+            </div>
+         </div>
+         <div class="panel-body">
+            <div class="row">
+               <div class="col-md-6">
+               <a href="tel:${emp.mobile_phone }">
+                  <button class="btn btn-info btn-rounded btn-block">
+                     <span class="glyphicon glyphicon-earphone"></span> Call
+                  </button>
+                  <input type="hidden" value="${emp.mobile_phone }">
+               </a>
+               </div>
+               <div class="col-md-6">
+               <a href="mailto:${emp.email }">
+                  <button class="btn btn-primary btn-rounded btn-block">
+                     <span class="glyphicon glyphicon-envelope"></span> e-mail
+                  </button>
+                  <input type="hidden" value="${emp.email }">
+               </a>
+               </div>
+            </div>
+          </div>
+<%--         <div class="panel-body list-group border-bottom">
+
+            <!--  ARCODIAN DROPDOWN MENU -->
+            <div class="w3-accordion w3-light-grey">
+               <button onclick="myFunction('Demo1')" class="w3-btn-block w3-left-align">Department Groups</button>
+               <div id="Demo1" class="w3-accordion-content w3-container">
+                  <c:forEach items="${depUserList }" var="list" varStatus="status">
+                     <c:if test="${list.employee_id != employeeDTO.employee_id}">
+                        <c:if test="${list.employee_id != emp.employee_id}">
+                           <a href="/user/searchUser/${list.employee_id}"><span>${list.employee_id}</span>${list.employee_name}</a>
+                        </c:if>
+                     </c:if>
+                  </c:forEach>
+               </div>
+               <button onclick="myFunction('Demo2')" class="w3-btn-block w3-left-align">Open Section 2</button>
+               <div id="Demo2" class="w3-accordion-content w3-container">
+                  <h4>Section 2</h4>
+                  <p>Some other text..</p>
+               </div>
+            </div>
+         </div> --%>
+         
+         <div class="panel-body">
+            <h2 class="text-title">Employee <br>Information</h2>
+            <div class="contact-info">
+               <p>
+                  <small>Department</small><br />${emp.department_name}</p>
+               <p>
+                  <small>Phone Number</small><br />${emp.mobile_phone}</p>
+               <p>
+                  <small>E-Mail</small><br />${emp.email}</p>
+               <p>
+                  <small>Position</small><br />${emp.position}</p>
+            </div>
+
+
+         </div>
+         
+         <!-- 부서 팀원 목록 -->
+         <div class="panel-body">
+            <h2 class="text-title">Team <br>Members</h2>
+            <div class="row">
+               <c:forEach items="${depUserList }" var="list" varStatus="status">
+                  <c:if test="${list.employee_id != employeeDTO.employee_id}">
+                      <c:if test="${list.employee_id != emp.employee_id}">
+                        <div class="col-md-4 col-xs-4">
+                           <a href="/user/searchUser/${list.employee_id}" class="friend">
+                              <img src="http://192.168.1.18:8085/test/${list.file_position }">
+                              <span>${list.employee_name}<br>(${list.file_position})</span>
+                           </a>
                         </div>
-                        
-                        <div class="col-md-9">
+                     </c:if>
+                  </c:if>
+               </c:forEach>
+            </div>
+         </div>
+      </div>
 
-                            <!-- START TIMELINE -->
-                            <div class="timeline timeline-right">
-                                
-                                <!-- START TIMELINE ITEM -->
-                                <div class="timeline-item timeline-main">
-                                    <div class="timeline-date">Today</div>
-                                </div>
-                                <!-- END TIMELINE ITEM -->                                                  
-                                
-                                <!-- START TIMELINE ITEM -->
-                                <div class="timeline-item timeline-item-right">
-                                    <div class="timeline-item-info">21:37</div>
-                                    <div class="timeline-item-icon"><span class="fa fa-users"></span></div>                                   
-                                    <div class="timeline-item-content">
-                                        <div class="timeline-heading" style="padding-bottom: 10px;">
-                                            <img src="/assets/images/users/user3.jpg"/>
-                                            <a href="#">Nadia Ali</a> added to friends 
-                                            <img src="/assets/images/users/user.jpg"/>
-                                            <img src="/assets/images/users/user2.jpg"/>
-                                            <img src="/assets/images/users/user4.jpg"/>
-                                        </div>                                        
-                                        <div class="timeline-body comments">
-                                            <div class="comment-item">
-                                                <img src="/assets/images/users/user.jpg"/>
-                                                <p class="comment-head">
-                                                    <a href="#">Dmitry Ivaniuk</a> <span class="text-muted">@Aqvatarius</span>
-                                                </p>
-                                                <p>Thank you so much... I would like to meet you :)</p>
-                                                <small class="text-muted">15min ago</small>
-                                            </div>                                            
-                                            <div class="comment-item">
-                                                <img src="/assets/images/users/user3.jpg"/>
-                                                <p class="comment-head">
-                                                    <a href="#">Nadia Ali</a> <span class="text-muted">@nadiaAli</span>
-                                                </p>
-                                                <p>Sure, i will contact you ;)</p>
-                                                <small class="text-muted">16min ago</small>
-                                            </div>                                            
-                                            <div class="comment-write">                                                
-                                                <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>                                                
-                                            </div>
-                                        </div>
-                                    </div>                                    
-                                </div>       
-                                <!-- END TIMELINE ITEM -->
+   </div>
+   <div class="content-frame-body">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                  <h3 class="panel-title">주간 계획</h3>
+               </div>
+               <div class="panel-body">
+                  <div id="calander" class="calendar">
+                     <div id="calendar" class="fc fc-ltr fc-unthemed "></div>
+                  </div>
+                  <div class=""></div>
+               </div>
+            </div>
+         </div>
+<!--          <div class="col-md-3">
+            START BAR CHART
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                  <h3 class="panel-title">거래처별 매출</h3>
+               </div>
+               <div class="panel-body">
+                  <div class="row stacked" id="customerSales" style="height: 300px;"></div>
+               </div>
+            </div>
+            END Area CHART
+         </div> -->
+         <div class="col-md-9 col-sm-6">
+            <!-- START BAR CHART -->
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                  <h3 class="panel-title">사원 매출 차트</h3>
+               </div>
+               <div class="panel-body">
+                  <div id="morris-line-example" style="height: 300px;"></div>
+               </div>
+            </div>
+            <!-- END Area CHART -->
+         </div>
+         <div class="col-md-3 col-sm-6">
+         <!-- START DONUT CHART -->
+         <div class="panel panel-default">
+            <div class="panel-heading">
+               <h3 class="panel-title">사원 이번달 달성률</h3>
+            </div>
+            <div class="panel-body">
+               <div id="morris-donut-example" style="height: 300px;"></div>
+            </div>
+         </div>
+         <!-- END DONUT CHART -->
+         </div>
+      </div>
+   </div>
+</div>
+<script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
+<script type="text/javascript" src="/js/weekly.js"></script>
 
-                                <!-- START TIMELINE ITEM -->
-                                <div class="timeline-item timeline-item-right">
-                                    <div class="timeline-item-info">20:23</div>
-                                    <div class="timeline-item-icon"><span class="fa fa-reply"></span></div>                                   
-                                    <div class="timeline-item-content">
-                                        <div class="timeline-heading padding-bottom-0">
-                                            <img src="/assets/images/users/user2.jpg"/> <a href="#">John Doe</a> posted article <a href="#">How to...?</a>
-                                        </div>                                        
-                                        <div class="timeline-body">                                                                                        
-                                            <img src="/assets/images/gallery/nature-6.jpg" width="200" class="img-text" align="left"/> 
-                                            <h4>Lorem ipsum dolor</h4>
-                                            <p>Aenean ultricies condimentum pellentesque. Maecenas pulvinar arcu vel tortor aliquet commodo. Phasellus dapibus nisl quis nunc pharetra, id lobortis arcu sagittis. Nunc facilisis nibh non diam dictum, vitae iaculis tellus egestas. Curabitur vitae dui tempus, tempus metus vitae, cursus nunc. In cursus odio vitae metus commodo, in posuere ante varius.</p> 
-                                            <p>Mauris sodales faucibus est, eu consequat dolor tristique in. Quisque at lacus sed ligula semper iaculis. In eu imperdiet ipsum. Ut vestibulum ornare venenatis.</p>           
-                                            <ul class="list-tags push-up-10">                                            
-                                                <li><a href="#"><strong>#</strong>tempor</a></li>
-                                                <li><a href="#"><strong>#</strong>eros</a></li>
-                                                <li><a href="#"><strong>#</strong>suspendisse</a></li>
-                                                <li><a href="#"><strong>#</strong>dolor</a></li>
-                                            </ul>
-                                        </div>                
-                                        <div class="timeline-footer">
-                                            <a href="#">Details</a>
-                                            <div class="pull-right">
-                                                <a href="#"><span class="fa fa-comments"></span> 35</a> 
-                                                <a href="#"><span class="fa fa-eye"></span> 1,432</a>
-                                            </div>
-                                        </div>
-                                    </div>                                    
-                                </div>       
-                                <!-- END TIMELINE ITEM -->                                                                
-                                
-                                <!-- START TIMELINE ITEM -->
-                                <div class="timeline-item timeline-main">
-                                    <div class="timeline-date">Yesterday</div>
-                                </div>
-                                <!-- END TIMELINE ITEM -->                                
-                                
-                                <!-- START TIMELINE ITEM -->
-                                <div class="timeline-item timeline-item-right">
-                                    <div class="timeline-item-info">20:23</div>
-                                    <div class="timeline-item-icon"><span class="fa fa-info-circle"></span></div>                                   
-                                    <div class="timeline-item-content">
-                                        <div class="timeline-heading padding-bottom-0">
-                                            <img src="/assets/images/users/user3.jpg"/> <a href="#">Nadia Ali</a> changed status to:
-                                        </div>                                        
-                                        <div class="timeline-body">                                            
-                                            <i>Peace Will Come, This World Will Rest, Once We Have Togetherness</i>
-                                        </div>                                               
-                                    </div>                                    
-                                </div>       
-                                <!-- END TIMELINE ITEM -->                                
-                                
-                                <!-- START TIMELINE ITEM -->
-                                <div class="timeline-item timeline-item-right">
-                                    <div class="timeline-item-info">18:34</div>
-                                    <div class="timeline-item-icon"><span class="fa fa-photo"></span></div>                                   
-                                    <div class="timeline-item-content">
-                                        <div class="timeline-heading">
-                                            <img src="/assets/images/users/user3.jpg"/> <a href="#">Nadia Ali</a> added images to gallery
-                                        </div>
-                                        <div class="timeline-body">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <a href="#">
-                                                        <img src="/assets/images/gallery/music-2.jpg" class="img-responsive img-text"/>
-                                                    </a>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <a href="#">
-                                                        <img src="/assets/images/gallery/music-3.jpg" class="img-responsive img-text"/>
-                                                    </a>                                                    
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <a href="#">
-                                                        <img src="/assets/images/gallery/space-1.jpg" class="img-responsive img-text"/>
-                                                    </a>                                                    
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <a href="#">
-                                                        <img src="/assets/images/gallery/space-2.jpg" class="img-responsive img-text"/>
-                                                    </a>                                                    
-                                                </div>
-                                            </div>
-                                            <ul class="list-tags push-up-10">                                            
-                                                <li><a href="#"><strong>#</strong>tempor</a></li>
-                                                <li><a href="#"><strong>#</strong>eros</a></li>
-                                                <li><a href="#"><strong>#</strong>suspendisse</a></li>
-                                                <li><a href="#"><strong>#</strong>dolor</a></li>
-                                            </ul>                                            
-                                        </div>
-                                    </div>                                    
-                                </div>       
-                                <!-- END TIMELINE ITEM -->
-                                
-                                <!-- START TIMELINE ITEM -->
-                                <div class="timeline-item timeline-item-right">
-                                    <div class="timeline-item-info">15:21</div>
-                                    <div class="timeline-item-icon"><span class="fa fa-users"></span></div>                                   
-                                    <div class="timeline-item-content">
-                                        <div class="timeline-heading" style="padding-bottom: 10px;">
-                                            <img src="/assets/images/users/user3.jpg"/>
-                                            <a href="#">${emp.employee_name}</a> added to friends 
-                                            <img src="/assets/images/users/user5.jpg"/>
-                                            <img src="/assets/images/users/user6.jpg"/>
-                                            <img src="/assets/images/users/user7.jpg"/>
-                                        </div>                                        
-                                        <div class="timeline-body comments">
-                                            <div class="comment-item">
-                                                <img src="/assets/images/users/user6.jpg"/>
-                                                <p class="comment-head">
-                                                    <a href="#">Darth Vader</a> <span class="text-muted">@darthvader</span>
-                                                </p>
-                                                <p>Hello, honey!</p>
-                                                <small class="text-muted">15min ago</small>
-                                            </div>                                                                                                                        
-                                            <div class="comment-write">                                                
-                                                <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>                                                
-                                            </div>
-                                        </div>
-                                    </div>                                    
-                                </div>       
-                                <!-- END TIMELINE ITEM -->
+<script>
+$(window).load(function(){
 
-                                
-                                <!-- START TIMELINE ITEM -->
-                                <div class="timeline-item timeline-main">
-                                    <div class="timeline-date"><a href="#"><span class="fa fa-ellipsis-h"></span></a></div>
-                                </div>                                
-                                <!-- END TIMELINE ITEM -->
-                            </div>
-                            <!-- END TIMELINE -->                            
-                            
-                        </div>
-                        
-                    </div>
+   // 달성도, 매출 차트
+   var mainpageMorrisCharts = function() {
+      $.ajax({
+         type : "POST",
+         url : "/chart/monthlySales",
+         data : {
+            employee_id : '${emp.employee_id }'
+         },
+         dataType : 'json',
+         success : function(data) {
+               
+            var achievement = Math.round((data.sumofMonthlyGoal / data.monthlyGoal) * 100);
+                     
+            if(isNaN(achievement)||!isFinite(achievement)){
+               achievement=0;
+            }
+   
+            var achievermentLimit = achievement;
+               
+            if(achievement>=100){
+               achievermentLimit=100;
+            }
+                  
+            Morris.Donut({
+               element : 'morris-donut-example',
+               data : [ {
+                  label : "achievement rate",
+                  value : achievement,
+                  formatted : achievement+'%'
+               }, {
+                  label : "lack of achievement rate",
+                  value : 100-achievermentLimit,
+                  formatted : 100-achievermentLimit+'%'
+               } ],
+               colors : [ '#95B75D', '#1caf9a'],
+               formatter : function(x, data) {
+                  return data.formatted;
+               },
+                 resize: true
+            });
+         },
+         error : function() {
+            alert("nono");
+         }
+      });
 
-                </div>
-                <!-- END PAGE CONTENT WRAPPER -->
+      $.ajax({
+         type : "POST",
+         url : "/chart/morrisChartLine",
+         data : {
+            // login employee_id 받아오기
+            employee_id : '${emp.employee_id }',
+            department_id: '${emp.department_id }'
+            
+         },
+         dataType : 'json',
+   
+         success : function(data) {
+            var jsonLoop = new Array();
+            
+            list1 = data.List1;
+            list2 = data.List2;
+            var d = new Date();
+             var n = d.getFullYear();
+            if(list2.length==0){
+   
+   //            $("#morris-line-example").append('<span>no data</span>');
+               jsonLoop.push({
+                  y : n+'',
+                  a : 0,
+                  b : 0
+               });
+            }
+            var chartFlag = true;
+            
+            for (var i = 0; i < list2.length; i++) {
+   
+               for (var j = 0; j < list1.length; j++) {
+                  if (list2[i].reg_date === list1[j].reg_date) {
+   
+                     jsonLoop.push({
+                        y : list2[i].reg_date,
+                        a : list1[j].sales,
+                        b : list2[i].sales
+                     });
+                     chartFlag = false;
+                  }
+               }
+               if (chartFlag) {
+                  jsonLoop.push({
+                     y : list2[i].reg_date,
+                     a : 0,
+                     b : list2[i].sales
+                  });
+               }
+               chartFlag = true;
+            }
+            Morris.Line({
+               element : 'morris-line-example',
+               data : jsonLoop,
+               xkey : 'y',
+               ykeys : [ 'a', 'b' ],
+               labels : [ 'My Sales', 'Team Sales Avg' ],
+               resize : true,
+               lineColors : [ '#33414E', '#95B75D' ]
+            });
+         },
+         error : function() {
+            alert('error');
+         }
+      });
+   }
 
-</body>
-</html>
+   mainpageMorrisCharts();
+   
+   // 거래처별 매출
+   var customerSales = function(){
+      
+      $.ajax({
+         type : "POST",
+         url : "/chart/customersSales",
+         data : {
+            department_id : '${emp.department_id }'
+         },
+         dataType : 'json',
+         success : function(data) {
+            
+            for(var i=0; i<data.length;i++){
+               var html= "<div class='progress-list'> " +
+                     "<div class='pull-left'>" +
+                     "<strong>" +
+                     data[i].client_name +
+                     "</strong></div> " +
+                     "<div class='pull-right'>" +
+                     data[i].sales +"만"+
+                     "</div> " +
+                     "<div class='progress progress-small progress-striped active'>"+
+                     "<div class='progress-bar progress-bar-primary' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100' style='width: " +
+                     data[i].sales_rate +
+                     "%;'>"+
+                     data[i].sales_rate+
+                     "</div></div></div>";
+               $("#customerSales").append(html);
+            }
+         },
+         error : function() {
+            alert("nono");
+         }
+      });
+      
+   }
+   
+   customerSales();
+
+   
+   // 주간계획
+   var makeCurrentReportId = function(){
+      var weeklyNumberText = $('.fc-week-number>span')[0].textContent;
+      var weeklyNumber = parseInt(weeklyNumberText[1] + weeklyNumberText[2]);
+    
+      var date = $('#calendar').fullCalendar('getDate');
+      var year = date._d.getFullYear();
+      
+      return year +"_"+ weeklyNumber + "_" + '${emp.employee_id}';
+   };
+   
+   makeSalesInput();
+   $.ajax({
+      type : "POST",
+      url : "/weeklyReport/getPlan",
+      data : {
+         ReportId : makeCurrentReportId()
+      },
+      success : function(data){
+		if(data.weeklyReportDTO == null){
+			var day = ['mon','tue','wed','thu','fri'];
+			for(var i=0; i<5; i++){
+				$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
+			}
+        }else{
+	        mainInputReportData(data);
+        }
+      }
+   })
+   
+});
+</script>

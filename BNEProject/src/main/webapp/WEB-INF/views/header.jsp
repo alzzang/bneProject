@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
-
-
-
+<style>
+.modal-dialog{
+ overflow-y: scroll; max-height:85%;
+}
+.modal-content{
+border-width: 0px !important;
+}
+</style>
 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
                     <!-- TOGGLE NAVIGATION -->
                     <li class="xn-icon-button">
@@ -14,12 +18,12 @@
                     <!-- SEARCH -->
 
                    <li class="xn-search">
-      			      	<input type="text" id="empSearch" name="search" placeholder="Search...">
-      			   </li>
+                        <input type="text" id="empSearch" name="search" placeholder="Search...">
+                  </li>
    <!-- END SEARCH -->
    <!-- SIGN OUT -->
-   <li class="xn-icon-button pull-right"><a href="#" class="mb-control" data-box="#mb-signout">
-   <span class="fa fa-sign-out"></span></a></li>
+   <li class="xn-icon-button pull-right"><a href="#" class="mb-control" data-box="#mb-signout"><span
+         class="fa fa-sign-out"></span></a></li>
    <!-- END SIGN OUT -->
    <!-- MESSAGES -->
    <li class="xn-icon-button pull-right" id="noticeButton" onclick='getNoticeList(1, 5)'><a href="#"><span
@@ -116,3 +120,34 @@
    </li>
    <!-- END TASKS -->
 </ul>
+
+
+<div id="myModal86"  class="modal fade" role="dialog">
+   <div class="modal-dialog modal-admin">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+         <div class="modal-header">
+         
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><span class="fa fa-arrow-circle-o-left"></span> 부서 인원</h4>
+            
+         </div>
+         
+         <div class="modal-body">
+<div class="page-title">
+          <h2>
+            
+         </h2>  
+      </div> 
+
+         <div class="page-content-wrap">
+            
+         </div>
+         </div>
+         <div class="modal-footer">
+         </div>
+      </div>
+   </div>
+</div>
+<input type="hidden" href="#" data-toggle="modal" data-target="#myModal86" id="modalAdd86"></button>

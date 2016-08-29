@@ -109,14 +109,14 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 	}
 	
 	@Override
-	public List<WeeklyReportSearchElement> selectWeeklyReportSearch(Map parameterMap) throws Exception {
+	public List<WeeklyReportSearchElement> selectWeeklyReportSearch(Map<String, Object> parameterMap) throws Exception {
 		List<WeeklyReportSearchElement> result = null; 
 		result = weeklyReportDAO.selectWeeklyReportList(parameterMap);
 		return result;
 	}
 
 	@Override
-	public List<WeeklyReportMemberInfo> selectDeptMember(String department_id) throws Exception {
+	public List<WeeklyReportMemberInfo> selectDeptMember(int department_id) throws Exception {
 		List<WeeklyReportMemberInfo> result = weeklyReportDAO.selectDeptMember(department_id);
 		return result;
 	}

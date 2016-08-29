@@ -4,11 +4,67 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.bne.mapper.SecondaryClient">
 
-	<select id="selectSecondClient" parameterType="Integer" resultType="SecondaryClient">
+	<select id="selectSecondaryClient" parameterType="Integer" resultType="SecondaryClient">
 
 	 <!-- <![CDATA[select * from secondary_client where client_id=#{value}]]> -->
 	 <![CDATA[select c.representative, c.client_name, s.* from client c, secondary_client s where c.client_id=s.client_id and s.client_id=#{value}]]> 
 
+	</select>
+
+	<insert id="insertSecondaryClient" parameterType="SecondaryClient">
+		INSERT INTO SECONDARY_CLIENT VALUES(SEC_CLIENT_SEQ.NEXTVAL, #{address}, #{sec_client_name}, #{client_id}, #{telephone})
+	</insert>
+	
+	<update id="updateSecondaryClient" parameterType="SecondaryClient">
+		UPDATE	SECONDARY_CLIENT
+		<set>
+			<if test="sec_client_name != null and sec_client_name != ''">
+				SEC_CLIENT_NAME=#{sec_client_name},
+			</if>
+			<if test="address != null and address != ''">
+				ADDRESS=#{address},
+			</if>
+			<if test="telephone != null and telephone != ''">
+				TELEPHONE=#{telephone},
+			</if>
+			<if test="client_id != null and client_id != ''">
+				client_id=#{client_id}
+			</if>
+		</set>
+		WHERE	SEC_CLIENT_ID = #{sec_client_id}
+	</update>
+	
+	<delete id="deleteSecondaryClient" parameterType="Integer">
+		DELETE FROM	SECONDARY_CLIENT WHERE SEC_CLIENT_ID = #{value}
+	</delete>
+	
+	<select id="searchSecondaryClient" parameterType="map" resultType="SecondaryClientSearchElement">
+		SELECT *
+		FROM   (		
+			SELECT  ROW_NUMBER() OVER (ORDER BY SEC_CLIENT_ID DESC) IDX, SC.*, C.CLIENT_NAME, D.DEPARTMENT_NAME
+			FROM    CLIENT C, SECONDARY_CLIENT SC, DEPARTMENT D
+			WHERE   C.CLIENT_ID = SC.CLIENT_ID
+			  AND   C.DEPARTMENT_ID = D.DEPARTMENT_ID
+	 		<if test="sec_client.sec_client_name != null and sec_client.sec_client_name != ''">
+			  AND   SC.SEC_CLIENT_NAME LIKE '%'||#{sec_client.sec_client_name}||'%'
+			</if>
+			<if test="sec_client.client_name != null and sec_client.client_name != ''">
+			  AND   C.CLIENT_NAME LIKE '%'||#{sec_client.client_name}||'%'
+			</if>  
+		  )
+		WHERE IDX BETWEEN 1 + (#{pageSize} * (#{page}-1)) AND #{pageSize} + (#{pageSize} * (#{page}-1))  
+	</select>
+	
+	<select id="searchSecondaryClientCount" parameterType="map" resultType="Integer">
+		SELECT  COUNT(*)
+		FROM    CLIENT C, SECONDARY_CLIENT SC
+		WHERE   C.CLIENT_ID = SC.CLIENT_ID
+ 		<if test="sec_client.sec_client_name != null and sec_client.sec_client_name != ''">
+		  AND   SC.SEC_CLIENT_NAME LIKE '%'||#{sec_client.sec_client_name}||'%'
+		</if>
+		<if test="sec_client.client_name != null and sec_client.client_name != ''">
+		  AND   C.CLIENT_NAME LIKE '%'||#{sec_client.client_name}||'%'
+		</if>  
 	</select>
 
 </mapper>

@@ -20,7 +20,7 @@ public interface WeeklyReportDAO {
 	// 조건에 맞는 주간 계획 목록
 	public List<WeeklyReportSearchElement> selectWeeklyReportList(Map<String, Object> parameterMap) throws Exception;
 	// 내 부서 사람들 정보 
-	public List<WeeklyReportMemberInfo> selectDeptMember(String department_id) throws Exception;
+	public List<WeeklyReportMemberInfo> selectDeptMember(int department_id) throws Exception;
 	// 조건에 맞는 작성된 주간 계획의 레코드 수   
 	public int selectTotalRecordNum(Map<String, Object> parameterMap) throws Exception;
 

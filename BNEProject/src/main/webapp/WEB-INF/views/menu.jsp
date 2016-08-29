@@ -56,8 +56,9 @@
         
 
  	<li class="xn-title">Navigation</li>
-			<li class=""><a href="/main"><span
-					class="fa fa-desktop"></span> <span class="xn-text">Home</span></a>
+			<li class=""><a href="/client/list"><span class="fa fa-desktop"></span> <span class="xn-text">1차 거래처 목록</span></a>
+			<li class=""><a href="/2ndclient/list"><span class="fa fa-desktop"></span> <span class="xn-text">2차 거래처 목록</span></a>
+			<li class=""><a href="/main"><span class="fa fa-desktop"></span> <span class="xn-text">Home</span></a>
 			</li>
 			<li class="xn-openable"><a href="#"><!-- weeklyReport/write --><span
 					class="fa fa-file-text-o"></span> <span class="xn-text">주간 계획</span></a>

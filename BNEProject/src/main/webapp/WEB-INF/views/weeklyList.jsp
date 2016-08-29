@@ -11,6 +11,7 @@
  
 <script>
 $(window).ready(function(){
+	
 	// 페이지에 보여줄 레코드 수
 	var pageSize = "${pageSize}";
 	// 현재 페이지
@@ -94,8 +95,8 @@ var goToWeeklyDetail = function(employee_id, weekly_report_id){
 
 var goToSearchResult = function(){
 	var form = getForm("POST", "/weeklyReport/list/" +  '${selectedMemberId}');
-	form.appendChild(getHiddenChild("keyword", $('#keywordInput').val()));
-	form.appendChild(getHiddenChild("planDate", $('#planDateInput').val()));
+	form.appendChild(getHiddenChild("keyword", $('#keyword').val()));
+	form.appendChild(getHiddenChild("planDate", $('#planDate').val()));
 	
 	document.body.appendChild(form);
 	form.submit();
@@ -105,8 +106,8 @@ var goToPage = function(pageNum){
 	
 	var form = getForm("POST", "/weeklyReport/list/" +  '${selectedMemberId}');
 	form.appendChild(getHiddenChild("pageStr", pageNum));
-	form.appendChild(getHiddenChild("keyword", $('#keywordInput').val()));
-	form.appendChild(getHiddenChild("planDate", $('#planDateInput').val()));
+	form.appendChild(getHiddenChild("keyword", '${keyword}'));
+	form.appendChild(getHiddenChild("planDate", '${planDate}'));
 	
 	document.body.appendChild(form);
 	form.submit();
@@ -152,13 +153,13 @@ var goToPage = function(pageNum){
             	</div>
 	            <div class="col-md-3 col-sm-3">
 	            	<div class="input-group">
-		            		<input type="text" class="form-control" placeholder="제목" id="keywordInput" value="${keyword }">
+		            		<input type="text" class="form-control" placeholder="제목" id="keyword" value="${keyword }">
 		            		<div class="input-group-addon" style="cursor:pointer" id="searchButton"  onclick="goToSearchResult();"><i class="fa fa-search"></i></div>
 	            	</div>
 	   	        </div>
                 <div class="pull-right col-md-3 col-sm-3" >
                     <div class="input-group">
-                        <input class="form-control datepicker" placeholder="날짜" id="planDateInput"  type="text" data-orientation="left" value="${planDate}"/>                                    
+                        <input class="form-control datepicker" placeholder="날짜" id="planDate"  type="text" data-orientation="left" value="${planDate}"/>                                    
                         <div class="input-group-addon"><span class="fa fa-calendar"></span></div>
                     </div>
                 </div>

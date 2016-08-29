@@ -25,6 +25,6 @@ public interface WeeklyReportService {
 	
 	//목록
 	public List<WeeklyReportSearchElement> selectWeeklyReportSearch(Map<String, Object> parameterMap) throws Exception;
-	public List<WeeklyReportMemberInfo> selectDeptMember(String department_id) throws Exception;
+	public List<WeeklyReportMemberInfo> selectDeptMember(int department_id) throws Exception;
 	public int selectTotalRecordNum(Map<String, Object> parameterMap) throws Exception;
 }
