@@ -447,7 +447,6 @@ function weeklyWriteCancleConfirm(){
                 {addClass: 'btn btn-danger btn-clean', text: 'Cancel', onClick: function($noty) {
                 	window.location.href = "/main"
                     $noty.close();
-                   
                     }
                 }
             ]

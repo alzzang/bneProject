@@ -99,20 +99,19 @@ public class WeeklyController {
 		boolean result = true;
 		
 		
-		String referer =  request.getHeader("referer");
+/*		String referer =  request.getHeader("referer");
 		String urlArr[] = referer.split("http://");
 		urlArr = urlArr[1].split("/");
 		String splitUrl = "/"+urlArr[1];
 		String origin[] = referer.split(splitUrl);
 		
-		String url = referer.replace(origin[0], "");
+		String url = referer.replace(origin[0], "");*/
 		WeeklyReportDetailDTO reportDetail = weeklyReportService.selectWeeklyReportDetail(weekly_report_id);
 		if(reportDetail.getWeeklyReportDTO() != null)
 			result = false;
 		
 		request.setAttribute("employee_Id", loginEmployee.getEmployee_id());
 		request.setAttribute("result", result);
-		request.setAttribute("beforeUrl",url);
 		return "weeklyWrite";
 	}
 	
