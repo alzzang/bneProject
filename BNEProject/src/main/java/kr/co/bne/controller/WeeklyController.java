@@ -138,7 +138,6 @@ public class WeeklyController {
 				weekly_report_id = weeklyReportId;
 			
 		WeeklyReportDetailDTO weeklyReportDetailDTO = weeklyReportService.selectWeeklyReportDetail(weekly_report_id);
-		System.out.println("link_id:"+weeklyReportDetailDTO.getWeeklyReportDTO().getLink_id());
 		JsonObject weeklyReportDetail = null;
 		if(weeklyReportDetailDTO.getWeeklyReportDTO()!=null)
 			weeklyReportDetail = parseWeeklyReportDetailDTO(weeklyReportDetailDTO);
