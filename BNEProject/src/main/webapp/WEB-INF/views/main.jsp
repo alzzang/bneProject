@@ -35,10 +35,8 @@
 				<div class="panel-body">
 					<div class="tasks ui-sortable" id="unapproval"
 						style="height: 450px;">
-						<c:forEach items="${requestScope.unapproval.dailyReportList}"
-							var="rlist">
-
-
+										
+						<c:forEach items="${requestScope.unapproval.dailyReportList}" var="rlist">
 							<div
 								class="task-item task-warning task-complete widget widget-item-icon"
 								id='${rlist.idx}' style="max-height:102px; min-height:10px;">
@@ -56,9 +54,8 @@
 									</div>
 								</div>
 							</div>
-
 						</c:forEach>
-
+				
 					</div>
 				</div>
 				<!-- START BAR CHART -->
