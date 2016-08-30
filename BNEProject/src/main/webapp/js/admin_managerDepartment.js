@@ -122,14 +122,23 @@ $("#submitAddFormBtn1").on("click",function(){
           return;
        }
        
-       if($("#deptAFInputMName").attr("formflag")=='false'){
-           alert('부서를 등록 할 수 없습니다.(팀장)');
+      if($("#deptAFInputMName").attr("formflag")=='false'){
+if($("#deptAFInputMName").val()==""){
+
+          }else{ 
+    	  alert('부서를 등록 할 수 없습니다.(팀장)');
            return;
+          }
         }
        
        if($("#deptAFInputDNum").attr("formflag")=='false'){
-           alert('부서를 등록 할 수 없습니다.(연락처)');
-           return;
+          if($("#deptAFInputDNum").val()==""){
+        	  
+          }else{
+        	  alert('부서를 등록 할 수 없습니다.(연락처)');
+              return;
+          }
+    	  
         }
        
            var form = document.createElement("form");
@@ -265,7 +274,7 @@ $("#deptAFInputDNum").on("keyup",function(){
       $("#deptAFInputDNum").parent().append(html);
      
      if(!pattern.test(key)){
-        console.log('b');
+        
           $("#deptAFInputDNum").attr("formflag",false);
           html2=''+
             '        <span class="list-group-item contacts-title" style="color:red;"><b>3~9자리의 숫자만 입력가능합니다.</b></span>'+

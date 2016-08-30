@@ -50,12 +50,12 @@ nhn.husky.EZCreator = new (function(){
 		 
 
 		try{
-			elIFrame = document.createElement("<IFRAME frameborder=0 scrolling=no class=col-md-5 col-md-offset-3>");
+			elIFrame = document.createElement("<IFRAME frameborder=0 scrolling=no class=col-md-5 col-md-offset-3 col-xs-12>");
 		}catch(e){
 			elIFrame = document.createElement("IFRAME");
 			elIFrame.setAttribute("frameborder", "0");
 			elIFrame.setAttribute("scrolling", "no");
-			elIFrame.setAttribute("class", "col-md-5 col-md-offset-3");
+			elIFrame.setAttribute("class", "col-md-5 col-md-offset-3 col-xs-offset-2 col-xs-8 smartIframe");
 		}
 		
 		elIFrame.style.width = "1px";

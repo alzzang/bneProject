@@ -453,7 +453,6 @@ function searchSalesGoal(reg_date) {
 				  $('#inputSales').attr('onKeyUp', 'changeProgress(this.value,'+result.daily_sales+')'); 
 				  changeProgress($('#inputSales').val(),result.daily_sales);
 			}
-			alert(result.flag);
 			if($('#searchGoalFlag').val()==0){
 				$('#searchGoalFlag').val(1);
 			}

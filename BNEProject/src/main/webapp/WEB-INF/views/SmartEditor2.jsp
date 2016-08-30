@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <head>
 <script type="text/javascript" src="/../js/HuskyEZCreator.js" charset="utf-8"></script>
+<style>
+.smartIframe{
+	height: 450px !important;
+}					
+</style>
 </head>
 <div class="form-group" >
 	<textarea name="content" id="ir1" rows="10" cols="100" style="width:650px; height:412px; display:none;"></textarea>

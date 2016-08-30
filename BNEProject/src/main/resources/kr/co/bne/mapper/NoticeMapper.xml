@@ -78,6 +78,8 @@
 	
 	<select id="selectUnconfirmedNotices" parameterType="hashmap" resultType="Notice">
 
+<if test='position.equals("manager")'>
+<![CDATA[
 select unconfirmed.*
 from
 (select ROW_NUMBER() OVER (ORDER BY n.reg_date desc, nt.importance_level) idx,nt.IMPORTANCE_LEVEL,n.NOTICE_TYPE,n.NOTICE_ID,n.REG_DATE,
@@ -87,33 +89,39 @@ TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date)/12) * 12) || 'month ' ||
 TRUNC((MONTHS_BETWEEN(SYSDATE,n.reg_date) - 
 TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date))) * 30.5) || 'day ' || trunc(mod((sysdate-n.REG_DATE),1)*24) ||'h '||
 trunc(mod((sysdate-n.REG_DATE)*24,1)*60) || 'min ' ||trunc(round(mod((sysdate-n.REG_DATE)*24*60,1)*60)) || 'sec ' passtime,
-<if test='position.equals("manager")'>
-e.EMPLOYEE_NAME,case when notice_type='DAILY_POST' then e1.employee_name || '님이 일일업무 보고서를 작성하였습니다' 
-when notice_type='WEEKLY_POST' then e1.employee_name || '님이 주간업무 보고서를 작성하였습니다.' 
-when notice_type='DAILY_CORRECT' then e1.employee_name || '님이 일일업무 보고서를 수정하였습니다.'
-when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무 보고서를 수정하였습니다.'
+e.EMPLOYEE_NAME,case when notice_type='DAILY_POST' then e1.employee_name || '님이 일일업무('||dr.title ||') 보고서를 작성하였습니다' 
+when notice_type='WEEKLY_POST' then e1.employee_name || '님이 주간업무('||wr.title||' )보고서를 작성하였습니다.' 
+when notice_type='DAILY_CORRECT' then e1.employee_name || '님이 일일업무('||dr.title ||') 보고서를 수정하였습니다.'
+when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무('||wr.title||') 보고서를 수정하였습니다.'
+END as content, n.link_id,n.SUBJECT
+from notice n,notice_type nt, employee e, employee e1,WEEKLY_REPORT wr,DAILY_REPORT dr
+where e.employee_id=n.object and e1.employee_id=n.subject and
+n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=0 and notice_type like #{type} and wr.LINK_ID(+)=n.link_id and dr.daily_report_id(+)=n.link_id) unconfirmed
+where unconfirmed.idx BETWEEN #{start} and #{end}
+]]>
 </if>
 <if test='position.equals("employee")'>
-e.EMPLOYEE_NAME,case when notice_type='COMMENT' then e1.employee_name || '님이 일일업무 보고서에 관한 COMMENT를 작성하였습니다' 
-when notice_type='WEEKLY_POST' then e1.employee_name || '님이 주간업무 보고서를 작성하였습니다.' 
-when notice_type='APPROVAL' then e1.employee_name || '님이 일일업무 보고서를 승인하였습니다.'
-when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무 보고서를 수정하였습니다.'
-</if>
+<![CDATA[
+select unconfirmed.*
+from
+(select ROW_NUMBER() OVER (ORDER BY n.reg_date desc, nt.importance_level) idx,nt.IMPORTANCE_LEVEL,n.NOTICE_TYPE,n.NOTICE_ID,n.REG_DATE,
+TRUNC(MONTHS_BETWEEN(SYSDATE,n.reg_date)/12) || 'year ' || 
+TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date) - 
+TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date)/12) * 12) || 'month ' ||
+TRUNC((MONTHS_BETWEEN(SYSDATE,n.reg_date) - 
+TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date))) * 30.5) || 'day ' || trunc(mod((sysdate-n.REG_DATE),1)*24) ||'h '||
+trunc(mod((sysdate-n.REG_DATE)*24,1)*60) || 'min ' ||trunc(round(mod((sysdate-n.REG_DATE)*24*60,1)*60)) || 'sec ' passtime,
+e.EMPLOYEE_NAME,case when notice_type='COMMENT' then e1.employee_name || '님이 일일업무('||dr.title ||') 보고서에 관한 COMMENT를 작성하였습니다' 
+when notice_type='WEEKLY_POST' then e1.employee_name || '님이 주간업무('||wr.title||') 보고서를 작성하였습니다.' 
+when notice_type='APPROVAL' then e1.employee_name || '님이 일일업무('||dr.title ||') 보고서를 승인하였습니다.'
+when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무('||wr.title||') 보고서를 수정하였습니다.'
 END as content, n.link_id,n.SUBJECT
-<if test='type.equals("%DAILY_REPORT%") or type.equals("%DAILY_CORRECT%")'>
-||':'||wr.WEEKLY_REPORT_ID subject
-</if>
-from notice n,notice_type nt, employee e, employee e1
-<if test='type.equals("%DAILY_REPORT%") or type.equals("%DAILY_CORRECT%")'>
-,weekly_report wr
-</if>
+from notice n,notice_type nt, employee e, employee e1,WEEKLY_REPORT wr,DAILY_REPORT dr
 where e.employee_id=n.object and e1.employee_id=n.subject and
-n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=0 and notice_type like #{type} 
-<if test='type.equals("%DAILY_REPORT%") or type.equals("%DAILY_CORRECT%")'>
-and n.link_id=wr.link_id
-</if>
-) unconfirmed
+n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=0 and notice_type like #{type} and wr.LINK_ID(+)=n.link_id and dr.daily_report_id(+)=n.link_id) unconfirmed
 where unconfirmed.idx BETWEEN #{start} and #{end} 
+]]>
+</if>
 
 </select>
 
@@ -122,43 +130,43 @@ where unconfirmed.idx BETWEEN #{start} and #{end}
 <![CDATA[
 select confirmed.*
 from
-(select ROW_NUMBER() OVER (ORDER BY reg_date desc, nt.importance_level) idx,nt.IMPORTANCE_LEVEL,n.NOTICE_TYPE,n.NOTICE_ID,n.REG_DATE,
+(select ROW_NUMBER() OVER (ORDER BY n.reg_date desc, nt.importance_level) idx,nt.IMPORTANCE_LEVEL,n.NOTICE_TYPE,n.NOTICE_ID,n.REG_DATE,
 TRUNC(MONTHS_BETWEEN(SYSDATE,n.reg_date)/12) || 'year ' || 
 TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date) - 
 TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date)/12) * 12) || 'month ' ||
 TRUNC((MONTHS_BETWEEN(SYSDATE,n.reg_date) - 
 TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date))) * 30.5) || 'day ' || trunc(mod((sysdate-n.REG_DATE),1)*24) ||'h '||
 trunc(mod((sysdate-n.REG_DATE)*24,1)*60) || 'min ' ||trunc(round(mod((sysdate-n.REG_DATE)*24*60,1)*60)) || 'sec ' passtime,
-e.EMPLOYEE_NAME,case when notice_type='DAILY_POST' then e1.employee_name || '님이 일일업무 보고서를 작성하였습니다' 
-when notice_type='WEEKLY_POST' then e1.employee_name || '님이 주간업무 보고서를 작성하였습니다.' 
-when notice_type='DAILY_CORRECT' then e1.employee_name || '님이 일일업무 보고서를 수정하였습니다.'
-when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무 보고서를 수정하였습니다.'
+e.EMPLOYEE_NAME,case when notice_type='DAILY_POST' then e1.employee_name || '님이 일일업무('||dr.title ||') 보고서를 작성하였습니다' 
+when notice_type='WEEKLY_POST' then e1.employee_name || '님이 주간업무('||wr.title||' )보고서를 작성하였습니다.' 
+when notice_type='DAILY_CORRECT' then e1.employee_name || '님이 일일업무('||dr.title ||') 보고서를 수정하였습니다.'
+when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무('||wr.title||') 보고서를 수정하였습니다.'
 END as content, n.link_id,n.SUBJECT
-from notice n,notice_type nt, employee e, employee e1
+from notice n,notice_type nt, employee e, employee e1,WEEKLY_REPORT wr,DAILY_REPORT dr
 where e.employee_id=n.object and e1.employee_id=n.subject and
-n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=1 and notice_type like #{type}) confirmed
-where confirmed.idx BETWEEN #{start} and #{end} 
+n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=1 and notice_type like #{type} and wr.LINK_ID(+)=n.link_id and dr.daily_report_id(+)=n.link_id) confirmed
+where confirmed.idx BETWEEN #{start} and #{end}
 ]]>
 </if>
 <if test='position.equals("employee")'>
 <![CDATA[
 select confirmed.*
 from
-(select ROW_NUMBER() OVER (ORDER BY reg_date desc, nt.importance_level) idx,nt.IMPORTANCE_LEVEL,n.NOTICE_TYPE,n.NOTICE_ID,n.REG_DATE,
+(select ROW_NUMBER() OVER (ORDER BY n.reg_date desc, nt.importance_level) idx,nt.IMPORTANCE_LEVEL,n.NOTICE_TYPE,n.NOTICE_ID,n.REG_DATE,
 TRUNC(MONTHS_BETWEEN(SYSDATE,n.reg_date)/12) || 'year ' || 
 TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date) - 
 TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date)/12) * 12) || 'month ' ||
 TRUNC((MONTHS_BETWEEN(SYSDATE,n.reg_date) - 
 TRUNC(MONTHS_BETWEEN(SYSDATE, n.reg_date))) * 30.5) || 'day ' || trunc(mod((sysdate-n.REG_DATE),1)*24) ||'h '||
 trunc(mod((sysdate-n.REG_DATE)*24,1)*60) || 'min ' ||trunc(round(mod((sysdate-n.REG_DATE)*24*60,1)*60)) || 'sec ' passtime,
-e.EMPLOYEE_NAME,case when notice_type='COMMENT' then e1.employee_name || '님이 일일업무 보고서에 관한 COMMENT를 작성하였습니다' 
-when notice_type='WEEKLY_POST' then e1.employee_name || '님이 주간업무 보고서를 작성하였습니다.' 
-when notice_type='APPROVAL' then e1.employee_name || '님이 일일업무 보고서를 승인하였습니다.'
-when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무 보고서를 수정하였습니다.'
+e.EMPLOYEE_NAME,case when notice_type='COMMENT' then e1.employee_name || '님이 일일업무('||dr.title ||') 보고서에 관한 COMMENT를 작성하였습니다' 
+when notice_type='WEEKLY_POST' then e1.employee_name || '님이 주간업무('||wr.title||') 보고서를 작성하였습니다.' 
+when notice_type='APPROVAL' then e1.employee_name || '님이 일일업무('||dr.title ||') 보고서를 승인하였습니다.'
+when notice_type='WEEKLY_CORRECT' then e1.employee_name || '님이 주간업무('||wr.title||') 보고서를 수정하였습니다.'
 END as content, n.link_id,n.SUBJECT
-from notice n,notice_type nt, employee e, employee e1
+from notice n,notice_type nt, employee e, employee e1,WEEKLY_REPORT wr,DAILY_REPORT dr
 where e.employee_id=n.object and e1.employee_id=n.subject and
-n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=1 and notice_type like #{type}) confirmed
+n.object=#{employee_id} and n.notice_type=nt.notice_type_id and n.READ_FLAG=1 and notice_type like #{type} and wr.LINK_ID(+)=n.link_id and dr.daily_report_id(+)=n.link_id) confirmed
 where confirmed.idx BETWEEN #{start} and #{end} 
 ]]>
 </if>

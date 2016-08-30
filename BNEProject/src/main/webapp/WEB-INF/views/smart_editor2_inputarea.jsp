@@ -6,7 +6,8 @@
 <meta charset="utf-8">
 <title>Smart Editor&#8482; WYSIWYG Mode</title>
 <style>
-.se2_inputarea{width:615px !important;}
+.se2_inputarea{width:95% !important;}
+
 </style>
 </head>
 

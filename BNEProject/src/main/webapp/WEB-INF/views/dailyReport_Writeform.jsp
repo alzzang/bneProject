@@ -71,17 +71,32 @@ input[type=text] {
 					<thead>
 						<tr>
 							<th>소속</th>
+							<c:if test="${sessionScope.employee.department_name ne null}">
 							<td><span id="department_name">${sessionScope.employee.department_name}</span></td>
+							</c:if>
+							<c:if test="${sessionScope.employee.department_name eq null}">
+							<td><span id="department_name">${sessionScope.user.department_name}</span></td>
+							</c:if>
 						</tr>
 
 						<tr>
 							<th>이름</th>
+							<c:if test="${sessionScope.employee.department_name ne null}">
 							<td><span id="employee_name">${sessionScope.employee.employee_name}</span></td>
+							</c:if>
+							<c:if test="${sessionScope.employee.department_name eq null}">
+							<td><span id="employee_name">${sessionScope.user.employee_name}</span></td>
+							</c:if>
 						</tr>
 
 						<tr>
 							<th>매출 목표</th>
+							<c:if test="${sessionScope.employee.department_name ne null}">
 							<td><span id="goalValue">${sessionScope.employee.sales_goal}</span></td>
+							</c:if>
+							<c:if test="${sessionScope.employee.department_name eq null}">
+							<td><span id="goalValue">0원</span></td>
+							</c:if>
 						</tr>
 					</thead>
 				</table>
@@ -90,11 +105,11 @@ input[type=text] {
 	</div>
 
 
-
+	<c:if test="${sessionScope.employee.department_name ne null}">
 	<script>
 		$('#goalValue').text(addComma('${sessionScope.employee.sales_goal}'));
 	</script>
-
+	</c:if>
 	<!-- END CONTENT FRAME LEFT -->
 
 	<!-- START CONTENT FRAME BODY -->
@@ -212,9 +227,7 @@ input[type=text] {
 								<label class="col-md-3 col-xs-12 control-label">상담 일지</label>
 								<div class="col-md-6 col-xs-12">
 									<div class="input-group">
-										<!-- <input type="text" class="tagsinput" value="First,Second,Third,Fourth" id="tags1466576242041" style="display: none;" readonly="readonly">
-										<span class="input-group-addon" style="cursor: pointer;"><span
-											class="fa fa-plus"></span></span> -->
+
 										<ul class="list-tags">
 											<li><a href="#" data-toggle="modal"
 												data-target="#myModal2" id="modalAdd"><span
@@ -225,6 +238,7 @@ input[type=text] {
 							</div>
 
 							<jsp:include page="SmartEditor2.jsp"></jsp:include>
+							
 							<div class="panel-footer">
 								<button class="btn btn-primary pull-right"
 									id="dailyReportSubmit" onclick="submitContents()">Submit</button>
