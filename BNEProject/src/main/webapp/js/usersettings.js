@@ -229,7 +229,7 @@ $(function() {
                   console.log('data find '+i);
                   html2='<a href="#" id="iii'+data[i].employee_id+'" class="list-group-item">'+
                        '        <div class="list-group-status status-online"></div>'+
-                       '        <img src="http://192.168.1.18:8085/test/'+data[i].file_position+'" class="pull-left" alt="John Doe"/>'+
+                       '        <img src="http://192.168.1.18:8085/test/'+data[i].file_position+'" class="pull-left" alt="John Doe" style="height:40px;"/>'+
                        '        <span class="contacts-title">'+data[i].employee_name+'('+data[i].employee_id+')</span>'+
                        '        <p><strong> mobile : '+data[i].mobile_phone+'</strong></p>'+
                        '    </a>';

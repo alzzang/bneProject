@@ -56,9 +56,9 @@ if(((EmployeeDTO) session.getAttribute("user")).getPosition() != null) {
 					</div>
 					<div class="profile-controls">
 						<a href="/user/changeProfile" class="profile-control-left"> <span
-							class="fa fa-gear"></span></a> <a href="#"
-							class="profile-control-right" id="sockettest"> <span
-							class="fa fa-envelope"></span></a>
+							class="fa fa-gear"></span></a> <a href="/user/searchUser/${sessionScope.user.employee_id}"
+							class="profile-control-right" > <span
+							class="fa fa-home"></span></a>
 					</div>
 
 				</div></li>
@@ -146,17 +146,17 @@ if(((EmployeeDTO) session.getAttribute("user")).getPosition() != null) {
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Modal Header</h4>
+				<h4 class="modal-title">회원 정보 수정</h4>
 			</div>
 			<div class="modal-body">
 				<div class="panel-body">
 					<h3>
-						<span class="fa fa-download"></span> Mini dropzone
+						<span class="fa fa-download"></span> 프로필 사진 변경
 					</h3>
 					<p>
-						Add form with class
-						<code>dropzone dropzone-mini</code>
-						to get mini dropzone box
+						
+						<code>Drop files click here to upload</code>
+						
 					</p>
 					<form class="dropzone dropzone-mini dz-clickable" method="post"
 						id="myDropzone">
