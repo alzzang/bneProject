@@ -373,6 +373,7 @@ function computeGuage(){
 	  if(result<0){
 		  $('#before_gauge').val(0);
 		  $('#result_guage').val(0);
+		  alert('주행거리는 0보다 작을 수 없습니다.')
 	  }else{
 		  $('#result_guage').val(result);
 	  }
