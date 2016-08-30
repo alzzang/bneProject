@@ -19,19 +19,19 @@ public class WeeklyReportDAOImpl implements WeeklyReportDAO {
 	private String namespace = "kr.co.bne.mapper.WeeklyReport" + "."; 
 
 	@Override
-	public int selectThisMonthlySales(String employee_id) throws Exception {
+	public int selectThisMonthlySales(String weekly_report_id) throws Exception {
 		int result = 0;
-		if(sqlSession.selectOne(namespace + "selectThisMonthlySales", employee_id) != null){
-			result = sqlSession.selectOne(namespace + "selectThisMonthlySales", employee_id);
+		if(sqlSession.selectOne(namespace + "selectThisMonthlySales", weekly_report_id) != null){
+			result = sqlSession.selectOne(namespace + "selectThisMonthlySales", weekly_report_id);
 		}
 		return result;
 	}
 
 	@Override
-	public int selectSalesGoal(String employee_id) throws Exception {
+	public int selectSalesGoal(String weekly_report_id) throws Exception {
 		int result = 0;
-		if(sqlSession.selectOne(namespace + "selectSalesGoal", employee_id) != null){
-			result = sqlSession.selectOne(namespace + "selectSalesGoal", employee_id);
+		if(sqlSession.selectOne(namespace + "selectSalesGoal", weekly_report_id) != null){
+			result = sqlSession.selectOne(namespace + "selectSalesGoal", weekly_report_id);
 		}
 		return result;
 	}

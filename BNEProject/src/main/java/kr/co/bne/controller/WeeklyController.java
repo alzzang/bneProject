@@ -86,13 +86,13 @@ public class WeeklyController {
 		
 		String loginId = loginEmployee.getEmployee_id();
 		
-		int salesGoal = weeklyReportService.getSalesGoal(loginId);
+		
+/*		int salesGoal = weeklyReportService.getSalesGoal(loginId);
 		int monthlySales = weeklyReportService.getThisMonthlySales(loginId);
 		//HashMap<String, String> dayList = weeklyReportService.getDayList(loginId);
 		
 		model.addAttribute("salesGoal", salesGoal);
-		model.addAttribute("monthlySales", monthlySales);
-		//model.addAttribute("dayList", dayList);
+		model.addAttribute("monthlySales", monthlySales);*/
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		model.addAttribute("currentDate", dateFormat.format(calendar.getTime()));
@@ -162,7 +162,12 @@ public class WeeklyController {
 			boolean result = false;
 			mv.addObject("weeklyReportDetail",result);
 		}
-			
+		int salesGoal = weeklyReportService.getSalesGoal(weekly_report_id);
+		int monthlySales = weeklyReportService.getThisMonthlySales(weekly_report_id);
+		
+
+		model.addAttribute("salesGoal", salesGoal);
+		model.addAttribute("monthlySales", monthlySales);
 		//mv.addObject("reportIdList", reportId_list);
 		mv.addObject("employee",eDTO);
 		mv.addObject("employee_Id", employeeId);
@@ -203,7 +208,15 @@ public class WeeklyController {
 			boolean result = false;
 			mv.addObject("weeklyReportDetail",result);
 		}
-			
+		
+		int salesGoal = weeklyReportService.getSalesGoal(weekly_report_id);
+		int monthlySales = weeklyReportService.getThisMonthlySales(weekly_report_id);
+		
+
+		model.addAttribute("salesGoal", salesGoal);
+		model.addAttribute("monthlySales", monthlySales);
+		
+		
 		//mv.addObject("reportIdList", reportId_list);
 		mv.addObject("employee",eDTO);
 		mv.addObject("employee_Id", employeeId);
@@ -257,7 +270,7 @@ public class WeeklyController {
 		weeklyReportService.writeWeeklyReport(weeklyReportDetail);
 	}
 	@RequestMapping("/getPlan")
-	public @ResponseBody WeeklyReportDetailDTO getPlan(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam("ReportId")String reportId ){
+	public @ResponseBody WeeklyReportDetailDTO getPlan(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam("ReportId")String reportId ) throws Exception{
 		WeeklyReportDetailDTO reportDetail = null;
 		try {
 			reportDetail = weeklyReportService.selectWeeklyReportDetail(reportId);
@@ -265,7 +278,14 @@ public class WeeklyController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		int salesGoal = weeklyReportService.getSalesGoal(reportId);
+		int monthlySales = weeklyReportService.getThisMonthlySales(reportId);
+		if(reportDetail.getWeeklyReportDTO()!=null){
+			reportDetail.getWeeklyReportDTO().setSales(monthlySales);
+			reportDetail.getWeeklyReportDTO().setSales_goal(salesGoal);
+		}
+/*		model.addAttribute("salesGoal", salesGoal);
+		model.addAttribute("monthlySales", monthlySales);*/
 /*		WeeklyReportDTO report = new WeeklyReportDTO();
 		report.setTitle("helloWorld");
 		report.setDepartment_id(1);
@@ -283,11 +303,29 @@ public class WeeklyController {
 	public ModelAndView modifyWeeklyReport(Model model,HttpServletRequest request,HttpServletResponse responsel)throws Exception {
 		ModelAndView mv = new ModelAndView("weeklyModify");
 		String weeklyReportId = (String)request.getParameter("weekly_report_id");
-		WeeklyReportDetailDTO result = weeklyReportService.selectWeeklyReportDetail(weeklyReportId);
+		WeeklyReportDetailDTO weeklyReportDetailDTO = weeklyReportService.selectWeeklyReportDetail(weeklyReportId);
 		
-		JsonObject weeklyReportDetail = parseWeeklyReportDetailDTO(result);
+		//JsonObject weeklyReportDetail = parseWeeklyReportDetailDTO(result);
 		
-		String employee_id = result.getWeeklyReportDTO().getEmployee_id();
+		JsonObject weeklyReportDetail = null;
+		if(weeklyReportDetailDTO.getWeeklyReportDTO()!=null)
+			weeklyReportDetail = parseWeeklyReportDetailDTO(weeklyReportDetailDTO);
+		
+		if(weeklyReportDetail != null)
+			mv.addObject("weeklyReportDetail", weeklyReportDetail);
+		else{
+			boolean result = false;
+			mv.addObject("weeklyReportDetail",result);
+		}
+		int salesGoal = weeklyReportService.getSalesGoal(weeklyReportId);
+		int monthlySales = weeklyReportService.getThisMonthlySales(weeklyReportId);
+		
+
+		model.addAttribute("salesGoal", salesGoal);
+		model.addAttribute("monthlySales", monthlySales);
+		
+		
+		String employee_id = weeklyReportDetailDTO.getWeeklyReportDTO().getEmployee_id();
 		
 		EmployeeDTO employeeDTO = userService.selectEmployee(employee_id);
 		

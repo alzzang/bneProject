@@ -92,8 +92,8 @@ var inputReportData = function(reportData) {
 	$('#reg_date').html(weeklyReportDTO.reg_date);
 	$('#employee_name').html(employee_name);
 	$('#department_name').html(department_name);
-	$('#sales_goal').html(weeklyReportDTO.sales_goal);
-	$('#sales').html(weeklyReportDTO.sales);
+/*	$('#sales_goal').html(weeklyReportDTO.sales_goal);
+	$('#sales').html(weeklyReportDTO.sales);*/
 	var achievement_rate = Number(weeklyReportDTO.sales)
 			/ Number(weeklyReportDTO.sales_goal) * 100;
 
@@ -126,10 +126,17 @@ var inputReportData = function(reportData) {
 	// ////////////////////////도넛 시작//////////////////////////
 
 	// 도넛을 비워주고
-	$('#weeklyDonut').empty();
+	createDount();
 
-	var achievement_rate = Number(weeklyReportDTO.sales)
-			/ Number(weeklyReportDTO.sales_goal) * 100;
+
+}
+
+var createDount = function() {
+	var temp = $('#sales')[0].textContent.split('원');
+	var temp2 = $('#sales_goal')[0].textContent.split('원');
+	
+	
+	var achievement_rate = Number(temp[0]) / Number(temp2[0]) * 100;
 
 	if (isNaN(achievement_rate) || !isFinite(achievement_rate))
 		achievement_rate = 0;
@@ -254,14 +261,14 @@ function getReportInfo(weeklyNumber){
 	
 	var employee_id = $('#employee_id').val();
 	var department_id = $('#department_id').val();
-	var salesGoal = 0;/* ${salesGoal}; */
-	var montlySales = 0;/* ${monthlySales}; */
+/*	var salesGoal = ${salesGoal}; 
+	var montlySales = ${monthlySales};*/ 
 	
 	var weeklyReport = {
 			weekly_report_id : report_id,
 			title : report_title,
-			saleGoal : salesGoal,
-			sales : montlySales,
+/*			saleGoal : salesGoal,
+			sales : montlySales,*/
 			employee_id : employee_id,
 			department_id : department_id
 	}
@@ -380,7 +387,9 @@ function getWeeklyPlanButtonEvent(data,sessionUserId,now){
 		for(var i=0; i<5; i++){
 			$('input[id="sales-'+day[i]+'"]').attr({'value': '0', 'disabled':'disabled'});
 		}
-		var box = $('#mb-NoWeeklyPlan');
+		$('#sales')[0].textContent='0원';
+		$('#sales_goal')[0].textContent='0원';
+		createDount();
 	}else{    		   		
 		if(sessionUserId == $('#employee_Id').val()){
 			
@@ -389,9 +398,13 @@ function getWeeklyPlanButtonEvent(data,sessionUserId,now){
 					$('.fc-right').prepend(o);
 				}
 		}
+
 		inputReportData(data);
 	}
-	registerDailyReportEvent();
+
+	if(sessionUserId == $('#employee_Id').val()){
+		registerDailyReportEvent();
+	}
 }
 function weeklyNoPlanConfirm(){
 	noty({

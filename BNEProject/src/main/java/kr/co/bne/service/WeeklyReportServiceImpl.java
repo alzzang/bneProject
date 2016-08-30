@@ -49,15 +49,15 @@ public class WeeklyReportServiceImpl implements WeeklyReportService{
 		return result;
 	}
 	@Override
-	public int getThisMonthlySales(String employee_id) throws Exception {
-		int result = weeklyReportDAO.selectThisMonthlySales(employee_id);
+	public int getThisMonthlySales(String weekly_report_id) throws Exception {
+		int result = weeklyReportDAO.selectThisMonthlySales(weekly_report_id);
 		System.out.println("매출액 : " + result);
 		return result;
 	}
 
 	@Override
-	public int getSalesGoal(String employee_id) throws Exception {
-		int result  = weeklyReportDAO.selectSalesGoal(employee_id);
+	public int getSalesGoal(String weekly_report_id) throws Exception {
+		int result  = weeklyReportDAO.selectSalesGoal(weekly_report_id);
 		System.out.println("매출목표 : " + result);
 		return result;
 	}

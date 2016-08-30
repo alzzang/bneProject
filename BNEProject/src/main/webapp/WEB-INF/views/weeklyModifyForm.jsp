@@ -88,11 +88,11 @@
 						<thead>
 							<tr>
 								<th>매출목표 </th>
-								<td><span id="sales_goal"></span>원</td>
+								<td><span id="sales_goal">${salesGoal}원</span></td>
 							</tr>
 		 					<tr>
 								<th>매출액</th>
-								<td><span id="sales"></span>원</td>
+								<td><span id="sales">${salesGoal}원</span></td>
 							</tr>
 						</thead>
 					</table>
@@ -159,8 +159,6 @@ var makeSalesInput = function(){
 		$('#reg_date').html(weeklyReportDTO.reg_date);
 		$('#employee_name').html(employee_name);
 		$('#department_name').html(department_name);
-		$('#sales_goal').html(weeklyReportDTO.sales_goal);
-		$('#sales').html(weeklyReportDTO.sales);
 		var achievement_rate = Number(weeklyReportDTO.sales) / Number(weeklyReportDTO.sales_goal) * 100;
 
 		$('#achievement_rate').html(achievement_rate + '%');
@@ -235,8 +233,9 @@ var makeSalesInput = function(){
 		$('#calendar').fullCalendar('getView').calendar.options.selectable = true;
 		$('#calendar').fullCalendar('next');
 		
-		var reportData = JSON.parse('${weeklyReportDetail}');
-		inputModifyReportData(reportData);
+		var weeklyReportDetail=${weeklyReportDetail};
+		//var reportData = JSON.parse('${weeklyReportDetail}');
+		inputModifyReportData(weeklyReportDetail);
 
 		$('#calendar').fullCalendar('getView').calendar.options.cellHeight = 200;
 		$('#calendar').fullCalendar('getView').calendar.options.contentHeight = "auto";	

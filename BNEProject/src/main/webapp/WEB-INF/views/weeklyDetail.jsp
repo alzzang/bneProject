@@ -116,11 +116,11 @@
 						<thead>
 							<tr>
 								<th>매출목표 </th>
-								<td><span id="sales_goal"></span>원</td>
+								<td><span id="sales_goal">${salesGoal}원</span></td>
 							</tr>
 		 					<tr>
 								<th>매출액</th>
-								<td><span id="sales"></span>원</td>
+								<td><span id="sales">${monthlySales}원</span></td>
 							</tr>
 						</thead>
 					</table>
@@ -224,10 +224,12 @@
 			$('.fc-right').prepend(o);
 		} */
 
-		
-		registerDailyReportEvent();
+		if(sessionUserId == $('#employee_Id').val()){
+			registerDailyReportEvent();
+		}
 		
 		$('.fc-next-button').on('click', function() {
+			$('#weeklyDonut').empty();
 			var report_id = makeReportId('next');
 
 			$.ajax({
@@ -240,6 +242,12 @@
     				$('#calendar').fullCalendar('next');
     		   		$('#calendar').fullCalendar('removeEvents');
 					$('.fc-right').empty();
+
+					if(data.weeklyReportDTO!=null){
+						$('#sales')[0].textContent=data.weeklyReportDTO.sales+'원';
+						$('#sales_goal')[0].textContent=data.weeklyReportDTO.sales_goal+'원';
+					}
+						
 					getWeeklyPlanButtonEvent(data,sessionUserId,now);
 				},
 				error : function() {
@@ -248,7 +256,7 @@
 		});
 		
 		$('.fc-prev-button').on('click', function() {
-			
+			$('#weeklyDonut').empty();
 			var report_id = makeReportId('prev');
 		
 			$.ajax({
@@ -261,6 +269,10 @@
     				$('#calendar').fullCalendar('prev');
     				$('#calendar').fullCalendar('removeEvents');
 					$('.fc-right').empty();
+					if(data.weeklyReportDTO!=null){
+						$('#sales')[0].textContent=data.weeklyReportDTO.sales+'원';
+						$('#sales_goal')[0].textContent=data.weeklyReportDTO.sales_goal+'원';
+					}
 					getWeeklyPlanButtonEvent(data,sessionUserId,now);
 				},
 				error : function() {
@@ -268,10 +280,6 @@
 			})
 		});
 		
-
-	});
-	$(document).ready(function() {
-
 
 	});
 </script>

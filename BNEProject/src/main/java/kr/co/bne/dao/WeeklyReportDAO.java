@@ -8,8 +8,8 @@ import kr.co.bne.common.WeeklyReportSearchElement;
 import kr.co.bne.dto.WeeklyReportDTO;
 
 public interface WeeklyReportDAO {
-	public int selectThisMonthlySales(String employee_id) throws Exception;
-	public int selectSalesGoal(String employee_id) throws Exception;
+	public int selectThisMonthlySales(String weekly_report_id) throws Exception;
+	public int selectSalesGoal(String weekly_report_id) throws Exception;
 	public WeeklyReportDTO selectWeeklyReport(String weekly_report_id) throws Exception;
 	public List<String> selectAllWeeklyReportId(String employee_id) throws Exception;
 	public int insertWeeklyReport(WeeklyReportDTO weeklyReport) throws Exception;

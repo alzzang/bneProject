@@ -12,8 +12,8 @@ import kr.co.bne.dto.WeeklyReportDetailDTO;
 public interface WeeklyReportService {
 
 	// 작성시 필요한 정보
-	public int getThisMonthlySales(String employee_id) throws Exception;
-	public int getSalesGoal(String employee_id) throws Exception;
+	public int getThisMonthlySales(String weekly_report_id) throws Exception;
+	public int getSalesGoal(String weekly_report_id) throws Exception;
 	public int writeWeeklyReport(WeeklyReportDetailDTO weeklyReportDetail) throws Exception ;
 	public int modifyWeeklyReport(WeeklyReportDetailDTO weeklyReportDetail) throws Exception;
 	//음뭘까??

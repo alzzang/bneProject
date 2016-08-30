@@ -92,28 +92,7 @@
 			</table>
 	      </div>
 		</div>
-	     <!-- START DONUT CHART -->
-	     <div class="panel panel-default" >
-	         <div class="panel-heading">
-	             <h3 class="panel-title">매출 현황</h3>                          
-	         </div>
-	         <div class="panel-body">
-					<table class="table table-bordered detailInfoTable">
-						<thead>
-							<tr>
-								<th>매출목표 </th>
-								<td><span id="sales_goal">${salesGoal}</span>원</td>
-							</tr>
-		 					<tr>
-								<th>매출액</th>
-								<td><span id="sales">${monthlySales}</span>원</td>
-							</tr>
-						</thead>
-					</table>
-					<hr>
-	         </div>
-	     </div>
-	     <!-- END DONUT CHART -->      
+	   
 	</div>
 	<!-- END CONTENT FRAME LEFT -->
 
