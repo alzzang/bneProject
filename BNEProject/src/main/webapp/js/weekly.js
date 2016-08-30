@@ -198,7 +198,7 @@ var registerDailyReportEvent = function(){
 
 						form.submit();
 				}else{
-					location.href="/dailyReport/write"
+					location.href="/dailyReport/write?reg_date="+date;
 				} 
 			}
 		});

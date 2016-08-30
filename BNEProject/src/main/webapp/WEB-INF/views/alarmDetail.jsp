@@ -14,7 +14,7 @@ $(window).load(function(){
    var $tasksComplete=$("#tasks_completed");
    
    $tasks.scroll(function(){
-      if($("#tasks").prop("scrollHeight")-$("#tasks").scrollTop()==640){
+      if($("#tasks").prop("scrollHeight")-$("#tasks").scrollTop()==$("#tasks").height()){  	  
           if (timer) {
             unconfirmedData(); // 실행
          } 
@@ -22,7 +22,7 @@ $(window).load(function(){
       };
    });
    $tasksComplete.scroll(function(){
-      if($("#tasks_completed").prop("scrollHeight")-$("#tasks_completed").scrollTop()==640){
+      if($("#tasks_completed").prop("scrollHeight")-$("#tasks_completed").scrollTop()==$("#tasks_completed").height()){
          if (timer1) {
             confirmedData(); // 실행
          } 
@@ -226,7 +226,6 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
                     <div class="content-frame-left" style="height: 837px;">
                                             
                         <div class="form-group">
-                            <h4>Task groups:</h4>
                             <div class="list-group border-bottom">
                                <a href="#" class="list-group-item" onclick="selectNoticeType('')"><span class="fa fa-circle text-muted"></span> 전체</a>
                                 <c:if test="${position eq 'manager'}">
@@ -254,7 +253,7 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
                            <div>
                             <div class="col-md-6">
                                 
-                                <h3>UnConfirmed List</h3>
+                                <h3>미확인 알림</h3>
                                 <div id="log">
                             
                                 <div class="tasks ui-sortable pre-scrollable" id="tasks">
@@ -295,7 +294,7 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
 
 
                             <div class="col-md-6">
-                                <h3>Confirmed List</h3>
+                                <h3>확인 알림</h3>
                                 <div class="tasks ui-sortable pre-scrollable" id="tasks_completed">
                                     
                                     <c:forEach items="${cnList}" var="clist">
@@ -303,7 +302,7 @@ function removeUnconfirmed(noticeId,type,linkId,subject){
                                  <div class="task-item task-primary task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
                               </c:if>
                               <c:if test="${clist.notice_type eq 'WEEKLY_POST'}">
-                                 <div class="task-item task-success task-complete" id="${clist.notice_id }" onclick="moveLHink(this.id,'${clist.notice_type}',${clist.link_id})">
+                                 <div class="task-item task-success task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">
                               </c:if>
                               <c:if test="${clist.notice_type eq 'DAILY_CORRECT'}">
                                  <div class="task-item task-warning task-complete" id="${clist.notice_id }" onclick="moveLink(this.id,'${clist.notice_type}',${clist.link_id})">

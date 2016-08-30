@@ -82,7 +82,7 @@ String text=(String)request.getAttribute("search_text");
                     <!-- START CONTENT FRAME TOP -->
                     <div class="content-frame-top">                        
                         <div class="page-title">                    
-                            <h2><span class="fa fa-inbox"></span> 일일 업무 보고 <small>(<%=totalUnapprovalNum %> 미승인된 보고)</small></h2>
+                            <h2><span class="fa fa-inbox"></span> 일일 업무 보고<small>(<%=totalUnapprovalNum %> 미승인된 보고)</small></h2>
                         </div>                                                                                
                         
                         <div class="pull-right">                            
@@ -96,7 +96,7 @@ String text=(String)request.getAttribute("search_text");
                         
                         <%if(!managerFlag) {%>
                         <div class="block">
-                            <a href="/dailyReport/write" class="btn btn-danger btn-block btn-lg"><span class="fa fa-edit"></span> COMPOSE</a>
+                            <a href="/dailyReport/write" class="btn btn-danger btn-block btn-lg"><span class="fa fa-edit"></span> 일일업무 작성</a>
                         </div>
                         <%}else { %>
                         
@@ -138,7 +138,7 @@ String text=(String)request.getAttribute("search_text");
                                                     </ul>
                                 </div>	
                                 
-                                <div class="pull-right col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                <div class="pull-right col-xs-3 col-sm-3 col-md-2 col-lg-2">
                                     <div class="input-group">
                                         <div class="input-group-addon" onclick="viewList('reg_date', undefined)" title="초기화" style="cursor: pointer;"><span class="fa fa-calendar"></span></div>
                                         <input class="form-control datepicker" type="text" data-orientation="left" onchange="viewList('reg_date', this.value)" value=<%=currentReg_date %>>                                    
@@ -160,7 +160,7 @@ String text=(String)request.getAttribute("search_text");
 
 							<c:if test="${search_text eq null}">
 								<input type="text" class="form-control"
-									placeholder="Who are you looking for?" id="searchText">
+									placeholder="검색어를 입력하세요." id="searchText">
 							</c:if>
 
 							<c:if test="${search_text ne null}">
@@ -170,7 +170,7 @@ String text=(String)request.getAttribute("search_text");
 
 							<div class="input-group-btn">
 								<button class="btn btn-primary"
-									onclick="viewList('search', undefined)">Search</button>
+									onclick="viewList('search', undefined)">검색</button>
 							</div>
 						</div>
 					</div>

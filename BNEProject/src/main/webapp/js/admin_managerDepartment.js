@@ -120,17 +120,25 @@ $("#submitAddFormBtn1").on("click",function(){
           alert('부서를 등록 할 수 없습니다.(부서명)');
           return;
        }
-  /*     
-       if($("#deptAFInputMName").attr("formflag")=='false'){
-           alert('부서를 등록 할 수 없습니다.(팀장)');
+	
+		 if($("#deptAFInputMName").attr("formflag")=='false'){
+		if($("#deptAFInputMName").val()==""){
+
+          }else{ 
+    	  alert('부서를 등록 할 수 없습니다.(팀장)');
            return;
-        }*/
-       
-       if($("#deptAFInputDNum").attr("formflag")=='false'){
-           alert('부서를 등록 할 수 없습니다.(연락처)');
-           return;
+          }
         }
-       
+        
+       if($("#deptAFInputDNum").attr("formflag")=='false'){
+          if($("#deptAFInputDNum").val()==""){
+        	  
+          }else{
+        	  alert('부서를 등록 할 수 없습니다.(연락처)');
+              return;
+          }
+    	  
+        }
            var form = document.createElement("form");
        var path = "/admin/department/add";
        var hiddenField = document.createElement("input");

@@ -258,6 +258,7 @@ public class DailyReportController {
 		model.addObject("employee", employee);
 		model.addObject("clients", clietns);
 		model.addObject("reg_date", req.getParameter("reg_date"));
+	
 		return model;
 	}
 

@@ -10,7 +10,6 @@
 <link href="/../css/smart_editor2.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	body { margin: 10px; }
-	#smart_editor2 {width:670px;}
 </style>
 <script type="text/javascript" src="/../js/lib/jindo2.all.js" charset="utf-8"></script>
 <script type="text/javascript" src="/../js/lib/jindo_component.js" charset="utf-8"></script>
@@ -28,6 +27,7 @@
 <!-- <span id="rev">Version: 2.8.2.12056 </span> -->
 
 <!-- SE2 Markup Start -->	
+
 <div id="smart_editor2">
 	<div id="smart_editor2_content"><a href="#se2_iframe" class="blind">글쓰기영역으로 바로가기</a>
 		<div class="se2_tool" id="se2_tool">
@@ -782,7 +782,9 @@
 
 
 </body>
+
 <style type="text/css">
-#smart_editor2 {width:650px !important; } 
+#smart_editor2 {width:50% !important; } 
+.se2_input_area {height: 300px !important;width: 100% !important;}
 </style>
 </html>
