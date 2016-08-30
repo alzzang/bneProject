@@ -218,7 +218,7 @@ input[type=text] {
 									<div class="input-group">
 										<span class="input-group-addon">주행 거리</span> <input
 											type="text" class="form-control" id="result_guage"
-											pattern="[0-9]{0,10}" required="required" readonly="readonly">
+											pattern="[0-9]{0,10}" required="required" >
 									</div>
 								</div>
 							</div>

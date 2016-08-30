@@ -370,7 +370,13 @@ function computeGuage(){
 	  var before=$('#before_gauge').val();
 	  var after=$('#after_gauge').val();
 	  var result=after-before;
-	  $('#result_guage').val(result);
+	  if(result<0){
+		  $('#before_gauge').val(0);
+		  $('#result_guage').val(0);
+	  }else{
+		  $('#result_guage').val(result);
+	  }
+	  
 }
 
 function insertComment(){
